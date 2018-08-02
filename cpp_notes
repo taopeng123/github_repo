@@ -1,0 +1,1279 @@
+cpp stopa:
+Both book and this note: search for "stopa"
+
+(findcbegin)
+
+============================================================
+|                                                          |
+|                     C                                    |
+|                                                          |
+============================================================
+
+//Sample C program, printf example:
+
+#include<stdio.h>
+
+void main() {
+	int i, sum = 0;	
+	for(i = 1; i <= 100; i++) 
+		sum = sum + i;	
+	printf("sum = %d\n", sum);		
+}
+
+printf("%d, %d", a, b + c);
+
+Format:
+d: int
+f: float
+e,E: exponential
+c: single character
+s: string
+
+==============================
+scanf:
+
+scanf is also in stdio.h
+
+scanf("%d, %d, %d", &x, &y, &z); <- Input should be deliminated by ,
+scanf("%d%d%d", &x, &y, &z); <- Input should be deliminated by any number of white spaces
+s = max(x, y, z);
+printf("max = %d\n", s);
+
+Format is the same as printf
+
+==============================
+No string or bool:
+
+There is no String variable type in C, but there is String constant type in C (eg, "abc").
+
+There is no bool type in C, it uses 1 to represent true, 0 to represent false.
+
+==============================
+stdio.h, math.h, string.h:
+
+math.h has the following functions:
+
+cos(0.2), exp(0.2), fabs(0.2), log(0.2), log10(0.2), 
+pow(0.2, 3.0) <- 0.2^3.0, 
+sin(0.2), sqrt(0.2), tan(0.2)
+
+==============================
+The length of "ab" is 3, because it is stored as "ab\0"
+
+==============================
+type   number of bytes
+char       1
+
+==============================
+a >= 0 ? a : -a
+
+==============================
+if(a < b) a = b;
+
+if(...) {
+	...
+} else {
+	...
+}
+
+==============================
+switch(grade) {
+	case 'A': printf("Excellent\n");
+	case 'B': printf("Good\n");
+	case 'C': printf("Pass\n");
+	case 'D': printf("Fail\n");
+	default: printf("Invalid input.\n");
+}
+
+==============================
+while(x > 0) printf("Helo\n");
+
+==============================
+do {
+	i--;
+	printf("a");
+} while(i >= 0);
+
+==============================
+for(i = 1; i <= 100; i++) 
+	sum = sum + i;	
+
+==============================
+C has "continue" and "break"
+
+==============================
+goto:
+
+s = 0.0;
+goto cal;
+s = 0.5 * 2;
+cal: printf("a");
+
+==============================
+Array:
+
+int a[10];
+a[0] = 1;
+int x[3] = {1, 2, 3};
+int x[] = {1, 2, 3}; //Can omit the length
+
+int x[3] = {0, 0, 0}; 
+can be written as 
+int x[3] = {0};
+
+double s[5][5]
+
+int x[2][4] = {{1,2,3,4}, {6,7,8,9}};
+is equivalent as
+int x[2][4] = {1,2,3,4,5,6,7,8,9};
+
+Array name is the address of the 0-th element
+These two expressions are equivalent: a, &a[0]
+These two expressions are equivalent: a[i], *(a+i)
+
+2-D array name is the address of the 0-th row.
+
+==============================
+string and char array:
+
+char a[15];
+char a[5] = {"BOY"}; 
+char a[5] = "BOY";
+char a[] = {"string!"};
+char a[] = "string";
+char a[4][8] = {"ZHANG", "ZHONG", "HUANG", "LIANG"};
+
+char *hostname = "localhost";
+
+//a is a string:
+scanf("%s", a);
+printf("%s\n", a);
+
+The following string functions are in <string.h>:
+
+strcat(s1, s2):  Catenate s1 and s2, return the address a the address of the first element of the new char array. s1 can not be a string constant.
+
+strcpy(s1, s2): Copy s2 into s1. s1 can not be a string constant.
+
+strcmp(s1, s2): Compare two strings. Note that "s1 == s2" is wrong. Should use "strcmp(s1, s2) == 0".
+
+strlen(s): Return the length of s, excluding the "\0" at end.
+
+strlwr(s): Replace the uppercase chars in s to lowercase.
+
+strupr(s): Replace the lowercase chars in s to uppercase.
+
+==============================
+Function:
+
+int max(int a, int b) {
+    if(a > b) return a;
+    else return b;
+}
+
+If no returned value, use void. 
+If no parameters, use ():
+
+void func() {
+    printf("a");
+}
+
+main function usually has no parameters, unlike Java.
+
+Function parameters are often passed by value. But for array names, it passes its address, so it is passed by reference.
+
+If use array names as parameter, the array should be defined in both the calling and called functions.
+
+For array as parameter, can define an empty array. If need to operate on its elemets, can use another parameter to denote its length:
+
+void sort_string(char str[], int n) {
+    ...
+}
+
+// Call the above function in another functin:
+char string[30]=”ABCDEFGHIJKLMNOPQRSTUVWXYZ”;
+int i=26;
+sort_string(string,i);
+
+==============================
+static, extern:
+
+Static variable: 
+Static variable in a function will have their values kept even after this function is been called.
+Exmaple: 
+static int i;
+
+Extern variable: 
+Can be used in two cases:
+1. In a file, can define a variable as extern and use this variable before its definition. Before using it, need to declare it using "extern". 
+2. In a file, can define a variable as extern and use this variable in another file. Before using it, need to declare it using "extern". 
+Example: none.
+
+
+Static function:
+Can only be used in the same file.
+Example: none.
+
+Extern function:
+Can be used in other files. If a function definition has no keyword "extern", then it is still extern by default. Before using extern function in another file, need to declare it using "extern". 
+Example: none.
+
+==============================
+Pointer:
+
+int *p = &i;
+// Pointer p equals the address of i
+// Then *p is i, *p = 100 is equivalent to i = 100
+
+If a pointer = 0, it means it does not point to anything.
+
+Print the address of a variable:
+printf("%p\n",(void*)&a);
+
+Pointers must be initialized.
+
+int a[20], *p;
+p = &a[0]; // p points to the address of a[0]
+p += 2; // p points to the address of a[2]
+
+a = &a[1];
+b = &a[3];
+Then (b - a) equals 2
+
+int *p[3]: p is an array of pointers (can be easily understood)
+int (*p)[3]: p is a pointer which points to an array (because the above is array of pointers, so here it is a pointer which...)
+
+int a[3][4], (*p)[4];
+p = a;
+
+Pointer to functions can be rememebered in the save way as above:
+int *f(int x); //f is a function which returns pointer
+int (*f)(int x); //f is a pointer which points to a function
+
+int func(int x);
+int (*f)(int x);
+f = func; <- func has no (), no parameters. Function name is the address of the entrance of function.
+(*f) is equivalent as func, eg (*f)(x)
+
+
+
+Array name as function parameter (in a similar way as Java):
+
+void sort(int x[], int n) {
+	...
+}
+
+void main() {
+	int a[10];
+	...
+	sort(a, 10);
+}
+
+A pointer to a string is the address of the first character in the string.
+
+==============================
+From online:
+
+Do I need to compile the header files (.h) in a C program?
+No, there's no reason to "compile" these header files independently. 
+Header files are intended to be included into implementation files, 
+not fed to the compiler as independent translation units.
+
+name1.h文件:
+-------------
+#ifndef __GF_SERVER_H__
+#define __GF_SERVER_H__
+
+int test(int x);
+
+#endif
+-------------
+
+name1.c文件:
+-------------
+#include "name1.h"
+int test(int x) {
+    return 5 * x;
+}
+-------------
+
+main.c文件:
+-------------
+#include <stdio.h>
+#include "name1.h"
+void main() {
+    int y = test(2);
+    printf("%d\n", y);
+}
+-------------
+
+編繹: gcc -o main main.c name1.c
+運行: ./main
+結果: 10
+
+==
+Convert command line argument to string:
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+
+int main(int argc, char *argv[]) // Don't forget first integral argument 'argc', which is count of arguments plus the current exec file.
+{
+  std::string current_exec_name = argv[0]; // Name of the current exec program
+  std::string first_arge;
+  std::vector<std::string> all_args;
+
+  if (argc > 1) {
+
+    first_arge = argv[1];
+
+    all_args.assign(argv + 1, argv + argc);
+  }
+}
+
+
+==============================
+Struct:
+
+From online:
+Should struct definitions go in .h or .c file?
+Private structures for that file should go in the .c file, 
+with a declaration in the .h file if they are used by any functions in the .h .
+Public structures should go in the .h file.
+
+struct date {
+    int year;
+    int month;
+    int day;
+}; // Don't forget the ;
+
+struct date d;
+
+The above two statements can be written together:
+
+struct date {
+    int year;
+    int month;
+    int day;
+} d;
+
+Initialize struct:
+
+struct date {
+    int year;
+    int month;
+    int day;
+} d = {1977, 11, 14};
+
+int y = date.year;
+
+struct array (every element is a struct type):
+
+struct date d[3];
+struct date d[3] = {{1977, 11, 14}, {1980, 3, 5};
+struct date d[] = {{1977, 11, 14}, {1980, 3, 5}; //Can omit the length
+
+A pointer to a struct points to the initial address of the struct.
+
+struct date d;
+struct date *p;
+p = &d;
+(*p).year
+p->year
+
+List node:
+
+struct student {
+    char name[8];
+    float score;
+    struct student *next;
+}
+
+==============================
+Union:
+
+union utag {
+    int i;
+    float f;
+    char c;
+};
+
+The definition of union is the same as struct.
+The reference to memebers of union (including pointers) is also the same as struct.
+
+The difference between struct and union:
+The members in a struct have their own memory units. The size of a struct is the sum of the size of its members.
+The members in a union share the same memory unit. The size of a union is the size of its largest member. Tao's understanding is that a union can be different types (any of its member type) at different times. Just like 精神分裂症.
+
+Can only initialize the first member of a union, can not initialize all members:
+
+Correct:
+
+union utag {
+    int i;
+    float f;
+    char c;
+} u1 = {100};
+
+Wrong:
+
+union utag u2 = {100, 31.6, 'a'};
+
+==============================
+typedef:
+
+typedef defines new type which is equivalent as original types, like an alias:
+
+typedef int INTEGER;
+INTEGER x, y;
+
+typedef char *POINTER;
+POINTER p;
+//Equivalent as: char *p;
+
+typedef struct {
+    int year;
+    int month;
+    int day;
+} DATE;
+
+DATE birthday;
+
+//Equivalent as:
+
+struct {
+    int year;
+    int month;
+    int day;
+} birthday;
+
+typedef char STRING[50];
+STRING s1, s2;
+//Equivalent to: char s1[50], s2[50];
+
+Good:
+Steps to use typedef:
+1. Write down the ordinary definition of a variale, like: char str[50];
+2. Replace the variable name with new type name, like replace "str" with "STRING" -> char STRING[50];
+3. Add "typedef" in front, like: typedef char STRING[50];
+4. Then can use the new type name to define variables, like: STRING s1, s2;
+
+
+==============================
+Dynamic memory allocation and free:
+
+#include <stdlib.h>
+
+int *p;
+p = (int *) malloc(sizeof(int)); //Allocates a memory of size int type, p points to this memory
+
+struct date {
+    int year;
+    int month;
+    int day;
+} *q;
+
+q = (struct date *) malloc(sizeof(struct date));
+
+free(p); //Free the memory pointed by p
+
+==============================
+宏
+
+#define PI 3.14
+int a = PI;
+
+==============================
+Header files
+
+When to use header files: when many programs use some common constants, data, etc, can put them into .h files.
+
+Difference between the following two:
+#include <xxx.h>
+#include "xxx.h"
+
+The difference is that: 
+If use <xxx.h>, then the system will only search for the header file in the designated directory for header files (the include directory). For the header files provided by C, it saves searching time to use this way.
+If use "xxx.h", then the system will first search for the header file in the current directory, then in the designated directory for header files (the include directory).
+
+==============================
+Files
+
+All the following should include:
+#include "sdio.h"
+
+//Open a file:
+FILE *fp;
+fp = fopen("file1", "r");
+
+//Close a file:
+fclose(fp); //Now fp no longer points to this file
+
+//Close all files:
+fcloseall();
+
+//Get a character from file:
+ch = fgetc(fp);
+
+//Returns whether fp points to the end of file:
+feof(fp);
+
+//Write a character to file at location pointed by fp:
+fputc("a", fp);
+fputc(c, stdout)//Outputs character c to terminal (screen), no "" around c.
+
+//Read a string:
+fgets()
+
+//Write a string:
+fputs()
+
+//Read and print to file
+fscanf(), fprintf()
+
+//Read binary files:
+fread(), fwrite()
+
+//Foce the pointer fp to point to the beginning of file:
+rewind(fp);
+
+//Set the pointer position
+fseek(file-pinter, offset, start-point)
+
+//C all recorded
+
+(findcppbegin)
+
+============================================================
+|                                                          |
+|                     C++                                  |
+|                                                          |
+============================================================
+
+Common suffix for C++ programs: 
+.cc .cpp .C .cxx .cp 
+
+Compile:
+g++ -o file_name file_name.cc
+
+==
+Sample C++ program:
+
+#include<iostream>
+using namespace std;
+//using std::cout; <- can also use this
+
+int main() {
+    double a = 2.6;
+    cout << a << endl;
+    return 0;
+}
+
+==============================
+Headers
+
+Need to include when use:
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <iterator>
+cctype //islower(c), tolower(c)
+container header
+container adaptor
+iterator
+algorithm
+tuple
+bind
+
+using namespace std;
+
+==
+#include <iostream>
+#include "Sales_item.h"
+
+Headers from the standard library are enclosed in <>
+Headers that are not part of the library are enclosed in ""
+
+The standard library headers typically have no suffix.
+Header files that we write usually have a suffix of .h
+
+Headers (usually) contain entities (such as class definitions and const variables) that can be defined only once in any given file.
+
+Code inside headers ordinarily should not use using declarations. The reason is that the contents of a header are copied into the including program’s text. If a header has a using declaration, then every program that includes that header gets that same using declaration. As a result, a program that didn’t intend to use the specified library name might encounter unexpected name conflicts.
+
+In addition to facilities defined specifically for C++, the C++ library incorporates the C library. Headers in C have names of the form name .h. The C++ versions of these headers are named c name—they remove the .h suffix and precede the name with the letter c. The c indicates that the header is part of the C library. Hence, cctype has the same contents as ctype.h, but in a form that is appropriate for C++ programs. In particular, the names defined in the cname headers are defined inside the std namespace, whereas those defined in the .h versions are not. Ordinarily, C++ programs should use the cname versions of headers and not the name .h versions.
+
+==
+preprocessor
+
+The most common technique for making it safe to include a header multiple times relies on the preprocessor. The preprocessor is a program that runs before the compiler and changes the source text of our programs.
+
+Our programs already rely on one preprocessor facility, #include. When the preprocessor sees a #include, it replaces the #include with the contents of the specified header.
+
+C++ programs also use the preprocessor to define header guards. Header guards rely on preprocessor variables. Preprocessor variables have one of two possible states: defined or not defined. The #define directive takes a name and defines that name as a preprocessor variable. There are two other directives that test whether a given preprocessor variable has or has not been defined: #ifdef is true if the variable has been defined, and #ifndef is true if the variable has not been defined. If the test is true, then everything following the #ifdef or #ifndef is processed up to the matching #endif.
+
+tao: the following is the .h file which defines Sales_data. The benefit of the preprocessor in this .h file is that this .h file can be included in multiple files, and there will be no conflict, because SALES_DATA_H will be defined in the first file that includes this .h file, other files will have ifndef = false and will not execute this .h file.
+
+#ifndef SALES_DATA_H
+#define SALES_DATA_H
+#include <string>
+struct Sales_data {
+    std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+#endif
+
+Preprocessor variables, including names of header guards, must be unique throughout the program. To avoid name clashes with other entities in our programs, preprocessor variables usually are written in all uppercase.
+
+Headers should have guards, even if they aren’t (yet) included by another header. Header guards are trivial to write, and by habitually defining them you don’t need to decide whether they are needed.
+
+==============================
+cout, cin 
+
+remember: t looks like <, n can be put into >
+
+The left-hand operand of << must be an ostream object. The operator writes the given value on the given ostream. The result of the output operator is its left-hand operand (the ostream). The following example uses << twice, because << returns ostream.
+
+Writing endl has the effect of ending the current line and flushing the buffer asociated with that device. Flusing the buffer ensures that all the output the program has generated so far is actually written to the output stream, rather than sitting in memory waiting to be written.
+
+Buffer: a region of storage used to hold data. IO facilities often store input (or output) in a buffer and read or write the buffer independently from actions in the program. Output buffers can be explicitly flushed to force the buffer to be written. By default, reading cin flushes cout; cout is also flushed when the program ends normally.
+
+//cout:
+#include<iostream>
+using namespace std;
+//using std::cout; <- can also use this
+
+int main() {
+    double a = 2.6;
+    cout << a << endl;
+    return 0;
+}
+
+//cin:
+#include<iostream>
+using namespace std;
+
+int main() {
+    int a = 0;
+    cin >> a;
+    return 0;
+}
+
+while(cin >> value) sum += value;
+
+End of file: ctrl+d
+
+// s is a string
+os << s //Writes s onto output stream os. Reurns os.
+is >> s //Reads whitespace-separated string from is into s. Returns is. 
+
+getline(is, s) //Reads a line of input from is into s. Returns is.
+
+==============================
+Operators:
+
+Logical AND: &&
+
+==============================
+Read from file and output to file
+
+In command line:
+$ addItems <infile >outfile
+
+Our program has been compiled into an executable file named "addItems". 
+Note it is not infile enclosed in <>, but it is < acting on infile, and > acting on outfile. 
+
+==============================
+Declaration & definition:
+
+A declaration makes a name known to the program. We must declare the type of a variable before we can use that variable.  A file that wants to use a name defined elsewhere includes a declaration for that name. 
+
+A definition creates the associated entity.
+
+A variable declaration specifies the type and name of a varaible. A variable definition is a declaration. In addition to specifying the name and type, a definition also allocates storage and may provide the variable with an initial value.
+
+To obtain a declaration that is not also a definition, we add the extern keyword and may not provide an explicit initializer:
+
+extern int i; //delcares but does not define i
+int j; //declares and defines j
+
+Any declaration that includes an explicit initializer is a definition. 
+
+Variables must be defined exactly once but can be declared many times.
+
+To use a variable in more than one file requires declarations. To use the same variable in multiple files, we must define that variable in one—and only one—file. Other files that use that variable must declare—but not define—that variable.
+
+==============================
+Intialization:
+
+//The followings are all equivalent:
+int a = 0;
+int a = {0};
+int a{0};
+int a(0);
+
+If we do not initialize a string, then it is an empty string. (Seems different from Java).
+
+We recommend initializing every object of built-in type.
+
+==============================
+Type checking (statically typed launage):
+
+Some languages, such as Smalltalk and Python, check types at run time. In contrast, C++ is a statically typed language; type checking is done at compile time.
+
+In C++, if we try to do things that the type does not support, the compiler generates an error message and does not produce an executable file.
+==============================
+bool:
+
+bool b = 42;
+int i = b; // i has value 1
+
+When we assign one non-bool types to a bool, the result is false if the value is 0, and true otherwise.
+When we use a bool in an arithmetic expression, its value always converts to either 0 or 1.
+
+The words true and false are literals of type bool:
+bool test = false;
+
+The word nullptr is a pointer literal.
+
+==============================
+Reference:
+
+int &refVal = ival; // refVal refers to (is another name for) ival
+
+A reference defines an alternative name for an object:
+A reference must be initialized (Avado, same as const types)
+There is no way to rebind a reference to refer to a different object.
+Because references are not objects, they don’t have addresses. Hence, we may not define a pointer to a reference.
+
+==============================
+Pointer:
+
+A pointer holds the address of another object. 
+A pointer is an object in its own right. 
+A pointer can be assigned and copied.
+A pointer can point to several different objects over its lifetime.
+A pointer do NOT need to be initialized at the time it is defined.
+
+We can use the address operator & to get the address of an object.
+We can use the dereference operator * to access the object being pointed.
+
+   declaration  operator
+&  reference    obtain address
+*  pointer      yield object
+
+int ival = 42;
+int *p = &ival; // p holds the address of ival; p is a pointer to ival
+int v = *p; //v = 42, dereference operator *
+*p = 0; //Assign new value to ival
+
+//Null pointer. The following three lines are equivalent, to assign null pointer to p.
+int *p = 0;
+int *p = nullptr; 
+int *p = NULL;//Must #include cstdlib, modern programs should avoid using NULL.
+
+Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
+
+if(p) {...}//If p == 0, then it is false. Any nonzero pointer evaluates as true. This is consistent with converting int to bool.
+
+Two pointers are equal (using ==) if they hold the same address.
+
+double obj = 3.14;
+void *pv = &obj; // The type void* is a special pointer type that can hold the address of any object.
+
+Variables defined inside a function ordinarily are not stored at a fixed address.
+
+==============================
+const:
+
+We can make a variable unchangeable by defining the variable’s type as const.
+const object must be initilized after being created.
+
+const int bufSize = 512;
+extern const int bufSize = 512; // A const that is accessible to other files
+
+//Reference to const:
+const int ci = 1024;
+const int &r1 = ci; // Both reference and underlying object are const. See following summary for remember.
+
+//const refrence: no such thing
+
+//Pointer to const:
+const double pi = 3.14;
+const double *cptr = &pi; // Store the address of a const object only in a pointer to const. See following summary for remember.
+
+//const pointer:
+int *const curErr = &errNumb; // curErr will always point to errNumb. See following summary for remember.
+
+Summary from the above:
+1. int is always on the left of *, like int *
+2. const can be on the left or right of int *, like const int *, int * const
+3. Principle: the symbol that is closest to the variable name is comes to the first in the type name: 
+   const double *cptr = &pi: cptr is a pointer to const
+   int *const curErr = &errNumb: curErr is a const pointer
+
+We use the term top-level const to indicate that the pointer itself is a const. When a pointer can point to a const object, we refer to that const as a low-level const.
+
+The distinction between top-level and low-level matters when we copy an object.
+When we copy an object, top-level consts are ignored. Example:
+
+const int ci = i, &cr = ci;
+auto b = ci; // b is an int (top-level const in ci is dropped)
+
+On the other hand, low-level const is never ignored. When we copy an object, both objects must have the same low-level const qualification or there must be a conversion between the types of the two objects. In general, we can convert a nonconst to const but not the other way round.
+
+A constant expression is an expression whose value cannot change and that can be evaluated at compile time. A literal is a constant expression. A const object that is initialized from a constant expression is also a constant expression. Examples:
+
+const int max_files = 20; // max_files is a constant expression
+const int limit = max_files + 1; // limit is a constant expression
+int staff_size = 27; // staff_size is not a constant expression
+const int sz = get_size(); // sz is not a constant expression
+
+Even though sz is a const, the value of its initializer is not known until run time. Hence, sz is not a
+constant expression.
+
+==============================
+typedef:
+
+typedef double wages; // wages is a synonym for double
+
+==============================
+Struct:
+
+struct Sales_data {
+    string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+
+Sales_data accum;
+Sales_data* salesptr;
+
+We’ll assume that our Sales_data class is defined inside "Sales_data.h".
+
+#include <iostream>
+#include <string>
+#include "Sales_data.h"
+int main() {
+    Sales_data data1, data2;
+    ...
+}
+
+==============================
+Class:
+
+Classes ordinarily are not defined inside functions.
+
+In order to ensure that the class definition is the same in each file, classes are usually defined in header files.
+
+class Sales_data {
+    public:
+        Sales_data() = default; // default constructor
+        Sales_data(string &s, double p) : bookNo(s), revenue(p) {}  
+    
+    private:
+        string bookNo;
+        double revenue = 0.0;
+        
+        double price() {
+            ...
+        }
+}
+
+If our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us (know as the synthesized default constructor).
+
+Sales_data item;
+Screen myScreen(5, 3);
+
+==============================
+Escape sequence:
+
+newline:       \n
+double quote:  \"
+single quote:  \'
+backslash:     \\
+question mark: \?
+
+Examples: 
+cout << '\n'; //prints a newline
+cout << "Hi \n"
+
+
+==============================
+string:
+
+#include <string>
+using std::string;
+
+string s1;
+string s2 = s1; //copy initialization, s2 is a copy of s1
+string s3 = "hiya"; //direct initialization
+
+When we initialize a variable using =, we are asking the compiler to copy initialize the object by copying the initializer on the right-hand side into the object being created. Otherwise, when we omit the =, we use direct initialization.
+
+string literal: the compiler appends a null character ('\0') to every string literal. Thus, the actual size of a string literal is one more than its apparent size.
+
+s.empty() //Returns bool
+s.size() //Returns number, which is a string::size_type, see below
+s[3] //Returns a reference to the char. The subscript operator (the [ ] operator) takes a string::size_type.
+s[0] = 'a'; //strings in C++ can be changed! Different from Java.
+s1 + s2 //Returns string
+s1 += s2 //Equivalent to s1 = s1 + s2
+s1 = s2 //Replaces characters in s1 with a copy of s2.
+s1 == s2 //s1 and s2 are equal if they contain the same characters. Equality is case-sensitive.
+s1 != s2
+s1 <= s2 //Comparisons are case-sensitive and use dictionary ordering.
+
+tao: convert a char array to string:
+
+char a1[2] = {'a', 'b'};
+string str1(a1);
+
+string::size_type:
+The string class—and most other library types—defines several companion types. These companion types make it possible to use the library types in a machine-independent manner. The type size_type is one of these companion types. Although we don’t know the precise type of string::size_type, we do know that it is an unsigned type big enough to hold the size of any string. Because size returns an unsigned type, it is essential to remember that expressions that mix signed and unsigned data can have surprising results. You can avoid problems due to conversion between unsigned and int by not using ints in expressions that use size().
+
+The string library lets us convert both character literals and character string literals to strings. Because we can use these literals where a string is expected.
+
+When we mix strings and string or character literals, at least one operand to each
++ operator must be of string type: 
+string s4 = s1 + ", "; // ok: adding a string and a literal
+string s5 = "hello" + ", "; // error: no string operand
+
+For historical reasons, and for compatibility with C, string literals are not standard library strings. It is important to remember that these types differ when you use string literals and library strings.
+
+//The followings should include the "cctype" header:
+//c is a character
+isalnum(c) //true if c is a letter or a digit.
+isalpha(c) //true if c is a letter
+isdigit(c) //true if c is a digit
+islower(c) //true if c is a lowercase letter
+isupper(c) //true if c is an uppercase letter
+tolower(c) //If c is an upercase letter, returns its lowercase equivalent, otherwise returns c unchanged
+toupper(c) //If c is a lowercase letter, returns its upercase equivalent, otherwise returns c unchanged
+isspace(c) //true if c is whitespace (ie, a space, tab, vertical tab, return, newline, or formfeed)
+
+string s2 = s.substr(pos, n) // return a string containing n characters fro s starting at pos. pos defaults to 0. n defaults to a value that causes the library to copy all the characters in s starting from pos.
+
+string s2 = s.erase (pos, len); //Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, from online)
+
+s2.append("helo"); // equivalent as below. The parameter of append() can only be string, it can not be char.
+s.insert(s.size(), "helo"); 
+
+Find a substring in a string:
+
+Use std::string::find as follows:
+
+if (s1.find(s2) != std::string::npos) {
+    std::cout << "found!" << '\n';
+}
+Note: "found!" will be printed if s2 is a substring of s1, both s1 and s2 are of type std::string. 
+
+--
+split a string:
+
+Problem: Split a string by a delim, and return a vector of strings containing no delim
+
+Use stringstream getline
+Signature istream& getline (istream&& is, string& str, char delim)
+
+vector<string> split(const string &s, char delim) {
+    stringstream ss(s);
+    string item;
+    vector<string> tokens;
+    while (getline(ss, item, delim)) {
+        tokens.push_back(item);
+    }
+    return tokens;
+}
+
+Tao's example of using the above function split:
+
+string test_str = "Helo,how,are,you";
+vector<string> strs = split(test_str, ',');
+for(int i = 0; i < strs.size(); i++) cout << strs[i] << " ";
+cout << endl;
+
+Output:
+Helo how are you
+
+--
+cast string to double:
+
+string stest = "0.21";
+double dtest = stod(stest);
+
+==============================
+vector:
+
+#include <vector>
+using std::vector;
+
+vector<int> v1; //v1 is empty
+vector<int> v2 = v1; //v2 is a copy of the elements in v1
+vector<int> v1(10); //v1 has n copies of a value-initialized object. 10 elements, each initialized to 0.
+vector<string> v1(10); //10 elements, each an empty string
+vector<int> v1(n, val); //v1 has n elements with value val
+vector<int> v1 = {1, 2, 3};//C++11, does not work in the old C++ version
+vector<int> v1{1,2,3};//Does not work
+//Searched online, in the old C++ version, to initialize a vector, we can only use push_back(). 
+
+vector<vector<double> > v1 //correct, note the space between > >
+vector<vector<double>> v1 //wrong
+
+vector< vector<int> > a(n,vector<int>(n)); //a is an 2D (n*n) vector, from HackerRank
+
+v.push_back(3) //Adds an element with value 3 to end of v
+v.empty() //Returns a bool
+v.size() //Returns a number, which is of type vector<int>::size_type
+v[5] //Returns a reference to the element
+v1 = v2 //Replaces the elements in v1 with a copy of the elements in v2
+v1 == v2 //Equal if each element in v1 is equal to the corresponding element in v2. 
+v1 != v2
+v1 <= v2 //Have their normal meanings using dictionary ordering.
+
+vector<int> v;
+for(vector<int>::size_type i = 0; i < 10; ++i) {
+    v[i] = i; // Wrong. Segmentation fault: 11. Because v is always an empty vector, so can not assign.
+    v.push_back(i); // Correct
+}
+
+vec.clear() //Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
+
+We can define vectors to hold objects of most any type. Because references are not objects, we cannot have a vector of references.
+
+vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
+
+==============================
+iterator
+
+Although we can use subscripts to access the characters of a string or the elements in a vector, there is a more general mechanism—known as iterators—that we can use for the same purpose. 
+
+In addition to vector, the library defines several other kinds of containers. All of the library containers have iterators, but only a few of them support the subscript operator.
+
+Like pointers, iterators give us indirect access to an object. In the case of an iterator, that object is an element in a container or a character in a string.
+
+Types that have iterators have members that return iterators. In particular, these types have members named begin and end. The begin member returns an iterator that denotes the first element (or first character).
+
+auto b = v.begin(), e = v.end(); //Note that auto is C++11
+
+The iterator returned by end is an iterator positioned “one past the end” of the associated container (or string). This iterator denotes a nonexistent element “off the end” of the container. It is used as a marker indicating when we have processed all the elements. The iterator returned by end is often referred to as the off-the-end iterator or abbreviated as “the end iterator.” If the container is empty, begin returns the same iterator as the one returned by end.
+
+Iterators support only a few operations, which are listed below (tao: these operations are very similar to pointers):
+
+(In the folllowng, an example of iter is: auto iter = v.begin())
+*iter //Returns a reference to the element denoted by the iterator iter.
+iter->mem //Dereferences iter and fetches the memeber named mem from the underlying element. Equivalent to (*iter).mem
+++iter //Increments iter to refer to the next element in the container.
+--iter //Decrements iter to refer to the previous element in the container.
+iter1 == iter2 //Two iterators are equal if they denote the same element or if they are the off-the-end iterator for the same container.
+iter1 != iter2
+iter + n // Adding (substracting) an integral value n to (from) an iterator yields an iterator that many elements forward (backward) within the container.
+iter - n
+iter += n
+iter -= n
+iter1 - iter2 //Returns the distance between the iterators. The result type is a signed integral type named difference_type. Both
+vector and string define difference_type. This type is signed, because subtraction might have a negative result.
+iter1 <= iter2 //One iterator is less than another if it refers to an element that appears in the container before the one referred to by the other iterator.
+
+Example: capitalize the first character of a string:
+
+string s("some string");
+if (s.begin() != s.end()) { // make sure s is not empty
+    auto it = s.begin(); // it denotes the first character in s
+    *it = toupper(*it); // make that character uppercase
+}
+
+Example: capitalize the first word in a string:
+
+for (auto it = s.begin(); it != s.end() && !isspace(*it); ++it)
+    *it = toupper(*it); // capitalize the current character
+
+Programmers coming to C++ from C or Java might be surprised that we used != rather than < in our for loops. C++ programmers use != as a matter of habit. They do so for the same reason that they use iterators rather than subscripts: This coding style applies equally well to various kinds of containers provided by the library. As we’ve seen, only a few library types, vector and string being among them, have the subscript operator. Similarly, all of the library containers have iterators that define the == and != operators. Most of those iterators do not have the < operator. By routinely using iterators and !=, we don’t have to worry about the precise type of container we’re processing.
+
+As with size_type, the library types that have iterators define types named iterator and const_iterator that represent actual iterator types:
+
+vector<int>::iterator it; // it can read and write vector<int> elements
+string::iterator it2; // it2 can read and write characters in a string
+vector<int>::const_iterator it3; // it3 can read but not write elements
+string::const_iterator it4; // it4 can read but not write characters
+
+A const_iterator behaves like a const pointer. Like a const pointer, a const_iterator may read but not write the element it denotes; an
+object of type iterator can both read and write. If a vector or string is const, we may use only its const_iterator type. With a nonconst vector or string, we can use either iterator or const_iterator.
+
+The type returned by begin and end depends on whether the object on which they operator is const. If the object is const, then begin and end return a const_iterator; if the object is not const, they return iterator:
+
+vector<int> v;
+const vector<int> cv;
+auto it1 = v.begin(); // it1 has type vector<int>::iterator
+auto it2 = cv.begin(); // it2 has type vector<int>::const_iterator
+
+It is important to realize that loops that use iterators should not add elements to the container to which the iterators refer.
+
+==============================
+array
+
+stopa: 166
+3.5.2. Accessing the Elements of an Array
+
+int a[10]; // array of 10 ints. The elements are default initialized.
+int a[3] = {0,1,2};
+int a[] = {0,1,2};
+int *p = a;
+
+int arr[3][4];
+int arr[2][3] = {{1,2},{3,4},{5,6}};
+
+tao: practice shows that the type of the array index can be int, but it should be const:
+const int num = 3;
+char a[num] = {'A', 'B', 'C'};
+
+//Principle: the symbol that is closest to the variable name is comes to the first in the type name
+int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
+int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
+int& refs[10] = ... // error: no arrays of references
+int (&arrRef)[10] = arr; // arrRef is a reference, which refers to an array of ten ints
+int* (&arry)[10] = ptrs; // arry is a reference to an array of ten pointers
+
+As with vector, arrays hold objects. Thus, there are no arrays of references. Because an array is an object, we can define both pointers and references to arrays.
+
+Because arrays have fixed size, they sometimes offer better run-time performance for specialized applications. However, that run-time advantage comes at the cost of lost flexibility.
+
+The number of elements in an array is part of the array’s type. As a result, the dimension must be known at compile time, which means that the dimension must be a constant expression. 
+
+Tao: in C++, there is no function to find array size (different from Java). So if need to use size, should not use array in the beginning, use vector instead. <- Confirmed later from online (including recommending using vector). If you must use the size of an array, you can do it as below:
+
+int num_files = sizeof(file_names) / sizeof(file_names[0]);
+
+Character arrays have an additional form of initialization: We can initialize such arrays from a string literal. When we use this form of initialization, it is important to remember that string literals end with a null character. That null character is copied into the array along with the characters in the literal:
+
+char a1[] = {'C', '+', '+'}; // size = 3. 
+char a2[] = {'C', '+', '+', '\0'}; // size = 4
+char a3[] = "C++"; // size = 4, null terminator added automatically
+
+
+======================================== old ========================================
+
+==============================
+stack:
+
+stack header
+stack<int> s;
+s.push(item), s.pop(), s.top()
+
+==============================
+queue:
+
+queue header
+q.push(item), q.pop(), q.top()
+
+==============================
+map:
+
+注意map是排了序的, 故應當用unordered_map, 要#include<unordered_map>
+注意不是unsorted_map
+注意unordered_map要用-std=c++11來編繹, map可以不用
+
+map header
+map<string, int> words;
+map<string, string> m = {{"Joyce", "James"}, {"Austen", "Jane"}};
+
+words.insert({word, 1});
+c.erase(k) // removes every element with key k.
+c[k] // returns the element with key k
+m.find(x) == m.end() //determine whether a key is in map
+
+for(auto &w : words) 
+    cout << w.first << " " << w.second << endl;
+==============================
+set:
+
+同樣應當用unordered_set, 要#include<unordered_set>
+
+set<string> iset = {"a", "b", "hehe"};
+iset.size()
+iset.insert(3);
+iset.insert({1,3,5});
+iset.erase(40);
+
+myset.find(x) != myset.end() //check that an element is in a set (from online)
+==============================
+Generic Algorithms:
+
+lst.remove(val), lst.reverse(), lst.sort(), lst.sort(comp)
+
+============================
+arithmetics:
+
+#include<cstdlib>
+abs(-11), fabs (-10.6)
+
+===========================
+example leetcode codes from 
+
+------
+class Solution {
+public:
+    string reverseString(string s) {
+        if(s.size() == 0){
+            return s;
+        }
+        char tmp;
+        for(unsigned long begin = 0, end = s.size()-1; begin < end; begin++, end--){
+            tmp = s[begin];
+            s[begin] = s[end];
+            s[end] = tmp;
+        }
+        return s;
+    }
+};
+------
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> res(2);
+        unordered_map<int, int> mp;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (mp.count(target - nums[i])) {
+                res[0] = i;
+                res[1] = mp[target-nums[i]];
+            } else {
+                mp[nums[i]] = i;
+            }
+        }
+        return res;
+    }
+};
+
+===========================
+template
+
+Templates are not themselves functions or classes. Instead, they can be thought of as instructions to the compiler for generating classes or functions. The process that the compiler uses to create classes or functions from templates is called instantiation.
+
+==============================
+others:
+INT_MIN, INT_MAX, 要#include <climits>
+max(1, 2), 要#include <algorithm>  
+bool類型的變量值可為true和false
+
+--
+Sleep:
+
+Compile the following file:
+
+g++ -o sleep sleep.cc -std=c++0x -D_GLIBCXX_USE_NANOSLEEP
+
+--- File sleep.cc starts ---
+#include <iostream>
+#include <chrono>
+#include <thread>
+using namespace std;
+
+int main() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    cout << "Hello world" << endl;
+}
+--- File sleep.cc ends ---

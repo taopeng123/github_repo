@@ -1,0 +1,2132 @@
+ml4t stopa: 01-03, p15
+ 
+(The book A Byte of Python has been all recroded here)
+
+==
+findgeneral                        Python general
+findcomment                        Comment in Python
+finddatatypes                      Data types
+findescape                         Escape Sequences
+findoperators                      Operators
+findand                            and
+findor                             or
+findnot                            not
+findprint                          print
+findreadfrominput                  Read from input in terminal
+findreadfromfile                   Read from file 
+findwritetofile                    Write to file
+findreadfromwebpage                Read from webpage
+findwhile                          while
+findif                             if
+findcast                           cast
+findbreak                          break
+findcontinue                       continue
+findfor                            for
+findrange                          range
+findfunction                       function
+findparameter                      Function parameters
+findreturn                         The return Statement
+findpass                           Pass statement
+finddocstring                      DocStrings
+findlocal                          Local variables
+findglobal                         Global statement
+findnonlocal                       Nonlocal statement
+finddefaultargument                Default Argument Values
+findkeywordargument                Keyword Arguments
+findvararg                         VarArgs parameters
+findkeywordonly                    Keyword- only Parameters
+findmodule                         Modules
+findtuple                          tuple
+findlist                           list
+finddictionary                     dictionary
+findset                            set
+findsequence                       sequences 
+findstring                         string
+findsubstring                      Return a substring, Determine whether a string contains a substring
+findsplit                          Split a string
+findprefix                         Whether a string start with a prefix
+findstrip                          Strip a string (remove charaters at beginning and end)
+findtrim                           Strip a string (remove charaters at beginning and end)
+findjoinlisttostring               Join list to string
+findclass                          class
+finddestructor                     destructor
+findsleep                          sleep
+findtime                           Output current local time
+findpandas                         Pandas
+findreadcsv                        Read csv file to a dataframe
+findcreatedataframe                Create DataFrame
+findplot                           Plot in Python, using matplotlib
+finddates                          Dates in pandas
+findjoin                           Join
+finddropnan                        Drop the rows with NaN
+findrenamecolumn                   Rename colum
+findhead                           head
+findtail                           tail
+findslice                          Slice dataframe             
+findselect                         Select rows and columns
+findmax                            Max
+findsort                           Sort
+findgroupby                        group by
+findlen                            Number of rows in dataframe df
+findsize                           Number of rows in dataframe df
+findisnull                         isnull or missing values
+findmissingvalues                  isnull or missing values
+findnormalize                      Normalize
+findnumpy                          NumPy
+
+(endfind)
+
+==
+# Read the book "A Byte of Python" in full again in May 2018, and recorded all my notes in this file.
+
+Features of Python (from Tao):
+
+1. There is no ; at the end of each statement.
+2. We can not randomly add spaces in front of a statement.
+3. In "i = 5", there can be spaces between =
+4. No need to declare data type for a variable like: int i = 5.
+
+==
+(findgeneral)                        
+Python general
+
+Portable:
+
+Due to its open-source nature, Python has been ported to (i.e. changed to make it work on) many platforms. All your Python programs can work on any of these platforms without requiring any changes at all if you are careful enough to avoid any system-dependent features.
+
+--
+Interpreted:
+
+A program written in a compiled language like C or C++ is converted from the source language i.e. C or C++ into a language that is spoken by your computer (binary code i.e. 0s and 1s) using a compiler with various flags and options. When you run the program, the linker/loader software copies the program from hard disk to memory and starts running it.
+
+Python, on the other hand, does not need compilation to binary. You just run the program directly from the source code. Internally, Python converts the source code into an intermediate form called bytecodes and then translates this into the native language of your computer and then runs it. All this, actually, makes using Python much easier since you don't have to worry about compiling the program, making sure that the proper libraries are linked and loaded, etc, etc. This also makes your Python programs much more portable, since you can just copy your Python program onto another computer and it just works!
+
+--
+Python is strongly object-oriented in the sense that everything is an object including numbers, strings and functions.
+
+--
+To test if you have Python already installed on your Linux box:
+
+$ python -V
+
+If you have Python 2.x already installed, then try python3 -V
+
+--
+There are two ways of using Python to run your program - using the interactive interpreter
+prompt or using a source file.
+
+Using The Interpreter Prompt:
+
+$ python
+>>> print('Hello World')
+
+$ python3
+>>> print('Hello World')
+
+To exit the prompt, press ctrl-d 
+
+--
+Like C++, unlike Java:
+A file name can be different from the class name. A file can even have no class in it.
+
+--
+Using A Source File:
+
+I follow the convention of having all Python programs saved with the extension .py
+
+-- File helloworld.py starts --
+
+#!/usr/bin/python
+#Filename: helloworld.py
+print('Hello World')
+
+-- File helloworld.py ends --
+
+Run the above program:
+
+$ python helloworld.py
+
+See below for the benefit of specifying the interpreter at the beginning of the file
+
+--
+Executable Python Programs:
+
+First, we have to give the program executable permission using the chmod command then run the source program.
+
+$ chmod a+x helloworld.py
+$ ./helloworld.py
+
+The chmod command is used here to change the mode of the file by giving execute permission to all users of the system.
+
+--
+Tao: the benefit of specifying the interpreter at the beginning of the file:
+
+You can rename the file to just helloworld and run it as ./helloworld and it will still work since the system knows that it has to run the program using the interpreter whose location is specified in the first line in the source file.
+
+What if you don't know where Python is located? Then, you can use the special env program on Linux/Unix systems. Just change the first line of the program to the following:
+
+#!/usr/bin/env python
+
+The env program will in turn look for the Python interpreter which will run the program.
+
+--
+Python does not use comments except for the special case of the first line here (#!/usr/bin/python). It is called the shebang line - whenever the first two characters of the source file are #! followed by the location of a program, this tells your Linux/Unix system that this program should be run with this interpreter when you execute the program.
+
+W.r.t. Python, a program or a script or software all mean the same thing.
+
+--
+If you want to specify more than one logical line on a single physical line, then you have to
+explicitly specify this using a semicolon (;) which indicates the end of a logical
+line/statement. For example:
+
+i = 5; print(i);
+
+An example of writing a logical line spanning many physical lines follows. This is referred to
+as explicit line joining.
+s = 'This is a string. \
+This continues the string.'
+print(s)
+
+This gives the output:
+This is a string. This continues the string.
+Similarly,
+print\
+(i)
+is the same as
+print(i)
+
+--
+Indentation
+
+Statements which go together must have the same indentation. Each such set of statements is called a block
+
+I strongly recommend that you use a single tab or four spaces for each indentation level.
+
+Python will always use indentation for blocks and will never use braces.
+
+In the above file (helloworld.py), ensure there are no spaces or tabs before the first character in each line
+
+--
+What if we wanted to be able to run the program from anywhere? 
+
+You can do this by storing the program in one of the directories listed in the PATH environment variable. Whenever you run any program, the system looks for that program in each of the directories listed in the PATH environment variable and then runs that program. We can make this program available everywhere by simply copying this source file to one of the directories listed in PATH.
+
+$ echo $PATH
+/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/home/swaroop/bin
+
+$ cp helloworld.py /home/swaroop/bin/helloworld
+
+$ helloworld
+Hello World
+
+We see that /home/swaroop/bin is one of the directories in the PATH variable
+
+Alternatively, you can add a directory of your choice to the PATH variable - this can be done by running PATH=$PATH:/home/swaroop/mydir
+
+This method is very useful if you want to write useful scripts that you want to run the program anytime, anywhere. It is like creating your own commands just like cd or any other commands that you use in the Linux terminal or DOS prompt.
+
+--
+Python is case-sensitive
+
+--
+(findcomment)
+Comment in Python:
+
+Anything to the right of the # symbol is a comment
+
+--
+If you need quick information about any function or statement in Python, then you can use the built-in help functionality. This is very useful especially when using the interpreter prompt. For example, run help(print) - this displays the help for the print function which is used to print things to the screen. Use help() to learn
+more about using help itself! In case you need to get help for operators like return, then you need to put those inside quotes such as help('return') so that Python doesn't get confused on what we're trying to do.
+
+Press q to exit the help.
+
+==
+(finddatatypes)
+Data types:
+
+# Show data type:
+i = 123
+type(i)
+# Displays: <type 'int'>
+
+# Convert string to int:
+x = '123456'
+i = int(x)
+
+Numbers:
+
+Numbers in Python are of three types - integers, floating point (or floats for short) and complex numbers.
+
+Examples:
+
+Integer: 2
+Float: 3.23, 52.3E-4.
+Complex number: (-5+4j), (2.3 - 4.6j)
+
+The default integer type can be any large value.
+
+Boolean:
+
+The True and False are called Boolean types and you can consider them to be equivalent to the value 1 and 0 respectively.
+
+if True:
+    print('Yes, it is true')
+
+==
+(findstring)
+String
+
+name = 'john'
+a = 'h' in name
+
+if name.find('oh') != -1:
+    print('name contains the substring "oh"')
+
+--
+(findsubstring)
+To return a substring from a string, search for "find sequence",
+this is also what people did online.
+
+Determine whether a string contains a substring:
+substr in str # Returns True if str contains substr, otherwise false.
+
+--
+(findsplit)
+Split a string
+
+split() method returns a list of strings after breaking the given string by the specified separator.
+
+# Splits at space
+text = 'geeks for geeks'
+text.split() # Returns: ['geeks', 'for', 'geeks']
+ 
+# Splits at ',' 
+word = 'geeks, for, geeks'
+word.split(', ') # Returns: ['geeks', 'for', 'geeks']
+
+--
+(findstrip)
+(findtrim)
+Strip a string (remove charaters at beginning and end)
+
+# str.strip([chars]): 相當於Java中的trim(), returns a copy of the string in which all chars have been stripped(即removed) from the beginning and the end of the string (default whitespace characters).
+
+str = "0000000this is string example....wow!!!0000000";
+str.strip('0') # Returns: "this is string example....wow!!!"
+
+--
+(findprefix)
+Whether a string start with a prefix
+
+The method startswith() checks whether string starts with str
+
+str = "this is string example"
+str.startswith('this') # Returns True
+
+--
+(findjoinlisttostring)
+Join list to string
+
+delimiter = '_*_'
+mylist = ['Brazil', 'Russia', 'India', 'China']
+delimiter.join(mylist) # Returns 'Brazil_*_Russia_*_India_*_China'
+
+--
+Single Quotes:
+You can specify strings using single quotes such as 'Quote me on this'.
+
+Double Quotes:
+Strings in double quotes work exactly the same way as strings in single quotes. An example
+is "What's your name?"
+
+Triple Quotes:
+You can specify multi-line strings using triple quotes - (""" or '''). You can use single quotes
+and double quotes freely within the triple quotes. An example is:
+'''This is a multi-line string. This is the first line.
+This is the second line.
+"What's your name?," I asked.
+He said "Bond, James Bond."
+'''
+
+--
+Reverse a string: nameStr[::-1]
+
+--
+# The format function does not only applies to print, but applies to all strings:
+
+name = "Tao"
+s = "My name is {}".format(name) 
+
+--
+(findescape)
+Escape Sequences:
+
+You specify the single quote as \'
+Now, you can specify the string as 'What\'s your name?'
+
+What if you wanted to specify a two-line string? One way is to use a triple-quoted string as shown previously or you can use an escape sequence for the newline character - \n to indicate the start of a new line.
+
+One thing to note is that in a string, a single backslash at the end of the line indicates that the string is continued in the next line, but no newline is added. For example:
+"This is the first sentence.\
+This is the second sentence."
+is equivalent to "This is the first sentence. This is the second sentence.".
+
+--
+Raw Strings
+If you need to specify some strings where no special processing such as escape sequences are handled, then what you need is to specify a raw string by prefixing r or R to the string. An example is r"Newlines are indicated by \n".
+
+Always use raw strings when dealing with regular expressions. Otherwise, a lot of backwhacking may be required. For example, backreferences can be referred to as '\\1' or r'\1'.
+
+--
+Strings Are Immutable
+This means that once you have created a string, you cannot change it.
+
+--
+String Literal Concatenation
+If you place two string literals side by side, they are automatically concatenated by Python.
+For example, 'What\'s ' 'your name?' is automatically converted in to "What's your name?".
+
+--
+There is no separate char data type in Python. There is no real need for it and I am sure you won't miss it.
+
+--
+The format Method
+
+Sometimes we may want to construct strings from other information. This is where the format() method is useful. The format method can be called to substitute those specifications with corresponding arguments to the format method.
+
+age = 25
+name = 'Swaroop'
+print('{0} is {1} years old'.format(name, age)) # Output: Swaroop is 25 years old
+print('Why is {0} playing with that python?'.format(name)) # Output: Why is Swaroop playing with that python?
+
+Notice that we could achieved the same using string concatenation: name + ' is ' + str(age) + ' years old' but notice how much uglier and error-prone this is.
+
+More examples of format method:
+
+>>> '{0:.3}'.format(1/3) # decimal (.) precision of 3 for float
+'0.333'
+
+>>> '{0:_^11}'.format('hello') # fill with underscores (_) with the text centered (^) to 11 width
+'___hello___'
+
+>>> '{name} wrote {book}'.format(name='Swaroop', book='A Byte of Python') # keyword-based
+'Swaroop wrote A Byte of Python'
+
+==
+(findoperators)
+Operators
+
+Evaluation order:
+Remember (same as Java and C++):
+->||
+
+There are no ++ and -- operators in Python.
+x++ can be written as x += 1 and x-- can be written as x -= 1 <- tao: so there are += and -= operators in Python.
+
+Shortcut:
+a *= 3
+is equivalent as
+a = a * 3
+
+Power:
+3 ** 4 gives 3 * 3 * 3 * 3
+
+Divide:
+4 / 3 gives 1.3333333333333333, not 1!
+
+Floor Division:
+4 // 3 gives 1
+
+Modulus:
+5 % 2 gives 1
+
+(findand)
+(findor)
+(findnot)
+Bitwise AND: &
+Bit-wise OR: |
+
+Boolean AND: and
+Boolean OR:  or 
+Boolean NOT: not
+
+Less Than: <
+Less Than or Equal To: <=
+
+Equal To: ==
+x = 'str'; 
+y = 'str'; 
+x == y returns True.
+
+Not Equal To: !=
+
+Right Shift: >>
+11 >> 1 gives 5. 11 is represented in bits by 1011 which when right shifted by 1 bit gives 101 which is the decimal 5.
+
+Left Shift: <<
+
+==
+(findprint)
+print
+
+age = 25
+age *= 2
+name = 'John'
+print(age)
+print('{0} is speaking'.format(name))
+print('{0} is {1} years old'.format(name, age))
+print('{name} is {age} years old'.format(name = 'Kevin', age = 40))
+print('Age is', age) # Output: Age is 25, note a space is added between "Age is" and "25".
+
+The print function prints a line each time.
+
+# In Jupyter Notebook, it is:
+x # Can also print
+print x
+print "parent =", parent # Displays: parent = 10
+
+By deafult, the print() function prints the text as well as an automatic newline to the screen. Tao: to override it, use this:
+print(line, end = 'a')
+this makes the newline character replaced by 'a'.
+
+==
+(findreadfrominput)
+Read from input in terminal
+
+# something = input('Enter text: ') //Prints "Enter text: " to the screen and waits for input from the user.
+# Enter text: sir // sir是用户從鍵盤輸入的, 然後something就等於sir了
+
+==
+(findreadfromfile)
+Read from file 
+
+file = open('poem.txt') # if no mode is specified, 'r'ead mode is assumed by default
+
+while True:
+    line = file.readline()
+    if len(line) == 0: # Zero length indicates EOF
+        break
+    print(line, end = '') # Suppress the newline at end of each output line, see more below.
+file.close() # close the file
+
+By deafult, the print() function prints the text as well as an automatic newline to the screen. We are suppressing the newline by specifying end='' because the line that is read from the file already ends with a newline character.
+
+==
+(findwritetofile)
+Write to file
+
+Write to file:
+
+f = open('poem.txt', 'w') # w: write mode. r: read mode. a: append mode.
+f.write('helo') # write text to file
+f.close() # close the file
+
+==
+(findreadfromwebpage)
+Read from webpage:
+
+link = "https://stackoverflow.com/questions/15138614/how-can-i-read-the-contents-of-an-url-with-python"
+f = urllib.urlopen(link)
+myfile = f.read()
+print myfile
+
+==
+(findwhile)
+(findif)
+(findcast)
+(findbreak)
+(findcontinue)
+(findtrue)
+
+while, if, cast, break, continue, True
+
+number = 1
+running = True
+
+while running:
+    #guess = int(input("Input a number: ")) //由此可知, int(str)可以將 string類型的str 轉化為int
+    guess = 1
+
+    if guess == number:
+        print("That's right.")
+        running = False
+    elif guess > number:
+        print('Too big.')
+        break
+    else:
+        print('Too small.')
+        continue
+else:
+    print('The while loop is over.') // A while statement can have an optional else clause. The else block is executed when the while loop condition becomes False
+
+There is no switch statement in Python.
+
+The continue statement is used to tell Python to skip the rest of the statements in the current loop block and to continue to the next iteration of the loop.
+
+The break statement is used to break out of a loop statement i.e. stop the execution of a looping statement, even if the loop condition has not become False or the sequence of items has been completely iterated over.
+
+An important note is that if you break out of a for or while loop, any corresponding loop else block is not executed.
+
+==
+(findfor)
+(findrange)
+for, range
+
+for i in range(1, 5): # range(1, 5)是一個sequence: [1, 2, 3, 4]. 它包括1, 但不包括5! range(1,5,2) = [1,3].
+    print(i)
+
+Remember that the for..in loop works for any sequence. Here, we have a list of numbers generated by the built-in range function, but in general we can use any kind of sequence of any kind of objects!
+
+--
+fruits = ['banana', 'apple',  'mango']
+
+for fruit in fruits:        
+   print fruit
+
+==
+(findfunction)
+function
+
+def sayHello():
+    print('Hello World!')
+
+sayHello() # Call the function
+
+def fahrenheit(value):
+    return (value * 9 / 5) + 32
+
+Tao: from above and below, Python also uses naming conventions like sayHello (Java style), rather than say_hello (C++ style).
+
+--
+(findparameter)
+Function parameters:
+
+Note the terminology used - the names given in the function definition are called parameters whereas the values you supply in the function call are called arguments.
+
+def printMax(a, b):
+    if a > b:
+        print(a, 'is maximum')
+    elif a == b:
+        print(a, 'is equal to', b)
+    else:
+        print(b, 'is maximum')
+
+printMax(3, 4)
+
+x = 5
+y = 7
+printMax(x, y)
+
+--
+(findreturn)
+The return Statement
+
+def maximum(x, y):
+    if x > y:
+        return x
+    else:
+        return y
+
+maximum(2, 3) //Returns 3
+
+Note that a return statement without a value is equivalent to return None. None is a special type in Python that represents nothingness. For example, it is used to indicate that a variable has no value if it has a value of None.
+
+Every function implicitly contains a return None statement at the end unless you have written your own return statement. 
+
+--
+(findpass)
+Pass statement
+
+def someFunction():
+    pass
+
+The pass statement is used in Python to indicate an empty block of statements.
+
+--
+(finddocstring)
+DocStrings
+
+Python has a nifty feature called documentation strings, usually referred to by its shorter name docstrings. DocStrings are an important tool that you should make use of since it helps to document the program better and makes it easier to understand.
+
+A string on the first logical line of a function is the docstring for that function. Note that DocStrings also apply to modules and classes.
+
+The convention followed for a docstring is a multi-line string where the first line starts with a capital letter and ends with a dot. Then the second line is blank followed by any detailed explanation starting from the third line. You are strongly advised to follow this convention for all your docstrings for all your non-trivial functions.
+
+We can access the docstring of the printMax function using the __doc__ (notice the double underscores) attribute (name belonging to) of the function.
+
+If you have used help() in Python, then you have already seen the usage of docstrings! What it does is just fetch the __doc__ attribute of that function and displays it in a neat manner for you. You can try it out on the function above - just include help(printMax) in your program. Remember to press the q key to exit help.
+
+def printMax(x, y):
+    '''Prints the maximum of two numbers.
+
+    The two values must be integers.'''
+    x = int(x) # convert to integers, if possible
+    y = int(y)
+
+    if x > y:
+        print(x, 'is maximum')
+    else:
+        print(y, 'is maximum')
+
+printMax(3, 5) # Output: 5 is maximum
+
+print(printMax.__doc__)
+# Output:
+Prints the maximum of two numbers.
+
+    The two values must be integers.
+
+We can use docstrings for classes as well as methods. We can access the class docstring at runtime using Robot.__doc__ and the method docstring as Robot.sayHi.__doc__
+
+--
+(findlocal)
+Local variables
+
+When you declare variables inside a function definition, they are not related in any way to other variables with the same names used outside the function i.e. variable names are local to the function. This is called the scope of the variable. All variables have the scope of the block they are declared in starting from the point of definition of the name.
+
+x = 50
+
+def func(x):
+    print('x is', x) # Output: x is 50
+    x = 2
+    print('Changed local x to', x) # Output: Changed local x to 2
+
+func(x)
+print('x is still', x) # Output: x is still 50
+
+--
+(findglobal)
+Global statement
+
+If you want to assign a value to "a name defined at the top level of the program" (i.e. not inside any kind of scope such as functions or classes), then you have to tell Python that the name is not local, but it is global. We do this using the global statement. It is impossible to assign a value to a variable defined outside a function without the global statement.
+
+x = 50
+
+def func():
+    global x
+    print('x is', x) # Output: x is 50
+    x = 2
+    print('Changed global x to', x) # Output: Changed global x to 2
+
+func()
+print('Value of x is', x) # Output: Value of x is 2
+
+--
+(findnonlocal)
+Nonlocal statement
+
+We have seen how to access variables in the local and global scope above. There is another kind of scope called "nonlocal" scope which is in-between these two types of scopes. Nonlocal scopes are observed when you define functions inside functions. Since everything in Python is just executable code, you can define functions anywhere.
+
+def func_outer():
+    x = 2
+    print('x is', x) # Output: x is 2
+
+    def func_inner():
+        nonlocal x
+        x = 5
+
+    func_inner()
+
+    print('Changed local x to', x) # Output: Changed local x to 5
+
+func_outer()
+
+--
+(finddefaultargument)
+Default Argument Values
+
+For some functions, you may want to make some of its parameters as optional and use default values if the user does not want to provide values for such parameters. This is done with the help of default argument values.
+
+Only those parameters which are at the end of the parameter list can be given default argument values. This is because the values are assigned to the parameters by position.
+
+def say(message, times = 1):
+    print(message * times)
+
+say('Hello') # Output: Hello
+say('World', 5) # Output: WorldWorldWorldWorldWorld
+
+--
+(findkeywordargument)
+Keyword Arguments
+
+If you have some functions with many parameters and you want to specify only some of them, then you can give values for such parameters by naming them - this is called keyword arguments - we use the name (keyword) instead of the position (which we have been using all along) to specify the arguments to the function.
+
+We can give values to only those parameters which we want, provided that the other parameters have default argument values.
+
+def func(a, b=5, c=10):
+    print('a is', a, 'and b is', b, 'and c is', c)
+
+func(3, 7) # Output: a is 3 and b is 7 and c is 10
+func(25, c=24) # Output: a is 25 and b is 5 and c is 24
+func(c=50, a=100) # Output: a is 100 and b is 5 and c is 50
+
+--
+(findvararg)
+VarArgs parameters
+
+Sometimes you might want to define a function that can take any number of parameters, this can be achieved by using the stars:
+
+def total(initial=5, *numbers, **keywords):
+    count = initial
+    for number in numbers:
+        count += number
+    for key in keywords:
+        count += keywords[key]
+    return count
+
+total(10, 1, 2, 3, vegetables=50, fruits=100)
+      --  -------  -------------------------
+  initial numbers              keywords
+          (numbers is a list)  (keywords is a dictionary)
+
+
+When we declare a starred parameter such as *param, then all the positional arguments from that point till the end are collected as a list called 'param'.
+
+Similarly, when we declare a double-starred parameter such as **param, then all the keyword arguments from that point till the end are collected as a dictionary called 'param'.
+
+--
+(findkeywordonly)
+Keyword- only Parameters
+
+If we want to specify certain keyword parameters to be available as keyword-only and not as positional arguments, they can be declared after a starred parameter:
+
+def total(initial=5, *numbers, vegetables):
+    count = initial
+    for number in numbers:
+        count += number
+    count += vegetables
+    return count
+
+total(10, 1, 2, 3, vegetables=50)
+total(10, 1, 2, 3) # Raises error because we have not supplied a default argument value for 'vegetables'
+
+Declaring parameters after a starred parameter results in keyword-only arguments. If these arguments are not supplied a default value (Tao: in the function definition), then calls to the function will raise an error if the keyword argument is not supplied, as seen above.
+
+If you want to have keyword-only arguments but have no need for a starred parameter, then simply use an empty star without using any name such as def total(initial=5, *, vegetables).
+
+==
+(findmodule)
+Modules
+
+Tao: modules in Python is like packages in Java and Scala.
+
+What if you wanted to reuse a number of functions in other programs that you write? The answer is modules.
+
+There are various methods of writing modules, but the simplest way is to create a file with a .py extension that contains functions and variables.
+
+Another method is to write the modules in the native language in which the Python interpreter itself was written. For example, you can write modules in the C programming language and when compiled, they can be used from your Python code when using the standard Python interpreter.
+
+A module can be imported by another program to make use of its functionality. This is how we can use the Python standard library as well. First, we will see how to use the standard library modules.
+
+Example:
+
+#!/usr/bin/python
+# Filename: using_sys.py
+
+import sys
+
+print('The command line arguments are:')
+for i in sys.argv:
+    print(i)
+
+print('\n\nThe PYTHONPATH is', sys.path, '\n')
+
+$ python using_sys.py we are arguments
+
+The command line arguments are:
+using_sys.py
+we
+are
+arguments
+The PYTHONPATH is ['', 'C:\\Windows\\system32\\python30.zip',
+'C:\\Python30\\DLLs', 'C:\\Python30\\lib',
+'C:\\Python30\\lib\\plat-win', 'C:\\Python30',
+'C:\\Python30\\lib\\site-packages']
+
+When Python executes the import sys statement, it looks for the sys module. In this case, it is one of the built-in modules, and hence Python knows where to find it.
+
+If it was not a compiled module i.e. a module written in Python, then the Python interpreter will search for it in the directories listed in its sys.path variable. If the module is found, then the statements in the body of that module is run and then the module is made available for you to use. Note that the initialization is done only the first time that we import a module.
+
+The sys.argv variable is a list of strings. Python stores the command line arguments in the sys.argv variable for us to use.
+
+Remember, the name of the script running is always the first argument in the sys.argv list. Notice that Python starts counting from 0 and not 1.
+
+The sys.path contains the list of directory names where modules are imported from. Observe that the first string in sys.path is empty - this empty string indicates that the current directory is also part of the sys.path which is same as the PYTHONPATH environment variable. This means that you can directly import modules located in the current directory. Otherwise, you will have to place your module in one of the directories listed in sys.path. 
+
+--
+from . . . import . . .
+
+Tao: in the above, even you imported sys, you still need to type sys.argv rather than only argv each time.
+
+If you want to directly import the argv variable into your program (to avoid typing the
+sys. everytime for it), then you can use the from sys import argv statement. If you want
+to import all the names used in the sys module, then you can use the from sys import *
+statement. This works for any module. In general, you should avoid using this statement and use the import statement instead since your program will avoid name clashes and will be more readable.
+
+--
+Making Your Own Modules
+
+Creating your own modules is easy, you've been doing it all along! This is because every
+Python program is also a module. You just have to make sure it has a .py extension.
+
+Example:
+
+#!/usr/bin/python
+# Filename: mymodule.py
+
+def sayhi():
+    print('Hi, this is mymodule speaking.')
+
+__version__ = '0.1'
+
+# End of mymodule.py
+
+The above was a sample module. As you can see, there is nothing particularly special about
+compared to our usual Python program.
+
+Remember that the module should be placed in the same directory as the program that we
+import it in, or the module should be in one of the directories listed in sys.path.
+
+#!/usr/bin/python
+# Filename: mymodule_demo.py
+
+import mymodule
+mymodule.sayhi()
+
+print ('Version', mymodule.__version__)
+
+$ python mymodule_demo.py
+Hi, this is mymodule speaking.
+Version 0.1
+
+Here is a version utilising the from..import syntax:
+#!/usr/bin/python
+# Filename: mymodule_demo2.py
+
+from mymodule import sayhi, __version__
+
+sayhi()
+print('Version', __version__)
+
+You could also use:
+from mymodule import *
+This will import all public names such as sayhi but would not import __version__
+because it starts with double underscores.
+
+--
+Byte- compiled .pyc files
+
+Importing a module is a relatively costly affair, so Python does some tricks to make it faster. One way is to create byte-compiled files with the extension .pyc which is an intermediate form that Python transforms the program into. This .pyc file is useful when you import the module the next time from a different program - it will be much faster since a portion of the processing required in importing a module is already done. Also, these byte-compiled files are platform-independent.
+
+--
+_ _ name_ _
+
+Every module has a name. This is handy in the particular situation of figuring out if the module is being run standalone or being imported. As mentioned previously, when a module is imported for the first time, the code in that module is executed. We can use this concept to alter the behavior of the module if the program was used by itself and not when it was imported from another module. This can be achieved using the __name__ attribute of the module.
+
+Example:
+#!/usr/bin/python
+# Filename: using_name.py
+if __name__ == '__main__':
+    print('This program is being run by itself')
+else:
+    print('I am being imported from another module')
+
+$ python using_name.py
+This program is being run by itself
+
+$ python
+>>> import using_name
+I am being imported from another module
+
+--
+dir
+
+When you supply a module name to the dir() function, it returns the list of the names
+defined in that module. When no argument is applied to it, it returns the list of names
+defined in the current module.
+
+==
+Packages
+
+What if you wanted to organize modules? That's where packages come into the
+picture.
+
+Packages are just folders of modules with a special __init__.py file that indicates to
+Python that this folder is special because it contains Python modules.
+
+==
+Data Structures
+
+There are four built-in data structures in Python - list, tuple, dictionary and set.
+
+tuple用(), list用[], dictionary用{}, 它們依次是 小中大 括號
+
+Python uses 0-based indexing
+R uses 1-based indexing
+
+==
+(findtuple)
+tuple
+
+Tao: tuple is like array in C++
+
+tuples are immutable.
+
+The pair of parentheses in tuples is optional.
+
+zoo = ('monkey', 'tiger', 'cat')
+a = len(zoo)
+b = zoo[0]
+print(zoo)
+
+newZoo = ('pig', 'dog', zoo) # newZoo = ('monkey', 'camel', ('python', 'elephant', 'penguin'))
+newZoo[2] # Returns ('python', 'elephant', 'penguin')
+newZoo[2][2] # Returns 'penguin'
+len(newZoo)
+len(newZoo[2])
+
+emptyTuple = ()
+singleton = (2, ) # A tuple containing the item 2 (only one item). Must define like this. (2) means a pair of parentheses surrounding the object in an expression (tao: like an arithmetic expression (2 + 1)).
+
+# passing tuples around:
+def func():
+    return (3, 'helo')
+
+num, s = func()
+
+Can define a tuple within a tuple, or a tuple within a list, or a list within a tuple.
+
+==
+(findlist)
+list
+
+Tao: list is like vector in C++
+
+Lists are mutatble. 
+You can add, remove or search for items in the list. we say that a list is a mutable data type
+
+The list of items should be enclosed in square brackets.
+
+odd = [1, 3, 5]
+odd.append(7)
+print(odd) # Output: [1, 3, 5, 7]
+
+shoplist = ['apple', 'mango', 'orange']
+a = shoplist[0]
+b = len(shoplist)
+
+shoplist.append('banana')
+shoplist.sort()
+print(shoplist)
+
+for item in shoplist:
+    print(item, end=' ') #加end=' '是因為print()函數會自動在 print出的東西的 末尾加一個newline character, end=' '的作用就是將這個newline character換成空格.
+
+del shoplist[0] #將shoplist的第0個元素 從shoplist中 刪掉
+
+# using lists as stacks (from online):
+stack = [3, 4, 6]
+stack.append(6) #相當於push
+stack.pop()
+
+# using lists as queues (from online):
+from collections import deque
+queue = deque(["Eric", "John", "Michael"])
+queue.append("Terry") #相當於offer
+queue.popleft() #相當於poll
+
+list1 = [3, 4, 6]
+a = sum(list1)
+b = max(list1)
+c = min(list1)
+
+# empty list
+my_list = []
+
+==
+(finddictionary)
+dictionary
+
+Tao: dictionary is like map in C++
+
+ages = {'John' : 30, 'Mary' : 40}
+a = ages['John']
+b = len(ages)
+del ages['John']
+ages['Mary'] = 20 # update
+ages['Kate'] = 40 # add an item
+
+# Traverse a dictionary:
+for name, age in ages.items(): #不是 for name : age ...
+    print('{0} is {1} years old'.format(name, age))
+
+# Existence of key in dictionary:
+if 'Mary' in ages: # if ages contains key 'Mary'
+    print('Has Mary.')
+
+Remember that key-value pairs in a dictionary are not ordered in any manner. If you want a particular order, then you will have to sort them yourself before using it.
+
+==
+list and dictionary as function parameter
+
+def total(count, *numbers, **keywords):
+    for i in numbers:
+        count += i
+    for key in keywords:
+        count += keywords[key]
+    return count
+
+print(total(0, 1, 2, 3, John=4, Jack=5))
+
+==
+(findset)
+set
+
+bric = set(['brazil', 'russia', 'india']) # A set is initialized from a list
+'india' in bric # 相當於Java中的bri.contains('india')
+bric.add('china')
+bric.remove('china')
+bric.issuperset(bri) # bri is also a set
+bri & bric # OR bri.intersection(bric)
+bricNew = bric.copy()
+
+Sets are unordered.
+
+==
+(findsequence)
+sequences 
+
+Lists, tuples and strings are examples of sequences. The major features of sequences is that they have membership tests (i.e. the in and not in expressions) and indexing operations. 
+
+Sequences also have a slicing operation which allows us to retrieve a slice of the sequence i.e. a part of the sequence.
+
+name = 'jan'
+name[-1] # Returns 'n'
+name[4] # 報錯: IndexError: string index out of range
+name[1:3]  #包括name[1], 但不包括name[3]
+name[2:]
+name[:] # a copy of the whole sequence
+name[::2] # 2 is the step
+name[:-1] # Returns a slice of the sequence which excludes the last item of the sequence but contains everything else.
+name[::-1] # Reverse the sequence
+
+==
+(findclass)
+class
+
+Tao: about self:
+1. In a class, all member methods should have a self parameter: def funcName(self, x, y). When calling this method, no need to insantiate this self parameter: funcName(2, 3).
+2. In a class, when using its own member variables or methods, should add self: self.variableName, self.func().
+
+Tao: in a class, no need to define its member variables. Any variables can jump out suddenly like the self.name below.
+
+# Example class 1:
+
+class Person:
+    # 這是constructor. self相當於Java中的this:
+    def __init__(self, name): 
+        self.name = name 
+    
+    def sayHi(self):
+        print('Hi', self.name) 
+    
+    #def sayHello(): //Avadoles!!! 報錯, 因為所有class method必加self參數. 實踐表明, static methd不用加self參數
+    #    print('Hello')
+
+p = Person('John')
+p.sayHi()
+
+# Example class 2:
+
+class Animal():
+    pass # An empty block
+
+anim = Animal()
+
+Self: although, you can give any name for this parameter, it is strongly recommended that you
+use the name self.
+
+All class memembers (including the data memebers) are public. If you use data members with names using the double underscore prefix such as __privatevar, Python uses name-mangling to effectively make it a private variable.
+
+fields vs variables, methods vs functions:
+
+Variables that belong to an object or class are referred to as fields. Functions that belong to a class: such functions are called methods of the class. This terminology is important because it helps us to differentiate between functions and variables which are independent and those which belong to a class or object.
+
+Tao: Functions can be out of class in Python.
+
+--
+Class And Object Variables
+
+There are two types of fields - class variables and object variables:
+
+Class variables are shared - they can be accessed by all instances of that class. There is only one copy of the class variable and when any one object makes a change to a class variable, that change will be seen by all the other instances. Tao: this is like static variable in Java.
+
+Object variables are owned by each individual object/instance of the class. In this case, each object has its own copy of the field i.e. they are not shared and are not related in any way to the field by the same name in a different instance.
+
+Example:
+
+class Robot:
+    # A class variable, counting the number of robots
+    # Tao: therefore, do not explicitly define variables in a class unless you want to make it a class variable
+    population = 0
+
+    def __init__(self, name):
+        self.name = name # Tao: self.name is an object variable
+        print('Initializing {0}'.format(self.name))
+
+        # When this person is created, the robot adds to the population
+        Robot.population += 1
+
+    def __del__(self):
+        print('{0} is being destroyed!'.format(self.name))
+
+        Robot.population -= 1
+
+        if Robot.population == 0:
+            print('{0} was the last one.'.format(self.name))
+        else:
+            print('There are still {0:d} robots working.'.format(Robot.population))
+
+    def howMany():
+        print('We have {0:d} robots.'.format(Robot.population))
+
+    howMany = staticmethod(howMany)
+
+droid1 = Robot('R2-D2') #Output: Initializing R2-D2)
+Robot.howMany() #Output: We have 1 robots.
+
+droid2 = Robot('C-3PO') #Output: Initializing C-3PO)
+Robot.howMany() #Output: We have 2 robots.
+
+del droid1 #Output: R2-D2 is being destroyed! (newline) There are still 1 robots working.
+del droid2 #Output: C-3PO is being destroyed! (newline) C-3PO was the last one.
+Robot.howMany() #Output: We have 0 robots.
+
+Here, population belongs to the Robot class and hence is a class variable. The name variable belongs to the object (it is assigned using self) and hence is an object variable.
+
+Thus, we refer to the population class variable as Robot.population and not as self.population. We refer to the object variable name using self.name notation in the methods of that object.
+
+The howMany is actually a method that belongs to the class and not to the object. This means we can define it as either a classmethod or a staticmethod depending on whether we need to know which class we are part of. Since we don't need such information, we will go for staticmethod.
+
+We could have also achieved the same using decorators. Decorators can be imagined to be a shortcut to calling an explicit statement:
+
+@staticmethod
+def howMany():
+    print('We have {0:d} robots.'.format(Robot.population))
+
+(finddestructor)
+The __del__ method (see example above) is run when the object is no longer in use and there is no guarantee when that method will be run. If you want to explicitly see it in action, we have to use the del statement which is what we have done here.
+
+==
+stopa
+
+Inheritance
+
+       SchoolMember 
+            |
+     ------------------        
+    |                  |
+ Teacher             Student
+
+class SchoolMember:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def tell(self):
+        print('Name:"{0}" Age:"{1}"'.format(self.name, self.age), end=" ")
+
+class Teacher(SchoolMember):
+    def __init__(self, name, age, salary):
+        SchoolMember.__init__(self, name, age)
+        self.salary = salary
+
+    def tell(self):
+        SchoolMember.tell(self)
+        print('Salary: "{0:d}"'.format(self.salary))
+
+class Student(SchoolMember):
+    def __init__(self, name, age, marks):
+        SchoolMember.__init__(self, name, age)
+        self.marks = marks
+
+    def tell(self):
+        SchoolMember.tell(self)
+        print('Marks: "{0:d}"'.format(self.marks))
+
+t = Teacher('Mrs. Shrividya', 40, 30000)
+s = Student('Swaroop', 25, 75)
+
+members = [t, s]
+
+for member in members:
+    member.tell() # works for both Teachers and Students
+
+# Output:
+Name:"Mrs. Shrividya" Age:"40" Salary: "30000"
+Name:"Swaroop" Age:"25" Marks: "75"
+
+Inherit from multiply classes: class Teacher(SchoolMember, Buyer, UncleFucker)
+
+This is very important to remember - Python does not automatically call the constructor of the base class, you have to explicitly call it yourself.
+
+Best illurstration of polymorphism:
+You can refer to a Teacher or Student object as a SchoolMember object which could be useful in some situations such as counting of the number of school members. This is called polymorphism where a sub-type can be substituted in any situation where a parent type is expected i.e. the object can be treated as an instance of the parent class.
+
+==
+References
+
+When you create an object and assign it to a variable, the variable only refers to the object and does not represent the object itself. Tao: same as Java.
+
+When you create an object and assign it to a variable, the variable only refers to the object and does not represent the object itself! That is, the variable name points to that part of your computer's memory where the object is stored. This is called as binding of the name to the object.
+
+Remember that an assignment statement for lists does not create a copy. You have to use slicing operation to make a copy of the sequence.
+
+The time.strftime() function takes a specification such as the one we have used in the
+above program. The %Y specification will be replaced by the year without the century. The
+%m specification will be replaced by the month as a decimal number between 01 and 12 and
+so on.
+
+==
+Exceptions
+
+We put all the statements that might raise exceptions/errors inside the try block and then put handlers for the appropriate errors/exceptions in the except clause/block. The except clause can handle a single specified error or exception, or a parenthesized list of errors/exceptions. If no names of errors or exceptions are supplied, it will handle all errors and exceptions.
+
+Note that there has to be at least one except clause associated with every try clause. Otherwise, what's the point of having a try block?
+
+If any error or exception is not handled, then the default Python handler is called which just
+stops the execution of the program and prints an error message.
+
+You can also have an else clause associated with a try..except block. The else clause is executed if no exception occurs.
+
+try:
+    text = input('Enter something --> ')
+except EOFError:
+    print('Why did you do an EOF on me?')
+except KeyboardInterrupt:
+    print('You cancelled the operation.')
+else:
+    print('You entered {0}'.format(text))
+
+--
+Raising Exceptions
+
+You can raise exceptions using the raise statement by providing the name of the error/exception and the exception object that is to be thrown.
+
+The error or exception that you can arise should be class which directly or indirectly must be a derived class of the Exception class.
+
+
+# A user-defined exception class.'''
+class ShortInputException(Exception):
+    def __init__(self, length, atleast):
+        Exception.__init__(self)
+        self.length = length
+        self.atleast = atleast
+
+    try:
+        text = input('Enter something --> ')
+        if len(text) < 3:
+            raise ShortInputException(len(text), 3)
+        # Other work can continue as usual here
+
+    except EOFError:
+        print('Why did you do an EOF on me?')
+
+    except ShortInputException as ex:
+        print('ShortInputException: The input was {0} long, expected at least {1}'.format(ex.length, ex.atleast))
+
+    else:
+        print('No exception was raised.')
+
+--
+Finally
+
+Suppose you are reading a file in your program. How do you ensure that the file object is closed properly whether or not an exception was raised? This can be done using the finally block.
+
+In the following, observe that the KeyboardInterrupt exception is thrown and the program quits. However, before the program exits, the finally clause is executed and the file object is always closed.
+
+import time
+
+try:
+    f = open('poem.txt')
+    while True: # our usual file-reading idiom
+        line = f.readline()
+        if len(line) == 0:
+            break
+        print(line, end='')
+        time.sleep(2) # To make sure it runs for a while
+
+except KeyboardInterrupt:
+    print('!! You cancelled the reading from the file.')
+
+finally:
+    f.close()
+    print('(Cleaning up: Closed the file)')
+
+--
+The with statement
+
+Acquiring a resource in the try block and subsequently releasing the resource in the finally block is a common pattern. Hence, there is also a with statement that enables this to be done in a clean manner:
+
+with open("poem.txt") as f:
+    for line in f:
+        print(line, end='')
+
+The output should be same as the previous example (the example of finally block). The difference here is that we are using the open function with the with statement - we leave the closing of the file to be done automatically by with open.
+
+==
+Standard Library
+
+sys module
+
+The sys module contains system-specific functionality. We have already seen that the sys.argv list contains the command-line arguments.
+
+Suppose we want to check the version of the Python command being used. The first entry is the major version.
+
+>>> import sys
+>>> sys.version_info
+(3, 0, 0, 'beta', 2)
+>>> sys.version_info[0] >= 3
+True
+
+Ensure the program runs only under Python 3.0. We use another module from the standard library called warnings that is used to display warnings to the end-user:
+
+import sys, warnings
+
+if sys.version_info[0] < 3:
+    warnings.warn("Need Python 3.0 for this program to run",
+        RuntimeWarning)
+else:
+    print('Proceed as normal')
+
+Output:
+
+$ python2.5 versioncheck.py
+versioncheck.py:6: RuntimeWarning: Need Python 3.0 for this program to run RuntimeWarning)
+
+$ python3 versioncheck.py
+Proceed as normal
+
+--
+logging module
+(Tao: not important, can skip)
+
+What if you wanted to have some debugging messages or important messages to be stored somewhere so that you can check whether your program has been running as you would expect it? How do you "store somewhere" these messages? This can be achieved using the logging module.
+
+import os, platform, logging
+
+if platform.platform().startswith('Windows'):
+    logging_file = os.path.join(os.getenv('HOMEDRIVE'), os.getenv('HOMEPATH'), 'test.log')
+else:
+    logging_file = os.path.join(os.getenv('HOME'), 'test.log')
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s : %(levelname)s : %(message)s',
+    filename = logging_file,
+    filemode = 'w',
+)
+
+logging.debug("Start of the program")
+logging.info("Doing something")
+logging.warning("Dying now")
+
+Output:
+$python use_logging.py
+Logging to C:\Users\swaroop\test.log
+
+If we check the contents of test.log, it will look something like this:
+2008-09-03 13:18:16,233 : DEBUG : Start of the program
+2008-09-03 13:18:16,233 : INFO : Doing something
+2008-09-03 13:18:16,233 : WARNING : Dying now
+
+We use three modules from the standard library - the os module for interacting with the operating system, the platform module for information about the platform i.e. the operating system and the logging module to log information.
+
+We use the os.path.join() function to put these three parts of the location together. The reason to use a special function rather than just adding the strings together is because this function will ensure the full location matches the format expected by the operating system.
+
+Once the program has run, we can check this file and we will know what happened in the program, even though no information was displayed to the user running the program.
+
+--
+urllib and json modules
+(Tao: not important, can skip)
+
+How much fun would it be if we could write our own program that will get search results from the web? Let us explore that now.
+
+This can be achieved using a few modules. First is the urllib module that we can use to fetch any webpage from the internet. We will make use of Yahoo! Search to get the search results and luckily they can give us the results in a format called JSON which is easy for us to parse because of the built-in json module in the standard library.
+
+import sys
+
+if sys.version_info[0] != 3:
+    sys.exit('This program needs Python 3.0')
+
+import json
+import urllib, urllib.parse, urllib.request, urllib.response
+
+# Get your own APP ID at http://developer.yahoo.com/wsregapp/
+
+YAHOO_APP_ID =
+'jl22psvV34HELWhdfUJbfDQzlJ2B57KFS_qs4I8D0Wz5U5_yCI1Awv8.lBSfPhwr'
+
+SEARCH_BASE =
+'http://search.yahooapis.com/WebSearchService/V1/webSearch'
+
+class YahooSearchError(Exception):
+    pass
+
+# Taken from http://developer.yahoo.com/python/python-json.html
+def search(query, results=20, start=1, **kwargs):
+    kwargs.update({
+        'appid': YAHOO_APP_ID,
+        'query': query,
+        'results': results,
+        'start': start,
+        'output': 'json'
+})
+
+url = SEARCH_BASE + '?' + urllib.parse.urlencode(kwargs)
+result = json.load(urllib.request.urlopen(url))
+
+if 'Error' in result:
+    raise YahooSearchError(result['Error'])
+return result['ResultSet']
+
+query = input('What do you want to search for? ')
+
+for result in search(query)['Result']:
+    print("{0} : {1}".format(result['Title'], result['Url']))
+
+
+==
+More
+
+Passing tuples around
+
+Ever wished you could return two different values from a function? You can. All you have to do is use a tuple.
+
+>>> def get_error_details():
+... return (2, 'second error details')
+...
+
+>>> errnum, errstr = get_error_details()
+>>> errnum
+2
+
+>>> errstr
+'second error details'
+
+Notice that the usage of a, b = <some expression> interprets the result of the expression as a tuple with two values.
+
+If you want to interpret the results as (a, <everything else>), then you just need to star it just like you would in function parameters:
+
+>>> a, *b = [1, 2, 3, 4]
+>>> a
+1
+>>> b
+[2, 3, 4]
+
+This also means the fastest way to swap two variables in Python is:
+>>> a = 5; b = 8
+>>> a, b = b, a
+>>> a, b
+(8, 5)
+
+--
+Special Methods
+
+There are certain methods such as the __init__ and __del__ methods which have special significance in classes.
+
+Special methods are used to mimic certain behaviors of built-in types. For example, if you want to use the x[key] indexing operation for your class (just like you use it for lists and tuples), then all you have to do is implement the __getitem__() method and your job is done. If you think about it, this is what Python does for the list class itself! Some useful special methods are listed in the following table:
+
+__init__(self, ...): This method is called just before the newly created object is returned for usage.
+
+__del__(self): Called just before the object is destroyed
+
+__str__(self): Called when we use the print function or when str() is used.
+
+__lt__(self, other): Called when the less than operator (<) is used. Similarly, there are special
+methods for all the operators (+, >, etc.)
+
+__getitem__(self, key): Called when x[key] indexing operation is used.
+
+__len__(self): Called when the built-in len() function is used for the sequence object.
+
+--
+Single Statement Blocks
+
+In an if or loop, if the body has only one line, then can put this line in the same line as if or for:
+
+>>> flag = True
+>>> if flag: print 'Yes'
+
+I strongly recommend avoiding this short-cut method, except for error checking.
+
+--
+Lambda Forms
+
+A lambda statement is used to create new function objects and then return them at runtime.
+
+Tao: in the below:
+1. make_repeater returns a function object.
+2. This function object is created by the lambda statement. The s in the lambda s is the parameter of this function object. s * n is the function body.
+3. twice is such a function object, so it can be called as other functions: twice(5).
+
+def make_repeater(n):
+    return lambda s: s * n
+
+twice = make_repeater(2)
+
+print(twice('word')) # Output: wordword
+print(twice(5)) # Output: 10
+
+--
+List Comprehension
+
+List comprehensions are used to derive a new list from an existing list. Suppose you have a list of numbers and you want to get a corresponding list with all the numbers multiplied by 2 only when the number itself is greater than 2. List comprehensions are ideal for such situations.
+
+listone = [2, 3, 4]
+listtwo = [2*i for i in listone if i > 2]
+print(listtwo) # Output: [6, 8]
+
+--
+exec and eval
+
+The exec function is used to execute Python statements which are stored in a string or file, as opposed to written in the program itself. For example, we can generate a string containing Python code at runtime and then execute these statements using the exec statement:
+
+>>> exec('print("Hello World")')
+Hello World
+
+Similarly, the eval function is used to evaluate valid Python expressions which are stored in a string. A simple example is shown below.
+
+>>> eval('2*3')
+6
+
+--
+The assert statement
+
+The assert statement is used to assert that something is true. For example, if you are very sure that you will have at least one element in a list you are using and want to check this, and raise an error if it is not true, then assert statement is ideal in this situation. When the assert statement fails, an AssertionError is raised.
+
+>>> mylist = ['item']
+>>> assert len(mylist) >= 1
+>>> mylist.pop()
+'item'
+>>> mylist
+[]
+>>> assert len(mylist) >= 1
+Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+AssertionError
+
+The assert statement should be used judiciously. Most of the time, it is better to catch exceptions, either handle the problem or display an error message to the user and then quit.
+
+--
+The repr function
+
+The repr function is used to obtain a canonical string representation of the object. The    interesting part is that you will have eval(repr(object)) == object most of the time.
+
+>>> i = []
+>>> i.append('item')
+>>> repr(i)
+"['item']"
+>>> eval(repr(i))
+['item']
+>>> eval(repr(i)) == i
+True
+
+Basically, the repr function is used to obtain a printable representation of the object. You can control what your classes return for the repr function by defining the __repr__ method in your class.
+
+--
+(findsleep)
+sleep
+
+The method sleep() suspends execution for the given number of seconds. The argument may be a floating point number to indicate a more precise sleep time.
+
+import time
+time.sleep(5) # Sleep for 5 seconds.
+
+--
+(findtime)
+Output current local time
+
+import datetime
+time_str = (datetime.datetime.now() - datetime.timedelta(hours = 5)).strftime("%H:%M, %Y-%m-%d") # Minus 5 hours, may not be necessary.
+print('Chicago time: {0}\n'.format(time_str)) # Output: Chicago time: 16:33, 2018-08-01
+
+==
+others:
+
+# Python程序的文件名不用跟class名一樣, 甚至程序裡可以不含class.
+
+# When you create an objet and assign it to a variable, the variable only refers to the object and does not represent the object itself.
+
+# Python is strongly object-oriented in the sense that everything is an object including numbers, strings and functions.
+
+# Python中的函數是可以在class之外的
+
+# swap two variables:
+# a = 5; b = 8
+# a, b = b, a
+
+# Read a list of numbers (in string form) from input and convert them into a list of int (from HackerRank):
+# arr = [int(arr_temp) for arr_temp in input().strip().split(' ')]  # 此句中strip()還可以刪掉輸入末尾的newline, 當然同時也刪空格(from Haddop課).
+# now arr is a list of int
+
+# abs(-45), abs(100.12)
+
+# 實踐表明, Python中連注釋都要正式indent, 否則報錯
+
+==
+The current date and time which we find out using the time.strftime() function. (import time).
+
+Notice the use of os.sep variable (import os) - this gives the directory separator according to your
+operating system i.e. it will be '/' in Linux, Unix, it will be '\\' in Windows and ':' in
+Mac OS. Using os.sep instead of these characters directly will make our program portable
+and work across these systems.
+
+==
+The zip command that we are using has some options and parameters passed. The -q
+option is used to indicate that the zip command should work quietly. The -r option
+specifies that the zip command should work recursively for directories i.e. it should include
+all the subdirectories and files. The two options are combined and specified in a shortcut as
+-qr. The options are followed by the name of the zip archive to create followed by the list of
+files and directories to backup. We convert the source list into a string using the join
+method of strings which we have already seen how to use.
+
+Then, we finally run the command using the os.system function which runs the command
+as if it was run from the system i.e. in the shell - it returns 0 if the command was
+successfully, else it returns an error number.
+
+==
+target = today + os.sep + now + '_' + \ comment.replace(' ', '_') + '.zip'
+
+===
+# Create the subdirectory if it isn't already there
+if not os.path.exists(today): #t oday is a string defined earlier.
+    os.mkdir(today) # make directory
+
+=====================================================================
+(findpandas)
+Pandas
+
+Pandas: This library was created by Wes McKinney at a hedge fund call AQR. It's used at many hedge funds and by many people in the finance industry. One of the key components of Pandas is something called the dataframe.
+
+==
+import pandas as pd
+import numpy as np
+
+==
+Use pandas in my Thinkpad computer:
+
+export PATH=~/anaconda2/bin:$PATH
+source activate homework1
+python file_name.py
+
+==
+(findreadcsv)
+Read csv file to a dataframe:
+
+df = pd.read_csv("data/AAPL.csv")
+
+--
+Only read in selected columns (col1, col2):
+
+dfSPY = pd.read_csv("data.csv", usecols = ['col1', 'col2'])
+
+--
+Read the string 'nan' as not-a-number:
+
+dfSPY = pd.read_csv("data.csv", na_values = ['nan'])
+
+Let's understand that csv 'nan' as string, so we need to tell the read_csv that 'nan' should be interpreted as not a number. Tao: otherwise it will read 'nan' as a string, instead of not-a-number.
+
+--
+Make a column to be the index:
+
+dfSPY = pd.read_csv("data.csv", index_col = "date", parse_dates = True)
+
+We make the date column in the csv file as index. We do this by using the index_col parameter. We also want the dates present in the DataFrame to be converted into date time index objects. This can be done by setting the value for the parse_dates parameter to True.
+
+==
+(finddropnan)
+Drop the rows with NaN:
+
+df2 = df1.dropna()
+df2 = df1.dropna(subset = ["col1"]) # Drop only the rows which have col1 equals NaN.
+
+==
+(findcreatedataframe)
+# Create DataFrame:
+
+# Tao: practice shows that d below is just a normal dictionary. The key is string type, and value is a list.
+
+d = {'col1': [1, 2], 'col2': [3, 4]}
+
+df = pd.DataFrame(data=d)
+
+df
+
+   col1  col2
+0     1     3
+1     2     4
+
+You will also observe there is a column that is not named and has values 0, 1, 2, 3. And this is not from the .csv. These are called index for the data frame, which help you to access rows.
+
+==
+(findhead)
+(findtail)
+head & tail
+
+df.head() # Top 5 rows 
+df.tail() # Last 5 rows 
+
+df.head(5)
+df.tail(3)
+
+==
+(findslice)
+(findselect)
+Slice dataframe
+Select rows and columns
+
+Select rows:
+
+df[10:21] # Data from index 10 to 20, because 21 is not inclusive in the range. This operation is called slicing and it is a very important operation in Python pandas
+
+df.ix[10:21] # Equivalent as df[10:21], just looks more Pythonic and robust.
+
+Select colums:
+df['col1']
+df[['A', 'B', 'C']]: returns a dataframe with columns A, B, C
+
+print df['col1']
+
+--
+Select rows and columns:
+df[1:5, ['A', 'B']] # Selects rows 1 to 4, columns A and B.
+df.ix[1:5, ['A', 'B']] # Equivalent as above
+
+--
+df[df.A > 0]
+
+                   A         B         C         D
+2013-01-01  0.469112 -0.282863 -1.509059 -1.135632
+2013-01-02  1.212112 -0.173215  0.119209 -1.044236
+2013-01-04  0.721555 -0.706771 -1.039575  0.271860
+
+--
+# select * from a_df
+# where label = 100
+
+a_df[a_df.label == 100]
+
+--
+# Get value from a row:
+# From online: If you have a DataFrame with only one row, then access the first (only) row as a Series using iloc, and then the value using the column name:
+
+sub_df
+
+          A         B
+2 -0.133653 -0.030854
+
+sub_df.iloc[0]
+
+A   -0.133653
+B   -0.030854
+
+sub_df.iloc[0]['A']
+-0.13365288513107493
+
+==
+(findmax)
+Max
+
+df['col1'].max()
+
+--
+(findsort)
+Sort
+
+df.sort_index(axis=1, ascending=False)
+
+                   D         C         B         A
+2013-01-01 -1.135632 -1.509059 -0.282863  0.469112
+2013-01-02 -1.044236  0.119209 -0.173215  1.212112
+2013-01-03  1.071804 -0.494929 -2.104569 -0.861849
+2013-01-04  0.271860 -1.039575 -0.706771  0.721555
+2013-01-05 -1.087401  0.276232  0.567020 -0.424972
+2013-01-06  0.524988 -1.478427  0.113648 -0.673690
+
+--
+df.sort_values(by='B')
+
+                   A         B         C         D
+2013-01-03 -0.861849 -2.104569 -0.494929  1.071804
+2013-01-04  0.721555 -0.706771 -1.039575  0.271860
+2013-01-01  0.469112 -0.282863 -1.509059 -1.135632
+2013-01-02  1.212112 -0.173215  0.119209 -1.044236
+2013-01-06 -0.673690  0.113648 -1.478427  0.524988
+2013-01-05 -0.424972  0.567020  0.276232 -1.087401
+
+
+--
+(findisnull)
+(findmissingvalues)
+isnull or missing values
+
+df['A'].isnull().sum(): returns number of missing values in column A.
+
+--
+(findlen)
+(findsize)
+Number of rows in dataframe df:
+
+len(df)
+
+--
+(findgroupby)
+group by
+
+# Now a new df:
+
+df
+
+     A      B         C         D
+0  foo    one -1.202872 -0.055224
+1  bar    one -1.814470  2.395985
+2  foo    two  1.018601  1.552825
+3  bar  three -0.595447  0.166599
+4  foo    two  1.395433  0.047609
+5  bar    two -0.392670 -0.136473
+6  foo    one  0.007207 -0.561757
+7  foo  three  1.928123 -1.623033
+
+--
+df.groupby('A').sum()
+
+            C        D
+A                     
+bar -2.802588  2.42611
+foo  3.146492 -0.63958
+
+--
+df.groupby(['A','B']).sum()
+
+                  C         D
+A   B                        
+bar one   -1.814470  2.395985
+    three -0.595447  0.166599
+    two   -0.392670 -0.136473
+foo one   -1.195665 -0.616981
+    three  1.928123 -1.623033
+    two    2.414034  1.600434
+
+--
+# group by, count
+
+df
+
+  col1 col2  col3  col4  col5  col6
+0    A    B  0.20 -0.61 -0.49  1.49
+1    A    B -1.53 -1.01 -0.39  1.82
+2    A    B -0.44  0.27  0.72  0.11
+3    A    B  0.28 -1.32  0.38  0.18
+4    C    D  0.12  0.59  0.81  0.66
+5    C    D -0.13 -1.65 -1.64  0.50
+6    C    D -1.42 -0.11 -0.18 -0.44
+7    E    F -0.00  1.42 -0.26  1.17
+8    E    F  0.91 -0.47  1.35 -0.34
+9    G    H  1.48 -0.63 -1.14  0.17
+
+df.groupby(['col1', 'col2']).size()
+
+col1  col2
+A     B       4
+C     D       3
+E     F       2
+G     H       1
+
+==
+(findplot)
+Plot in Python, using matplotlib
+
+import matplotlib.pyplot as plot
+
+df['col1'].plot()
+plot.show() # Must be called to show plots
+
+--
+Plot two curves in the same figure:
+
+df[['col1', 'col2']].plot() # Yes, double squre brackets.
+plot.show()
+
+df.plot() # Plot all the columns, each column as a curve.
+
+--
+Add title and labels:
+
+import matplotlib.pyplot as plot
+
+ax = df.plot(title = 'prices', fontsize = 2)
+ax.set_xlabel("date")
+ax.set_ylabel("price")
+plot.show()
+
+==
+(finddates)
+Dates in pandas
+
+import pandas as pd
+
+def test_run():
+	start_date = '2010-01-22'
+	end_date = '2010-01-26'
+	dates = pd.date_range(start_date, end_date)
+	print dates[0] # Output: 2010-01-22 00:00:00
+	df1 = pd.DataFrame(index = dates)
+
+We used pandas date range method which takes two parameters, that is start and end date. The output you see is not the list of strings, but the list of date time index objects. 
+
+The output above: 2010-01-22 00:00:00:
+This is the first element of the list which a date/time index object. The trailing zero zeros for each object is the default time stamp.
+
+Next we define an empty dataframe df1 with these dates as index. We use the parameter index to supply the dates. Note that without this parameter the dataframe will have an index of integers 0,1,2 as seen before. So here's your DataFrame, DF1. It's an empty DataFrame with no columns. However, as we pass the index parameter, we have an index as dates. And you can see that it's a date time index object.
+
+==
+(findjoin)
+Join
+
+df_join = df1.join(df2) <- Left join, avadoles!
+df_join = df1.join(df2, how = 'inner') <- Inner join
+
+Avadoles! Different from Hive, Spark, SQL:
+DataFrame.join does a left join by default. So if we write a.join b, it will read in all the rows from a, but only those rows from b whose index values are present in a's index.
+
+--
+The following is equivalent to:
+select *  
+from cluster0_nov_sumscore a 
+join label_meanings b
+on a.label = b.label;
+
+cluster0_label_sumscore_name = pd.merge(cluster0_nov_sumscore, label_meanings, on = 'label')
+
+==
+(findrenamecolumn)
+Rename colum
+
+df_new = df.rename(columns = {'old_name' : 'new_name'})
+
+==
+(findnormalize)
+Normalize
+
+df1 = df1 / df1[0] # Divide the entire dataframe by its first row. It is equivalent as below, but it is more elegant and much FASTER.
+
+df1 = df1 / df1.ix[0,:] # Should be the same as above.
+
+Does the same thing as above:
+
+for date in df1.index:
+    for s in symbols:
+        df1[date, s] = df1[date, s] / df1[0, s]
+
+
+=====
+(findnumpy)
+NumPy
+
+To use NumPy:
+import numpy as np
+
+The NumPy numerical library: NumPy is a Python library that acts as a wrapper around underlying C and Fortran code. Because of that, it's very, very fast. NumPy focuses on matrices which are called ndarrays. NumPy is one of the important reasons people use Python for financial research.
+
+Now, how does NumPy relate to Pandas? Well, I said just a moment ago that NumPy is a wrapper for numerical libraries, well it turns out that Pandas is a kind of wrapper for NumPy. So remember our traditional data frame here, with our columns being symbols and our rows being dates. This data frame is just a wrapper around this ndarray, access the columns with symbols and the rows by dates. But you can, in fact, just treat this inside part (tao: the part of the dataframe without the header line and the index column) as an ndarray directly. If you use this syntax (nd1 = df1.values) in Python, that pulls these values out and lets you access it directly and then ndarray. You don't really need to do that though, you can, if you like, treat a data frame just like a NumPy ndarray. And so we're going to assume in the rest of this lesson that we're just working with an ndarray
+
+==
+NumPy access ndarray cells:
+
+nd[0, 0] # The element at row 0, column 0
+nd[3, 2] # The element at row 3, column 2
+nd[0:3, 1:3] # The block from row 0 to row 2, column 1 to column 2. Notices that 0:3 means 0,1,2.
+nd[:, 3] # All the rows, column 3.
+nd[-1, 1:3] # -1 means last row. Similary, -2 means second to last row.
+
+Replace some of the values in nd1, with these values from nd2:
+nd1[0:2, 0:2] = nd2[-2:, 2:4] # "-2:" means from "the second to last row" to "the last row". 
+
+==
+Create NumPy arrays from scratch:
+
+np.array() can take as input a list, a template, or other sequence.
+
+import numpy as np
+
+a = np.array([2, 3, 4]) # List to 1D array
+
+b = np.array([(2, 3, 4), (5, 6, 7)]) # List of tuples to 2D array. Each tuple serves as one row. We could also have passed a list of lists.
+
+print b
+
+Output:
+[[2 3 4]
+  5 6 7]]
+
+b.shape # Returns [2, 3]  
+b.shape[0] # Number of rows
+b.shape[1] # Number of columns
+b.size # Number of elements in the array
+
+print b.dtype # Data type of each element
+
+--
+Create empty ndarray:
+
+np.empty(5)
+np.empty((5, 4))
+
+The empty function takes the shape of the array as input. The shape can be defined as a single integer, as we did over here, for creating a one dimensional array, or a sequence of integers denoting the size in each dimension. For a two dimensional array, a sequence of two integers is needed. That is the number of rows and the number of columns.
+
+print np.empty((5, 4))
+
+Now let's check the output. Hm, strange. The empty array is not actually empty. What happens is that when we call numpy.empty to create an array, the elements of the array read in whatever values were present in the corresponding memory location.
+
+--
+Create ndarray with ones or zeroes:
+
+np.ones((5, 4)) # Create an array full of ones.
+np.zeroes((5, 4)) # Create an array full of zeroes.
+
+We notice that the default data type of all the values in the array is float. Fortunately, you can change this when creating the array:
+
+np.ones((5, 4), dtype = np.int_) # Here we defined the values to be integers
+
+--
+Create ndarray with random values:
+
+Generate an array full of random numbers, uniformly sampled from [0.0, 1.0). Pass in a size tuple:
+
+np.random.random((5, 4)) # 5 rows, 4 columns
+
+A slightly variation of this function is rand. We directly pass the
+values of the rows and columns through the function and did not define a tuple:
+
+np.random.rand(5, 4) # 5 rows, 4 columns
+
+--
+Create ndarray with normal (Gaussian) distribution.
+
+Standard normal (mean = 0, s.d. = 1):
+
+np.random.normal(size = (2, 3)) # 2 rows, 3 columns
+
+Mean = 50, s.d. = 10:
+
+np.random.normal(50, 10, size = (2, 3))
+
+--
+Create ndarray with random integers:
+
+np.random.randint(10) # A single integer in [0, 10)
+np.random.randint(0, 10) # Same as above, specifying [low, high) explicit
+np.random.randint(0, 10, size = 5) # 5 random integers as a 1D array 
+np.random.randint(0, 10, size = (2, 3)) # 2*3 array of random integers 
