@@ -297,18 +297,30 @@ if a==None:
 String
 
 name = 'john'
-a = 'h' in name
 
-if name.find('oh') != -1:
-    print('name contains the substring "oh"')
+len(str) # Length of str
 
 --
 (findsubstring)
+
+** Return substring:
+
 To return a substring from a string, search for "find sequence",
 this is also what people did online.
 
+** Whether contains substring:
+
 Determine whether a string contains a substring:
 substr in str # Returns True if str contains substr, otherwise false.
+
+** Position of substring:
+
+str1 = "this is string example....wow!!!";
+str2 = "exam";
+
+print str1.find(str2) # Returns: 15 <- the index of 'e' in str1
+
+** 
 
 --
 (findsplit)
