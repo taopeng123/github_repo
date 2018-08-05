@@ -2,6 +2,7 @@ ml4t stopa: 01-03, p15
  
 (The book A Byte of Python has been all recroded here)
 
+
 ==
 findgeneral                        Python general
 findcomment                        Comment in Python
@@ -1218,8 +1219,6 @@ def howMany():
 The __del__ method (see example above) is run when the object is no longer in use and there is no guarantee when that method will be run. If you want to explicitly see it in action, we have to use the del statement which is what we have done here.
 
 ==
-stopa
-
 Inheritance
 
        SchoolMember 
