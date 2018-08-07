@@ -1,5 +1,4 @@
-ml4t stopa: 01-03, p15
-aaa 
+ml4t stopa: 01-04, p1 
 (The book A Byte of Python has been all recroded here)
 
 
@@ -1709,6 +1708,13 @@ import datetime
 time_str = (datetime.datetime.now() - datetime.timedelta(hours = 5)).strftime("%H:%M, %Y-%m-%d") # Minus 5 hours, may not be necessary.
 print('Chicago time: {0}\n'.format(time_str)) # Output: Chicago time: 16:33, 2018-08-01
 
+--
+t1 = time.time()
+print "ml4t"
+t2 = time.time()
+print "The time taken by print statement is ", t2 - t1, "seconds"
+
+
 ==
 others:
 
@@ -2098,7 +2104,7 @@ import numpy as np
 
 The NumPy numerical library: NumPy is a Python library that acts as a wrapper around underlying C and Fortran code. Because of that, it's very, very fast. NumPy focuses on matrices which are called ndarrays. NumPy is one of the important reasons people use Python for financial research.
 
-Now, how does NumPy relate to Pandas? Well, I said just a moment ago that NumPy is a wrapper for numerical libraries, well it turns out that Pandas is a kind of wrapper for NumPy. So remember our traditional data frame here, with our columns being symbols and our rows being dates. This data frame is just a wrapper around this ndarray, access the columns with symbols and the rows by dates. But you can, in fact, just treat this inside part (tao: the part of the dataframe without the header line and the index column) as an ndarray directly. If you use this syntax (nd1 = df1.values) in Python, that pulls these values out and lets you access it directly and then ndarray. You don't really need to do that though, you can, if you like, treat a data frame just like a NumPy ndarray. And so we're going to assume in the rest of this lesson that we're just working with an ndarray
+Now, how does NumPy relate to Pandas? Well, I said just a moment ago that NumPy is a wrapper for numerical libraries, well it turns out that Pandas is a kind of wrapper for NumPy. So remember our traditional data frame here, with our columns being symbols and our rows being dates. This data frame is just a wrapper around this ndarray, access the columns with symbols and the rows by dates. But you can, in fact, just treat this inside part (tao: the part of the dataframe without the header line and the index column) as an ndarray directly. If you use this syntax (nd1 = df1.values) in Python, that pulls these values out and lets you access it directly and then ndarray. You don't really need to do that though, you can, if you like, ** treat a data frame just like a NumPy ndarray **. And so we're going to assume in the rest of this lesson that we're just working with an ndarray
 
 ==
 NumPy access ndarray cells:
@@ -2108,9 +2114,18 @@ nd[3, 2] # The element at row 3, column 2
 nd[0:3, 1:3] # The block from row 0 to row 2, column 1 to column 2. Notices that 0:3 means 0,1,2.
 nd[:, 3] # All the rows, column 3.
 nd[-1, 1:3] # -1 means last row. Similary, -2 means second to last row.
+nd[0, 1:3] # For the 0 row, get values from column 1 to column 2
 
-Replace some of the values in nd1, with these values from nd2:
-nd1[0:2, 0:2] = nd2[-2:, 2:4] # "-2:" means from "the second to last row" to "the last row". 
+nd[0, 0:3:2] # Slice n:m:t sepcifies a range that starts at n, and stops before m, in steps of size t.
+
+nd1[0:2, 0:2] = nd2[-2:, 2:4] # Replace some of the values in nd1, with these values from nd2. "-2:" means from "the second to last row" to "the last row". 
+
+--
+Assign values:
+
+nd[0, 0] = 1 # Assign value
+nd[0, :] = 2 # Assign a single value to an entire row
+nd[:, 3] = [1, 2, 3, 4, 5] # Assign a list to a column in an array.
 
 ==
 Create NumPy arrays from scratch:
@@ -2188,3 +2203,73 @@ np.random.randint(10) # A single integer in [0, 10)
 np.random.randint(0, 10) # Same as above, specifying [low, high) explicit
 np.random.randint(0, 10, size = 5) # 5 random integers as a 1D array 
 np.random.randint(0, 10, size = (2, 3)) # 2*3 array of random integers 
+
+--
+np.random.seed(693)
+
+a = np.random.randint(0, 10, size = (5, 4))
+
+Note how we used seed, the random number generator with the constant, to get the same sequence of numbers every time.
+
+--
+We can also sum in a specific direction of the array.  What I mean by direction is along rows or columns. NumPy gives this direction a special name.  It is called axis.  Axis = 0 signifies rows, and axis =  1 indicates columns. 
+
+a:
+
+[[2 0 5 1
+  1 3 4 4
+  9 2 9 1
+  9 3 7 5 
+  4 7 0 3]]
+
+# Iterate over rows, to compute sum of each column:
+a.sum(axis = 0) # Returns sum of each column: [25 15 25 14]
+
+# Iterate over columns, to compute sum of each row:
+a.sum(axis = 1) # Returns sum of each row: [8 12 21 24 14]
+
+# Returns min across rows, to compute min of each column:
+a.min(axis = 0) # Returns min of each column: [1 0 0 1]
+
+# Returns max across columns, to compute max of each row:
+a.max(axis = 1) # Returns max of each row: [5 4 9 9 7]
+
+a.mean() # Returns the mean all elements: 3.95. Of course we can get mean along each axis as we did for max and min.  
+
+--
+Find the position of some element in an ndarray:
+
+a.argmx() # Returns the index of the maximum value in given 1D array
+
+For multidimensional arrays, finding and representing indices is a little tricky. 
+
+--
+We want to get all the values from the array, which is less than mean of the entire array.  
+
+mean = a.mean()
+a[a < mean] # Returns the wanted values above
+a[a < mean] = mean # all the values previously less than mean have been replaced by the mean
+
+--
+Arithmetic operations on arrays are always applied element wise (tao: ie, element by elment).
+
+2 * a # Every element multiplied by 2.
+a + b # Add every element from a and b.
+a * b # Normal matrix multiplication (as in Linear Algebra).
+
+What about matrix multiplication?  How do you achieve that?  Like, for everything, Num Pi has a function.  It has function called dot, which performs matrix multiplication.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
