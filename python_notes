@@ -1,8 +1,6 @@
 ml4t stopa: 01-04, p1 
 (The book A Byte of Python has been all recroded here)
 
-20180809a
-
 ==
 findgeneral                        Python general
 findcomment                        Comment in Python
@@ -53,7 +51,10 @@ findtrim                           Strip a string (remove charaters at beginning
 findjoinlisttostring               Join list to string
 findargs                           Parse command line arguments   
 findclass                          class
+findinheritance                    inheritance
 finddestructor                     destructor
+findgetter                         Getters and setters
+findsetter                         Getters and setters
 findsleep                          sleep
 findtime                           Output current local time
 findpandas                         Pandas
@@ -62,6 +63,8 @@ findcreatedataframe                Create DataFrame
 findplot                           Plot in Python, using matplotlib
 finddates                          Dates in pandas
 findjoin                           Join
+findmerge                          Join, merge, concat
+findconcat                         Join, merge, concat
 finddropnan                        Drop the rows with NaN
 findrenamecolumn                   Rename colum
 findhead                           head
@@ -1081,8 +1084,10 @@ del shoplist[0] #將shoplist的第0個元素 從shoplist中 刪掉
 
 # using lists as stacks (from online):
 stack = [3, 4, 6]
-stack.append(6) #相當於push
+stack.append(6) #相當於push <- It adds 6 to the original list "stack", and it returns nothing.
 stack.pop()
+
+stackNew = stack + [40] <- This returns a new list
 
 # using lists as queues (from online):
 from collections import deque
@@ -1110,6 +1115,7 @@ b = len(ages)
 del ages['John']
 ages['Mary'] = 20 # update
 ages['Kate'] = 40 # add an item
+new_dict = {} # Create an empty dictionary
 
 # Traverse a dictionary:
 for name, age in ages.items(): #不是 for name : age ...
@@ -1274,6 +1280,7 @@ def howMany():
 The __del__ method (see example above) is run when the object is no longer in use and there is no guarantee when that method will be run. If you want to explicitly see it in action, we have to use the del statement which is what we have done here.
 
 ==
+(findinheritance)
 Inheritance
 
        SchoolMember 
@@ -1326,6 +1333,43 @@ This is very important to remember - Python does not automatically call the cons
 
 Best illurstration of polymorphism:
 You can refer to a Teacher or Student object as a SchoolMember object which could be useful in some situations such as counting of the number of school members. This is called polymorphism where a sub-type can be substituted in any situation where a parent type is expected i.e. the object can be treated as an instance of the parent class.
+
+==
+(findgetter)
+(findsetter)
+Getters and setters:
+
+What's the pythonic way to use getters and setters?
+
+The "Pythonic" way is not to use "getters" and "setters", but to use plain attributes, like the question demonstrates, and del for dereferencing (but the names are changed to protect the innocent... builtins).
+
+The sample code is:
+
+class C(object):
+    def __init__(self):
+        self._x = None
+
+    @property
+    def x(self):
+        """I'm the 'x' property."""
+        print("getter of x called")
+        return self._x
+
+    @x.setter
+    def x(self, value):
+        print("setter of x called")
+        self._x = value
+
+    @x.deleter
+    def x(self):
+        print("deleter of x called")
+        del self._x
+
+
+c = C()
+c.x = 'foo'  # setter called
+foo = c.x    # getter called
+del c.x      # deleter called
 
 ==
 References
@@ -1855,7 +1899,7 @@ df[10:21] # Data from index 10 to 20, because 21 is not inclusive in the range. 
 df.ix[10:21] # Equivalent as df[10:21], just looks more Pythonic and robust.
 
 Select colums:
-df['col1']
+df['col1'] <- the returned type is not dataframe!
 df[['A', 'B', 'C']]: returns a dataframe with columns A, B, C
 
 print df['col1']
@@ -2063,13 +2107,79 @@ Avadoles! Different from Hive, Spark, SQL:
 DataFrame.join does a left join by default. So if we write a.join b, it will read in all the rows from a, but only those rows from b whose index values are present in a's index.
 
 --
-The following is equivalent to:
-select *  
-from cluster0_nov_sumscore a 
-join label_meanings b
-on a.label = b.label;
+(findmerge)
+(findconcat)
 
-cluster0_label_sumscore_name = pd.merge(cluster0_nov_sumscore, label_meanings, on = 'label')
+Join, merge, concat:
+
+From online:
+
+Use merge, which is inner join by default:
+
+pd.merge(df1, df2, left_index=True, right_index=True)
+Or join, which is left join by default:
+
+df1.join(df2)
+Or concat, which is outer join by default:
+
+pd.concat([df1, df2], axis=1)
+Samples:
+
+df1 = pd.DataFrame({'a':range(6),
+                    'b':[5,3,6,9,2,4]}, index=list('abcdef'))
+
+print (df1)
+   a  b
+a  0  5
+b  1  3
+c  2  6
+d  3  9
+e  4  2
+f  5  4
+
+df2 = pd.DataFrame({'c':range(4),
+                    'd':[10,20,30, 40]}, index=list('abhi'))
+
+print (df2)
+   c   d
+a  0  10
+b  1  20
+h  2  30
+i  3  40
+
+#default inner join
+df3 = pd.merge(df1, df2, left_index=True, right_index=True)
+
+print (df3)
+   a  b  c   d
+a  0  5  0  10
+b  1  3  1  20
+
+#default left join
+df4 = df1.join(df2)
+
+print (df4)
+   a  b    c     d
+a  0  5  0.0  10.0
+b  1  3  1.0  20.0
+c  2  6  NaN   NaN
+d  3  9  NaN   NaN
+e  4  2  NaN   NaN
+f  5  4  NaN   NaN
+
+#default outer join
+df5 = pd.concat([df1, df2], axis=1)
+
+print (df5)
+     a    b    c     d
+a  0.0  5.0  0.0  10.0
+b  1.0  3.0  1.0  20.0
+c  2.0  6.0  NaN   NaN
+d  3.0  9.0  NaN   NaN
+e  4.0  2.0  NaN   NaN
+f  5.0  4.0  NaN   NaN
+h  NaN  NaN  2.0  30.0
+i  NaN  NaN  3.0  40.0
 
 ==
 (findrenamecolumn)
