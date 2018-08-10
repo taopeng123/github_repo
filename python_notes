@@ -1273,10 +1273,6 @@ def howMany():
 The __del__ method (see example above) is run when the object is no longer in use and there is no guarantee when that method will be run. If you want to explicitly see it in action, we have to use the del statement which is what we have done here.
 
 ==
-<<<<<<< HEAD
-=======
-
->>>>>>> ebf64ce7bdb840747aba2bf5915f961f27aba0a2
 Inheritance
 
        SchoolMember 
