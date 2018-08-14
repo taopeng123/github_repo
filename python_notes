@@ -1,4 +1,4 @@
-ml4t stopa: 01-04, p1 
+ml4t stopa: 01-05, p1 
 (The book A Byte of Python has been all recroded here)
 
 ==
@@ -71,7 +71,11 @@ findhead                           head
 findtail                           tail
 findslice                          Slice dataframe             
 findselect                         Select rows and columns
+findiloc                           iloc, loc, ix
+findloc                            iloc, loc, ix
+findix                             iloc, loc, ix
 findmax                            Max
+findstatistics                     Statistics functions
 findsort                           Sort
 findgroupby                        group by
 findlen                            Number of rows in dataframe df
@@ -1924,7 +1928,52 @@ df[df.A > 0]
 a_df[a_df.label == 100]
 
 --
-# Get value from a row:
+(findiloc)
+(findloc)
+(findix)
+iloc, loc, ix:
+
+Abstract from https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
+
+There’s three main options to achieve the selection and indexing activities in Pandas, which can be confusing. The three selection cases and methods covered in this post are:
+
+1. Selecting data by row numbers (.iloc)
+2. Selecting data by label or by a conditional statment (.loc)
+3. Selecting in a hybrid approach (.ix) (now Deprecated in Pandas 0.20.1). The ix[] indexer is a hybrid of .loc and .iloc.
+
+.iloc selections: position based selection:
+
+data.iloc[<row selection], <column selectoin>]
+ 
+row selectoin and column selection: 
+iteger list of rows:[0,1,2]  
+integer list of columns: [0,1,2]
+slice of rows: [4:7]
+slice of columns:[4:7]
+single values: 1
+single column selections: 1
+
+Examples of iloc:
+
+# Single selections using iloc and DataFrame
+# Rows:
+data.iloc[0] # first row of data frame. Note a Series data type output.
+data.iloc[1] # second row of data frame
+data.iloc[-1] # last row of data frame
+# Columns:
+data.iloc[:,0] # first column of data frame 
+data.iloc[:,1] # second column of data frame 
+data.iloc[:,-1] # last column of data frame
+
+# Multiple row and column selections using iloc and DataFrame
+data.iloc[0:5] # first five rows of dataframe
+data.iloc[:, 0:2] # first two columns of data frame with all rows
+data.iloc[[0,3,6,24], [0,5,6]] # 1st, 4th, 7th, 25th row + 1st 6th 7th columns.
+data.iloc[0:5, 5:8] # first 5 rows and 5th, 6th, 7th columns of data frame (county -> phone1).
+
+Note that .iloc returns a Pandas Series when one row is selected, and a Pandas DataFrame when multiple rows are selected, or if any column in full is selected. To counter this, pass a single-valued list if you require DataFrame output.
+
+# Get value from one row:
 # From online: If you have a DataFrame with only one row, then access the first (only) row as a Series using iloc, and then the value using the column name:
 
 sub_df
@@ -1940,11 +1989,68 @@ B   -0.030854
 sub_df.iloc[0]['A']
 -0.13365288513107493
 
+--
+loc selectoins: position based selection:
+
+data.loc[<row selection], <column selection>]
+
+row selectoin and column selection: 
+index/label value: 'john'
+named column: 'first_name'
+list of labels: ['john', 'sarah']
+list of column names: ['first_name', 'age']
+logical/boolean index: data['age'] == 10
+slice of columns: 'first_name': 'address'
+
+Examples of loc:
+
+# Select rows with index values 'Andrade' and 'Veness', with all columns between 'city' and 'email'
+data.loc[['Andrade', 'Veness'], 'city':'email']
+# Select same rows, with just 'first_name', 'address' and 'city' columns
+data.loc['Andrade':'Veness', ['first_name', 'address', 'city']]
+ 
+# Change the index to be based on the 'id' column
+data.set_index('id', inplace=True)
+# select the row with 'id' = 487
+data.loc[487]
+
+# Select rows with first name Antonio, # and all columns between 'city' and 'email'
+data.loc[data['first_name'] == 'Antonio', 'city':'email']
+ 
+# Select rows where the email column ends with 'hotmail.com', include all columns
+data.loc[data['email'].str.endswith("hotmail.com")]   
+ 
+# Select rows with last_name equal to some values, all columns
+data.loc[data['first_name'].isin(['France', 'Tyisha', 'Eric'])]   
+       
+# Select rows with first name Antonio AND hotmail email addresses
+data.loc[data['email'].str.endswith("gmail.com") & (data['first_name'] == 'Antonio')] 
+ 
+# select rows with id column between 100 and 200, and just return 'postal' and 'web' columns
+data.loc[(data['id'] > 100) & (data['id'] <= 200), ['postal', 'web']] 
+ 
+# A lambda function that yields True/False values can also be used.
+# Select rows where the company name has 4 words in it.
+data.loc[data['company_name'].apply(lambda x: len(x.split(' ')) == 4)] 
+ 
+# Selections can be achieved outside of the main .loc for clarity:
+# Form a separate variable with your selections:
+idx = data['company_name'].apply(lambda x: len(x.split(' ')) == 4)
+# Select only the True values in 'idx' and only the 3 columns specified:
+data.loc[idx, ['email', 'first_name', 'company']]
+
 ==
 (findmax)
+(findstatistics)
 Max
+Statistics functions
 
-df['col1'].max()
+df['col1'].max() 
+
+df.mean() # Return the mean of each column
+df.median()
+df.std() # Standard deviation
+
 
 --
 (findsort)
