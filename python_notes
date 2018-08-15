@@ -1,5 +1,5 @@
-ml4t stopa: 01-05, p1 
-(The book A Byte of Python has been all recroded here)
+ml4t stopa: 01-07, p1 
+(The book A Byte of Python has been all recroded here <- confirmed)
 
 ==
 findgeneral                        Python general
@@ -76,6 +76,8 @@ findloc                            iloc, loc, ix
 findix                             iloc, loc, ix
 findmax                            Max
 findstatistics                     Statistics functions
+findlinearregression               Linear Regression
+findpolyfit                        Polyfit
 findsort                           Sort
 findgroupby                        group by
 findlen                            Number of rows in dataframe df
@@ -2052,6 +2054,31 @@ df.median()
 df.std() # Standard deviation
 
 
+df.kurtosis() 
+
+Kurtosis:
+
+If we’ve got a positive kurtosis, that means we’ve got fat tails, there are more occurrences outside in the tails than would normally happen
+with a Gaussian distribution. If negative.... less...
+
+Correlation:
+df.corr(method = 'pearson') # df only has two columns, this returns the correlation of the two columns.
+
+--
+(findlinearregression)
+(findpolyfit)
+Linear Regression
+Polyfit
+
+import pandas as pd
+import numpy as np
+
+beta, alpha = np.polyfit(df['col1'], df['col2'], 1) 
+
+1 means polynomial degree is 1 (linear).
+So the line is y = beta * x + alpha
+
+
 --
 (findsort)
 Sort
@@ -2084,6 +2111,16 @@ df.sort_values(by='B')
 isnull or missing values
 
 df['A'].isnull().sum(): returns number of missing values in column A.
+
+Fill the missing data:
+
+df.fillna()
+
+df.fillna(method = 'ffill') # Forwad fill, ie, fill in the last, previous known value. <- Think of stock curve (price vs time).
+
+df.fillna(method = 'bfill') # Backward fill.
+
+df.fillna(method="ffill", inplace=True)
 
 --
 (findlen)
@@ -2159,18 +2196,38 @@ G     H       1
 (findplot)
 Plot in Python, using matplotlib
 
+import pandas as pd
 import matplotlib.pyplot as plot
 
 df['col1'].plot()
 plot.show() # Must be called to show plots
 
+# Scatter plot:
+df.plot(kind = 'scatter', x = 'compay_1', y = 'compay_2')
+
+# Plot histogram, set number of bins to 20:
+df.hist(bins = 20)
+plot.show()
+
+# Add verticle line at the position x coordinate = 5, with white color:
+plot.axvline(5, color = 'w', linestyle = 'dashed', linewidth = 2)
+
 --
 Plot two curves in the same figure:
+
+import pandas as pd
+import matplotlib.pyplot as plot
 
 df[['col1', 'col2']].plot() # Yes, double squre brackets.
 plot.show()
 
 df.plot() # Plot all the columns, each column as a curve.
+
+Plot two histograms in the same figure:
+df['col1'].hist(bins = 20, label = 'col1')
+df['col2'].hist(bins = 20, label = 'col2')
+plot.legend(loc = 'upper right')
+plot.show()
 
 --
 Add title and labels:
