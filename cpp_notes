@@ -1,13 +1,49 @@
 cpp stopa:
 Both book and this note: search for "stopa"
 
-(findcbegin)
+Review stopa: stopareview
+
+==
+findcbegin                   C begin
+findscanfc                   scanf in C
+findstringc                  Strin in C
+findboolc                    Bool in C
+findincludec                 Include in C
+findheaderc                  Header in C
+findmathc                    math.h in C
+findifc                      if in C
+findswitchc                  switch in C
+findwhilec                   while in C
+findforc                     for in C
+findcontinuec                C has "continue" and "break"
+findbreakc                   C has "continue" and "break"
+findgotoc                    goto in C
+findarrayc                   Array in C
+findfunctionc                Function in C
+findstaticc                  static & extern in C
+findexternc                  static & extern in C
+findpointerc                 Pointer in C
+findargsc                    Command line argument C
+findcommandlineargumentc     Command line argument C
+findstructc                  Struct in C
+findunionc                   Union in C
+findtypedefc                 typedef in C
+findmallocc                  Dynamic memory allocation and free in C
+findmemoryc                  Dynamic memory allocation and free in C
+findconstantc                Constant(宏) in C
+findfilec                    File in C
+findreadfromfilec            Read from file in C
+findwritetofilec             Write to file in C
+
+findcppbegin                 C++ begin
+
 
 ============================================================
 |                                                          |
 |                     C                                    |
 |                                                          |
 ============================================================
+(findcbegin)
 
 //Sample C program, printf example:
 
@@ -30,7 +66,8 @@ c: single character
 s: string
 
 ==============================
-scanf:
+(findscanfc)
+scanf in C:
 
 scanf is also in stdio.h
 
@@ -42,13 +79,61 @@ printf("max = %d\n", s);
 Format is the same as printf
 
 ==============================
-No string or bool:
+(finddatatypec)
+Data types in C
+
+type   number of bytes
+char       1
+
+==============================
+(findstringc)
+No string type in C:
 
 There is no String variable type in C, but there is String constant type in C (eg, "abc").
 
+The length of "ab" is 3, because it is stored as "ab\0"
+
+string and char array:
+
+char a[15];
+char a[5] = {"BOY"}; 
+char a[5] = "BOY";
+char a[] = {"string!"};
+char a[] = "string";
+char a[4][8] = {"ZHANG", "ZHONG", "HUANG", "LIANG"};
+
+char *hostname = "localhost";
+
+//a is a string:
+scanf("%s", a);
+printf("%s\n", a);
+
+The following string functions are in <string.h>:
+
+strcat(s1, s2):  Catenate s1 and s2, return the address of the first element of the new char array. s1 can not be a string constant.
+
+strcpy(s1, s2): Copy s2 into s1. s1 can not be a string constant.
+
+strcmp(s1, s2): Compare two strings. Note that "s1 == s2" is wrong. Should use "strcmp(s1, s2) == 0".
+
+strlen(s): Return the length of s, excluding the "\0" at end.
+
+strlwr(s): Replace the uppercase chars in s to lowercase.
+
+strupr(s): Replace the lowercase chars in s to uppercase.
+
+==
+(findboolc)
 There is no bool type in C, it uses 1 to represent true, 0 to represent false.
 
 ==============================
+(findincludec)
+(findheaderc)
+(findmathc)
+Include in C
+Headers in C
+math.h in C
+
 stdio.h, math.h, string.h:
 
 math.h has the following functions:
@@ -57,17 +142,64 @@ cos(0.2), exp(0.2), fabs(0.2), log(0.2), log10(0.2),
 pow(0.2, 3.0) <- 0.2^3.0, 
 sin(0.2), sqrt(0.2), tan(0.2)
 
-==============================
-The length of "ab" is 3, because it is stored as "ab\0"
+--
+When to use header files: when many programs use some common constants, data, etc, can put them into .h files.
+
+Difference between the following two:
+#include <xxx.h>
+#include "xxx.h"
+
+The difference is that: 
+If use <xxx.h>, then the system will only search for the header file in the designated directory for header files (the include directory). For the header files provided by C, it saves searching time to use this way.
+If use "xxx.h", then the system will first search for the header file in the current directory, then in the designated directory for header files (the include directory).
+
+--
+From online:
+
+Do I need to compile the header files (.h) in a C program?
+No, there's no reason to "compile" these header files independently. 
+Header files are intended to be included into implementation files, 
+not fed to the compiler as independent translation units.
+
+--
+How to use header files:
+
+name1.h文件: Declares function test()
+-------------
+#ifndef __GF_SERVER_H__
+#define __GF_SERVER_H__
+
+int test(int x);
+
+#endif
+-------------
+
+name1.c文件: Defines (implements) function test()
+-------------
+#include "name1.h"
+int test(int x) {
+    return 5 * x;
+}
+-------------
+
+main.c文件: Calls function test()
+-------------
+#include <stdio.h>
+#include "name1.h"
+void main() {
+    int y = test(2);
+    printf("%d\n", y);
+}
+-------------
+
+編繹: gcc -o main main.c name1.c
+運行: ./main
+結果: 10
 
 ==============================
-type   number of bytes
-char       1
+(findifc)
+if in C
 
-==============================
-a >= 0 ? a : -a
-
-==============================
 if(a < b) a = b;
 
 if(...) {
@@ -76,7 +208,13 @@ if(...) {
 	...
 }
 
+--
+a >= 0 ? a : -a
+
 ==============================
+(findswitchc)
+Switch in C
+
 switch(grade) {
 	case 'A': printf("Excellent\n");
 	case 'B': printf("Good\n");
@@ -86,23 +224,33 @@ switch(grade) {
 }
 
 ==============================
+(findwhilec)
+While in C
+
 while(x > 0) printf("Helo\n");
 
-==============================
+--
 do {
 	i--;
 	printf("a");
 } while(i >= 0);
 
 ==============================
+(findforc)
+for in C
+
 for(i = 1; i <= 100; i++) 
 	sum = sum + i;	
 
 ==============================
+(findcontinuec)
+(findbreakc)
+
 C has "continue" and "break"
 
 ==============================
-goto:
+(findgotoc)
+goto in C
 
 s = 0.0;
 goto cal;
@@ -110,7 +258,8 @@ s = 0.5 * 2;
 cal: printf("a");
 
 ==============================
-Array:
+(findarrayc)
+Array in C
 
 int a[10];
 a[0] = 1;
@@ -134,37 +283,8 @@ These two expressions are equivalent: a[i], *(a+i)
 2-D array name is the address of the 0-th row.
 
 ==============================
-string and char array:
-
-char a[15];
-char a[5] = {"BOY"}; 
-char a[5] = "BOY";
-char a[] = {"string!"};
-char a[] = "string";
-char a[4][8] = {"ZHANG", "ZHONG", "HUANG", "LIANG"};
-
-char *hostname = "localhost";
-
-//a is a string:
-scanf("%s", a);
-printf("%s\n", a);
-
-The following string functions are in <string.h>:
-
-strcat(s1, s2):  Catenate s1 and s2, return the address a the address of the first element of the new char array. s1 can not be a string constant.
-
-strcpy(s1, s2): Copy s2 into s1. s1 can not be a string constant.
-
-strcmp(s1, s2): Compare two strings. Note that "s1 == s2" is wrong. Should use "strcmp(s1, s2) == 0".
-
-strlen(s): Return the length of s, excluding the "\0" at end.
-
-strlwr(s): Replace the uppercase chars in s to lowercase.
-
-strupr(s): Replace the lowercase chars in s to uppercase.
-
-==============================
-Function:
+(findfunctionc)
+Function in C
 
 int max(int a, int b) {
     if(a > b) return a;
@@ -182,21 +302,21 @@ main function usually has no parameters, unlike Java.
 
 Function parameters are often passed by value. But for array names, it passes its address, so it is passed by reference.
 
-If use array names as parameter, the array should be defined in both the calling and called functions.
-
-For array as parameter, can define an empty array. If need to operate on its elemets, can use another parameter to denote its length:
+For array as parameter, can define an empty array (tao: in the parameter parenthesis). If need to operate on its elemets, can use another parameter to denote its length:
 
 void sort_string(char str[], int n) {
     ...
 }
 
 // Call the above function in another functin:
-char string[30]=”ABCDEFGHIJKLMNOPQRSTUVWXYZ”;
+char str[30]=”ABCDEFGHIJKLMNOPQRSTUVWXYZ”;
 int i=26;
-sort_string(string,i);
+sort_string(str, i);
 
 ==============================
-static, extern:
+(findstaticc)
+(findexternc)
+static & extern in C
 
 Static variable: 
 Static variable in a function will have their values kept even after this function is been called.
@@ -209,7 +329,6 @@ Can be used in two cases:
 2. In a file, can define a variable as extern and use this variable in another file. Before using it, need to declare it using "extern". 
 Example: none.
 
-
 Static function:
 Can only be used in the same file.
 Example: none.
@@ -219,7 +338,8 @@ Can be used in other files. If a function definition has no keyword "extern", th
 Example: none.
 
 ==============================
-Pointer:
+(findpointerc)
+Pointer in C
 
 int *p = &i;
 // Pointer p equals the address of i
@@ -240,14 +360,11 @@ a = &a[1];
 b = &a[3];
 Then (b - a) equals 2
 
-int *p[3]: p is an array of pointers (can be easily understood)
+int* p[3]: p is an array of pointers (can be easily understood)
 int (*p)[3]: p is a pointer which points to an array (because the above is array of pointers, so here it is a pointer which...)
 
-int a[3][4], (*p)[4];
-p = a;
-
 Pointer to functions can be rememebered in the save way as above:
-int *f(int x); //f is a function which returns pointer
+int* f(int x); //f is a function which returns pointer
 int (*f)(int x); //f is a pointer which points to a function
 
 int func(int x);
@@ -255,10 +372,9 @@ int (*f)(int x);
 f = func; <- func has no (), no parameters. Function name is the address of the entrance of function.
 (*f) is equivalent as func, eg (*f)(x)
 
-
-
 Array name as function parameter (in a similar way as Java):
 
+// Tao remembers online says this way passes by copying the array and this way should be avoided, needs to confirm
 void sort(int x[], int n) {
 	...
 }
@@ -272,52 +388,13 @@ void main() {
 A pointer to a string is the address of the first character in the string.
 
 ==============================
-From online:
-
-Do I need to compile the header files (.h) in a C program?
-No, there's no reason to "compile" these header files independently. 
-Header files are intended to be included into implementation files, 
-not fed to the compiler as independent translation units.
-
-name1.h文件:
--------------
-#ifndef __GF_SERVER_H__
-#define __GF_SERVER_H__
-
-int test(int x);
-
-#endif
--------------
-
-name1.c文件:
--------------
-#include "name1.h"
-int test(int x) {
-    return 5 * x;
-}
--------------
-
-main.c文件:
--------------
-#include <stdio.h>
-#include "name1.h"
-void main() {
-    int y = test(2);
-    printf("%d\n", y);
-}
--------------
-
-編繹: gcc -o main main.c name1.c
-運行: ./main
-結果: 10
-
-==
-Convert command line argument to string:
+(findargsc)
+(findcommandlineargumentc)
+Convert command line argument to string in C
 
 #include <iostream>
 #include <string>
 #include <vector>
-
 
 int main(int argc, char *argv[]) // Don't forget first integral argument 'argc', which is count of arguments plus the current exec file.
 {
@@ -326,16 +403,15 @@ int main(int argc, char *argv[]) // Don't forget first integral argument 'argc',
   std::vector<std::string> all_args;
 
   if (argc > 1) {
-
     first_arge = argv[1];
-
     all_args.assign(argv + 1, argv + argc);
   }
 }
 
 
 ==============================
-Struct:
+(findstructc)
+Struct in C
 
 From online:
 Should struct definitions go in .h or .c file?
@@ -383,7 +459,7 @@ p = &d;
 (*p).year
 p->year
 
-List node:
+Linked list node (note the next pointer):
 
 struct student {
     char name[8];
@@ -392,7 +468,8 @@ struct student {
 }
 
 ==============================
-Union:
+(findunionc)
+Union in C
 
 union utag {
     int i;
@@ -422,7 +499,8 @@ Wrong:
 union utag u2 = {100, 31.6, 'a'};
 
 ==============================
-typedef:
+(findtypedefc)
+typedef in C
 
 typedef defines new type which is equivalent as original types, like an alias:
 
@@ -462,7 +540,9 @@ Steps to use typedef:
 
 
 ==============================
-Dynamic memory allocation and free:
+(findmallocc)
+(findmemoryc)
+Dynamic memory allocation and free in C
 
 #include <stdlib.h>
 
@@ -480,26 +560,20 @@ q = (struct date *) malloc(sizeof(struct date));
 free(p); //Free the memory pointed by p
 
 ==============================
-宏
+(findconstantc)
+Constant in C
+宏 in C
 
 #define PI 3.14
 int a = PI;
 
 ==============================
-Header files
-
-When to use header files: when many programs use some common constants, data, etc, can put them into .h files.
-
-Difference between the following two:
-#include <xxx.h>
-#include "xxx.h"
-
-The difference is that: 
-If use <xxx.h>, then the system will only search for the header file in the designated directory for header files (the include directory). For the header files provided by C, it saves searching time to use this way.
-If use "xxx.h", then the system will first search for the header file in the current directory, then in the designated directory for header files (the include directory).
-
-==============================
-Files
+(findfilec)
+(findreadfromfilec)
+(findwritetofilec)
+File in C
+Read from file in C
+Write to file in C
 
 All the following should include:
 #include "sdio.h"
@@ -542,15 +616,16 @@ rewind(fp);
 //Set the pointer position
 fseek(file-pinter, offset, start-point)
 
-//C all recorded
-
-(findcppbegin)
+*** C all recorded ***
 
 ============================================================
 |                                                          |
 |                     C++                                  |
 |                                                          |
 ============================================================
+(findcppbegin)
+
+(stopareview)
 
 Common suffix for C++ programs: 
 .cc .cpp .C .cxx .cp 
@@ -793,6 +868,47 @@ void *pv = &obj; // The type void* is a special pointer type that can hold the a
 
 Variables defined inside a function ordinarily are not stored at a fixed address.
 
+--
+Return pointer from a function (from online):
+
+It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable. Tao: otherwise the caller function would get a pointer containing wrong address value (from practice).
+
+Example:
+
+#include <iostream>
+#include <ctime>
+ 
+using namespace std;
+ 
+// function to generate and retrun random numbers.
+int * getRandom( ) {
+   static int  r[10];
+ 
+   // set the seed
+   srand( (unsigned)time( NULL ) );
+   
+   for (int i = 0; i < 10; ++i) {
+      r[i] = rand();
+      cout << r[i] << endl;
+   }
+ 
+   return r;
+}
+ 
+// main function to call above defined function.
+int main () {
+   // a pointer to an int.
+   int *p;
+ 
+   p = getRandom();
+   for ( int i = 0; i < 10; i++ ) {
+      cout << "*(p + " << i << ") : ";
+      cout << *(p + i) << endl;
+   }
+ 
+   return 0;
+}
+
 ==============================
 const:
 
@@ -897,6 +1013,10 @@ If our class does not explicitly define any constructors, the compiler will impl
 
 Sales_data item;
 Screen myScreen(5, 3);
+
+From online:
+Using the new operator returns a pointer to the object:
+Node *n = new Node(); 
 
 ==============================
 Escape sequence:
@@ -1077,6 +1197,13 @@ vector<int> random(100);
 // ...
 found = binarySearch(first, last, search4, &random);
 
+--
+Convert array to vector:
+
+#include <iterator>
+#include <vector>
+int x[] = { 1, 2, 3, 4, 5 };
+std::vector<int> v(std::begin(x), std::end(x));
 
 ==============================
 iterator
