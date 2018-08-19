@@ -558,6 +558,10 @@ Common suffix for C++ programs:
 Compile:
 g++ -o file_name file_name.cc
 
+Simpler way to compile and run:
+g++ foo.c
+./a.out
+
 ==
 Sample C++ program:
 
@@ -774,7 +778,9 @@ int v = *p; //v = 42, dereference operator *
 //Null pointer. The following three lines are equivalent, to assign null pointer to p.
 int *p = 0;
 int *p = nullptr; 
-int *p = NULL;//Must #include cstdlib, modern programs should avoid using NULL.
+int *p = NULL;//Must include cstdlib as below, modern programs should avoid using NULL <- tao: practice confirms that we need to inlcude it
+
+#include<cstdlib>
 
 Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
 
@@ -870,19 +876,22 @@ Classes ordinarily are not defined inside functions.
 
 In order to ensure that the class definition is the same in each file, classes are usually defined in header files.
 
+Tao: note public and private has no identitation (from online examples).
+Tao: note the ; at the end of a class.
+
 class Sales_data {
-    public:
-        Sales_data() = default; // default constructor
-        Sales_data(string &s, double p) : bookNo(s), revenue(p) {}  
+public:
+    Sales_data() = default; // default constructor
+    Sales_data(string &s, double p) : bookNo(s), revenue(p) {}  
+
+private:
+    string bookNo;
+    double revenue = 0.0;
     
-    private:
-        string bookNo;
-        double revenue = 0.0;
-        
-        double price() {
-            ...
-        }
-}
+    double price() {
+        ...
+    }
+};
 
 If our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us (know as the synthesized default constructor).
 
@@ -1046,6 +1055,28 @@ vec.clear() //Removes all elements from the vector (which are destroyed), leavin
 We can define vectors to hold objects of most any type. Because references are not objects, we cannot have a vector of references.
 
 vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
+
+--
+Pass a vector to a function (from online):
+
+It depends on if you want to pass the vector as a reference or as a pointer (I am disregarding the option of passing it by value as clearly undesirable).
+
+As a reference:
+
+int binarySearch(int first, int last, int search4, vector<int>& random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, random);
+
+As a pointer:
+
+int binarySearch(int first, int last, int search4, vector<int>* random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, &random);
+
 
 ==============================
 iterator
