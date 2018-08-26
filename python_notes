@@ -533,6 +533,14 @@ Left Shift: <<
 (findprint)
 print
 
+A better way to print without using format (from online and tao's experiment):
+
+a = 1
+b = 2
+print('a =', a) # Output: a = 1
+print('a = ', a, ', b = ', b, sep="") # Output: a = 1, b = 2
+
+--
 age = 25
 age *= 2
 name = 'John'
@@ -582,8 +590,14 @@ Write to file
 Write to file:
 
 f = open('poem.txt', 'w') # w: write mode. r: read mode. a: append mode.
+f = open('poem.txt', 'w+') # w+: the + sign that means it will create a file if it does not exist
 f.write('helo') # write text to file
 f.close() # close the file
+
+Determine whether a file exists:
+
+import os
+os.path.exists('/this/is/a/dir') # Returns true for directories, not just files.
 
 ==
 (findreadfromwebpage)
@@ -923,8 +937,12 @@ from . . . import . . .
 Tao: in the above, even you imported sys, you still need to type sys.argv rather than only argv each time.
 
 If you want to directly import the argv variable into your program (to avoid typing the
-sys. everytime for it), then you can use the from sys import argv statement. If you want
-to import all the names used in the sys module, then you can use the from sys import *
+sys. everytime for it), then you can use the 
+from sys import argv 
+statement. 
+
+If you want to import all the names used in the sys module, then you can use the 
+from sys import *
 statement. This works for any module. In general, you should avoid using this statement and use the import statement instead since your program will avoid name clashes and will be more readable.
 
 --
@@ -978,6 +996,19 @@ This will import all public names such as sayhi but would not import __version__
 because it starts with double underscores.
 
 --
+How to import module from different folder (from online):
+
+By default, you can't. When importing a file, Python only searches the current directory, the directory that the entry-point script is running from, and sys.path which includes locations such as the package installation directory (it's actually a little more complex than this, but this covers most cases).
+
+However, you can add to the Python path at runtime:
+
+# some_file.py
+import sys
+sys.path.append('/path/to/application/app/folder')
+
+import file
+
+==
 Byte- compiled .pyc files
 
 Importing a module is a relatively costly affair, so Python does some tricks to make it faster. One way is to create byte-compiled files with the extension .pyc which is an intermediate form that Python transforms the program into. This .pyc file is useful when you import the module the next time from a different program - it will be much faster since a portion of the processing required in importing a module is already done. Also, these byte-compiled files are platform-independent.
@@ -1187,6 +1218,8 @@ Tao: about self:
 2. In a class, when using its own member variables or methods, should add self: self.variableName, self.func().
 
 Tao: in a class, no need to define its member variables. Any variables can jump out suddenly like the self.name below.
+
+Tao: there is no way to overload __init__ method in Python (confirmed from online). We need to use tricks to overload it or avoid having the desire to overload it.
 
 # Example class 1:
 

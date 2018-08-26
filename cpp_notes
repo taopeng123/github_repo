@@ -1,13 +1,61 @@
 cpp stopa:
 Both book and this note: search for "stopa"
 
-(findcbegin)
+Review stopa: stopareview
+
+==
+findcbegin                   C begin
+findscanfc                   scanf in C
+findstringc                  Strin in C
+findboolc                    Bool in C
+findincludec                 Include in C
+findheaderc                  Header in C
+findmathc                    math.h in C
+findifc                      if in C
+findswitchc                  switch in C
+findwhilec                   while in C
+findforc                     for in C
+findcontinuec                C has "continue" and "break"
+findbreakc                   C has "continue" and "break"
+findgotoc                    goto in C
+findarrayc                   Array in C
+findfunctionc                Function in C
+findstaticc                  static & extern in C
+findexternc                  static & extern in C
+findpointerc                 Pointer in C
+findargsc                    Command line argument C
+findcommandlineargumentc     Command line argument C
+findstructc                  Struct in C
+findunionc                   Union in C
+findtypedefc                 typedef in C
+findmallocc                  Dynamic memory allocation and free in C
+findmemoryc                  Dynamic memory allocation and free in C
+findconstantc                Constant(宏) in C
+findfilec                    File in C
+findreadfromfilec            Read from file in C
+findwritetofilec             Write to file in C
+
+findcppbegin                 C++ begin
+findheader                   Headers
+findcout                     cout
+findcin                      cin 
+findand
+findoperator                 Operators
+findreadfromfile             Read from file and output to file
+findwritetofile              Read from file and output to file
+finddeclaration              declaration vs definition
+finddefinition               declaration vs definition
+findconvertdatatype          Convert data types
+findfor                      Range for 
+findrangefor                 Range for 
+
 
 ============================================================
 |                                                          |
 |                     C                                    |
 |                                                          |
 ============================================================
+(findcbegin)
 
 //Sample C program, printf example:
 
@@ -30,7 +78,8 @@ c: single character
 s: string
 
 ==============================
-scanf:
+(findscanfc)
+scanf in C:
 
 scanf is also in stdio.h
 
@@ -42,13 +91,61 @@ printf("max = %d\n", s);
 Format is the same as printf
 
 ==============================
-No string or bool:
+(finddatatypec)
+Data types in C
+
+type   number of bytes
+char       1
+
+==============================
+(findstringc)
+No string type in C:
 
 There is no String variable type in C, but there is String constant type in C (eg, "abc").
 
+The length of "ab" is 3, because it is stored as "ab\0"
+
+string and char array:
+
+char a[15];
+char a[5] = {"BOY"}; 
+char a[5] = "BOY";
+char a[] = {"string!"};
+char a[] = "string";
+char a[4][8] = {"ZHANG", "ZHONG", "HUANG", "LIANG"};
+
+char *hostname = "localhost";
+
+//a is a string:
+scanf("%s", a);
+printf("%s\n", a);
+
+The following string functions are in <string.h>:
+
+strcat(s1, s2):  Catenate s1 and s2, return the address of the first element of the new char array. s1 can not be a string constant.
+
+strcpy(s1, s2): Copy s2 into s1. s1 can not be a string constant.
+
+strcmp(s1, s2): Compare two strings. Note that "s1 == s2" is wrong. Should use "strcmp(s1, s2) == 0".
+
+strlen(s): Return the length of s, excluding the "\0" at end.
+
+strlwr(s): Replace the uppercase chars in s to lowercase.
+
+strupr(s): Replace the lowercase chars in s to uppercase.
+
+==
+(findboolc)
 There is no bool type in C, it uses 1 to represent true, 0 to represent false.
 
 ==============================
+(findincludec)
+(findheaderc)
+(findmathc)
+Include in C
+Headers in C
+math.h in C
+
 stdio.h, math.h, string.h:
 
 math.h has the following functions:
@@ -57,17 +154,21 @@ cos(0.2), exp(0.2), fabs(0.2), log(0.2), log10(0.2),
 pow(0.2, 3.0) <- 0.2^3.0, 
 sin(0.2), sqrt(0.2), tan(0.2)
 
-==============================
-The length of "ab" is 3, because it is stored as "ab\0"
+--
+When to use header files: when many programs use some common constants, data, etc, can put them into .h files.
+
+Difference between the following two:
+#include <xxx.h>
+#include "xxx.h"
+
+The difference is that: 
+If use <xxx.h>, then the system will only search for the header file in the designated directory for header files (the include directory). For the header files provided by C, it saves searching time to use this way.
+If use "xxx.h", then the system will first search for the header file in the current directory, then in the designated directory for header files (the include directory).
 
 ==============================
-type   number of bytes
-char       1
+(findifc)
+if in C
 
-==============================
-a >= 0 ? a : -a
-
-==============================
 if(a < b) a = b;
 
 if(...) {
@@ -76,7 +177,13 @@ if(...) {
 	...
 }
 
+--
+a >= 0 ? a : -a
+
 ==============================
+(findswitchc)
+Switch in C
+
 switch(grade) {
 	case 'A': printf("Excellent\n");
 	case 'B': printf("Good\n");
@@ -86,23 +193,33 @@ switch(grade) {
 }
 
 ==============================
+(findwhilec)
+While in C
+
 while(x > 0) printf("Helo\n");
 
-==============================
+--
 do {
 	i--;
 	printf("a");
 } while(i >= 0);
 
 ==============================
+(findforc)
+for in C
+
 for(i = 1; i <= 100; i++) 
 	sum = sum + i;	
 
 ==============================
+(findcontinuec)
+(findbreakc)
+
 C has "continue" and "break"
 
 ==============================
-goto:
+(findgotoc)
+goto in C
 
 s = 0.0;
 goto cal;
@@ -110,7 +227,8 @@ s = 0.5 * 2;
 cal: printf("a");
 
 ==============================
-Array:
+(findarrayc)
+Array in C
 
 int a[10];
 a[0] = 1;
@@ -134,37 +252,8 @@ These two expressions are equivalent: a[i], *(a+i)
 2-D array name is the address of the 0-th row.
 
 ==============================
-string and char array:
-
-char a[15];
-char a[5] = {"BOY"}; 
-char a[5] = "BOY";
-char a[] = {"string!"};
-char a[] = "string";
-char a[4][8] = {"ZHANG", "ZHONG", "HUANG", "LIANG"};
-
-char *hostname = "localhost";
-
-//a is a string:
-scanf("%s", a);
-printf("%s\n", a);
-
-The following string functions are in <string.h>:
-
-strcat(s1, s2):  Catenate s1 and s2, return the address a the address of the first element of the new char array. s1 can not be a string constant.
-
-strcpy(s1, s2): Copy s2 into s1. s1 can not be a string constant.
-
-strcmp(s1, s2): Compare two strings. Note that "s1 == s2" is wrong. Should use "strcmp(s1, s2) == 0".
-
-strlen(s): Return the length of s, excluding the "\0" at end.
-
-strlwr(s): Replace the uppercase chars in s to lowercase.
-
-strupr(s): Replace the lowercase chars in s to uppercase.
-
-==============================
-Function:
+(findfunctionc)
+Function in C
 
 int max(int a, int b) {
     if(a > b) return a;
@@ -182,21 +271,21 @@ main function usually has no parameters, unlike Java.
 
 Function parameters are often passed by value. But for array names, it passes its address, so it is passed by reference.
 
-If use array names as parameter, the array should be defined in both the calling and called functions.
-
-For array as parameter, can define an empty array. If need to operate on its elemets, can use another parameter to denote its length:
+For array as parameter, can define an empty array (tao: in the parameter parenthesis). If need to operate on its elemets, can use another parameter to denote its length:
 
 void sort_string(char str[], int n) {
     ...
 }
 
 // Call the above function in another functin:
-char string[30]=”ABCDEFGHIJKLMNOPQRSTUVWXYZ”;
+char str[30]=”ABCDEFGHIJKLMNOPQRSTUVWXYZ”;
 int i=26;
-sort_string(string,i);
+sort_string(str, i);
 
 ==============================
-static, extern:
+(findstaticc)
+(findexternc)
+static & extern in C
 
 Static variable: 
 Static variable in a function will have their values kept even after this function is been called.
@@ -209,7 +298,6 @@ Can be used in two cases:
 2. In a file, can define a variable as extern and use this variable in another file. Before using it, need to declare it using "extern". 
 Example: none.
 
-
 Static function:
 Can only be used in the same file.
 Example: none.
@@ -219,7 +307,8 @@ Can be used in other files. If a function definition has no keyword "extern", th
 Example: none.
 
 ==============================
-Pointer:
+(findpointerc)
+Pointer in C
 
 int *p = &i;
 // Pointer p equals the address of i
@@ -240,14 +329,11 @@ a = &a[1];
 b = &a[3];
 Then (b - a) equals 2
 
-int *p[3]: p is an array of pointers (can be easily understood)
+int* p[3]: p is an array of pointers (can be easily understood)
 int (*p)[3]: p is a pointer which points to an array (because the above is array of pointers, so here it is a pointer which...)
 
-int a[3][4], (*p)[4];
-p = a;
-
 Pointer to functions can be rememebered in the save way as above:
-int *f(int x); //f is a function which returns pointer
+int* f(int x); //f is a function which returns pointer
 int (*f)(int x); //f is a pointer which points to a function
 
 int func(int x);
@@ -255,10 +341,9 @@ int (*f)(int x);
 f = func; <- func has no (), no parameters. Function name is the address of the entrance of function.
 (*f) is equivalent as func, eg (*f)(x)
 
-
-
 Array name as function parameter (in a similar way as Java):
 
+// Tao remembers online says this way passes by copying the array and this way should be avoided, needs to confirm
 void sort(int x[], int n) {
 	...
 }
@@ -272,52 +357,13 @@ void main() {
 A pointer to a string is the address of the first character in the string.
 
 ==============================
-From online:
-
-Do I need to compile the header files (.h) in a C program?
-No, there's no reason to "compile" these header files independently. 
-Header files are intended to be included into implementation files, 
-not fed to the compiler as independent translation units.
-
-name1.h文件:
--------------
-#ifndef __GF_SERVER_H__
-#define __GF_SERVER_H__
-
-int test(int x);
-
-#endif
--------------
-
-name1.c文件:
--------------
-#include "name1.h"
-int test(int x) {
-    return 5 * x;
-}
--------------
-
-main.c文件:
--------------
-#include <stdio.h>
-#include "name1.h"
-void main() {
-    int y = test(2);
-    printf("%d\n", y);
-}
--------------
-
-編繹: gcc -o main main.c name1.c
-運行: ./main
-結果: 10
-
-==
-Convert command line argument to string:
+(findargsc)
+(findcommandlineargumentc)
+Convert command line argument to string in C
 
 #include <iostream>
 #include <string>
 #include <vector>
-
 
 int main(int argc, char *argv[]) // Don't forget first integral argument 'argc', which is count of arguments plus the current exec file.
 {
@@ -326,16 +372,15 @@ int main(int argc, char *argv[]) // Don't forget first integral argument 'argc',
   std::vector<std::string> all_args;
 
   if (argc > 1) {
-
     first_arge = argv[1];
-
     all_args.assign(argv + 1, argv + argc);
   }
 }
 
 
 ==============================
-Struct:
+(findstructc)
+Struct in C
 
 From online:
 Should struct definitions go in .h or .c file?
@@ -383,7 +428,7 @@ p = &d;
 (*p).year
 p->year
 
-List node:
+Linked list node (note the next pointer):
 
 struct student {
     char name[8];
@@ -392,7 +437,8 @@ struct student {
 }
 
 ==============================
-Union:
+(findunionc)
+Union in C
 
 union utag {
     int i;
@@ -422,7 +468,8 @@ Wrong:
 union utag u2 = {100, 31.6, 'a'};
 
 ==============================
-typedef:
+(findtypedefc)
+typedef in C
 
 typedef defines new type which is equivalent as original types, like an alias:
 
@@ -462,7 +509,9 @@ Steps to use typedef:
 
 
 ==============================
-Dynamic memory allocation and free:
+(findmallocc)
+(findmemoryc)
+Dynamic memory allocation and free in C
 
 #include <stdlib.h>
 
@@ -480,26 +529,20 @@ q = (struct date *) malloc(sizeof(struct date));
 free(p); //Free the memory pointed by p
 
 ==============================
-宏
+(findconstantc)
+Constant in C
+宏 in C
 
 #define PI 3.14
 int a = PI;
 
 ==============================
-Header files
-
-When to use header files: when many programs use some common constants, data, etc, can put them into .h files.
-
-Difference between the following two:
-#include <xxx.h>
-#include "xxx.h"
-
-The difference is that: 
-If use <xxx.h>, then the system will only search for the header file in the designated directory for header files (the include directory). For the header files provided by C, it saves searching time to use this way.
-If use "xxx.h", then the system will first search for the header file in the current directory, then in the designated directory for header files (the include directory).
-
-==============================
-Files
+(findfilec)
+(findreadfromfilec)
+(findwritetofilec)
+File in C
+Read from file in C
+Write to file in C
 
 All the following should include:
 #include "sdio.h"
@@ -542,21 +585,24 @@ rewind(fp);
 //Set the pointer position
 fseek(file-pinter, offset, start-point)
 
-//C all recorded
-
-(findcppbegin)
+*** C all recorded ***
 
 ============================================================
 |                                                          |
 |                     C++                                  |
 |                                                          |
 ============================================================
+(findcppbegin)
 
 Common suffix for C++ programs: 
-.cc .cpp .C .cxx .cp 
+.cc .cpp .C .cxx .cp <- tao: .cpp is the most common I have seen online
 
 Compile:
 g++ -o file_name file_name.cc
+
+Simpler way to compile and run:
+g++ foo.c
+./a.out
 
 ==
 Sample C++ program:
@@ -572,6 +618,7 @@ int main() {
 }
 
 ==============================
+(findheader)
 Headers
 
 Need to include when use:
@@ -590,7 +637,7 @@ bind
 
 using namespace std;
 
-==
+--
 #include <iostream>
 #include "Sales_item.h"
 
@@ -602,18 +649,20 @@ Header files that we write usually have a suffix of .h
 
 Headers (usually) contain entities (such as class definitions and const variables) that can be defined only once in any given file.
 
-Code inside headers ordinarily should not use using declarations. The reason is that the contents of a header are copied into the including program’s text. If a header has a using declaration, then every program that includes that header gets that same using declaration. As a result, a program that didn’t intend to use the specified library name might encounter unexpected name conflicts.
+Code inside headers ordinarily should not use "using declarations". The reason is that the contents of a header are copied into the including program’s text. If a header has a using declaration, then every program that includes that header gets that same using declaration. As a result, a program that didn’t intend to use the specified library name might encounter unexpected name conflicts.
 
 In addition to facilities defined specifically for C++, the C++ library incorporates the C library. Headers in C have names of the form name .h. The C++ versions of these headers are named c name—they remove the .h suffix and precede the name with the letter c. The c indicates that the header is part of the C library. Hence, cctype has the same contents as ctype.h, but in a form that is appropriate for C++ programs. In particular, the names defined in the cname headers are defined inside the std namespace, whereas those defined in the .h versions are not. Ordinarily, C++ programs should use the cname versions of headers and not the name .h versions.
 
-==
+--
 preprocessor
 
 The most common technique for making it safe to include a header multiple times relies on the preprocessor. The preprocessor is a program that runs before the compiler and changes the source text of our programs.
 
 Our programs already rely on one preprocessor facility, #include. When the preprocessor sees a #include, it replaces the #include with the contents of the specified header.
 
-C++ programs also use the preprocessor to define header guards. Header guards rely on preprocessor variables. Preprocessor variables have one of two possible states: defined or not defined. The #define directive takes a name and defines that name as a preprocessor variable. There are two other directives that test whether a given preprocessor variable has or has not been defined: #ifdef is true if the variable has been defined, and #ifndef is true if the variable has not been defined. If the test is true, then everything following the #ifdef or #ifndef is processed up to the matching #endif.
+C++ programs also use the preprocessor to define header guards. Header guards rely on preprocessor variables. Preprocessor variables have one of two possible states: defined or not defined. The #define directive takes a name and defines that name as a preprocessor variable. There are two other directives that test whether a given preprocessor variable has or has not been defined: #ifdef is true if the variable has been defined, and #ifndef is true if the variable has not been defined. 
+
+If the test is true, then everything following the #ifdef or #ifndef is processed up to the matching #endif.
 
 tao: the following is the .h file which defines Sales_data. The benefit of the preprocessor in this .h file is that this .h file can be included in multiple files, and there will be no conflict, because SALES_DATA_H will be defined in the first file that includes this .h file, other files will have ifndef = false and will not execute this .h file.
 
@@ -631,7 +680,145 @@ Preprocessor variables, including names of header guards, must be unique through
 
 Headers should have guards, even if they aren’t (yet) included by another header. Header guards are trivial to write, and by habitually defining them you don’t need to decide whether they are needed.
 
+--
+How to include header in another folder (from online):
+
+Just inlcude the path as well:
+
+#include "../../Header/class1.h"
+
+--
+Whether to compile header files (from online):
+
+Do I need to compile the header files (.h) in a C program?
+No, there's no reason to "compile" these header files independently. 
+Header files are intended to be included into implementation files, 
+not fed to the compiler as independent translation units.
+
+--
+How to compile the files in the following example:
+
+Suppose the files are organized in the following folders:
+
+code
+  - main.cpp
+
+utils  
+  - Time.h
+  - Time.cpp 
+
+Then in folder code, type the followings (list all the other cpp files after main.cpp.):
+g++ main.cpp ../utils/Time.cpp 
+
+This makes a compiled file in the same folder as main.cpp: a.out
+
+In file Time.cpp, in the implementation of the Time member functions, it can use the other Time members directly without adding class name, note that the Time class is defined in another file Time.h
+
+--
+Separate Header and Implementation Files (from online, tao changed the path in the include for illustration)
+
+How to compile the following files? See above.
+
+In this section, we demonstrate how to make class reusable by separating it into another files.
+
+Header File
+Class declarations are stored in a separate file. A file that contains a class declaration is called header file. The name of the class is usually the same as the name of the class, with a .h extension. For example, the Time class would be declared in the file Time .h.
+
+#ifndef TIME_H
+#define TIME_H
+
+class Time
+{
+     private :
+          int hour;
+          int minute;
+          int second;
+     public :
+          //with default value
+          Time(const int h = 0, const int m  = 0, const int s = 0);
+          //    setter function
+          void setTime(const int h, const int m, const int s);
+          // Print a description of object in " hh:mm:ss"
+          void print() const;
+          //compare two time object
+          bool equals(const Time&);
+};
+ 
+#endif
+ 
+Implementation File
+
+The member function definitions for a class are stored in a separate .cpp file, which is called the class implementation file. The file usually has the same name as the class, with the .cpp extension. For example the Time class member functions would be defined in the file Time.cpp.
+
+#include <iostream>
+#include <iomanip>
+#include "Time.h" <- tao: since Time.cpp is in the same folder as Time.h, so no need to include path
+using namespace std;
+ 
+Time :: Time(const int h, const int m, const int s) 
+  : hour(h), minute (m), second(s)
+{}
+ 
+void Time :: setTime(const int h, const int m, const int s) 
+{
+     hour = h;
+     minute = m;
+     second = s;     
+}       
+ 
+void Time :: print() const
+{
+     cout << setw(2) << setfill('0') << hour << ":"
+    << setw(2) << setfill('0') << minute << ":"
+    << setw(2) << setfill('0') << second << "\n";   
+ 
+}
+ 
+bool Time :: equals(const Time &otherTime)
+{
+     if(hour == otherTime.hour 
+          && minute == otherTime.minute 
+          && second == otherTime.second)
+          return true;
+     else
+          return false;
+}
+ 
+Client Code
+
+client code, is the one that includes the main function. This file should be stored by the name main.cpp
+ 
+#include <iostream>
+using namespace std;
+#include "../utils/Time.h" <- tao: since main.cpp is in a different folder from Time.h, so need to include path
+
+int main()
+{
+     Time t1(10, 50, 59);
+     t1.print();   // 10:50:59
+     Time t2;
+     t2.print(); // 06:39:09
+     t2.setTime(6, 39, 9);
+     t2.print();  // 06:39:09
+   
+     if(t1.equals(t2))
+          cout << "Two objects are equal\n";
+     else
+          cout << "Two objects are not equal\n";    
+  
+     return 0;
+}
+The advanages of storing class definition in separate file are
+
+1. The class is reusable
+
+2. The clients of the class know what member functions the class provides, how to call them and what return types to expect
+
+3. The clients do not know how the class's member functions are implemented.
+
 ==============================
+(findcout)
+(findcin)
 cout, cin 
 
 remember: t looks like <, n can be put into >
@@ -659,7 +846,7 @@ using namespace std;
 
 int main() {
     int a = 0;
-    cin >> a;
+    cin >> a; //tao: read input into a
     return 0;
 }
 
@@ -674,11 +861,8 @@ is >> s //Reads whitespace-separated string from is into s. Returns is.
 getline(is, s) //Reads a line of input from is into s. Returns is.
 
 ==============================
-Operators:
-
-Logical AND: &&
-
-==============================
+(findreadfromfile)
+(findwritetofile)
 Read from file and output to file
 
 In command line:
@@ -688,7 +872,17 @@ Our program has been compiled into an executable file named "addItems".
 Note it is not infile enclosed in <>, but it is < acting on infile, and > acting on outfile. 
 
 ==============================
-Declaration & definition:
+(findand)
+(findoperator)
+Operators:
+
+Logical AND: &&
+
+==============================
+stopareview
+(finddeclaration)
+(finddefinition)
+declaration vs definition:
 
 A declaration makes a name known to the program. We must declare the type of a variable before we can use that variable.  A file that wants to use a name defined elsewhere includes a declaration for that name. 
 
@@ -740,6 +934,15 @@ bool test = false;
 
 The word nullptr is a pointer literal.
 
+--
+(findconvertdatatype)
+Convert data types:
+
+//string -> int
+#include <string>  
+string str1 = "45";
+int myint1 = stoi(str1); // myint1 = 45
+
 ==============================
 Reference:
 
@@ -774,7 +977,7 @@ int v = *p; //v = 42, dereference operator *
 //Null pointer. The following three lines are equivalent, to assign null pointer to p.
 int *p = 0;
 int *p = nullptr; 
-int *p = NULL;//Must #include cstdlib, modern programs should avoid using NULL.
+int *p = NULL;//Must #include<cstdlib>, modern programs should avoid using NULL <- tao: practice confirms that cstdlib is also included in std namespace : if we already wrote "using namespace std;", then we do not need to #include<cstdlib>
 
 Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
 
@@ -786,6 +989,47 @@ double obj = 3.14;
 void *pv = &obj; // The type void* is a special pointer type that can hold the address of any object.
 
 Variables defined inside a function ordinarily are not stored at a fixed address.
+
+--
+Return pointer from a function (from online):
+
+It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable. Tao: otherwise the caller function would get a pointer containing wrong address value (from practice).
+
+Example:
+
+#include <iostream>
+#include <ctime>
+ 
+using namespace std;
+ 
+// function to generate and retrun random numbers.
+int * getRandom( ) {
+   static int  r[10];
+ 
+   // set the seed
+   srand( (unsigned)time( NULL ) );
+   
+   for (int i = 0; i < 10; ++i) {
+      r[i] = rand();
+      cout << r[i] << endl;
+   }
+ 
+   return r;
+}
+ 
+// main function to call above defined function.
+int main () {
+   // a pointer to an int.
+   int *p;
+ 
+   p = getRandom();
+   for ( int i = 0; i < 10; i++ ) {
+      cout << "*(p + " << i << ") : ";
+      cout << *(p + i) << endl;
+   }
+ 
+   return 0;
+}
 
 ==============================
 const:
@@ -864,30 +1108,48 @@ int main() {
 }
 
 ==============================
+(findfor)
+(findrangefor)
+
+Range for in C++ 2011:
+
+vector<int> v = {1, 3, 5, 7, 9};
+
+for (auto x : v)
+    cout << x << ' ';
+
+==============================
 Class:
 
 Classes ordinarily are not defined inside functions.
 
 In order to ensure that the class definition is the same in each file, classes are usually defined in header files.
 
+Tao: note public and private has no identitation (from online examples, and sublime also removes these identitaction automatically).
+Tao: note the ; at the end of a class.
+
 class Sales_data {
-    public:
-        Sales_data() = default; // default constructor
-        Sales_data(string &s, double p) : bookNo(s), revenue(p) {}  
+public:
+    Sales_data() = default; // default constructor
+    Sales_data(string &s, double p) : bookNo(s), revenue(p) {}  
+
+private:
+    string bookNo;
+    double revenue = 0.0;
     
-    private:
-        string bookNo;
-        double revenue = 0.0;
-        
-        double price() {
-            ...
-        }
-}
+    double price() {
+        ...
+    }
+};
 
 If our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us (know as the synthesized default constructor).
 
 Sales_data item;
 Screen myScreen(5, 3);
+
+From online:
+Using the new operator returns a pointer to the object:
+Node *n = new Node(); 
 
 ==============================
 Escape sequence:
@@ -1046,6 +1308,35 @@ vec.clear() //Removes all elements from the vector (which are destroyed), leavin
 We can define vectors to hold objects of most any type. Because references are not objects, we cannot have a vector of references.
 
 vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
+
+--
+Pass a vector to a function (from online):
+
+It depends on if you want to pass the vector as a reference or as a pointer (I am disregarding the option of passing it by value as clearly undesirable).
+
+As a reference:
+
+int binarySearch(int first, int last, int search4, vector<int>& random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, random);
+
+As a pointer:
+
+int binarySearch(int first, int last, int search4, vector<int>* random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, &random);
+
+--
+Convert array to vector:
+
+#include <iterator>
+#include <vector>
+int x[] = { 1, 2, 3, 4, 5 };
+std::vector<int> v(std::begin(x), std::end(x));
 
 ==============================
 iterator
