@@ -36,10 +36,11 @@ findreadfromfilec            Read from file in C
 findwritetofilec             Write to file in C
 
 findcppbegin                 C++ begin
+findinclude                  Need to include
 findheader                   Headers
 findcout                     cout
 findcin                      cin 
-findand
+findand                      Operators
 findoperator                 Operators
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
@@ -52,6 +53,7 @@ findrangefor                 Range for
 findintialization            Intialization
 findstaticallytyped          Statically typed launage
 finddatatype                 Data types
+findbool                     bool
 findtypedef                  typedef
 findreference                Reference
 findpointer                  Pointer
@@ -61,20 +63,18 @@ findconstantexpression       Constant expression
 findstruct                   Struct
 findclass                    Class
 findnew                      The new operator
+findsleep                    Sleep
 findescape                   Escape sequence
 findstring                   string
 findsubstring                Substring (get and find substring)
 findsplit                    split a string
+findvector                   vector
+finditerator                 iterator
+findarray                    array
 
-(vector)
-vector
-
-====
-|                                                          |
-|                     C                                    |
-|                                                          |
-====
+=============
 (findcbegin)
+C begins
 
 //Sample C program, printf example:
 
@@ -608,11 +608,8 @@ fseek(file-pinter, offset, start-point)
 *** C all recorded ***
 
 ====
-|                                                          |
-|                     C++                                  |
-|                                                          |
-====
 (findcppbegin)
+C++ begins
 
 Common suffix for C++ programs: 
 .cc .cpp .C .cxx .cp <- tao: .cpp is the most common I have seen online
@@ -641,6 +638,8 @@ int main() {
 (finddatatype)                 
 Data types
 
+--
+(findbool)
 bool:
 
 bool b = 42;
@@ -674,6 +673,13 @@ double dtest = stod(stest);
 typedef
 
 typedef double wages; // wages is a synonym for double
+
+==
+(findinclude)
+Need to include
+
+INT_MIN, INT_MAX: need to #include <climits>
+max(1, 2): need to #include <algorithm>  
 
 ==
 (findheader)
@@ -1189,6 +1195,26 @@ Using the new operator returns a pointer to the object:
 Node *n = new Node(); 
 
 ==
+(findsleep)
+Sleep
+
+Compile the following file:
+
+g++ -o sleep sleep.cc -std=c++0x -D_GLIBCXX_USE_NANOSLEEP
+
+--- File sleep.cc starts ---
+#include <iostream>
+#include <chrono>
+#include <thread>
+using namespace std;
+
+int main() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    cout << "Hello world" << endl;
+}
+--- File sleep.cc ends ---
+
+==
 (findescape)
 Escape sequence:
 
@@ -1309,10 +1335,8 @@ cout << endl;
 Output:
 Helo how are you
 
-
 ==
-stopareview
-(vector)
+(findvector)
 vector
 
 #include <vector>
@@ -1325,7 +1349,8 @@ vector<string> v1(10); //10 elements, each an empty string
 vector<int> v1(n, val); //v1 has n elements with value val
 vector<int> v1 = {1, 2, 3};//C++11, does not work in the old C++ version
 vector<int> v1{1,2,3};//Does not work
-//Searched online, in the old C++ version, to initialize a vector, we can only use push_back(). 
+
+Searched online, in the old C++ version, to initialize a vector, we can only use push_back(). 
 
 vector<vector<double> > v1 //correct, note the space between > >
 vector<vector<double>> v1 //wrong
@@ -1340,39 +1365,11 @@ v1 = v2 //Replaces the elements in v1 with a copy of the elements in v2
 v1 == v2 //Equal if each element in v1 is equal to the corresponding element in v2. 
 v1 != v2
 v1 <= v2 //Have their normal meanings using dictionary ordering.
-
-vector<int> v;
-for(vector<int>::size_type i = 0; i < 10; ++i) {
-    v[i] = i; // Wrong. Segmentation fault: 11. Because v is always an empty vector, so can not assign.
-    v.push_back(i); // Correct
-}
-
 vec.clear() //Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
 
 We can define vectors to hold objects of most any type. Because references are not objects, we cannot have a vector of references.
 
 vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
-
---
-Pass a vector to a function (from online):
-
-It depends on if you want to pass the vector as a reference or as a pointer (I am disregarding the option of passing it by value as clearly undesirable).
-
-As a reference:
-
-int binarySearch(int first, int last, int search4, vector<int>& random);
-
-vector<int> random(100);
-// ...
-found = binarySearch(first, last, search4, random);
-
-As a pointer:
-
-int binarySearch(int first, int last, int search4, vector<int>* random);
-
-vector<int> random(100);
-// ...
-found = binarySearch(first, last, search4, &random);
 
 --
 Convert array to vector:
@@ -1382,7 +1379,36 @@ Convert array to vector:
 int x[] = { 1, 2, 3, 4, 5 };
 std::vector<int> v(std::begin(x), std::end(x));
 
+--
+Pass a vector to a function (from online):
+
+It depends on if you want to pass the vector as a reference or as a pointer (I am disregarding the option of passing it by value as clearly undesirable).
+
+As a pointer:
+
+int binarySearch(int first, int last, int search4, vector<int>* random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, &random);
+
+As a reference:
+
+int binarySearch(int first, int last, int search4, vector<int>& random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, random);
+
+--
+vector<int> v;
+for(vector<int>::size_type i = 0; i < 10; ++i) {
+    v[i] = i; // Wrong. Segmentation fault: 11. Because v is always an empty vector, so can not assign.
+    v.push_back(i); // Correct
+}
+
 ==
+(finditerator)
 iterator
 
 Although we can use subscripts to access the characters of a string or the elements in a vector, there is a more general mechanism—known as iterators—that we can use for the same purpose. 
@@ -1410,8 +1436,7 @@ iter + n // Adding (substracting) an integral value n to (from) an iterator yiel
 iter - n
 iter += n
 iter -= n
-iter1 - iter2 //Returns the distance between the iterators. The result type is a signed integral type named difference_type. Both
-vector and string define difference_type. This type is signed, because subtraction might have a negative result.
+iter1 - iter2 //Returns the distance between the iterators. The result type is a signed integral type named difference_type. Both vector and string define difference_type. This type is signed, because subtraction might have a negative result.
 iter1 <= iter2 //One iterator is less than another if it refers to an element that appears in the container before the one referred to by the other iterator.
 
 Example: capitalize the first character of a string:
@@ -1419,7 +1444,7 @@ Example: capitalize the first character of a string:
 string s("some string");
 if (s.begin() != s.end()) { // make sure s is not empty
     auto it = s.begin(); // it denotes the first character in s
-    *it = toupper(*it); // make that character uppercase
+    *it = toupper(*it); // make that character uppercase, tao: note the characters in a string can be changed in C++
 }
 
 Example: capitalize the first word in a string:
@@ -1436,8 +1461,7 @@ string::iterator it2; // it2 can read and write characters in a string
 vector<int>::const_iterator it3; // it3 can read but not write elements
 string::const_iterator it4; // it4 can read but not write characters
 
-A const_iterator behaves like a const pointer. Like a const pointer, a const_iterator may read but not write the element it denotes; an
-object of type iterator can both read and write. If a vector or string is const, we may use only its const_iterator type. With a nonconst vector or string, we can use either iterator or const_iterator.
+A const_iterator behaves like a const pointer. Like a const pointer, a const_iterator may read but not write the element it denotes; an object of type iterator can both read and write. If a vector or string is const, we may use only its const_iterator type. With a nonconst vector or string, we can use either iterator or const_iterator.
 
 The type returned by begin and end depends on whether the object on which they operator is const. If the object is const, then begin and end return a const_iterator; if the object is not const, they return iterator:
 
@@ -1449,10 +1473,8 @@ auto it2 = cv.begin(); // it2 has type vector<int>::const_iterator
 It is important to realize that loops that use iterators should not add elements to the container to which the iterators refer.
 
 ==
+(findarray)
 array
-
-stopa: 166
-3.5.2. Accessing the Elements of an Array
 
 int a[10]; // array of 10 ints. The elements are default initialized.
 int a[3] = {0,1,2};
@@ -1462,11 +1484,11 @@ int *p = a;
 int arr[3][4];
 int arr[2][3] = {{1,2},{3,4},{5,6}};
 
-tao: practice shows that the type of the array index can be int, but it should be const:
-const int num = 3;
-char a[num] = {'A', 'B', 'C'};
+tao: practice shows that the type of the array size can be int, but it should be const:
+const int aSize = 3;
+char a[aSize] = {'A', 'B', 'C'};
 
-//Principle: the symbol that is closest to the variable name is comes to the first in the type name
+//Principle: the symbol that is closest to the variable name comes to the first in the type name
 int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
 int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
 int& refs[10] = ... // error: no arrays of references
@@ -1489,126 +1511,9 @@ char a1[] = {'C', '+', '+'}; // size = 3.
 char a2[] = {'C', '+', '+', '\0'}; // size = 4
 char a3[] = "C++"; // size = 4, null terminator added automatically
 
-
-============ old ============
-
 ==
-stack:
-
-stack header
-stack<int> s;
-s.push(item), s.pop(), s.top()
-
+stopareview
 ==
-queue:
+stopa: 166
+3.5.2. Accessing the Elements of an Array
 
-queue header
-q.push(item), q.pop(), q.top()
-
-==
-map:
-
-注意map是排了序的, 故應當用unordered_map, 要#include<unordered_map>
-注意不是unsorted_map
-注意unordered_map要用-std=c++11來編繹, map可以不用
-
-map header
-map<string, int> words;
-map<string, string> m = {{"Joyce", "James"}, {"Austen", "Jane"}};
-
-words.insert({word, 1});
-c.erase(k) // removes every element with key k.
-c[k] // returns the element with key k
-m.find(x) == m.end() //determine whether a key is in map
-
-for(auto &w : words) 
-    cout << w.first << " " << w.second << endl;
-==
-set:
-
-同樣應當用unordered_set, 要#include<unordered_set>
-
-set<string> iset = {"a", "b", "hehe"};
-iset.size()
-iset.insert(3);
-iset.insert({1,3,5});
-iset.erase(40);
-
-myset.find(x) != myset.end() //check that an element is in a set (from online)
-==
-Generic Algorithms:
-
-lst.remove(val), lst.reverse(), lst.sort(), lst.sort(comp)
-
-============================
-arithmetics:
-
-#include<cstdlib>
-abs(-11), fabs (-10.6)
-
-===========================
-example leetcode codes from 
-
-------
-class Solution {
-public:
-    string reverseString(string s) {
-        if(s.size() == 0){
-            return s;
-        }
-        char tmp;
-        for(unsigned long begin = 0, end = s.size()-1; begin < end; begin++, end--){
-            tmp = s[begin];
-            s[begin] = s[end];
-            s[end] = tmp;
-        }
-        return s;
-    }
-};
-------
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> res(2);
-        unordered_map<int, int> mp;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (mp.count(target - nums[i])) {
-                res[0] = i;
-                res[1] = mp[target-nums[i]];
-            } else {
-                mp[nums[i]] = i;
-            }
-        }
-        return res;
-    }
-};
-
-===========================
-template
-
-Templates are not themselves functions or classes. Instead, they can be thought of as instructions to the compiler for generating classes or functions. The process that the compiler uses to create classes or functions from templates is called instantiation.
-
-==
-others:
-INT_MIN, INT_MAX, 要#include <climits>
-max(1, 2), 要#include <algorithm>  
-bool類型的變量值可為true和false
-
---
-Sleep:
-
-Compile the following file:
-
-g++ -o sleep sleep.cc -std=c++0x -D_GLIBCXX_USE_NANOSLEEP
-
---- File sleep.cc starts ---
-#include <iostream>
-#include <chrono>
-#include <thread>
-using namespace std;
-
-int main() {
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    cout << "Hello world" << endl;
-}
---- File sleep.cc ends ---
