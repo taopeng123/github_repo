@@ -36,26 +36,45 @@ findreadfromfilec            Read from file in C
 findwritetofilec             Write to file in C
 
 findcppbegin                 C++ begin
+findinclude                  Need to include
 findheader                   Headers
 findcout                     cout
 findcin                      cin 
-findand
+findand                      Operators
 findoperator                 Operators
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
 finddeclaration              declaration vs definition
 finddefinition               declaration vs definition
+findcast                     Cast
 findconvertdatatype          Convert data types
 findfor                      Range for 
 findrangefor                 Range for 
+findintialization            Intialization
+findstaticallytyped          Statically typed launage
+finddatatype                 Data types
+findbool                     bool
+findtypedef                  typedef
+findreference                Reference
+findpointer                  Pointer
+findconst                    Constant
+findconstant                 Constant
+findconstantexpression       Constant expression
+findstruct                   Struct
+findclass                    Class
+findnew                      The new operator
+findsleep                    Sleep
+findescape                   Escape sequence
+findstring                   string
+findsubstring                Substring (get and find substring)
+findsplit                    split a string
+findvector                   vector
+finditerator                 iterator
+findarray                    array
 
-
-============================================================
-|                                                          |
-|                     C                                    |
-|                                                          |
-============================================================
+=============
 (findcbegin)
+C begins
 
 //Sample C program, printf example:
 
@@ -77,7 +96,7 @@ e,E: exponential
 c: single character
 s: string
 
-==============================
+==
 (findscanfc)
 scanf in C:
 
@@ -90,14 +109,15 @@ printf("max = %d\n", s);
 
 Format is the same as printf
 
-==============================
+==
 (finddatatypec)
 Data types in C
 
 type   number of bytes
 char       1
 
-==============================
+
+==
 (findstringc)
 No string type in C:
 
@@ -138,7 +158,7 @@ strupr(s): Replace the lowercase chars in s to uppercase.
 (findboolc)
 There is no bool type in C, it uses 1 to represent true, 0 to represent false.
 
-==============================
+==
 (findincludec)
 (findheaderc)
 (findmathc)
@@ -165,7 +185,7 @@ The difference is that:
 If use <xxx.h>, then the system will only search for the header file in the designated directory for header files (the include directory). For the header files provided by C, it saves searching time to use this way.
 If use "xxx.h", then the system will first search for the header file in the current directory, then in the designated directory for header files (the include directory).
 
-==============================
+==
 (findifc)
 if in C
 
@@ -180,7 +200,7 @@ if(...) {
 --
 a >= 0 ? a : -a
 
-==============================
+==
 (findswitchc)
 Switch in C
 
@@ -192,7 +212,7 @@ switch(grade) {
 	default: printf("Invalid input.\n");
 }
 
-==============================
+==
 (findwhilec)
 While in C
 
@@ -204,20 +224,20 @@ do {
 	printf("a");
 } while(i >= 0);
 
-==============================
+==
 (findforc)
 for in C
 
 for(i = 1; i <= 100; i++) 
 	sum = sum + i;	
 
-==============================
+==
 (findcontinuec)
 (findbreakc)
 
 C has "continue" and "break"
 
-==============================
+==
 (findgotoc)
 goto in C
 
@@ -226,7 +246,7 @@ goto cal;
 s = 0.5 * 2;
 cal: printf("a");
 
-==============================
+==
 (findarrayc)
 Array in C
 
@@ -251,7 +271,7 @@ These two expressions are equivalent: a[i], *(a+i)
 
 2-D array name is the address of the 0-th row.
 
-==============================
+==
 (findfunctionc)
 Function in C
 
@@ -282,7 +302,7 @@ char str[30]=”ABCDEFGHIJKLMNOPQRSTUVWXYZ”;
 int i=26;
 sort_string(str, i);
 
-==============================
+==
 (findstaticc)
 (findexternc)
 static & extern in C
@@ -306,7 +326,7 @@ Extern function:
 Can be used in other files. If a function definition has no keyword "extern", then it is still extern by default. Before using extern function in another file, need to declare it using "extern". 
 Example: none.
 
-==============================
+==
 (findpointerc)
 Pointer in C
 
@@ -356,7 +376,7 @@ void main() {
 
 A pointer to a string is the address of the first character in the string.
 
-==============================
+==
 (findargsc)
 (findcommandlineargumentc)
 Convert command line argument to string in C
@@ -378,7 +398,7 @@ int main(int argc, char *argv[]) // Don't forget first integral argument 'argc',
 }
 
 
-==============================
+==
 (findstructc)
 Struct in C
 
@@ -436,7 +456,7 @@ struct student {
     struct student *next;
 }
 
-==============================
+==
 (findunionc)
 Union in C
 
@@ -467,7 +487,7 @@ Wrong:
 
 union utag u2 = {100, 31.6, 'a'};
 
-==============================
+==
 (findtypedefc)
 typedef in C
 
@@ -508,7 +528,7 @@ Steps to use typedef:
 4. Then can use the new type name to define variables, like: STRING s1, s2;
 
 
-==============================
+==
 (findmallocc)
 (findmemoryc)
 Dynamic memory allocation and free in C
@@ -528,7 +548,7 @@ q = (struct date *) malloc(sizeof(struct date));
 
 free(p); //Free the memory pointed by p
 
-==============================
+==
 (findconstantc)
 Constant in C
 宏 in C
@@ -536,7 +556,7 @@ Constant in C
 #define PI 3.14
 int a = PI;
 
-==============================
+==
 (findfilec)
 (findreadfromfilec)
 (findwritetofilec)
@@ -587,12 +607,9 @@ fseek(file-pinter, offset, start-point)
 
 *** C all recorded ***
 
-============================================================
-|                                                          |
-|                     C++                                  |
-|                                                          |
-============================================================
+====
 (findcppbegin)
+C++ begins
 
 Common suffix for C++ programs: 
 .cc .cpp .C .cxx .cp <- tao: .cpp is the most common I have seen online
@@ -617,7 +634,54 @@ int main() {
     return 0;
 }
 
-==============================
+==
+(finddatatype)                 
+Data types
+
+--
+(findbool)
+bool:
+
+bool b = 42;
+int i = b; // i has value 1
+
+When we assign one non-bool types to a bool, the result is false if the value is 0, and true otherwise.
+When we use a bool in an arithmetic expression, its value always converts to either 0 or 1.
+
+The words true and false are literals of type bool:
+bool test = false;
+
+The word nullptr is a pointer literal.
+
+--
+(findcast)
+(findconvertdatatype)
+Cast
+Convert data types
+
+//string -> int
+#include <string>  
+string str1 = "45";
+int myint1 = stoi(str1); // myint1 = 45
+
+//string -> double
+string stest = "0.21";
+double dtest = stod(stest);
+
+==
+(findtypedef)
+typedef
+
+typedef double wages; // wages is a synonym for double
+
+==
+(findinclude)
+Need to include
+
+INT_MIN, INT_MAX: need to #include <climits>
+max(1, 2): need to #include <algorithm>  
+
+==
 (findheader)
 Headers
 
@@ -816,7 +880,7 @@ The advanages of storing class definition in separate file are
 
 3. The clients do not know how the class's member functions are implemented.
 
-==============================
+==
 (findcout)
 (findcin)
 cout, cin 
@@ -860,7 +924,7 @@ is >> s //Reads whitespace-separated string from is into s. Returns is.
 
 getline(is, s) //Reads a line of input from is into s. Returns is.
 
-==============================
+==
 (findreadfromfile)
 (findwritetofile)
 Read from file and output to file
@@ -871,15 +935,14 @@ $ addItems <infile >outfile
 Our program has been compiled into an executable file named "addItems". 
 Note it is not infile enclosed in <>, but it is < acting on infile, and > acting on outfile. 
 
-==============================
+==
 (findand)
 (findoperator)
 Operators:
 
 Logical AND: &&
 
-==============================
-stopareview
+==
 (finddeclaration)
 (finddefinition)
 declaration vs definition:
@@ -901,7 +964,8 @@ Variables must be defined exactly once but can be declared many times.
 
 To use a variable in more than one file requires declarations. To use the same variable in multiple files, we must define that variable in one—and only one—file. Other files that use that variable must declare—but not define—that variable.
 
-==============================
+==
+(findintialization)
 Intialization:
 
 //The followings are all equivalent:
@@ -914,37 +978,17 @@ If we do not initialize a string, then it is an empty string. (Seems different f
 
 We recommend initializing every object of built-in type.
 
-==============================
+==
+(findstaticallytyped)
 Type checking (statically typed launage):
 
 Some languages, such as Smalltalk and Python, check types at run time. In contrast, C++ is a statically typed language; type checking is done at compile time.
 
 In C++, if we try to do things that the type does not support, the compiler generates an error message and does not produce an executable file.
-==============================
-bool:
 
-bool b = 42;
-int i = b; // i has value 1
-
-When we assign one non-bool types to a bool, the result is false if the value is 0, and true otherwise.
-When we use a bool in an arithmetic expression, its value always converts to either 0 or 1.
-
-The words true and false are literals of type bool:
-bool test = false;
-
-The word nullptr is a pointer literal.
-
---
-(findconvertdatatype)
-Convert data types:
-
-//string -> int
-#include <string>  
-string str1 = "45";
-int myint1 = stoi(str1); // myint1 = 45
-
-==============================
-Reference:
+==
+(findreference)
+Reference
 
 int &refVal = ival; // refVal refers to (is another name for) ival
 
@@ -953,8 +997,9 @@ A reference must be initialized (Avado, same as const types)
 There is no way to rebind a reference to refer to a different object.
 Because references are not objects, they don’t have addresses. Hence, we may not define a pointer to a reference.
 
-==============================
-Pointer:
+==
+(findpointer)
+Pointer
 
 A pointer holds the address of another object. 
 A pointer is an object in its own right. 
@@ -977,7 +1022,7 @@ int v = *p; //v = 42, dereference operator *
 //Null pointer. The following three lines are equivalent, to assign null pointer to p.
 int *p = 0;
 int *p = nullptr; 
-int *p = NULL;//Must #include<cstdlib>, modern programs should avoid using NULL <- tao: practice confirms that cstdlib is also included in std namespace : if we already wrote "using namespace std;", then we do not need to #include<cstdlib>
+int *p = NULL;//Must #include<cstdlib>, modern programs should avoid using NULL <- tao: practice confirms that cstdlib is also included in std namespace, so if we already wrote "using namespace std;", then we do not need to #include<cstdlib>
 
 Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
 
@@ -988,7 +1033,9 @@ Two pointers are equal (using ==) if they hold the same address.
 double obj = 3.14;
 void *pv = &obj; // The type void* is a special pointer type that can hold the address of any object.
 
+Avadoles:
 Variables defined inside a function ordinarily are not stored at a fixed address.
+Tao: this is also the reason why my program did something wrong when I tried to return a pointer to a variable defined inside a function (see more below).
 
 --
 Return pointer from a function (from online):
@@ -1031,11 +1078,13 @@ int main () {
    return 0;
 }
 
-==============================
-const:
+==
+(findconst)
+(findconstant)
+const
 
 We can make a variable unchangeable by defining the variable’s type as const.
-const object must be initilized after being created.
+const object MUST be initilized after being created.
 
 const int bufSize = 512;
 extern const int bufSize = 512; // A const that is accessible to other files
@@ -1070,6 +1119,10 @@ auto b = ci; // b is an int (top-level const in ci is dropped)
 
 On the other hand, low-level const is never ignored. When we copy an object, both objects must have the same low-level const qualification or there must be a conversion between the types of the two objects. In general, we can convert a nonconst to const but not the other way round.
 
+--
+(findconstantexpression)
+Constant expression
+
 A constant expression is an expression whose value cannot change and that can be evaluated at compile time. A literal is a constant expression. A const object that is initialized from a constant expression is also a constant expression. Examples:
 
 const int max_files = 20; // max_files is a constant expression
@@ -1077,37 +1130,9 @@ const int limit = max_files + 1; // limit is a constant expression
 int staff_size = 27; // staff_size is not a constant expression
 const int sz = get_size(); // sz is not a constant expression
 
-Even though sz is a const, the value of its initializer is not known until run time. Hence, sz is not a
-constant expression.
+Even though sz is a const, the value of its initializer is not known until run time. Hence, sz is not a constant expression.
 
-==============================
-typedef:
-
-typedef double wages; // wages is a synonym for double
-
-==============================
-Struct:
-
-struct Sales_data {
-    string bookNo;
-    unsigned units_sold = 0;
-    double revenue = 0.0;
-};
-
-Sales_data accum;
-Sales_data* salesptr;
-
-We’ll assume that our Sales_data class is defined inside "Sales_data.h".
-
-#include <iostream>
-#include <string>
-#include "Sales_data.h"
-int main() {
-    Sales_data data1, data2;
-    ...
-}
-
-==============================
+==
 (findfor)
 (findrangefor)
 
@@ -1118,8 +1143,22 @@ vector<int> v = {1, 3, 5, 7, 9};
 for (auto x : v)
     cout << x << ' ';
 
-==============================
-Class:
+==
+(findstruct)
+Struct
+
+struct Sales_data {
+    string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+}; //Tao: note the ;
+
+Sales_data accum;
+Sales_data* salesptr;
+
+==
+(findclass)
+Class
 
 Classes ordinarily are not defined inside functions.
 
@@ -1147,11 +1186,36 @@ If our class does not explicitly define any constructors, the compiler will impl
 Sales_data item;
 Screen myScreen(5, 3);
 
+--
+(findnew)
+The new operator
+
 From online:
 Using the new operator returns a pointer to the object:
 Node *n = new Node(); 
 
-==============================
+==
+(findsleep)
+Sleep
+
+Compile the following file:
+
+g++ -o sleep sleep.cc -std=c++0x -D_GLIBCXX_USE_NANOSLEEP
+
+--- File sleep.cc starts ---
+#include <iostream>
+#include <chrono>
+#include <thread>
+using namespace std;
+
+int main() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    cout << "Hello world" << endl;
+}
+--- File sleep.cc ends ---
+
+==
+(findescape)
 Escape sequence:
 
 newline:       \n
@@ -1164,9 +1228,9 @@ Examples:
 cout << '\n'; //prints a newline
 cout << "Hi \n"
 
-
-==============================
-string:
+==
+(findstring)
+string
 
 #include <string>
 using std::string;
@@ -1203,7 +1267,7 @@ The string library lets us convert both character literals and character string 
 When we mix strings and string or character literals, at least one operand to each
 + operator must be of string type: 
 string s4 = s1 + ", "; // ok: adding a string and a literal
-string s5 = "hello" + ", "; // error: no string operand
+string s5 = "hello" + ", "; // error: no string operand (tao: both are string literals, which are not string type variables, see below)
 
 For historical reasons, and for compatibility with C, string literals are not standard library strings. It is important to remember that these types differ when you use string literals and library strings.
 
@@ -1218,12 +1282,20 @@ tolower(c) //If c is an upercase letter, returns its lowercase equivalent, other
 toupper(c) //If c is a lowercase letter, returns its upercase equivalent, otherwise returns c unchanged
 isspace(c) //true if c is whitespace (ie, a space, tab, vertical tab, return, newline, or formfeed)
 
-string s2 = s.substr(pos, n) // return a string containing n characters fro s starting at pos. pos defaults to 0. n defaults to a value that causes the library to copy all the characters in s starting from pos.
+
 
 string s2 = s.erase (pos, len); //Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, from online)
 
 s2.append("helo"); // equivalent as below. The parameter of append() can only be string, it can not be char.
 s.insert(s.size(), "helo"); 
+
+--
+(findsubstring)
+Substring (get and find)
+
+Get a substring:
+
+string s2 = s.substr(pos, n) // return a string containing n characters fro s starting at pos. pos defaults to 0. n defaults to a value that causes the library to copy all the characters in s starting from pos.
 
 Find a substring in a string:
 
@@ -1235,7 +1307,8 @@ if (s1.find(s2) != std::string::npos) {
 Note: "found!" will be printed if s2 is a substring of s1, both s1 and s2 are of type std::string. 
 
 --
-split a string:
+(findsplit)
+split a string
 
 Problem: Split a string by a delim, and return a vector of strings containing no delim
 
@@ -1262,14 +1335,9 @@ cout << endl;
 Output:
 Helo how are you
 
---
-cast string to double:
-
-string stest = "0.21";
-double dtest = stod(stest);
-
-==============================
-vector:
+==
+(findvector)
+vector
 
 #include <vector>
 using std::vector;
@@ -1281,7 +1349,8 @@ vector<string> v1(10); //10 elements, each an empty string
 vector<int> v1(n, val); //v1 has n elements with value val
 vector<int> v1 = {1, 2, 3};//C++11, does not work in the old C++ version
 vector<int> v1{1,2,3};//Does not work
-//Searched online, in the old C++ version, to initialize a vector, we can only use push_back(). 
+
+Searched online, in the old C++ version, to initialize a vector, we can only use push_back(). 
 
 vector<vector<double> > v1 //correct, note the space between > >
 vector<vector<double>> v1 //wrong
@@ -1296,39 +1365,11 @@ v1 = v2 //Replaces the elements in v1 with a copy of the elements in v2
 v1 == v2 //Equal if each element in v1 is equal to the corresponding element in v2. 
 v1 != v2
 v1 <= v2 //Have their normal meanings using dictionary ordering.
-
-vector<int> v;
-for(vector<int>::size_type i = 0; i < 10; ++i) {
-    v[i] = i; // Wrong. Segmentation fault: 11. Because v is always an empty vector, so can not assign.
-    v.push_back(i); // Correct
-}
-
 vec.clear() //Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
 
 We can define vectors to hold objects of most any type. Because references are not objects, we cannot have a vector of references.
 
 vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
-
---
-Pass a vector to a function (from online):
-
-It depends on if you want to pass the vector as a reference or as a pointer (I am disregarding the option of passing it by value as clearly undesirable).
-
-As a reference:
-
-int binarySearch(int first, int last, int search4, vector<int>& random);
-
-vector<int> random(100);
-// ...
-found = binarySearch(first, last, search4, random);
-
-As a pointer:
-
-int binarySearch(int first, int last, int search4, vector<int>* random);
-
-vector<int> random(100);
-// ...
-found = binarySearch(first, last, search4, &random);
 
 --
 Convert array to vector:
@@ -1338,7 +1379,36 @@ Convert array to vector:
 int x[] = { 1, 2, 3, 4, 5 };
 std::vector<int> v(std::begin(x), std::end(x));
 
-==============================
+--
+Pass a vector to a function (from online):
+
+It depends on if you want to pass the vector as a reference or as a pointer (I am disregarding the option of passing it by value as clearly undesirable).
+
+As a pointer:
+
+int binarySearch(int first, int last, int search4, vector<int>* random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, &random);
+
+As a reference:
+
+int binarySearch(int first, int last, int search4, vector<int>& random);
+
+vector<int> random(100);
+// ...
+found = binarySearch(first, last, search4, random);
+
+--
+vector<int> v;
+for(vector<int>::size_type i = 0; i < 10; ++i) {
+    v[i] = i; // Wrong. Segmentation fault: 11. Because v is always an empty vector, so can not assign.
+    v.push_back(i); // Correct
+}
+
+==
+(finditerator)
 iterator
 
 Although we can use subscripts to access the characters of a string or the elements in a vector, there is a more general mechanism—known as iterators—that we can use for the same purpose. 
@@ -1366,8 +1436,7 @@ iter + n // Adding (substracting) an integral value n to (from) an iterator yiel
 iter - n
 iter += n
 iter -= n
-iter1 - iter2 //Returns the distance between the iterators. The result type is a signed integral type named difference_type. Both
-vector and string define difference_type. This type is signed, because subtraction might have a negative result.
+iter1 - iter2 //Returns the distance between the iterators. The result type is a signed integral type named difference_type. Both vector and string define difference_type. This type is signed, because subtraction might have a negative result.
 iter1 <= iter2 //One iterator is less than another if it refers to an element that appears in the container before the one referred to by the other iterator.
 
 Example: capitalize the first character of a string:
@@ -1375,7 +1444,7 @@ Example: capitalize the first character of a string:
 string s("some string");
 if (s.begin() != s.end()) { // make sure s is not empty
     auto it = s.begin(); // it denotes the first character in s
-    *it = toupper(*it); // make that character uppercase
+    *it = toupper(*it); // make that character uppercase, tao: note the characters in a string can be changed in C++
 }
 
 Example: capitalize the first word in a string:
@@ -1392,8 +1461,7 @@ string::iterator it2; // it2 can read and write characters in a string
 vector<int>::const_iterator it3; // it3 can read but not write elements
 string::const_iterator it4; // it4 can read but not write characters
 
-A const_iterator behaves like a const pointer. Like a const pointer, a const_iterator may read but not write the element it denotes; an
-object of type iterator can both read and write. If a vector or string is const, we may use only its const_iterator type. With a nonconst vector or string, we can use either iterator or const_iterator.
+A const_iterator behaves like a const pointer. Like a const pointer, a const_iterator may read but not write the element it denotes; an object of type iterator can both read and write. If a vector or string is const, we may use only its const_iterator type. With a nonconst vector or string, we can use either iterator or const_iterator.
 
 The type returned by begin and end depends on whether the object on which they operator is const. If the object is const, then begin and end return a const_iterator; if the object is not const, they return iterator:
 
@@ -1404,11 +1472,9 @@ auto it2 = cv.begin(); // it2 has type vector<int>::const_iterator
 
 It is important to realize that loops that use iterators should not add elements to the container to which the iterators refer.
 
-==============================
+==
+(findarray)
 array
-
-stopa: 166
-3.5.2. Accessing the Elements of an Array
 
 int a[10]; // array of 10 ints. The elements are default initialized.
 int a[3] = {0,1,2};
@@ -1418,11 +1484,11 @@ int *p = a;
 int arr[3][4];
 int arr[2][3] = {{1,2},{3,4},{5,6}};
 
-tao: practice shows that the type of the array index can be int, but it should be const:
-const int num = 3;
-char a[num] = {'A', 'B', 'C'};
+tao: practice shows that the type of the array size can be int, but it should be const:
+const int aSize = 3;
+char a[aSize] = {'A', 'B', 'C'};
 
-//Principle: the symbol that is closest to the variable name is comes to the first in the type name
+//Principle: the symbol that is closest to the variable name comes to the first in the type name
 int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
 int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
 int& refs[10] = ... // error: no arrays of references
@@ -1445,126 +1511,9 @@ char a1[] = {'C', '+', '+'}; // size = 3.
 char a2[] = {'C', '+', '+', '\0'}; // size = 4
 char a3[] = "C++"; // size = 4, null terminator added automatically
 
+==
+stopareview
+==
+stopa: 166
+3.5.2. Accessing the Elements of an Array
 
-======================================== old ========================================
-
-==============================
-stack:
-
-stack header
-stack<int> s;
-s.push(item), s.pop(), s.top()
-
-==============================
-queue:
-
-queue header
-q.push(item), q.pop(), q.top()
-
-==============================
-map:
-
-注意map是排了序的, 故應當用unordered_map, 要#include<unordered_map>
-注意不是unsorted_map
-注意unordered_map要用-std=c++11來編繹, map可以不用
-
-map header
-map<string, int> words;
-map<string, string> m = {{"Joyce", "James"}, {"Austen", "Jane"}};
-
-words.insert({word, 1});
-c.erase(k) // removes every element with key k.
-c[k] // returns the element with key k
-m.find(x) == m.end() //determine whether a key is in map
-
-for(auto &w : words) 
-    cout << w.first << " " << w.second << endl;
-==============================
-set:
-
-同樣應當用unordered_set, 要#include<unordered_set>
-
-set<string> iset = {"a", "b", "hehe"};
-iset.size()
-iset.insert(3);
-iset.insert({1,3,5});
-iset.erase(40);
-
-myset.find(x) != myset.end() //check that an element is in a set (from online)
-==============================
-Generic Algorithms:
-
-lst.remove(val), lst.reverse(), lst.sort(), lst.sort(comp)
-
-============================
-arithmetics:
-
-#include<cstdlib>
-abs(-11), fabs (-10.6)
-
-===========================
-example leetcode codes from 
-
-------
-class Solution {
-public:
-    string reverseString(string s) {
-        if(s.size() == 0){
-            return s;
-        }
-        char tmp;
-        for(unsigned long begin = 0, end = s.size()-1; begin < end; begin++, end--){
-            tmp = s[begin];
-            s[begin] = s[end];
-            s[end] = tmp;
-        }
-        return s;
-    }
-};
-------
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> res(2);
-        unordered_map<int, int> mp;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (mp.count(target - nums[i])) {
-                res[0] = i;
-                res[1] = mp[target-nums[i]];
-            } else {
-                mp[nums[i]] = i;
-            }
-        }
-        return res;
-    }
-};
-
-===========================
-template
-
-Templates are not themselves functions or classes. Instead, they can be thought of as instructions to the compiler for generating classes or functions. The process that the compiler uses to create classes or functions from templates is called instantiation.
-
-==============================
-others:
-INT_MIN, INT_MAX, 要#include <climits>
-max(1, 2), 要#include <algorithm>  
-bool類型的變量值可為true和false
-
---
-Sleep:
-
-Compile the following file:
-
-g++ -o sleep sleep.cc -std=c++0x -D_GLIBCXX_USE_NANOSLEEP
-
---- File sleep.cc starts ---
-#include <iostream>
-#include <chrono>
-#include <thread>
-using namespace std;
-
-int main() {
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    cout << "Hello world" << endl;
-}
---- File sleep.cc ends ---
