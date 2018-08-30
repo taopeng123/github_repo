@@ -85,7 +85,10 @@ findsize                           Number of rows in dataframe df
 findisnull                         isnull or missing values
 findmissingvalues                  isnull or missing values
 findnormalize                      Normalize
+findsumcolumns                     Sum of all columns 
+findmeancolumns                    Mean of all columns 
 findnumpy                          NumPy
+findrandomnumber                   Random number
 
 (endfind)
 
@@ -265,6 +268,9 @@ type(i)
 # Convert string to int:
 x = '123456'
 i = int(x)
+
+# Convert int to string:
+str(10) # Returns: '10'
 
 Numbers:
 
@@ -2232,11 +2238,22 @@ Plot in Python, using matplotlib
 import pandas as pd
 import matplotlib.pyplot as plot
 
+# Make the plot and show it in a window:
 df['col1'].plot()
 plot.show() # Must be called to show plots
 
+# Make the plot and save it to file:
+df['col1'].plot()
+plot.savefig('fig_1.png')
+
+# Set the y axis range:
+df1 = pd.DataFrame(data = dic1)
+df1.plot()
+plot.ylim(-256, 100)
+
 # Scatter plot:
 df.plot(kind = 'scatter', x = 'compay_1', y = 'compay_2')
+plot.show()
 
 # Plot histogram, set number of bins to 20:
 df.hist(bins = 20)
@@ -2244,6 +2261,7 @@ plot.show()
 
 # Add verticle line at the position x coordinate = 5, with white color:
 plot.axvline(5, color = 'w', linestyle = 'dashed', linewidth = 2)
+plot.show()
 
 --
 Plot two curves in the same figure:
@@ -2397,11 +2415,34 @@ for date in df1.index:
     for s in symbols:
         df1[date, s] = df1[date, s] / df1[0, s]
 
+==
+(findsumcolumns)
+(findmeancolumns)
+Sum (or mean) of all columns into a new column
+
+df2 = pd.DataFrame(data = dic2)
+df2['sum'] = df2.iloc[:,-num_columns:].sum(axis=1) # Sum all columns
+df2['mean'] = df2['sum'] / num_columns
+df2['std'] = df2.iloc[:,-num_columns:].std(axis=1)
+
+print df2.head(5)
+
+   run_0  run_1  run_2  sum      mean       std
+0      0      0      0    0  0.000000  0.000000
+1      1      1     -1    1  0.333333  1.018350
+2      2      0      1    3  1.000000  1.154701
+3      1      2      2    5  1.666667  1.835857
+4     -1      3      1    3  1.000000  1.154701
+
+
 
 =====
 (findnumpy)
 NumPy
 
+Any python can run numpy, no need to use some annaconda environment (confirmed from tao's practice).
+
+--
 To use NumPy:
 import numpy as np
 
@@ -2562,6 +2603,12 @@ a * b # Normal matrix multiplication (as in Linear Algebra).
 
 What about matrix multiplication?  How do you achieve that?  Like, for everything, Num Pi has a function.  It has function called dot, which performs matrix multiplication.  
 
+--
+(findrandomnumber)                   
+Random number
+
+import numpy as np  
+np.random.random() # Returns a random number, not sure about the range.
 
 
 
