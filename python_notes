@@ -49,12 +49,14 @@ findprefix                         Whether a string start with a prefix
 findstrip                          Strip a string (remove charaters at beginning and end)
 findtrim                           Strip a string (remove charaters at beginning and end)
 findjoinlisttostring               Join list to string
-findargs                           Parse command line arguments   
+findargs                           Parse command line arguments  
+findargv                           Parse command line arguments 
 findclass                          class
 findinheritance                    inheritance
 finddestructor                     destructor
 findgetter                         Getters and setters
 findsetter                         Getters and setters
+findexception                      Exceptions
 findsleep                          sleep
 findtime                           Output current local time
 findpandas                         Pandas
@@ -382,8 +384,25 @@ mylist = ['Brazil', 'Russia', 'India', 'China']
 delimiter.join(mylist) # Returns 'Brazil_*_Russia_*_India_*_China'
 
 --
-(findargs)                           
+(findargs)   
+(findargv)    
 Parse command line arguments   
+
+** Simple way **
+
+import sys
+
+for i in sys.argv:
+    print(i)
+
+$ python using_sys.py we are arguments
+
+using_sys.py
+we
+are
+arguments
+
+** Complicated way **
 
 File prog.py:
 
@@ -1431,6 +1450,7 @@ above program. The %Y specification will be replaced by the year without the cen
 so on.
 
 ==
+(findexception)
 Exceptions
 
 We put all the statements that might raise exceptions/errors inside the try block and then put handlers for the appropriate errors/exceptions in the except clause/block. The except clause can handle a single specified error or exception, or a parenthesized list of errors/exceptions. If no names of errors or exceptions are supplied, it will handle all errors and exceptions.
