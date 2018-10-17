@@ -42,6 +42,7 @@ findcout                     cout
 findcin                      cin 
 findand                      Operators
 findoperator                 Operators
+findmath                     Math operators
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
 finddeclaration              declaration vs definition
@@ -668,6 +669,20 @@ int myint1 = stoi(str1); // myint1 = 45
 string stest = "0.21";
 double dtest = stod(stest);
 
+//double -> string
+string pi = std::to_string(3.1415926); // pi = "3.1415926" 
+
+//int -> string
+int a = std::to_string(28); // a = "28"
+
+//int -> double
+int a = 2;
+double b = (double) a;
+
+//double -> int
+double a = 3.0;
+double b = (int) a;
+
 ==
 (findtypedef)
 typedef
@@ -941,6 +956,35 @@ Note it is not infile enclosed in <>, but it is < acting on infile, and > acting
 Operators:
 
 Logical AND: &&
+
+==
+(findmath)
+Math operators:
+
+power:
+
+#include <cmath>
+pow(3.4, 4.4) // Returns: 3.4^4.4 = 218.025
+
+--
+std::pow in the <cmath> header has these overloads:
+
+pow(float, float);
+pow(float, int);
+pow(double, double); // taken over from C
+pow(double, int);
+pow(long double, long double);
+pow(long double, int);
+
+Now you can't just do
+pow(2, N)
+with N being an int, because it doesn't know which of float, double or long double version it should take, and you would get an ambiguity error. All three would need a conversion from int to floating point, and all three are equally costly!
+
+Therefor, be sure to have the first argument typed so it matches one of those three perfectly. I usually use double
+
+pow(2.0, N)
+Some lawyer crap from me again. I've often fallen in this pitfall myself, so i'm going to warn you about it.
+
 
 ==
 (finddeclaration)
@@ -1254,10 +1298,18 @@ s1 == s2 //s1 and s2 are equal if they contain the same characters. Equality is 
 s1 != s2
 s1 <= s2 //Comparisons are case-sensitive and use dictionary ordering.
 
-tao: convert a char array to string:
+From online: create a string with five dot characters:
+string foo = string(5, '.') // foo = "....."
 
-char a1[2] = {'a', 'b'};
+tao: convert a char array to string (from online: Note that this only works for constant NULL-terminated C-strings.)
+char a1[2] = {'a', 'b', '\0'};
 string str1(a1);
+
+from online: convert a string to char array:
+string temp = "cat";
+char * tab2 = new char [temp.length()+1];
+strcpy (tab2, temp.c_str());
+
 
 string::size_type:
 The string class—and most other library types—defines several companion types. These companion types make it possible to use the library types in a machine-independent manner. The type size_type is one of these companion types. Although we don’t know the precise type of string::size_type, we do know that it is an unsigned type big enough to hold the size of any string. Because size returns an unsigned type, it is essential to remember that expressions that mix signed and unsigned data can have surprising results. You can avoid problems due to conversion between unsigned and int by not using ints in expressions that use size().
@@ -1281,8 +1333,6 @@ isupper(c) //true if c is an uppercase letter
 tolower(c) //If c is an upercase letter, returns its lowercase equivalent, otherwise returns c unchanged
 toupper(c) //If c is a lowercase letter, returns its upercase equivalent, otherwise returns c unchanged
 isspace(c) //true if c is whitespace (ie, a space, tab, vertical tab, return, newline, or formfeed)
-
-
 
 string s2 = s.erase (pos, len); //Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, from online)
 
@@ -1314,6 +1364,8 @@ Problem: Split a string by a delim, and return a vector of strings containing no
 
 Use stringstream getline
 Signature istream& getline (istream&& is, string& str, char delim)
+
+#include <sstream>
 
 vector<string> split(const string &s, char delim) {
     stringstream ss(s);
@@ -1353,7 +1405,7 @@ vector<int> v1{1,2,3};//Does not work
 Searched online, in the old C++ version, to initialize a vector, we can only use push_back(). 
 
 vector<vector<double> > v1 //correct, note the space between > >
-vector<vector<double>> v1 //wrong
+vector<vector<double>> v1 //wrong <- tao: in the Mac (or C++11?), this is also correct.
 
 vector< vector<int> > a(n,vector<int>(n)); //a is an 2D (n*n) vector, from HackerRank
 
@@ -1483,6 +1535,10 @@ int *p = a;
 
 int arr[3][4];
 int arr[2][3] = {{1,2},{3,4},{5,6}};
+
+Fill in an array with the same values:
+int arr[5];
+std::fill_n(arr, 5, 2); //Now arr = {2, 2, 2, 2, 2}
 
 tao: practice shows that the type of the array size can be int, but it should be const:
 const int aSize = 3;
