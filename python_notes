@@ -293,6 +293,15 @@ The True and False are called Boolean types and you can consider them to be equi
 if True:
     print('Yes, it is true')
 
+--
+Print the type of a variable:
+
+>>> i = 123
+>>> type(i)
+<type 'int'>
+>>> type(i) is int
+True
+
 ==
 (findnull)
 (findnone)
