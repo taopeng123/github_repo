@@ -1,7 +1,4 @@
-cpp stopa:
-Both book and this note: search for "stopa"
-
-Review stopa: stopareview
+Stopa: p216, The sizeof operator
 
 ==
 findcbegin                   C begin
@@ -40,8 +37,6 @@ findinclude                  Need to include
 findheader                   Headers
 findcout                     cout
 findcin                      cin 
-findand                      Operators
-findoperator                 Operators
 findmath                     Math operators
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
@@ -72,6 +67,12 @@ findsplit                    split a string
 findvector                   vector
 finditerator                 iterator
 findarray                    array
+findand                      AND operator
+findoperator                 operators
+findincrement                ++ and -- operators
+finddecrement                ++ and -- operators
+find++                       ++ and -- operators
+find--                       ++ and -- operators
 
 =============
 (findcbegin)
@@ -199,7 +200,7 @@ if(...) {
 }
 
 --
-a >= 0 ? a : -a
+string finalgrade = (grade < 60) ? "fail" : "pass";
 
 ==
 (findswitchc)
@@ -654,6 +655,13 @@ bool test = false;
 
 The word nullptr is a pointer literal.
 
+It is usually a bad idea to use the boolean literals true and false as operands in a comparison. For example:
+if (val == true) { /* ...   */ }
+
+Better way:
+if (val)  { /*  ...  */ }
+
+
 --
 (findcast)
 (findconvertdatatype)
@@ -949,13 +957,6 @@ $ addItems <infile >outfile
 
 Our program has been compiled into an executable file named "addItems". 
 Note it is not infile enclosed in <>, but it is < acting on infile, and > acting on outfile. 
-
-==
-(findand)
-(findoperator)
-Operators:
-
-Logical AND: &&
 
 ==
 (findmath)
@@ -1301,16 +1302,6 @@ s1 <= s2 //Comparisons are case-sensitive and use dictionary ordering.
 From online: create a string with five dot characters:
 string foo = string(5, '.') // foo = "....."
 
-tao: convert a char array to string (from online: Note that this only works for constant NULL-terminated C-strings.)
-char a1[2] = {'a', 'b', '\0'};
-string str1(a1);
-
-from online: convert a string to char array:
-string temp = "cat";
-char * tab2 = new char [temp.length()+1];
-strcpy (tab2, temp.c_str());
-
-
 string::size_type:
 The string class—and most other library types—defines several companion types. These companion types make it possible to use the library types in a machine-independent manner. The type size_type is one of these companion types. Although we don’t know the precise type of string::size_type, we do know that it is an unsigned type big enough to hold the size of any string. Because size returns an unsigned type, it is essential to remember that expressions that mix signed and unsigned data can have surprising results. You can avoid problems due to conversion between unsigned and int by not using ints in expressions that use size().
 
@@ -1386,6 +1377,23 @@ cout << endl;
 
 Output:
 Helo how are you
+
+--
+C-style charater strings are null terminated char arrays. 
+
+C-style charater string functions: 
+strlen, strcmp, strcat, strcpy.
+
+For most applications, in addition to being safer, it is also more efficient to use library strings rather than C-style strings.
+
+tao: convert a char array to string (from online: Note that this only works for constant NULL-terminated C-strings.)
+char a1[2] = {'a', 'b', '\0'};
+string str1(a1);
+
+from online: convert a string to char array:
+string temp = "cat";
+char * tab2 = new char [temp.length()+1];
+strcpy (tab2, temp.c_str());
 
 ==
 (findvector)
@@ -1531,6 +1539,7 @@ array
 int a[10]; // array of 10 ints. The elements are default initialized.
 int a[3] = {0,1,2};
 int a[] = {0,1,2};
+unsigned scores[11] = {}; // 11 buckets, all value initialized to 0
 int *p = a;
 
 int arr[3][4];
@@ -1540,22 +1549,19 @@ Fill in an array with the same values:
 int arr[5];
 std::fill_n(arr, 5, 2); //Now arr = {2, 2, 2, 2, 2}
 
+As in the case of string or vector, it is best to use a range for when we want to traverse the entire array.
+
+for (auto i : scores)
+    cout << i << " ";  
+
+--
 tao: practice shows that the type of the array size can be int, but it should be const:
 const int aSize = 3;
 char a[aSize] = {'A', 'B', 'C'};
 
-//Principle: the symbol that is closest to the variable name comes to the first in the type name
-int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
-int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
-int& refs[10] = ... // error: no arrays of references
-int (&arrRef)[10] = arr; // arrRef is a reference, which refers to an array of ten ints
-int* (&arry)[10] = ptrs; // arry is a reference to an array of ten pointers
-
-As with vector, arrays hold objects. Thus, there are no arrays of references. Because an array is an object, we can define both pointers and references to arrays.
+The number of elements in an array is part of the array’s type. As a result, the dimension must be known at compile time, which means that the dimension must be a constant expression. 
 
 Because arrays have fixed size, they sometimes offer better run-time performance for specialized applications. However, that run-time advantage comes at the cost of lost flexibility.
-
-The number of elements in an array is part of the array’s type. As a result, the dimension must be known at compile time, which means that the dimension must be a constant expression. 
 
 Tao: in C++, there is no function to find array size (different from Java). So if need to use size, should not use array in the beginning, use vector instead. <- Confirmed later from online (including recommending using vector). If you must use the size of an array, you can do it as below:
 
@@ -1567,9 +1573,198 @@ char a1[] = {'C', '+', '+'}; // size = 3.
 char a2[] = {'C', '+', '+', '\0'}; // size = 4
 char a3[] = "C++"; // size = 4, null terminator added automatically
 
+--
+When we use a variable to subscript an array, we normally should define that variable to have type size_t. size_t is a machine-specific unsigned type that is guaranteed to be large enough to hold the size of any object in memory. The size_t type is defined in the cstddef header.
+
+--
+//Principle: the symbol that is closest to the variable name comes to the first in the type name
+int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
+int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
+int& refs[10] = ... // error: no arrays of references
+int (&arrRef)[10] = arr; // arrRef is a reference, which refers to an array of ten ints
+int* (&arry)[10] = ptrs; // arry is a reference to an array of ten pointers
+
+As with vector, arrays hold objects. Thus, there are no arrays of references. Because an array is an object, we can define both pointers and references to arrays.
+
+When we use an array, the compiler ordinarily converts the array to a pointer.
+
+--
+Although we can compute an off-the-end pointer, doing so is error-prone. To make it easier and safer to use pointers, the new library includes two functions, named begin and end.
+
+int *beg = begin(ia); // pointer to the first element in ia
+int *last = end(ia);  // pointer one past the last element in ia
+
+These functions are defined in the iterator header.
+
+A pointer “one past” the end of a built-in array behaves the same way as the iterator returned by the end operation of a vector.
+
+As with iterators, subtracting two pointers gives us the distance between those pointers. 
+
+The result of subtracting two pointers is a library type named ptrdiff_t. Like size_t,the ptrdiff_t type is a machine-specific type and is defined in the cstddef header. Because subtraction might yield a negative distance, ptrdiff_t is a signed integral type.
+
+We can use the subscript operator on any pointer, as long as that pointer points to an element (or one past the last element) in an array:
+
+int *p = &ia[2];  // p points to the element indexed by 2
+int j = p[1];     // p[1] is equivalent to *(p + 1),
+                  // p[1] is the same element as ia[3]
+int k = p[-2];    // p[-2] is the same element as ia[0]
+
+--
+string *p = &nums[0];   // p points to the first element in nums
+
+When we use an array, the compiler automatically substitutes a pointer to the first element:
+
+string *p2 = nums;      // equivalent to p2 = &nums[0]
+
+when we use an array as an
+initializer for a variable defined using auto (§ 2.5.2, p. 68), the deduced type is a
+pointer, not an array:
+
+int ia[] = {0,1,2,3,4,5,6,7,8,9}; // ia is an array of ten ints
+auto ia2(ia); // ia2 is an int* that points to the first element in ia
+
+It is worth noting that this conversion does not happen when we use decltype. The type returned by decltype(ia) is array of ten ints:
+
+decltype(ia) ia3 = {0,1,2,3,4,5,6,7,8,9}; //Tao: decltype(ia) returns a type name
+ia3[4] = i; // ok: assigns the value of i to an element in ia3
+
+Pointers to array elements support the same operations as iterators on vectors or strings. For example, we can use the increment operator to move from one element in an array to the next:
+  
+int arr[] = {0,1,2,3,4,5,6,7,8,9};
+int *p = arr; // p points to the first element in arr
+++p;          // p points to arr[1]
+
+--
+Using an Array to Initialize a vector
+ 
+We noted that we cannot initialize a built-in array from another array. Nor can we initialize an array from a vector. However, we can use an array to initialize a vector. To do so, we specify the address of the first element and one past the last element that we wish to copy:
+
+int int_arr[] = {0, 1, 2, 3, 4, 5};
+vector<int> ivec(begin(int_arr), end(int_arr));
+
+The specified range can be a subset of the array:
+vector<int> subVec(int_arr + 1, int_arr + 4);
+
+--
+Modern C++ programs should use vectors and iterators instead of built-in arrays and pointers, and use strings rather than C-style array-based character strings.
+
+--
+Multidimensional Arrays
+
+Strictly speaking, there are no multidimensional arrays in C++. What are commonly referred to as multidimensional arrays are actually arrays of arrays.
+
+int ia[3][4]; // array of size 3; each element is an array of ints of size 4
+
+int arr[10][20][30] = {0}; // initialize all elements to 0
+
+In a two-dimensional array, the first dimension is usually referred to as the row and the second as the column.
+
+Multidimensional arrays may be initialized by specifying bracketed values for each row:
+
+int ia[3][4] = {    
+    {0, 1, 2, 3},   
+    {4, 5, 6, 7},   
+    {8, 9, 10, 11}  
+};
+
+The nested braces are optional. The following initialization is equivalent, although considerably less clear:
+
+int ia[3][4] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+Under the new standard we can simplify the previous loop by using a range for:
+
+size_t cnt = 0;
+
+for (auto &row : ia)        
+    for (auto &col : row) { 
+        col = cnt;          
+        ++cnt;            
+    }
+
+In the previous example, we used references as our loop control variables because we wanted to change the elements in the array. However, there is a deeper reason for using references.
+
+Had we neglected the reference and written these loops as:
+ 
+for (auto row : ia)
+    for (auto col : row)
+ 
+our program would not compile. As before, the first for iterates through ia, whose elements are arrays of size 4. As a result, in this loop the type of row is int*. The inner for loop is illegal, it attempts to iterate over an int*
+
+As with any array, when we use the name of a multidimensional array, it is automatically converted to a pointer to the first element in the array (tao: note this is not an actual element, but an inner array):
+
+int ia[3][4]
+int (*p)[4] = ia; // p points to an array of four ints
+
+The result of *p is an array of four ints. As usual, when we use an array, it is converted automatically to a pointer to its first element.
+
 ==
-stopareview
-==
-stopa: 166
-3.5.2. Accessing the Elements of an Array
+(findoperator)
+(findand)
+Operators
+
+Logical operators:
+AND: &&
+OR:  ||
+NOT: !
+
+--
+Bitwise operators:
+AND: &
+OR:  |
+XOR: ^ (eg: expr1 ^ expr2)
+NOT: ~ (eg: ~expr) 
+Left shift: << (eg: expr1 << expr2)
+Right shift: >> (eg: expr1 >> expr2)
+
+a^b is equivalent as a != b
+
+The left-shift operator (the << operator) inserts 0-valued bits on the right. The behavior of the right-shift operator (the >> operator) depends on the type of the left-hand operand: If that operand is unsigned, then the operator inserts 0-valued
+bits on the left; if it is a signed type, the result is implementation defined—either copies of the sign bit or 0-valued bits are inserted on the left.
+
+The bitwise NOT operator (the ~ operator) generates a new value with the bits of its operand inverted. Each 1 bit is set to 0; each 0 bit is set to 1.
+
+Because there are no guarantees for how the sign bit is handled, we strongly recommend using unsigned types with the bitwise operators.
+
+Overloaded versions of these operators for IO: 
+cout << "Helo" << endl;
+
+--
+Remainder (modulus) operator: %
+
+--
+Order of Evaluation
+
+Rember: ->|
+
+--
+Lvalues and Rvalues
+
+Every expression in C++ is either an rvalue or an lvalue. lvalues could stand on the left-hand side of an assignment whereas rvalues could not. In C++, the distinction is less simple. Roughly speaking, when we use an object as an rvalue, we use the object’s value (its contents). When we use an object as an lvalue, we use
+the object’s identity (its location in memory).
+
+--
+In assignment, if the types of the left and right operands differ, the right-hand operand is converted to the type of the left.
+
+--
+Compound assignments:
++=   -=   *=   /=   %=   (arithmetic operators)
+<<=  >>=   &=   ^=   |=  (bitwise operators)
+
+--
+(findincrement)
+(finddecrement)
+(find++)
+(find--)
+The increment (++) and decrement (--) operators
+
+int i = 0;
+++i; // i = 1. Prefix returns new value 1 (remeber: ee)
+i++; // i = 1. Postfix returns old value 0 (remember: oo)
+
+Readers from a C background might be surprised that we use the prefix increment in the programs we’ve written. The reason is simple: The prefix version avoids unnecessary work. It increments the value and returns the incremented version. The postfix operator must store the original value so that it can return the unincremented value as its result. If we don’t need the
+unincremented value, there’s no need for the extra work done by the postfix operator.
+
+--
+p->size() is equivalent to (*p).size()
+
 
