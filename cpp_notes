@@ -64,6 +64,8 @@ findescape                   Escape sequence
 findstring                   string
 findsubstring                Substring (get and find substring)
 findsplit                    split a string
+findargs                     Command line argument 
+findcommandlineargument      Command line argument 
 findvector                   vector
 finditerator                 iterator
 findarray                    array
@@ -619,6 +621,12 @@ Common suffix for C++ programs:
 Compile:
 g++ -o file_name file_name.cc
 
+Using C++ 11, in my Thinkpad (recommended to always compile in this way in my Thinkpad):
+g++ -std=c++0x -o file_name file_name.cc
+
+Using C++ 11, in Mac:
+g++ -std=c++11 -o file_name file_name.cc
+
 Simpler way to compile and run:
 g++ foo.c
 ./a.out
@@ -952,11 +960,28 @@ getline(is, s) //Reads a line of input from is into s. Returns is.
 (findwritetofile)
 Read from file and output to file
 
-In command line:
-$ addItems <infile >outfile
+The following function reads all contents in the input file, and write them into output file. Note that if in my Thinkpad, it needs to be compiled in C++ 11.
 
-Our program has been compiled into an executable file named "addItems". 
-Note it is not infile enclosed in <>, but it is < acting on infile, and > acting on outfile. 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+using namespace std;
+
+// g++ -std=c++0x -o convert convert.cc
+void process_one_file(string input_file_name, string output_file) { 
+    ifstream input_file(input_file_name);
+    ofstream output_file(output_file_name);
+
+    string line;
+
+    while(getline(input_file, line)) {
+        output_file << line << endl;
+    }
+
+    output_file.close();
+    input_file.close();
+}
 
 ==
 (findmath)
@@ -1331,6 +1356,19 @@ s2.append("helo"); // equivalent as below. The parameter of append() can only be
 s.insert(s.size(), "helo"); 
 
 --
+In some computers (like my Thinkpad), some functions (like ifstream) needs the input to string to be defined as type: const char*, for example:
+
+const char* filename = "helo";
+ifstream input_file(filename);
+
+However, I can use string instead of const char* if compile using std C++ 11.
+
+In some computers (like the Mac), it can be written as:
+
+string filename = "helo";
+ifstream input_file(filename);
+
+--
 (findsubstring)
 Substring (get and find)
 
@@ -1394,6 +1432,28 @@ from online: convert a string to char array:
 string temp = "cat";
 char * tab2 = new char [temp.length()+1];
 strcpy (tab2, temp.c_str());
+
+==
+(findargs)                    
+(findcommandlineargument)      
+Command line argument 
+
+Note that if in my Thinkpad, the following should be compiled in C++ 11.
+
+#include <string>
+using namespace std;
+
+int main(int argc, char** argv) {
+    int nfiles = stoi(argv[1]); // If run as: ./main 5, then argv[1] = "5"
+    cout << "nfiles = " << nfiles << endl;
+    return 0;
+}
+
+Run the program:
+./main 5
+
+Then the output is:
+nfiles = 5
 
 ==
 (findvector)
