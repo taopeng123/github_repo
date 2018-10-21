@@ -1,0 +1,295 @@
+For the Operation Hwang-Chue
+
+stopa: 99, boolean
+
+==
+findcompile                     Compile and execute Java code
+findimport                      Need to import
+findsamplecode                  Sample Java code
+findargs                        args
+finddecimalformat               DecimalFormat
+finddatatypes                   Data types
+findcast                        Cast
+findoperators                   Operators
+findnegativenumbers             Negative numbers
+findinput                       Input & output
+findread                        Input & output
+findscanner                     Input & output
+findnamedconstants              Named constants
+findtime                        Time
+
+==
+This note is from the book of Y. Daniel Liang.
+
+It uses Java SE 8.
+
+==
+Oracle releases each version with a Java Development Tookit (JDK). For Java SE 8, the Java Development Toolkit is called JDK 1.8 (also known as Java 8 or JDK 8).
+
+==
+You save a Java program in a .java file and compile it into a .class file. The .class file is executed by the Java Virtual Machine.
+
+==
+
+Source code
+-> Compile source code, eg, javac Welcome.java
+-> Bytecode
+-> Run Bytecode, eg, java Welcome
+-> Result
+
+You save a Java program in a .java file and compile it into a .class file. The .class file
+is executed by the Java Virtual Machine.
+
+The source file must end with the extension .java and must have the samde exact name as the public class name.
+
+The Java language is a high-level language, but Java bytecode is a low-level language. The bytecode is similar to machine instructions but is architecture neutral and can run on any platform that has a Java Virtual Machine (JVM),
+
+To execute a Java program is to run the program’s bytecode. You can execute the bytecode
+on any platform with a JVM, which is an interpreter. It translates the individual instructions in the bytecode into the target machine language code one at a time rather than the whole program as a single unit. Each step is executed immediately after it is translated.
+
+==
+(findcompile)
+Compile and execute Java code:
+
+javac Welcome.java
+java Welcome
+
+==
+(findimport)
+Need to import
+
+java.util.*:
+HashMap, HashSet, Stack, Queue, ArrayList, Arrays, Collections, Scanner, Comparator, Iterator
+
+No need to import:
+String, Math, Collection (not Collections), Character
+
+--
+There are two types of import statements: specific import and wildcard import. The specific import specifies a single class in the import statement. For example, the following statement imports Scanner from the package java.util
+
+import java.util.Scanner;
+
+The wildcard import imports all the classes in a package by using the asterisk as the
+wildcard. For example, the following statement imports all the classes from the package java.util
+
+import java.uitl.*;
+
+
+==
+(findsamplecode)
+Sample Java code
+
+public class Welcome {
+	public static void main(String[] args) { 
+		System.out.println("Welcome to Java!");
+	}
+}
+
+注意參數(String[] args)必須寫, 否則編譯器把main認為另一個函數, 而報錯說main函數不存在
+
+Every Java program must have at least one class. A class may contain several methods. The main method is the entry point where the program begins execution. 
+
+==
+(findargs)
+args
+
+javac Test.java 
+java Test how are you
+
+public class Test{ 
+	public static void main(String[] args){ 
+		//args[0] is how 
+		//args[1] is are 
+		//args[2] is you
+    } 
+} 
+
+String[] args: args can be changed to any name
+
+==
+(finddecimalformat)
+DecimalFormat
+
+import java.text.DecimalFormat;
+double km = 1.60934;
+DecimalFormat format = new DecimalFormat("#.##");
+return String.valueOf(format.format(km));
+返回的即為"1.61", 注意會四舍五入.
+
+==
+(finddatatypes)
+Data types
+
+Java uses four types for integers: byte, short, int, and long.
+Java uses two types for floating-point numbers: float and double.
+
+Numeric data types:
+
+Type      Storage size
+byte      8-bit sized
+short     16-bit sized
+int       32-bit sized (4 bytes)
+long      64-bit sized
+float     32-bit IEEE 754
+double    64-bit IEEE 754
+
+The range of int is: (-2147483648 to 2147483647), 這也是Integer.MIN_VALUE
+和Integer.MAX_VALUE的值, 即二十憶. 共10位數.
+
+1. Integer.MIN_VALUE的絶對值比Integer.MAX_VALUE大1
+2. Integer.MAX_VALUE的二進製即32個1(leetcode 201)
+
+--
+literal:
+
+An integer literal is assumed to be of the int type. To denote an integer literal of the long type, append the letter L or l to it. For example: 2147483648L or 2147483648l.
+
+By default, an integer literal is a decimal integer number. To denote a binary integer literal, use a leading 0b or 0B (zero B), to denote an octal integer literal, use a leading 0 (zero), and to denote a hexadecimal integer literal, use a leading 0x or 0X (zero X).
+
+By default, a floating-point literal is treated as a double type value. For example, 5.0 is considered a double value, not a float value. You can make a number a float by appending the letter f or F , and you can make a number a double by appending the letter d or D . For example, you can use 100.2f or 100.2F for a float number, and 100.2d or 100.2D for a double number.
+
+A float value has 7 to 8 number of significant digits and a double value has 15 to 17 number of significant digits.
+
+--
+Scientific notation:
+
+1.23456E2, 1.23456E+2, 1.23456E-2 
+E (or e ) represents an exponent and can be in either lowercase or uppercase.
+
+--
+To improve readability, Java allows you to use underscores between two digits in a
+number literal. For example, the following literals are correct.
+long ssn = 232_45_4519;
+long creditCardNumber = 2324_4545_4519_3415L;
+However, 45_ or _45 is incorrect. The underscore must be placed between two digits.
+
+==
+(findnegativenumbers)
+Negative numbers
+
+負數的表示:
+C, C++, Java基本上都用two's complement.
+(http://stackoverflow.com/questions/1664751/why-c-c-java-does-not-use-one-complement)
+
+對two's complement解釋得最好的:
+(http://mathforum.org/library/drmath/view/55924.html)
+Mathematically, there's nothing wrong with writing -53 as -110101,  using a separate negative sign as we do in decimal. In computers, the usual method for storing signed numbers is called "twos-complement": to negate a number, you take the complement (changing 0 to 1 and 1 to 0) and add 1:
+
+      53 --> 00110101
+     -53 --> 11001010 + 1 = 11001011
+
+Since any negative number has the leftmost bit set, the effect of this is to take the upper half of the range of numbers (Tao: 128 to 255) that can be stored in a fixed number of bits (eight bits in my example) and use them for negative numbers. The numbers 0 to 127 are positive; numbers 128 to 255 represent -128 to -1. You can still add two numbers 
+just as you do with unsigned numbers:
+
+       -53 =    11001011
+     +  63 =    00111111
+     -----   -----------
+        10 = (1)00001010
+
+In this case an extra carry digit is generated, but it is ignored and the result is the correct answer.
+
+You can learn more about this by using a searcher like Google (http://www.google.com/) to look for the phrase  "twos complement."
+
+From Wiki (Signed number representation):
+
+Binary value  Two's complement interpretation
+00000000	  0	
+00000001	  1	
+⋮	⋮	⋮
+01111110	  126	
+01111111	  127	
+10000000	  −128	
+10000001	  −127	
+10000010	  −126	
+⋮	⋮	⋮
+11111110	  −2	
+11111111	  −1
+
+==
+(findinput)
+(findread)
+(findscanner)
+
+Input & output
+
+System.out就是monitor
+System.in就是keyboard
+
+Java uses System.out to refer to the standard output device and System.in to the standard input device. By default, the output device is the display monitor and the input device is the keyboard. 
+
+To perform console output, you simply use the println method to display a primitive value or a string to the console. Console input is not directly supported in Java, but you can use the Scanner class to create an object to read input from System.in, as follows:
+
+import java.util.Scanner;
+Scanner input = new Scanner(System.in);
+
+You can invoke the nextDouble() method to read a double value as follows:
+
+double number1 = input.nextDouble();
+double number2 = input.nextDouble();
+double number3 = input.nextDouble();
+
+You may enter three numbers separated by spaces, then press the Enter key, or enter each number followed by a press of the Enter key
+
+Methods for Scanner:
+nextByte(), nextShort(), nextInt(), nextLong(), nextFloat(), nextDouble()
+
+==
+Java does not report warnings or errors on overflow, so be careful when working with num-
+bers close to the maximum or minimum range of a given type.
+
+==
+(findcast)
+Cast
+
+(int) 1.7
+
+Casting does not change the variable being cast.
+
+==
+(findoperators)
+Operators
+
+Remainder operator: %
+
+Math.pow(a, b): returns a^b
+
+count += 1;
+
+All the augmented assignment operators: 
++=, -=, +=, *=, /=. &=
+
+--
+++i: returns the new value
+i++: returns the old value
+
+Remember: pre-new, post-old 
+
+==
+The variable declaration tells the compiler to allocate appropriate memory space for the variable based on its data type. The syntax for declaring a variable is
+
+datatype variableName;
+
+Examples:
+
+int count;
+int i, j, k;
+int count = 1;
+
+==
+(findnamedconstants)
+Named constants
+
+A named constant, or simply constant, represents permanent data that never changes. A constant must be declared and initialized in the same statement. Example:
+
+final double PI = 3.14159; // Declare a constant
+
+==
+(findtime)
+Time
+
+You can invoke System.currentTimeMillis() to return the current time.
+
+The currentTimeMillis method in the System class returns the current time in milliseconds elapsed since midnight, January 1, 1970 GMT. This time is known as the UNIX epoch. The epoch is the point when time starts, and 1970 was the year when the UNIX operating system was formally introduced.
+
+
+
