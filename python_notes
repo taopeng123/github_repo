@@ -7,6 +7,7 @@ findcomment                        Comment in Python
 finddatatypes                      Data types
 findescape                         Escape Sequences
 findoperators                      Operators
+findmath                           Math functions
 findand                            and
 findor                             or
 findnot                            not
@@ -564,6 +565,13 @@ Right Shift: >>
 Left Shift: <<
 
 ==
+(findmath)
+Math functions
+
+import math 
+math.exp(-45.17) # The method exp() returns returns exponential of x: e^x.
+
+==
 (findprint)
 print
 
@@ -694,6 +702,37 @@ fruits = ['banana', 'apple',  'mango']
 
 for fruit in fruits:        
    print fruit
+
+--
+Question:
+
+Is there a way to step between 0 and 1 by 0.1?
+
+I thought I could do it like the following, but it failed:
+
+for i in range(0, 1, 0.1):
+    print i
+Instead, it says that the step argument cannot be zero, which I did not expect.
+
+Answer:
+
+Rather than using a decimal step directly, it's much safer to express this in terms of how many points you want. Otherwise, floating-point rounding error is likely to give you a wrong result.
+
+You can use the linspace function from the NumPy library (which isn't part of the standard library but is relatively easy to obtain). linspace takes a number of points to return, and also lets you specify whether or not to include the right endpoint:
+
+>>> np.linspace(0,1,11)
+array([ 0. ,  0.1,  0.2,  0.3,  0.4,  0.5,  0.6,  0.7,  0.8,  0.9,  1. ])
+>>> np.linspace(0,1,10,endpoint=False)
+array([ 0. ,  0.1,  0.2,  0.3,  0.4,  0.5,  0.6,  0.7,  0.8,  0.9])
+If you really want to use a floating-point step value, you can, with numpy.arange.
+
+>>> import numpy as np
+>>> np.arange(0.0, 1.0, 0.1)
+array([ 0. ,  0.1,  0.2,  0.3,  0.4,  0.5,  0.6,  0.7,  0.8,  0.9])
+Floating-point rounding error will cause problems, though. Here's a simple case where rounding error causes arange to produce a length-4 array when it should only produce 3 numbers:
+
+>>> numpy.arange(1, 1.3, 0.1)
+array([1. , 1.1, 1.2, 1.3])
 
 ==
 (findfunction)

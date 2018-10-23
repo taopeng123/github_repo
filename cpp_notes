@@ -64,6 +64,7 @@ findescape                   Escape sequence
 findstring                   string
 findsubstring                Substring (get and find substring)
 findsplit                    split a string
+findfind                     find the position of a substring in a string
 findargs                     Command line argument 
 findcommandlineargument      Command line argument 
 findvector                   vector
@@ -1320,7 +1321,7 @@ string literal: the compiler appends a null character ('\0') to every string lit
 s.empty() //Returns bool
 s.size() //Returns number, which is a string::size_type, see below
 s[3] //Returns a reference to the char. The subscript operator (the [ ] operator) takes a string::size_type.
-s[0] = 'a'; //strings in C++ can be changed! Different from Java.
+s[0] = 'a'; //Charaters in a string can be changed in C++! Different from Java.
 s1 + s2 //Returns string
 s1 += s2 //Equivalent to s1 = s1 + s2
 s1 = s2 //Replaces characters in s1 with a copy of s2.
@@ -1393,6 +1394,8 @@ Note: "found!" will be printed if s2 is a substring of s1, both s1 and s2 are of
 (findsplit)
 split a string
 
+** Split by a char **
+
 Problem: Split a string by a delim, and return a vector of strings containing no delim
 
 Use stringstream getline
@@ -1419,6 +1422,47 @@ cout << endl;
 
 Output:
 Helo how are you
+
+** Split by a string **
+
+You can use the std::string::find() function to find the position of your string delimiter, then use std::string::substr() to get a token.
+
+Example:
+
+std::string s = "scott>=tiger";
+std::string delimiter = ">=";
+std::string token = s.substr(0, s.find(delimiter)); // token is "scott"
+
+(findfind)
+The find(const string& str, size_t pos = 0) function returns the position of the first occurrence of str in the string, or npos if the string is not found.
+Tao's example:
+string s = "helo";
+s.find("lo")// Returns: 2
+
+The substr(size_t pos = 0, size_t n = npos) function returns a substring of the object, starting at position pos and of length npos.
+
+If you have multiple delimiters, after you have extracted one token, you can remove it (delimiter included) to proceed with subsequent extractions (if you want to preserve the original string, just use  s = s.substr(pos + delimiter.length());):
+
+s.erase(0, s.find(delimiter) + delimiter.length());
+This way you can easily loop to get each token.
+
+Complete Example
+std::string s = "scott>=tiger>=mushroom";
+std::string delimiter = ">=";
+
+size_t pos = 0;
+std::string token;
+while ((pos = s.find(delimiter)) != std::string::npos) {
+    token = s.substr(0, pos);
+    std::cout << token << std::endl;
+    s.erase(0, pos + delimiter.length());
+}
+std::cout << s << std::endl;
+Output:
+
+scott
+tiger
+mushroom
 
 --
 C-style charater strings are null terminated char arrays. 
