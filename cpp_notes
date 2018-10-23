@@ -624,6 +624,8 @@ g++ -o file_name file_name.cc
 Using C++ 11, in my Thinkpad (recommended to always compile in this way in my Thinkpad):
 g++ -std=c++0x -o file_name file_name.cc
 
+When writing leetcode, I can still compile using -std=c++11 in my Thinkpad.
+
 Using C++ 11, in Mac:
 g++ -std=c++11 -o file_name file_name.cc
 
@@ -1097,6 +1099,8 @@ int *p = NULL;//Must #include<cstdlib>, modern programs should avoid using NULL 
 Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
 
 if(p) {...}//If p == 0, then it is false. Any nonzero pointer evaluates as true. This is consistent with converting int to bool.
+
+In Leetcode, if(p) is also equivalent to if(p != NULL).
 
 Two pointers are equal (using ==) if they hold the same address.
 
