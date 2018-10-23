@@ -65,6 +65,7 @@ findstring                   string
 findsubstring                Substring (get and find substring)
 findsplit                    split a string
 findfind                     find the position of a substring in a string
+findtrim                     trim
 findargs                     Command line argument 
 findcommandlineargument      Command line argument 
 findvector                   vector
@@ -1438,6 +1439,7 @@ The find(const string& str, size_t pos = 0) function returns the position of the
 Tao's example:
 string s = "helo";
 s.find("lo")// Returns: 2
+while((pos = s.find(delimiter)) != string::npos) {...}
 
 The substr(size_t pos = 0, size_t n = npos) function returns a substring of the object, starting at position pos and of length npos.
 
@@ -1480,6 +1482,42 @@ from online: convert a string to char array:
 string temp = "cat";
 char * tab2 = new char [temp.length()+1];
 strcpy (tab2, temp.c_str());
+
+==
+(findtrim)
+trim
+
+There is no standard way of trimming a string, but it’s possible to implement using the methods in the string class:
+
+Left trim: Use find_first_not_of() to find the characters to erase
+Right trim: Use find_first_of() to find the characters to erase
+Trim: Do a right trim followed by a left trim (or vice-versa)
+Use erase() to actually erase the characters.
+
+Here is my implementation. It defaults to trimming whitespace characters but you can specify any string of characters as the second argument.
+
+string& ltrim(string& str, const string& chars = "\t\n\v\f\r ") {
+    str.erase(0, str.find_first_not_of(chars));
+    return str;
+}
+ 
+string& rtrim(string& str, const string& chars = "\t\n\v\f\r ") {
+    str.erase(str.find_last_not_of(chars) + 1);
+    return str;
+}
+
+string& trim(string& str, const string& chars = "\t\n\v\f\r ") {
+    return ltrim(rtrim(str, chars), chars);
+}
+
+string extract_column_names(string line) {
+    return line + "\n";
+}
+
+Example:
+
+string str = " test ";
+trim(str);
 
 ==
 (findargs)                    
