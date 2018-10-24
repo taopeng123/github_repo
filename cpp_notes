@@ -69,6 +69,7 @@ findtrim                     trim
 findargs                     Command line argument 
 findcommandlineargument      Command line argument 
 findvector                   vector
+findset                      set
 finditerator                 iterator
 findarray                    array
 findand                      AND operator
@@ -1613,6 +1614,20 @@ vector<int> v;
 for(vector<int>::size_type i = 0; i < 10; ++i) {
     v[i] = i; // Wrong. Segmentation fault: 11. Because v is always an empty vector, so can not assign.
     v.push_back(i); // Correct
+}
+
+==
+(findset)
+set
+
+#include<set>
+
+set<string> set_a;
+set_a.insert("Hello");
+
+//Traverse set:
+for(set<string>::iterator it = set_a.begin(); it != set_a.end(); ++it) {
+  cout << *it << endl;
 }
 
 ==
