@@ -193,6 +193,68 @@ public:
     }
 };
 
+************************
+pr_206. Reverse Linked List, Easy 
 
+Question:
 
+Reverse a singly linked list.
 
+Example:
+
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL
+Follow up:
+
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+==
+Key:
+
+Iterative: Create a single node called pre. Each time move a node from the list to the right of pre.
+
+Recursive: Call reverseList(head -> next) to reverse all the nodes after head, and then add head to it appropriately.
+
+==
+History:
+
+E4 wrote the iterative code quickly and passed in one trial. Also wrote recursive code, and passed after changing a small mistake. But my recursive code is to split the list into two halves and call reverseList on each of the havles, which is not as good as the solution in discussion. So I recorded the code from discussion here for recursive code.
+
+==
+Code:
+
+Iterative:
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(!head || !head->next) return head;
+
+        ListNode* pre = new ListNode(0);
+        ListNode* cur = head;
+
+        while(cur) {
+            ListNode* curNext = cur->next;
+            cur->next = pre->next;
+            pre->next = cur;
+            cur = curNext;
+        }        
+
+        return pre->next;
+    }
+};
+
+Recursive (from leetcode solution):
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !(head -> next)) {
+            return head;
+        }
+        ListNode* node = reverseList(head -> next);
+        head -> next -> next = head;
+        head -> next = NULL;
+        return node;
+    }
+};
