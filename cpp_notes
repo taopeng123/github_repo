@@ -1100,9 +1100,11 @@ int *p = NULL;//Must #include<cstdlib>, modern programs should avoid using NULL 
 
 Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
 
-if(p) {...}//If p == 0, then it is false. Any nonzero pointer evaluates as true. This is consistent with converting int to bool.
+if(p) {...} is equivalent to if(p != NULL) {...}. If p == 0, then p = false. Any nonzero pointer evaluates as true. This is consistent with converting int to bool.
 
-In Leetcode, if(p) is also equivalent to if(p != NULL).
+if(!p) is equivalent to if(p == NULL) <- Remember: if p buxin, ie p == NULL
+if(p) is equivalent to if(p != NULL) <- Rememebr: if p xin, ie p != NULL
+
 
 Two pointers are equal (using ==) if they hold the same address.
 
