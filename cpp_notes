@@ -649,6 +649,8 @@ int main() {
     return 0;
 }
 
+Note that the main() function should be outside any class, which is opposite to Java.
+
 ==
 (finddatatype)                 
 Data types
@@ -1930,4 +1932,25 @@ unincremented value, there’s no need for the extra work done by the postfix op
 --
 p->size() is equivalent to (*p).size()
 
+--
+(findsizeof)
+sizeof
 
+The sizeof operator returns the size, in bytes, of an expression or a type name. The result of sizeof is a constant expression of type size_t. The operator takes one of two forms:
+ 
+sizeof (type)
+sizeof expr
+ 
+In the second form, sizeof returns the size of the type returned by the given expression. The sizeof operator is unusual in that it does not evaluate its operand:
+
+sizeof an array is the size of the entire array. It is equivalent to taking the sizeof the element type times the number of elements in the array. Note that sizeof does not convert the array to a pointer.
+
+(Tao did not understand):
+sizeof a string or a vector returns only the size of the fixed part of these types; it does not return the size used by the object’s elements.
+
+Example:
+
+constexpr size_t sz = sizeof(ia)/sizeof(*ia);
+int arr2[sz];  // ok sizeof returns a constant expression § 2.4.4 (p. 65)
+ 
+Because sizeof returns a constant expression, we can use the result of a sizeof expression to specify the dimension of an array.

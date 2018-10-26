@@ -592,16 +592,23 @@ print('{0} is {1} years old'.format(name, age))
 print('{name} is {age} years old'.format(name = 'Kevin', age = 40))
 print('Age is', age) # Output: Age is 25, note a space is added between "Age is" and "25".
 
-The print function prints a line each time.
-
-# In Jupyter Notebook, it is:
-x # Can also print
-print x
-print "parent =", parent # Displays: parent = 10
-
 By deafult, the print() function prints the text as well as an automatic newline to the screen. Tao: to override it, use this:
 print(line, end = 'a')
 this makes the newline character replaced by 'a'.
+
+--
+From online:
+
+print in Python 3 vs Python 2:
+
+Old: print "The answer is", 2*2
+New: print("The answer is", 2*2)
+
+Old: print x,           # Trailing comma suppresses newline
+New: print(x, end=" ")  # Appends a space instead of a newline
+
+Old: print              # Prints a newline
+New: print()            # You must call the function!
 
 ==
 (findreadfrominput)
