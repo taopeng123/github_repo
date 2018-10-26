@@ -315,7 +315,11 @@ None
 <class 'Nonetype'>
 
 另外，None是没有像len,size等属性的，要判断一个变量是否为None，直接使用
-if a==None:
+if a == None. 
+
+Same as C++:
+"if a" is equivalent to "if a != None"
+"if not a" is equivalent to "if a == None"
 
 再者，注意None与布尔类型的区别，布尔类型只包括两个：True和False（注意它的大小写）
 但python是把0，空字符串‘ ’和None都看作False，把其他数值和非空字符串都看作True
@@ -1295,7 +1299,7 @@ class
 
 Tao: about self:
 1. In a class, all member methods should have a self parameter: def funcName(self, x, y). When calling this method, no need to insantiate this self parameter: funcName(2, 3).
-2. In a class, when using its own member variables or methods, should add self: self.variableName, self.func().
+2. In a class, when using its own member variables or methods, should add self: self.variableName, self.func(). This is true even when a member function in a class calls itself recursively, it still needs to add self.
 
 Tao: in a class, no need to define its member variables. Any variables can jump out suddenly like the self.name below.
 
