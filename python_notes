@@ -2359,6 +2359,10 @@ df['col2'].hist(bins = 20, label = 'col2')
 plot.legend(loc = 'upper right')
 plot.show()
 
+(did not work):
+Plot two columns of single DataFrame on Y axis:
+total_year_df.plot(x='year', y=['action', 'comedy'], figsize=(10,5), grid=True)
+
 --
 Add title and labels:
 
