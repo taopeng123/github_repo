@@ -1,4 +1,4 @@
-Stopa: p216, The sizeof operator
+stopa 243
 
 ==
 findcbegin                   C begin
@@ -78,6 +78,10 @@ findincrement                ++ and -- operators
 finddecrement                ++ and -- operators
 find++                       ++ and -- operators
 find--                       ++ and -- operators
+findsizeof                   sizeof
+commaoperator                Comma operator
+findif                       if 
+findswitch                   switch
 
 =============
 (findcbegin)
@@ -655,6 +659,10 @@ Note that the main() function should be outside any class, which is opposite to 
 (finddatatype)                 
 Data types
 
+The arithmetic types are divided into two categories: integral types (which include character and boolean types, tao: should also include int) and floating-point types.
+
+Tao: integral types means: int, character, boolean types. The concept of integral types will be used later.
+
 --
 (findbool)
 bool:
@@ -663,6 +671,7 @@ bool b = 42;
 int i = b; // i has value 1
 
 When we assign one non-bool types to a bool, the result is false if the value is 0, and true otherwise.
+
 When we use a bool in an arithmetic expression, its value always converts to either 0 or 1.
 
 The words true and false are literals of type bool:
@@ -675,7 +684,6 @@ if (val == true) { /* ...   */ }
 
 Better way:
 if (val)  { /*  ...  */ }
-
 
 --
 (findcast)
@@ -705,6 +713,22 @@ double b = (double) a;
 //double -> int
 double a = 3.0;
 double b = (int) a;
+
+--
+cast:
+
+The above "(int) a" is the old-style C++ casts. New styles are followings.
+
+Although necessary at times, casts are inherently dangerous constructs.
+
+Named Casts
+
+A named cast has the following form:
+cast-name<type>(expression);
+
+where type is the target type of the conversion, and expression is the value to be cast. The cast-name may be one of static_cast, dynamic_cast, const_cast, and reinterpret_cast.
+
+Old-style casts are less visible than are named casts. Because they are easily overlooked, it is more difficult to track down a rogue(流氓) cast.
 
 ==
 (findtypedef)
@@ -1102,6 +1126,9 @@ int *p = nullptr;
 int *p = NULL;//Must #include<cstdlib>, modern programs should avoid using NULL <- tao: practice confirms that cstdlib is also included in std namespace, so if we already wrote "using namespace std;", then we do not need to #include<cstdlib>
 
 Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
+
+There is an automatic conversion from arithmetic or pointer
+types to bool. If the pointer or arithmetic value is zero, the conversion yields false; any other value yields true
 
 if(p) {...} is equivalent to if(p != NULL) {...}. If p == 0, then p = false. Any nonzero pointer evaluates as true. This is consistent with converting int to bool.
 
@@ -1945,12 +1972,128 @@ In the second form, sizeof returns the size of the type returned by the given ex
 
 sizeof an array is the size of the entire array. It is equivalent to taking the sizeof the element type times the number of elements in the array. Note that sizeof does not convert the array to a pointer.
 
-(Tao did not understand):
-sizeof a string or a vector returns only the size of the fixed part of these types; it does not return the size used by the object’s elements.
+sizeof a string or a vector returns only the size of the fixed part of these types; it does not return the size used by the object’s elements. Tao's understanding: think of how vector and string is implememted using array and doubles its size when reached maximum, sizeof only takes the fixed part and may not return the correct size of a vector or string.
 
 Example:
 
 constexpr size_t sz = sizeof(ia)/sizeof(*ia);
-int arr2[sz];  // ok sizeof returns a constant expression § 2.4.4 (p. 65)
- 
+int arr2[sz];  // ok sizeof returns a constant expression 
+
 Because sizeof returns a constant expression, we can use the result of a sizeof expression to specify the dimension of an array.
+
+==
+(commaoperator)
+Comma operator
+
+The comma operator takes two operands, which it evaluates from left to right. Like
+the logical AND and logical OR and the conditional operator, the comma operator
+guarantees the order in which its operands are evaluated.
+
+The left-hand expression is evaluated and its result is discarded. The result of a
+comma expression is the value of its right-hand expression.
+
+Example:
+
+for(vector<int>::size_type ix = 0; ix != ivec.size(); ++ix, --cnt)
+ivec[ix] = cnt;
+
+This loop increments ix and decrements cnt in the expression in the for header. Both ix and cnt are changed on each trip through the loop.
+
+==
+The simplest statement is the empty statement, also known as a null statement. A null statement is a single semicolon:
+; // null statement
+
+A null statement is useful where the language requires a statement but the program’s logic does not. Such usage is most common when a loop’s work can be done within its condition.
+
+while (cin >> s && s != sought)
+	; // null statement
+
+Null statements should be commented. That way anyone reading the code can see that the statement was omitted intentionally.
+
+An empty block is equivalent to a null statement:
+
+while (cin >> s && s != sought)
+	{ } // empty block
+
+==
+(findif)
+if 
+
+int a;
+
+if (grade < 60)
+	a = 1;
+else
+	a = 2;
+
+
+if (grade == 2) {
+	a = 5;
+} else if (grade == 9) {
+	a = 8;
+}
+
+It is a common mistake to forget the curly braces when multiple statements must be executed as a block. To avoid such problems, some coding styles recommend always using braces after an if or an else (and also around the bodies of while and for statements).
+Doing so avoids any possible confusion. It also means that the braces are already in place if later modifications of the code require adding statements.
+
+==
+(findswitch)
+switch
+
+A switch statement provides a convenient way of selecting among a (possibly large) number of fixed alternatives.
+
+unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0;
+
+char ch;
+
+switch (ch) {
+	case 'a':
+		++aCnt;
+		break;
+	case 'e':
+		++eCnt;
+		break;
+	case 'i':
+		++iCnt;
+		break;
+	case 'o':
+		++oCnt;
+		break;
+	case 'u':
+		++uCnt;
+		break;
+}
+
+In this case, the break transfers control out of the switch.
+
+The case keyword and its associated value together are known as the case label. case labels must be integral constant expressions.
+
+char ch = getVal();
+int ival = 42;
+switch(ch) {
+	case 3.14: // error: noninteger as case label
+	case ival: // error: nonconstant as case label
+// . . .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
