@@ -1,4 +1,4 @@
-stopa 243
+stopa 259: 5.6. try Blocks and Exception Handling
 
 ==
 findcbegin                   C begin
@@ -82,6 +82,11 @@ findsizeof                   sizeof
 commaoperator                Comma operator
 findif                       if 
 findswitch                   switch
+findwhile                    while
+findfor                      for
+findbreak                    break
+findcontinue                 continue
+findgoto                     goto
 
 =============
 (findcbegin)
@@ -2042,7 +2047,7 @@ switch
 
 A switch statement provides a convenient way of selecting among a (possibly large) number of fixed alternatives.
 
-unsigned aCnt = 0, eCnt = 0, iCnt = 0, oCnt = 0, uCnt = 0;
+unsigned aCnt = 0, eCnt = 0, otherCunt = 0;
 
 char ch;
 
@@ -2053,18 +2058,12 @@ switch (ch) {
 	case 'e':
 		++eCnt;
 		break;
-	case 'i':
-		++iCnt;
-		break;
-	case 'o':
-		++oCnt;
-		break;
-	case 'u':
-		++uCnt;
-		break;
+ 	default:
+ 		++otherCunt;
+ 		break;
 }
 
-In this case, the break transfers control out of the switch.
+In this case, the break transfers control out of the switch. Forgetting a break Is a Common Source of Bugs.
 
 The case keyword and its associated value together are known as the case label. case labels must be integral constant expressions.
 
@@ -2075,25 +2074,94 @@ switch(ch) {
 	case ival: // error: nonconstant as case label
 // . . .
 
+It can be useful to define a default label even if there is no work for the default case. Defining an empty default section indicates to subsequent readers that the case was considered. If a switch ends with a default case that has no work to do, then the default label must be followed by a null statement or an empty block.
+
+==
+(findwhile)
+while
+
+while(a > 3) {
+	cout << a << endl;
+}
+
+--
+do while
+
+A do while statement is like a while but the condition is tested after the statement body completes. Regardless of the value of the condition, we execute the loop at least once.
+
+A do while ends with a semicolon after the parenthesized condition.
+
+Variables used in condition must be defined outside the body of the do while statement.
+
+// repeatedly ask the user for a pair of numbers to sum
+string rsp;  // used in the condition; can't be defined inside the do
+
+do {
+    cout << "please enter two values: ";
+    int val1 = 0, val2 = 0;
+    cin  >> val1 >> val2;
+    cout << "The sum of " << val1 << " and " << val2
+         << " = " << val1 + val2 << "\n\n"
+         << "More? Enter yes or no: ";
+    cin  >> rsp;
+} while (!rsp.empty() && rsp[0] != 'n');
+
+==
+(findfor)
+for
+
+for(int i = 0; i < 5; ++i) {
+	cout << i << endl;
+}
+
+for (decltype(v.size()) i = 0, sz = v.size(); i != sz; ++i)
+    v.push_back(v[i]);
+
+--
+Range for (in C++11):
+
+If we want to write to the elements in the sequence, the
+loop variable must be a reference type.
+
+vector<int> v = {0,1,2,3,4,5,6,7,8,9};
+
+// range variable must be a reference so we can write to the elements
+for (auto &r : v)   // for each element in v
+    r *= 2; // double the value of each element in v
+
+we cannot use a range for to add elements to a vector (or
+other container). 
+
+==
+(findbreak)
+break
+
+A break statement terminates the nearest enclosing while, do while, for, or switch statement. Execution resumes at the statement immediately following the terminated statement.
+
+for (auto it = buf.begin()+1; it != buf.end(); ++it) {
+	  if (*it == ' ')
+	       break; // leaves the for loop
+}
+
+==
+(findcontinue)
+continue
+
+A continue statement terminates the current iteration of the nearest enclosing loop and immediately begins the next iteration. A continue can appear only inside a for, while, or do while loop. 
+
+In the case of a while or a do while, execution continues by evaluating the condition. In a traditional for loop, execution continues at the expression inside the for header.
+
+==
+(findgoto)
+goto
+
+A goto statement provides an unconditional jump from the goto to a another statement in the same function. Programs should not use gotos. gotos make programs hard to understand and hard to modify.
 
 
+goto label;
+ 
+where label is an identifier that identifies a statement. A labeled statement is any statement that is preceded by an identifier followed by a colon:
 
+end: return;  // labeled statement; may be the target of a goto
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Label identifiers are independent of names used for variables and other identifiers.
