@@ -1152,6 +1152,26 @@ Variables defined inside a function ordinarily are not stored at a fixed address
 Tao: this is also the reason why my program did something wrong when I tried to return a pointer to a variable defined inside a function (see more below).
 
 --
+//Principle: the symbol that is closest to the variable name comes to the first in the type name
+int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
+int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
+int& refs[10] = ... // error: no arrays of references
+int (&arrRef)[10] = arr; // arrRef is a reference, which refers to an array of ten ints
+int* (&arry)[10] = ptrs; // arry is a reference to an array of ten pointers
+
+As with vector, arrays hold objects. Thus, there are no arrays of references. Because an array is an object, we can define both pointers and references to arrays.
+
+When we use an array, the compiler ordinarily converts the array to a pointer.
+
+--
+Pointer to vector: vector<int> *t; t->push_back(10);
+Vector of pointers: vector<int*> movies = ...
+
+--
+Reference to a vector: vector<int>& = ...
+There is no vector of references. 
+
+--
 Return pointer from a function (from online):
 
 It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable. Tao: otherwise the caller function would get a pointer containing wrong address value (from practice).
@@ -1616,6 +1636,32 @@ We can define vectors to hold objects of most any type. Because references are n
 vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
 
 --
+Vector iterator:
+
+// vector::begin/end
+#include <iostream>
+#include <vector>
+
+int main ()
+{
+  std::vector<int> myvector;
+  for (int i=1; i<=5; i++) myvector.push_back(i);
+
+  std::cout << "myvector contains:";
+  for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
+}
+Edit & Run
+
+--
+Concatenating two vectors:
+
+vector1.insert( vector1.end(), vector2.begin(), vector2.end() );
+
+--
 Convert array to vector:
 
 #include <iterator>
@@ -1774,17 +1820,6 @@ char a3[] = "C++"; // size = 4, null terminator added automatically
 --
 When we use a variable to subscript an array, we normally should define that variable to have type size_t. size_t is a machine-specific unsigned type that is guaranteed to be large enough to hold the size of any object in memory. The size_t type is defined in the cstddef header.
 
---
-//Principle: the symbol that is closest to the variable name comes to the first in the type name
-int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
-int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
-int& refs[10] = ... // error: no arrays of references
-int (&arrRef)[10] = arr; // arrRef is a reference, which refers to an array of ten ints
-int* (&arry)[10] = ptrs; // arry is a reference to an array of ten pointers
-
-As with vector, arrays hold objects. Thus, there are no arrays of references. Because an array is an object, we can define both pointers and references to arrays.
-
-When we use an array, the compiler ordinarily converts the array to a pointer.
 
 --
 Although we can compute an off-the-end pointer, doing so is error-prone. To make it easier and safer to use pointers, the new library includes two functions, named begin and end.
