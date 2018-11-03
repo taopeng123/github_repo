@@ -70,6 +70,10 @@ findargs                     Command line argument
 findcommandlineargument      Command line argument 
 findvector                   vector
 findset                      set
+findmap                      map
+findstack                    stack
+findqueue                    queue
+findpriorityqueue            priority_queue
 finditerator                 iterator
 findarray                    array
 findand                      AND operator
@@ -1701,15 +1705,369 @@ for(vector<int>::size_type i = 0; i < 10; ++i) {
 (findset)
 set
 
-#include<set>
+From geeksforgeeks:
 
-set<string> set_a;
-set_a.insert("Hello");
+Functions associated with Set:
+begin() – Returns an iterator to the first element in the set
+end() – Returns an iterator to the theoretical element that follows last element in the set
+size() – Returns the number of elements in the set
+max_size() – Returns the maximum number of elements that the set can hold
+empty() – Returns whether the set is empty
+pair <iterator, bool> insert(const g) – Adds a new element ‘g’ to the set
+iterator insert (iterator position, const g) – Adds a new element ‘g’ at the position pointed by iterator
+erase(iterator position) – Removes the element at the position pointed by the iterator
+erase(const g)- Removes the value ‘g’ from the set
+clear() – Removes all the elements from the set
+key_comp() / value_comp() – Returns the object that determines how the elements in the set are ordered (‘<‘ by default)
+find(const g) – Returns an iterator to the element ‘g’ in the set if found, else returns the iterator to end
+count(const g) – Returns 1 or 0 based on the element ‘g’ is present in the set or not.
+lower_bound(const g) – Returns an iterator to the first element that is equivalent to ‘g’ or definitely will not go before the element ‘g’ in the set
+upper_bound(const g) – Returns an iterator to the first element that is equivalent to ‘g’ or definitely will go after the element ‘g’ in the set
 
-//Traverse set:
-for(set<string>::iterator it = set_a.begin(); it != set_a.end(); ++it) {
-  cout << *it << endl;
+Example:
+
+#include <iostream> 
+#include <set> 
+#include <iterator> 
+  
+using namespace std; 
+  
+int main() 
+{ 
+    // empty set container 
+    set <int, greater <int> > gquiz1;         
+  
+    // insert elements in random order 
+    gquiz1.insert(40); 
+    gquiz1.insert(30); 
+    gquiz1.insert(60); 
+    gquiz1.insert(20); 
+    gquiz1.insert(50); 
+    gquiz1.insert(50); // only one 50 will be added to the set 
+    gquiz1.insert(10); 
+  
+    // printing set gquiz1 
+    set <int, greater <int> > :: iterator itr; 
+    cout << "\nThe set gquiz1 is : "; 
+    for (itr = gquiz1.begin(); itr != gquiz1.end(); ++itr) 
+    { 
+        cout << '\t' << *itr; 
+    } 
+    cout << endl; 
+  
+    // assigning the elements from gquiz1 to gquiz2 
+    set <int> gquiz2(gquiz1.begin(), gquiz1.end()); 
+  
+    // print all elements of the set gquiz2 
+    cout << "\nThe set gquiz2 after assign from gquiz1 is : "; 
+    for (itr = gquiz2.begin(); itr != gquiz2.end(); ++itr) 
+    { 
+        cout << '\t' << *itr; 
+    } 
+    cout << endl; 
+  
+    // remove all elements up to 30 in gquiz2 
+    cout << "\ngquiz2 after removal of elements less than 30 : "; 
+    gquiz2.erase(gquiz2.begin(), gquiz2.find(30)); 
+    for (itr = gquiz2.begin(); itr != gquiz2.end(); ++itr) 
+    { 
+        cout << '\t' << *itr; 
+    } 
+  
+    // remove element with value 50 in gquiz2 
+    int num; 
+    num = gquiz2.erase (50); 
+    cout << "\ngquiz2.erase(50) : "; 
+    cout << num << " removed \t" ; 
+    for (itr = gquiz2.begin(); itr != gquiz2.end(); ++itr) 
+    { 
+        cout << '\t' << *itr; 
+    } 
+  
+    cout << endl; 
+  
+    //lower bound and upper bound for set gquiz1 
+    cout << "gquiz1.lower_bound(40) : "
+         << *gquiz1.lower_bound(40) << endl; 
+    cout << "gquiz1.upper_bound(40) : "
+         << *gquiz1.upper_bound(40) << endl; 
+  
+    //lower bound and upper bound for set gquiz2 
+    cout << "gquiz2.lower_bound(40) : "
+         << *gquiz2.lower_bound(40) << endl; 
+    cout << "gquiz2.upper_bound(40) : "
+         << *gquiz2.upper_bound(40) << endl; 
+  
+    return 0; 
+  
+} 
+
+==
+(findmap)
+map
+
+From geeksforgeeks:
+
+Functions associated with Map:
+begin() – Returns an iterator to the first element in the map
+end() – Returns an iterator to the theoretical element that follows last element in the map
+size() – Returns the number of elements in the map
+max_size() – Returns the maximum number of elements that the map can hold
+empty() – Returns whether the map is empty
+pair insert(keyvalue,mapvalue) – Adds a new element to the map
+erase(iterator position) – Removes the element at the position pointed by the iterator
+erase(const g)– Removes the key value ‘g’ from the map
+clear() – Removes all the elements from the map
+key_comp() / value_comp() – Returns the object that determines how the elements in the map are ordered (‘<' by default)
+find(const g) – Returns an iterator to the element with key value ‘g’ in the map if found, else returns the iterator to end
+count(const g) – Returns the number of matches to element with key value ‘g’ in the map
+lower_bound(const g) – Returns an iterator to the first element that is equivalent to mapped value with key value ‘g’ or definitely will not go before the element with key value ‘g’ in the map
+upper_bound(const g) – Returns an iterator to the first element that is equivalent to mapped value with key value ‘g’ or definitely will go after the element with key value ‘g’ in the map
+
+
+Example:
+
+#include <iostream> 
+#include <map> 
+#include <iterator> 
+  
+using namespace std; 
+  
+int main() 
+{ 
+    map <int, int> gquiz1;        // empty map container 
+  
+    // insert elements in random order 
+    gquiz1.insert(pair <int, int> (1, 40)); 
+    gquiz1.insert(pair <int, int> (2, 30)); 
+    gquiz1.insert(pair <int, int> (3, 60)); 
+    gquiz1.insert(pair <int, int> (4, 20)); 
+    gquiz1.insert(pair <int, int> (5, 50)); 
+    gquiz1.insert(pair <int, int> (6, 50));  
+    gquiz1.insert(pair <int, int> (7, 10)); 
+  
+    // printing map gquiz1 
+    map <int, int> :: iterator itr; 
+    cout << "\nThe map gquiz1 is : \n"; 
+    cout << "\tKEY\tELEMENT\n"; 
+    for (itr = gquiz1.begin(); itr != gquiz1.end(); ++itr) 
+    { 
+        cout  <<  '\t' << itr->first  
+              <<  '\t' << itr->second << '\n'; 
+    } 
+    cout << endl; 
+  
+    // assigning the elements from gquiz1 to gquiz2 
+    map <int, int> gquiz2(gquiz1.begin(), gquiz1.end()); 
+  
+    // print all elements of the map gquiz2 
+    cout << "\nThe map gquiz2 after assign from gquiz1 is : \n"; 
+    cout << "\tKEY\tELEMENT\n"; 
+    for (itr = gquiz2.begin(); itr != gquiz2.end(); ++itr) 
+    { 
+        cout  <<  '\t' << itr->first  
+              <<  '\t' << itr->second << '\n'; 
+    } 
+    cout << endl; 
+  
+    // remove all elements up to element with key=3 in gquiz2 
+    cout << "\ngquiz2 after removal of elements less than key=3 : \n"; 
+    cout << "\tKEY\tELEMENT\n"; 
+    gquiz2.erase(gquiz2.begin(), gquiz2.find(3)); 
+    for (itr = gquiz2.begin(); itr != gquiz2.end(); ++itr) 
+    { 
+        cout  <<  '\t' << itr->first  
+              <<  '\t' << itr->second << '\n'; 
+    } 
+  
+    // remove all elements with key = 4 
+    int num; 
+    num = gquiz2.erase (4); 
+    cout << "\ngquiz2.erase(4) : "; 
+    cout << num << " removed \n" ; 
+    cout << "\tKEY\tELEMENT\n"; 
+    for (itr = gquiz2.begin(); itr != gquiz2.end(); ++itr) 
+    { 
+        cout  <<  '\t' << itr->first  
+              <<  '\t' << itr->second << '\n'; 
+    } 
+  
+    cout << endl; 
+  
+    //lower bound and upper bound for map gquiz1 key = 5 
+    cout << "gquiz1.lower_bound(5) : " << "\tKEY = "; 
+    cout << gquiz1.lower_bound(5)->first << '\t'; 
+    cout << "\tELEMENT = " << gquiz1.lower_bound(5)->second << endl; 
+    cout << "gquiz1.upper_bound(5) : " << "\tKEY = "; 
+    cout << gquiz1.upper_bound(5)->first << '\t'; 
+    cout << "\tELEMENT = " << gquiz1.upper_bound(5)->second << endl; 
+      
+    return 0; 
+  
+} 
+
+==
+(findstack)
+stack
+
+From geeksforgeeks:
+
+The functions associated with stack are:
+empty() – Returns whether the stack is empty – Time Complexity : O(1)
+size() – Returns the size of the stack – Time Complexity : O(1)
+top() – Returns a reference to the top most element of the stack – Time Complexity : O(1)
+push(g) – Adds the element ‘g’ at the top of the stack – Time Complexity : O(1)
+pop() – Deletes the top most element of the stack – Time Complexity : O(1)
+
+Example:
+
+// CPP program to demonstrate working of STL stack 
+#include <iostream> 
+#include <stack> 
+using namespace std; 
+  
+void showstack(stack <int> s) 
+{ 
+    while (!s.empty()) 
+    { 
+        cout << '\t' << s.top(); 
+        s.pop(); 
+    } 
+    cout << '\n'; 
+} 
+  
+int main () 
+{ 
+    stack <int> s; 
+    s.push(10); 
+    s.push(30); 
+    s.push(20); 
+    s.push(5); 
+    s.push(1); 
+  
+    cout << "The stack is : "; 
+    showstack(s); 
+  
+    cout << "\ns.size() : " << s.size(); 
+    cout << "\ns.top() : " << s.top(); 
+  
+  
+    cout << "\ns.pop() : "; 
+    s.pop(); 
+    showstack(s); 
+  
+    return 0; 
+} 
+
+==
+(findqueue)
+queue
+
+From geeksforgeeks:
+
+The functions supported by queue are :
+
+empty() – Returns whether the queue is empty
+size() – Returns the size of the queue
+front() – Returns a reference to the first element of the queue
+back() – Returns a reference to the last element of the queue
+push(g) – Adds the element ‘g’ at the end of the queue
+pop() – Deletes the first element of the queue
+
+Example:
+
+// CPP code to illustrate  
+// Queue in Standard Template Library (STL) 
+#include <iostream> 
+#include <queue> 
+  
+using namespace std; 
+  
+void showq(queue <int> gq) 
+{ 
+    queue <int> g = gq; 
+    while (!g.empty()) 
+    { 
+        cout << '\t' << g.front(); 
+        g.pop(); 
+    } 
+    cout << '\n'; 
+} 
+  
+int main() 
+{ 
+    queue <int> gquiz; 
+    gquiz.push(10); 
+    gquiz.push(20); 
+    gquiz.push(30); 
+  
+    cout << "The queue gquiz is : "; 
+    showq(gquiz); 
+  
+    cout << "\ngquiz.size() : " << gquiz.size(); 
+    cout << "\ngquiz.front() : " << gquiz.front(); 
+    cout << "\ngquiz.back() : " << gquiz.back(); 
+  
+    cout << "\ngquiz.pop() : "; 
+    gquiz.pop(); 
+    showq(gquiz); 
+  
+    return 0; 
 }
+
+==
+(findpriorityqueue)
+priority_queue
+
+From geeksforgeeks:
+
+The functions associated with priority queue are:
+empty() – Returns whether the queue is empty
+size() – Returns the size of the queue
+top() – Returns a reference to the top most element of the queue
+push(g) – Adds the element ‘g’ at the end of the queue
+pop() – Deletes the first element of the queue
+
+Example:
+
+#include <iostream> 
+#include <queue> 
+  
+using namespace std; 
+  
+void showpq(priority_queue <int> gq) 
+{ 
+    priority_queue <int> g = gq; 
+    while (!g.empty()) 
+    { 
+        cout << '\t' << g.top(); 
+        g.pop(); 
+    } 
+    cout << '\n'; 
+} 
+  
+int main () 
+{ 
+    priority_queue <int> gquiz; 
+    gquiz.push(10); 
+    gquiz.push(30); 
+    gquiz.push(20); 
+    gquiz.push(5); 
+    gquiz.push(1); 
+  
+    cout << "The priority queue gquiz is : "; 
+    showpq(gquiz); 
+  
+    cout << "\ngquiz.size() : " << gquiz.size(); 
+    cout << "\ngquiz.top() : " << gquiz.top(); 
+  
+  
+    cout << "\ngquiz.pop() : "; 
+    gquiz.pop(); 
+    showpq(gquiz); 
+  
+    return 0; 
+} 
 
 ==
 (finditerator)
