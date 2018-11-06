@@ -52,6 +52,8 @@ finddatatype                 Data types
 findbool                     bool
 findtypedef                  typedef
 findreference                Reference
+findpassbyvalue              Pass by value
+findpassbyreference          Pass by reference
 findpointer                  Pointer
 findconst                    Constant
 findconstant                 Constant
@@ -346,6 +348,74 @@ Example: none.
 Extern function:
 Can be used in other files. If a function definition has no keyword "extern", then it is still extern by default. Before using extern function in another file, need to declare it using "extern". 
 Example: none.
+
+==
+(findpassbyvalue)              
+(findpassbyreference)          
+Pass by value vs Pass by reference
+
+From online:
+
+C++ Passing by value vs. passing by reference
+
+First of all, this article is NOT going to explain C++ references and pointers. If you are not clear on what these are then this is quite probably the wrong article for you and you really should probably go read here, here or here.
+
+In C++ all arguments are passed to functions by value. In other words, a copy of the value is taken and that is what the function has to work with. If you want to modify the original value you must either pass a pointer or reference to the original value you wish to modify. Of course, even the pointer or reference are still passed by value. Pointers and references are just another C++ type and when they are passed around you do so by value.
+
+Now, what about the case where we don't want to modify the value? There's no need to pass by reference or pointer, right? Wrong! Now, in the case of fundemental types it probably doesn't make a huge deal of difference since these are unlikely to be any more complicated that a pointer or reference type; howver, in the case of fully blown class objects, such as string, vector, map, set or any other (including your own class objects) it can make a huge difference. You see, passing by value can be very expensive both in terms of memory usage and performance (time / space complexity)
+
+Classes have copy constructors, which are defined to facilitate the correct copying semantics for a class. Now in C++ there are two types of copy, shallow and deep. A shallow copy is where all the values of the class are copied but pointers are not followed. A deep copy is where pointers are followed and all the objects that they point to are also copied, thus creating a copy of all the "deep" objects, too. Any class that contains references to other objects should (unless there is a very good reason not to) provide both an assignment and copy constructor such that the class is always copied deeply.
+
+Consider the std::vector class. This class contains an internal buffer of memory that is managed by the vector. In reality, we can assume that the vector contains a pointer that points to memory allocated on the heap. The vector class implements a copy constructor that will perform a deep copy on a vector object if a copy is taken. This is the only sane thing to do, otherwise we have two objects referencing the same memory and then we have issues of ownership. In other words, which of the vectors is now responsible for managing and freeing that memory and what happens to the other vector if that memory is released? Of course, it'll be left with a dangling pointer that is referencing invalid memory! Bad mojo for all!!!
+
+Now, imagine we have a vector class that contains thousands of items. If we pass this object to a function by value the whole of the internal buffer will be copied. Not only is this really very inefficient in terms of the time it will take to allocate the memory and copy the values from the original vector to the copy it also increases memory usage greatly and, as a side effect, the risk of memory fragmentation. Imagine if this same vector is copied around again and again (maybe in a loop); it should be pretty clear just how inefficient this is.
+
+The solution is to pass things around by const reference (or const pointer in C). The cost of passing things around by const reference is trivial and about as expensive as passing around an int value. Not only is it so much more efficient to pass objects in this way, but the semantics of your function become way clearer. Just looking at the function prototype tells us that the value being passed is never meant to be modified by this function. You are helping to enforce your objects interface contract.
+
+Let's see a trivial example. 
+#include <vector>
+#include <chrono>
+#include <iostream>
+
+void foo(std::vector<int> byValue)
+{
+// do nothing
+}
+
+void bar(std::vector<int> const & byRef)
+{
+// do nothing
+}
+
+int main()
+{
+   auto && v = std::vector<int>(0x7FFFFFF);
+
+   auto && x1 = std::chrono::steady_clock::now();
+   foo(v);
+   auto && x2 = std::chrono::steady_clock::now();
+   bar(v);
+   auto && x3 = std::chrono::steady_clock::now();
+
+   auto && d1 = std::chrono::duration_cast<std::chrono::nanoseconds>(x2 - x1);
+   auto && d2 = std::chrono::duration_cast<std::chrono::nanoseconds>(x3 - x2);
+
+   std::cout
+         << "Time to call foo: " << d1.count() << std::endl
+         << "Time to call bar: " << d2.count() << std::endl;
+}
+
+Select all
+ 
+Open in new window
+
+
+When running this on my Windows 7 laptop, build with Visual Studio 2013 and executed in as a Release build the call by value takes approximately 1 second whilst the call by reference takes less than a nanosecond. That makes the pass by value a billion times slower! Of course, this is a contrived example and on different machines with different compilers YMMV, but hopefully it serves to demonstrate just how slow passing by value can, when compared to passing by reference!
+
+In the case of passing by value the cost in terms of both time and space complexity is O(N), where N is the number of bytes to be copied. Passing by reference will cost O(1), which is a significant improvement. Okay, the pedants amongst you may wish to argue that even for a reference it's O(N), because a reference is composed of bytes. True, but the big (massive) difference that the size of a reference is always constant and will be in the order of a few bytes (4 on a 32 bit machine, 8 on a 64 bit machine) and not hundreds, thousands, millions or even billion in the case of non-fundamental objects.
+
+Note: that some compilers may optimize out the calls to the functions foo and bar due to the fact they don't do anything. This is most likely to happen if you have aggressive optimisation enabled on your compiler. You can either disable this or add some code to these functions to make use of the passed references. Whilst disabling optimisation may skew the results in an absolute sense, the relative comparison should still hold up because what we're truly interested in here is the asymtoptic variance (Big O) rather than wall clock time!
+
 
 ==
 (findpointerc)
@@ -677,15 +747,14 @@ Tao: integral types means: int, character, boolean types. The concept of integra
 (findbool)
 bool:
 
+bool test = false; // The words true and false are literals of type bool
+
 bool b = 42;
 int i = b; // i has value 1
 
 When we assign one non-bool types to a bool, the result is false if the value is 0, and true otherwise.
 
 When we use a bool in an arithmetic expression, its value always converts to either 0 or 1.
-
-The words true and false are literals of type bool:
-bool test = false;
 
 The word nullptr is a pointer literal.
 
@@ -1643,19 +1712,19 @@ vector is a template, not a type. Types generated from vector must include the e
 --
 Vector iterator:
 
-// vector::begin/end
 #include <iostream>
 #include <vector>
+using namespace std;
 
 int main ()
 {
-  std::vector<int> myvector;
+  vector<int> myvector;
   for (int i=1; i<=5; i++) myvector.push_back(i);
 
-  std::cout << "myvector contains:";
-  for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
-    std::cout << ' ' << *it;
-  std::cout << '\n';
+  cout << "myvector contains:";
+  for (vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+    cout << ' ' << *it;
+  cout << '\n';
 
   return 0;
 }
@@ -1671,8 +1740,10 @@ Convert array to vector:
 
 #include <iterator>
 #include <vector>
+using namespace std;
+
 int x[] = { 1, 2, 3, 4, 5 };
-std::vector<int> v(std::begin(x), std::end(x));
+vector<int> v(begin(x), end(x));
 
 --
 Pass a vector to a function (from online):
