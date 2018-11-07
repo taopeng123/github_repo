@@ -1535,6 +1535,7 @@ Signature istream& getline (istream&& is, string& str, char delim)
 
 #include <sstream>
 
+//tao: notice the function parameter uses reference to a string
 vector<string> split(const string &s, char delim) {
     stringstream ss(s);
     string item;
