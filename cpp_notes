@@ -1682,7 +1682,7 @@ using std::vector;
 
 --
 vector<int> v1; //v1 is empty
-vector<int> v2 = v1; //v2 is a copy of the elements in v1
+vector<int> v2 = v1; //v2 is a copy of the elements in v1 (tao: copies the values of v1 to v2)
 vector<int> v1(10); //v1 has n copies of a value-initialized object. 10 elements, each initialized to 0.
 vector<string> v1(10); //10 elements, each an empty string
 vector<int> v1(n, val); //v1 has n elements with value val
@@ -1711,6 +1711,14 @@ We can define vectors to hold objects of most any type. Because references are n
 vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
 
 --
+Traverse a vector (in C++ 11):
+
+//vec is type vector<Person*>
+for(auto p : vec) {
+  cout << p->height << endl;
+}
+
+--
 Vector iterator:
 
 #include <iostream>
@@ -1730,6 +1738,89 @@ int main ()
   return 0;
 }
 Edit & Run
+
+
+--
+Sort a vector:
+
+// C++ program to sort a vector in non-decreasing 
+// order. 
+#include <iostream>
+#include <vector>
+using namespace std; 
+  
+int main() 
+{ 
+    vector<int> v{ 1, 5, 8, 9, 6, 7, 3, 4, 2, 0 }; 
+  
+    sort(v.begin(), v.end()); 
+  
+    for (auto x : v) cout << x << " "; //Ouptut: 0 1 2 3 4 5 6 7 8 9
+  
+    return 0; 
+} 
+
+How to sort in descending order?
+sort() takes a third parameter that is used to specify the order in which elements are to be sorted. We can pass “greater()” function to sort in descending order. This function does comparison in a way that puts greater element before.
+
+// C++ program to sort a vector in non-increasing 
+// order. 
+#include <iostream>
+#include <vector>
+using namespace std; 
+  
+int main() 
+{ 
+    vector<int> v{ 1, 5, 8, 9, 6, 7, 3, 4, 2, 0 }; 
+  
+    sort(v.begin(), v.end(), greater<int>()); 
+  
+    for (auto x : v) cout << x << " "; //Ouptut: 9 8 7 6 5 4 3 2 1 0
+  
+    return 0; 
+} 
+
+How to sort in particular order?
+We can also write our own comparator function and pass it as a third parameter.
+
+// A C++ program to sort vector using 
+// our own comparator 
+#include <iostream>
+#include <vector>
+using namespace std; 
+  
+// An interval has start time and end time 
+struct Interval { 
+    int start, end; 
+}; 
+  
+// Tao's experience shows that the following function compareInterval should be defined outside of a class (it can be used either inside or outside a class).
+// Compares two intervals according to staring times. 
+bool compareInterval(Interval i1, Interval i2) 
+{ 
+    return (i1.start < i2.start); 
+} 
+  
+int main() 
+{ 
+    vector<Interval> v { { 6, 8 }, { 1, 9 }, { 2, 4 }, { 4, 7 } }; 
+  
+    // sort the intervals in increasing order of 
+    // start time 
+    sort(v.begin(), v.end(), compareInterval); 
+  
+    cout << "Intervals sorted by start time : \n"; 
+    for (auto x : v) 
+        cout << "[" << x.start << ", " << x.end << "] "; 
+  
+    return 0; 
+} 
+
+Output :
+
+Intervals sorted by start time : 
+[1, 9] [2, 4] [4, 7] [6, 8] 
+
 
 --
 Concatenating two vectors:
@@ -2622,6 +2713,85 @@ int ia[3][4]
 int (*p)[4] = ia; // p points to an array of four ints
 
 The result of *p is an array of four ints. As usual, when we use an array, it is converted automatically to a pointer to its first element.
+
+--
+Passing Arrays to Functions (from online):
+
+C++ does not allow to pass an entire array as an argument to a function. However, You can pass a pointer to an array by specifying the array's name without an index.
+
+If you want to pass a single-dimension array as an argument in a function, you would have to declare function formal parameter in one of following three ways and all three declaration methods produce similar results because each tells the compiler that an integer pointer is going to be received.
+
+Way-1
+
+Formal parameters as a pointer as follows −
+
+void myFunction(int *param) {
+   .
+   .
+   .
+}
+
+Way-2
+
+Formal parameters as a sized array as follows −
+
+void myFunction(int param[10]) {
+   .
+   .
+   .
+}
+
+Way-3
+
+Formal parameters as an unsized array as follows −
+
+void myFunction(int param[]) {
+   .
+   .
+   .
+}
+
+Now, consider the following function, which will take an array as an argument along with another argument and based on the passed arguments, it will return average of the numbers passed through the array as follows −
+
+double getAverage(int arr[], int size) {
+  int i, sum = 0;       
+  double avg;          
+
+   for (i = 0; i < size; ++i) {
+      sum += arr[i];
+   }
+   avg = double(sum) / size;
+
+   return avg;
+}
+
+Now, let us call the above function as follows −
+
+#include <iostream>
+using namespace std;
+ 
+// function declaration:
+double getAverage(int arr[], int size);
+
+int main () {
+   // an int array with 5 elements.
+   int balance[5] = {1000, 2, 3, 17, 50};
+   double avg;
+
+   // pass pointer to the array as an argument.
+   avg = getAverage( balance, 5 ) ;
+ 
+   // output the returned value 
+   cout << "Average value is: " << avg << endl; 
+    
+   return 0;
+}
+
+When the above code is compiled together and executed, it produces the following result −
+
+Average value is: 214.4
+
+As you can see, the length of the array doesn't matter as far as the function is concerned because C++ performs no bounds checking for the formal parameters.
 
 ==
 (findoperator)
