@@ -815,7 +815,7 @@ Write two helper functions:
 
 void insert_at_node(Node* node, string word): insert word in a subtrie whose root is node. Recursively call itself.
 
-Node* get_last(Node* node, string prefix): get the node which corresponds to the last character in prefix. If prefix does not exist in the trie, then return null.
+Node* get_last(Node* node, string prefix): get the node which corresponds to the last character in prefix. If prefix does not exist in the trie, then return null. Recursively call itself.
 
 ==
 The following is an example of a trie, which contains the word "cbd":
