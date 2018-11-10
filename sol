@@ -826,7 +826,7 @@ The following is an example of a trie, which contains the word "cbd":
  |     |                          |                               |
 null  null                        c                              null
                                   |
-              ------------------------------------------
+              -------------------------------------------
               |              |                   |      |  
              null            b                  null   null
                              |
