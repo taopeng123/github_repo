@@ -1522,6 +1522,10 @@ if (s1.find(s2) != std::string::npos) {
 }
 Note: "found!" will be printed if s2 is a substring of s1, both s1 and s2 are of type std::string. 
 
+string test = "123";
+string res = test.substr(1, 0);
+res.size(); //returns: 0
+
 --
 (findsplit)
 split a string

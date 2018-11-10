@@ -781,7 +781,6 @@ public:
 category_trie
 
 ************************
-(Not done!)
 pr_208. Implement Trie (Prefix Tree), Medium 
 
 Question:
@@ -804,7 +803,106 @@ Note:
 - All inputs are guaranteed to be non-empty strings.
 
 ==
-Key:
+Key: 
+
+Let the trie Node class have the following members:
+
+char label; //Value of the character in this node
+bool end_of_word; //Whether this node is the end of a word
+Node* next[26]; //Child nodes
+
+Write two helper functions:
+
+void insert_at_node(Node* node, string word): insert word in a subtrie whose root is node. Recursively call itself.
+
+Node* get_last(Node* node, string prefix): get the node which corresponds to the last character in prefix. If prefix does not exist in the trie, then return null.
+
+==
+The following is an example of a trie, which contains the word "cbd":
+
+                                 root
+                                  |
+ -----------------------------------------------------------------
+ |     |                          |                               |
+null  null                        c                              null
+                                  |
+              ------------------------------------------
+              |              |                   |      |  
+             null            b                  null   null
+                             |
+                 ----------------------
+                 |     |     |    |   |      
+                null  null  null  d  null
+
+
+Tao's conclusion about trie:
+
+1. The root does not have a character.
+2. Every node has 26 children. If a character exists, this child node is not null. Otherwise this child node is null.
 
 ==
 C++ code:
+
+The code in leetcode discussion is simpler than tao's code below, but tao's code is easier to understand and remember.
+
+#include <string>
+#include <cstring> //This is to use memset below
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    char label;
+    bool end_of_word;
+    Node* next[26];
+    
+    Node() = default;
+    Node(char label_): label(label_), end_of_word(false) {memset(next, 0, sizeof(next));} //Have to use memset, otherwise LeetCode online judge reports error.
+};
+
+class Trie {
+private:
+    Node* root;
+
+    void insert_at_node(Node* node, string word) {
+        if(word.size() == 0) {
+            node->end_of_word = true;
+            return;
+        }
+
+        char label = word[0];
+        int index = label - 'a';
+        if(!node->next[index]) node->next[index] = new Node(label); 
+        insert_at_node(node->next[index], word.substr(1, word.size() - 1));
+    }
+
+    Node* get_last(Node* node, string prefix) {
+        if(prefix.size() == 0) return node;
+
+        char label = prefix[0];
+        int index = label - 'a';
+        Node* child = node->next[index];
+        if(!child || child->label != label) return NULL;
+
+        return get_last(child, prefix.substr(1, prefix.size() - 1));        
+    }
+
+public:   
+    Trie() {
+        root = new Node('#');
+    }
+    
+    void insert(string word) {
+        insert_at_node(root, word);
+    }
+    
+    bool search(string word) {
+        Node* last = get_last(root, word);
+        return last && last->end_of_word;
+    }
+    
+    bool startsWith(string prefix) {
+        return get_last(root, prefix);
+    }
+};
+
