@@ -1,4 +1,4 @@
-stopa 268, 6.1. Function Basics
+stopa 272 bottom, Local static Objects
 
 ==
 findcbegin                   C begin
@@ -94,6 +94,7 @@ findbreak                    break
 findcontinue                 continue
 findgoto                     goto
 findexception                Exception
+findfunction                 function
 
 =============
 (findcbegin)
@@ -3180,6 +3181,36 @@ The other exception types have the opposite behavior: We can initialize those ob
 initializer. That initializer is used to provide additional information about the error that occurred.
  
 The exception types define only a single operation named what. That function takes no arguments and returns a const char* that points to a C-style character string. The purpose of this C-style character string is to provide some sort of textual description of the exception thrown.
+
+==
+(findfunction)
+function
+
+Example:
+
+int fact(int val) {
+  int ret = 1; 
+  while (val > 1)
+    ret *= val--; 
+  return ret;
+}
+
+The statements after the return statement will not be executed (tao's practice).
+
+--
+For compatibility with C, we also can use the keyword void to indicate that there are no parameters:
+
+int f1(){ /* ... */ } // implicit void parameter list
+
+int f2(void){ /* ... */ } // explicit void parameter list
+
+--
+The return type can be void, which means that the function does not return a value.
+
+The return type may not be an array type or a function type. However, a function may return a pointer to an array or a function. 
+
+--
+Local static Objects
 
 
 
