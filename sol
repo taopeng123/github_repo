@@ -822,7 +822,7 @@ The following is an example of a trie, which contains the word "cbd":
 
                                  root
                                   |
- -----------------------------------------------------------------
+ ------------------------------------------------------------------
  |     |                          |                               |
 null  null                        c                              null
                                   |
