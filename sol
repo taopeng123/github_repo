@@ -12,7 +12,7 @@ Summary:
 - For questions in List, how to determine what xxx to wrote in the while(xxx) {...}, like while(!cur) {...} ?
   the way is to look into the yyy in while(...){yyy} or while(!cur && yyy) {...}. If yyy used cur->val, then should add !cur in the condition. Similarly, if yyy used cur->next->val, then should add !cur->next in the condition.
 
-************************************************
+=================================================
 category_list
 
 ************************
@@ -342,7 +342,6 @@ class Solution:
 
     	return pre.next	
 
-
 ==
 C++ code (recursive):
 
@@ -376,8 +375,6 @@ class Solution:
     	return new_head
 
 ************************
-stopa
-
 pr_92. Reverse Linked List II, Medium 
 
 Question:
@@ -423,3 +420,391 @@ public:
         return fakeHead->next;
     }
 };
+
+=================================================
+category_tree
+
+************************
+pr_94. Binary Tree Inorder Traversal, Medium 
+
+Question:
+
+Given a binary tree, return the inorder traversal of its nodes' values.
+
+Example:
+
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [1,3,2]
+Follow up: Recursive solution is trivial, could you do it iteratively?
+
+==
+Key:
+
+Recursive: write a "void helper(TreeNode* node, vector<int>& res)", whose functionality is to in-order traversal the subtree having "node" as its root, and put the result in res. Then in this helper function, call itself on node->left, then add node to res, then call itself on node->right.
+
+Iterative: put all nodes on the left edge of the tree into a stack. Each time get a node from the stack, if the right child of this node exisits, then in the subtree which has this node as root, put all nodes on the left edge of this substree into this stack.
+
+==
+C++ code (recursive):
+
+//This code was originally from leetcode discussion, and modified by Tao.
+
+class Solution {
+public:
+	vector<int> inorderTraversal(TreeNode* root) {
+		vector<int> res;
+		helper(root, res);
+		return res; //Returns a copy of the vector
+	}
+
+private:
+	void helper(TreeNode* node, vector<int>& res) {
+		if(!node) return;
+
+		helper(node->left, res);
+		res.push_back(node->val);
+		helper(node->right, res);
+	}
+};
+
+==
+C++ code (iterative):
+
+//The code in Leetcode solution is simpler, but here I still use tao's code because it is easier to understand and remember.
+
+class Solution {
+public:
+	vector<int> inorderTraversal(TreeNode* root) {
+    	vector<int> res;
+    	if(!root) return res;
+
+        stack<TreeNode*> stack;
+        TreeNode* cur = root;
+
+        while(cur) {
+            stack.push(cur);
+            cur = cur->left;
+        }
+
+        while(!stack.empty()) {
+            TreeNode* top = stack.top();
+            stack.pop();
+
+            res.push_back(top->val);
+
+            if(top->right) {
+                TreeNode* n = top->right;
+                while(n) {
+                    stack.push(n);
+                    n = n->left;
+                }
+            }
+        }
+
+    	return res;
+	}
+};
+
+************************
+pr_102. Binary Tree Level Order Traversal, Easy
+
+Question:
+
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its level order traversal as:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+
+==
+Key: Use a queue. Use two numbers: cur_num (number of nodes left in the current level), next_num (number of nodes left in the next level). First add root to the queue. Then in the loop, in each iteration, take a node from the queue, add it to the result vector, if this node has left child then add it to the queue, if this node has right child then add it to the queue.
+
+==
+C++ code:
+
+Used CodeGanker style code. The leetcode discusison code is simpler, but still use CodeGanker style code because it is easier to understanad and remember.
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+		vector<vector<int>> res;
+		if(!root) return res;
+
+		vector<int> item;
+
+		queue<TreeNode*> q;
+		q.push(root);
+		int cur_num = 1, next_num = 0;
+
+		while(!q.empty()) {
+			TreeNode* cur = q.front();
+			item.push_back(cur->val);
+			q.pop();
+			--cur_num;
+
+			if(cur->left) {
+				q.push(cur->left);
+				++next_num;
+			}
+
+			if(cur->right) {
+				q.push(cur->right);
+				++next_num;
+			}
+
+			if(cur_num == 0) {
+				cur_num = next_num;
+				next_num = 0;
+				res.push_back(item); //Pass by value (pass a copy of item)
+				item.clear();
+			}
+		}
+
+		return res;
+    }
+};
+
+************************
+pr_100. Same Tree, Easy.
+
+Question:
+
+Given two binary trees, write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
+
+Example 1:
+
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+
+Output: true
+
+Example 2:
+
+Input:     1         1
+          /           \
+         2             2
+
+        [1,2],     [1,null,2]
+
+Output: false
+
+Example 3:
+
+Input:     1         1
+          / \       / \
+         2   1     1   2
+
+        [1,2,1],   [1,1,2]
+
+Output: false
+
+
+==
+Key: Recursively call isSameTree() on the left and right subtree.
+
+==
+C++ code:
+
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+    	if(!p && !q) return true;
+        if(!p || !q) return false;
+
+        if(p->val != q->val) return false; 
+
+        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+    }
+};
+
+=================================================
+category_binary_search_tree
+
+************************
+pr_230. Kth Smallest Element in a BST, Medium 
+
+Question:
+
+Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+
+Example 1:
+
+Input: root = [3,1,4,null,2], k = 1
+   3
+  / \
+ 1   4
+  \
+   2
+Output: 1
+
+Example 2:
+
+Input: root = [5,3,6,2,4,null,null,1], k = 3
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+Output: 3
+
+Follow up:
+What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
+
+==
+Key: Write a function to find the size of a tree recursively. Then do a binary search to find the k-th smallest node. Note that in the binary search, we only need to find the size of the left subtree of root, no need to find the size of the right subtree of the root.
+
+Note: this method looks preliminary and slow, especially finding the size of a subtree. But it actually looks OK, because this is what William's code is like, and my C++ code ran faster than 99.16% of C++ online submissions.
+
+==
+C++ code:
+
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+     	if(!root) return 0;
+     	if(!root->left && !root->right) return root->val;
+
+     	int left_size = tree_size(root->left);
+
+     	if(k <= left_size) return kthSmallest(root->left, k);
+     	else if(k == left_size + 1) return root->val;
+     	else return kthSmallest(root->right, k - left_size - 1);
+    }
+
+private:
+	int tree_size(TreeNode* root) {
+		if(!root) return 0;
+		return tree_size(root->left) + tree_size(root->right) + 1;
+	}
+};
+
+Solution for the follow up in the question (from online, another solution from online also did the same):
+
+If we can change the BST node structure, We can add a new Integer to mark the number of element in the left sub-tree.
+when the node is not null.
+1. If k == node.leftNum + 1, return node
+2. if k > node.leftNum + 1, make k -= node.leftNum + 1, and then node = node.right
+3. otherwise, node = node.left
+
+The time complexity of algorithm above will be O(h), h is the height of the input tree. Tao: because h = O(log n),  and binary search's time complexity is also O(log n).
+
+=================================================
+category_array
+
+************************
+pr_35. Search Insert Position, Medium.
+
+Question:
+
+Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You may assume no duplicates in the array.
+
+Example 1:
+
+Input: [1,3,5,6], 5
+Output: 2
+
+Example 2:
+
+Input: [1,3,5,6], 2
+Output: 1
+
+Example 3:
+
+Input: [1,3,5,6], 7
+Output: 4
+
+Example 4:
+
+Input: [1,3,5,6], 0
+Output: 0
+
+
+==
+Key: Binary search. This problem can be used as a formula for binary search. Tao's code uses the Chiu Chang template: always use while(l < r - 1), which means that after the while, l and r are two neighboring numbers.
+
+==
+C++ code:
+
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+    	int n = nums.size();
+        if(n == 0) return 0;
+
+        int l = 0, r = n - 1;
+
+        while(l < r - 1) {
+        	int m = (l + r) / 2;
+
+        	if(target == nums[m]) return m;
+        	else if(target < nums[m]) r = m;
+        	else l = m;
+        }
+
+        if(target <= nums[l]) return l;
+        if(target <= nums[r]) return r;
+        if(target > nums[r]) return r + 1;
+
+        return 0;
+    }
+};
+
+=================================================
+category_trie
+
+************************
+(Not done!)
+pr_208. Implement Trie (Prefix Tree), Medium 
+
+Question:
+
+Implement a trie with insert, search, and startsWith methods.
+
+Example:
+
+Trie trie = new Trie();
+
+trie.insert("apple");
+trie.search("apple");   // returns true
+trie.search("app");     // returns false
+trie.startsWith("app"); // returns true
+trie.insert("app");   
+trie.search("app");     // returns true
+
+Note:
+- You may assume that all inputs are consist of lowercase letters a-z.
+- All inputs are guaranteed to be non-empty strings.
+
+==
+Key:
+
+==
+C++ code:
