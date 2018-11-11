@@ -2139,18 +2139,21 @@ set
 From geeksforgeeks:
 
 Functions associated with Set:
+
+pair <iterator, bool> insert(const g) – Adds a new element ‘g’ to the set
+find(const g) – Returns an iterator to the element ‘g’ in the set if found, else returns the iterator to end
 begin() – Returns an iterator to the first element in the set
 end() – Returns an iterator to the theoretical element that follows last element in the set
+
 size() – Returns the number of elements in the set
-max_size() – Returns the maximum number of elements that the set can hold
 empty() – Returns whether the set is empty
-pair <iterator, bool> insert(const g) – Adds a new element ‘g’ to the set
+
 iterator insert (iterator position, const g) – Adds a new element ‘g’ at the position pointed by iterator
+max_size() – Returns the maximum number of elements that the set can hold
 erase(iterator position) – Removes the element at the position pointed by the iterator
 erase(const g)- Removes the value ‘g’ from the set
 clear() – Removes all the elements from the set
 key_comp() / value_comp() – Returns the object that determines how the elements in the set are ordered (‘<‘ by default)
-find(const g) – Returns an iterator to the element ‘g’ in the set if found, else returns the iterator to end
 count(const g) – Returns 1 or 0 based on the element ‘g’ is present in the set or not.
 lower_bound(const g) – Returns an iterator to the first element that is equivalent to ‘g’ or definitely will not go before the element ‘g’ in the set
 upper_bound(const g) – Returns an iterator to the first element that is equivalent to ‘g’ or definitely will go after the element ‘g’ in the set
@@ -2240,17 +2243,20 @@ map
 From geeksforgeeks:
 
 Functions associated with Map:
+
+pair insert(keyvalue,mapvalue) – Adds a new element to the map
+find(const g) – Returns an iterator to the element with key value ‘g’ in the map if found, else returns the iterator to end
 begin() – Returns an iterator to the first element in the map
 end() – Returns an iterator to the theoretical element that follows last element in the map
+
 size() – Returns the number of elements in the map
-max_size() – Returns the maximum number of elements that the map can hold
 empty() – Returns whether the map is empty
-pair insert(keyvalue,mapvalue) – Adds a new element to the map
+
+max_size() – Returns the maximum number of elements that the map can hold
 erase(iterator position) – Removes the element at the position pointed by the iterator
 erase(const g)– Removes the key value ‘g’ from the map
 clear() – Removes all the elements from the map
 key_comp() / value_comp() – Returns the object that determines how the elements in the map are ordered (‘<' by default)
-find(const g) – Returns an iterator to the element with key value ‘g’ in the map if found, else returns the iterator to end
 count(const g) – Returns the number of matches to element with key value ‘g’ in the map
 lower_bound(const g) – Returns an iterator to the first element that is equivalent to mapped value with key value ‘g’ or definitely will not go before the element with key value ‘g’ in the map
 upper_bound(const g) – Returns an iterator to the first element that is equivalent to mapped value with key value ‘g’ or definitely will go after the element with key value ‘g’ in the map
@@ -2344,11 +2350,14 @@ stack
 From geeksforgeeks:
 
 The functions associated with stack are:
+
+push(g) – Adds the element ‘g’ at the top of the stack – Time Complexity : O(1)
+top() – Returns a reference to the top most element of the stack – Time Complexity : O(1)
+pop() – Deletes the top most element of the stack – Time Complexity : O(1)
+
 empty() – Returns whether the stack is empty – Time Complexity : O(1)
 size() – Returns the size of the stack – Time Complexity : O(1)
-top() – Returns a reference to the top most element of the stack – Time Complexity : O(1)
-push(g) – Adds the element ‘g’ at the top of the stack – Time Complexity : O(1)
-pop() – Deletes the top most element of the stack – Time Complexity : O(1)
+
 
 Example:
 
@@ -2398,12 +2407,14 @@ From geeksforgeeks:
 
 The functions supported by queue are :
 
+push(g) – Adds the element ‘g’ at the end of the queue
+front() – Returns a reference to the first element of the queue
+pop() – Deletes the first element of the queue
+
+back() – Returns a reference to the last element of the queue
+
 empty() – Returns whether the queue is empty
 size() – Returns the size of the queue
-front() – Returns a reference to the first element of the queue
-back() – Returns a reference to the last element of the queue
-push(g) – Adds the element ‘g’ at the end of the queue
-pop() – Deletes the first element of the queue
 
 Example:
 
@@ -2453,11 +2464,13 @@ priority_queue
 From geeksforgeeks:
 
 The functions associated with priority queue are:
+
+push(g) – Adds the element ‘g’ at the end of the queue
+top() – Returns a reference to the top most element of the queue
+pop() – Deletes the first element of the queue
+
 empty() – Returns whether the queue is empty
 size() – Returns the size of the queue
-top() – Returns a reference to the top most element of the queue
-push(g) – Adds the element ‘g’ at the end of the queue
-pop() – Deletes the first element of the queue
 
 Example:
 
