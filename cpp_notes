@@ -1,4 +1,5 @@
-stopa 272 bottom, Local static Objects
+stopa 313:
+6.5.2. Inline and constexpr Functions
 
 ==
 findcbegin                   C begin
@@ -95,6 +96,9 @@ findcontinue                 continue
 findgoto                     goto
 findexception                Exception
 findfunction                 function
+findreturn                   return
+findstatic                   Static variables
+findoverload                 Overloaded Functions
 
 =============
 (findcbegin)
@@ -1022,6 +1026,23 @@ The advanages of storing class definition in separate file are
 
 3. The clients do not know how the class's member functions are implemented.
 
+--
+Separate Compilation
+
+As our programs get more complicated, we’ll want to store the various parts of the program in separate files. For example, we might store the functions we wrote in one file and store code that uses these functions in other source files. To allow programs to be written in logical parts, C++ supports what is commonly known as separate compilation. Separate compilation lets us split our programs into several files, each of which can be compiled independently.
+
+As an example, assume that the definition of our fact function is in a file named fact.cc and its declaration is in a header file named Chapter6.h. Our fact.cc file, like any file that uses these functions, will include the Chapter6.h header. We’ll store a main function that calls fact in a second file named factMain.cc. We might compile these files as follows:
+
+g++ factMain.cc fact.cc -o main // generates main
+
+If we have changed only one of our source files, we’d like to recompile only the file that actually changed. Most compilers provide a way to separately compile each file. This process usually yields a file with the .o file extension, indicating that the file contains object code.
+ 
+The compiler lets us link object files together to form an executable. On the system we use, we would separately compile our program as follows:
+ 
+g++ -c factMain.cc     // generates factMain.o
+g++ -c fact.cc         // generates fact.o
+g++ factMain.o fact.o -o main // generates main
+
 ==
 (findcout)
 (findcin)
@@ -1227,10 +1248,13 @@ Tao: this is also the reason why my program did something wrong when I tried to 
 
 --
 //Principle: the symbol that is closest to the variable name comes to the first in the type name
+
 int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
 int (*parr)[10] = &arr; // parr is a pointer, which points to an array of ten ints
+
 int& refs[10] = ... // error: no arrays of references
 int (&arrRef)[10] = arr; // arrRef is a reference, which refers to an array of ten ints
+
 int* (&arry)[10] = ptrs; // arry is a reference to an array of ten pointers
 
 As with vector, arrays hold objects. Thus, there are no arrays of references. Because an array is an object, we can define both pointers and references to arrays.
@@ -2732,85 +2756,6 @@ int (*p)[4] = ia; // p points to an array of four ints
 
 The result of *p is an array of four ints. As usual, when we use an array, it is converted automatically to a pointer to its first element.
 
---
-Passing Arrays to Functions (from online):
-
-C++ does not allow to pass an entire array as an argument to a function. However, You can pass a pointer to an array by specifying the array's name without an index.
-
-If you want to pass a single-dimension array as an argument in a function, you would have to declare function formal parameter in one of following three ways and all three declaration methods produce similar results because each tells the compiler that an integer pointer is going to be received.
-
-Way-1
-
-Formal parameters as a pointer as follows −
-
-void myFunction(int *param) {
-   .
-   .
-   .
-}
-
-Way-2
-
-Formal parameters as a sized array as follows −
-
-void myFunction(int param[10]) {
-   .
-   .
-   .
-}
-
-Way-3
-
-Formal parameters as an unsized array as follows −
-
-void myFunction(int param[]) {
-   .
-   .
-   .
-}
-
-Now, consider the following function, which will take an array as an argument along with another argument and based on the passed arguments, it will return average of the numbers passed through the array as follows −
-
-double getAverage(int arr[], int size) {
-  int i, sum = 0;       
-  double avg;          
-
-   for (i = 0; i < size; ++i) {
-      sum += arr[i];
-   }
-   avg = double(sum) / size;
-
-   return avg;
-}
-
-Now, let us call the above function as follows −
-
-#include <iostream>
-using namespace std;
- 
-// function declaration:
-double getAverage(int arr[], int size);
-
-int main () {
-   // an int array with 5 elements.
-   int balance[5] = {1000, 2, 3, 17, 50};
-   double avg;
-
-   // pass pointer to the array as an argument.
-   avg = getAverage( balance, 5 ) ;
- 
-   // output the returned value 
-   cout << "Average value is: " << avg << endl; 
-    
-   return 0;
-}
-
-When the above code is compiled together and executed, it produces the following result −
-
-Average value is: 214.4
-
-As you can see, the length of the array doesn't matter as far as the function is concerned because C++ performs no bounds checking for the formal parameters.
-
 ==
 (findoperator)
 (findand)
@@ -3223,21 +3168,480 @@ The return type can be void, which means that the function does not return a val
 The return type may not be an array type or a function type. However, a function may return a pointer to an array or a function. 
 
 --
-Local static Objects
+Argument Passing
+
+If the parameter is a reference, then the parameter is bound to its argument. Otherwise, the argument’s value is copied.
+
+When a parameter is a reference, we say that its corresponding argument is “passed by reference” or that the function is “called by reference.” The parameter is an alias for its corresponding argument.
+ 
+When the argument value is copied, the parameter and argument are independent objects. We say such arguments are “passed by value” or alternatively that the function is “called by value.”
+
+-- 
+Passing Arguments by Value
+
+Nothing the function does to the parameter can affect the argument.
+
+Pointer Parameters
+ 
+Pointers behave like any other nonreference type. When we copy a
+pointer, the value of the pointer is copied. After the copy, the two pointers are distinct. However, a pointer also gives us indirect access to the object to which that pointer points.
+
+(Avadoles) Programmers accustomed to programming in C often use pointer parameters to access objects outside a function. In C++, programmers generally use reference parameters instead.
+
+--
+Passing Arguments by Reference
+
+void reset(int &i)  // i is just another name for the object passed to reset
+{
+    i = 0;  // changes the value of the object to which i refers
+}
+
+int j = 42;
+reset(j);  // j is passed by reference; the value in j is changed
+cout << "j = " << j  << endl;  // prints j = 0
+
+Using References to Avoid Copies
+ 
+It can be inefficient to copy objects of large class types or large containers. Moreover, some class types (including the IO types) cannot be copied. Functions must use reference parameters to operate on objects of a type that cannot be copied.
+
+As an example, we’ll write a function to compare the length of two strings. Because strings can be long, we’d like to avoid copying them, so we’ll make our parameters references. Because comparing two strings does not involve changing the strings, we’ll make the parameters references to const. Reference parameters that are not changed inside a function should be
+references to const.
+
+// compare the length of two strings
+bool isShorter(const string &s1, const string &s2) {
+    return s1.size() < s2.size();
+}
+
+Use Reference to const When Possible
+
+It is a somewhat common mistake to define parameters that a function does not change as (plain) references. Doing so gives the function’s caller the misleading impression that the function might change its argument’s value.
+
+Using Reference Parameters to Return Additional Information
+ 
+A function can return only a single value. However, sometimes a function has more than one value to return. Reference parameters let us effectively return multiple results.
+
+// returns the index of the first occurrence of c in s
+// the reference parameter occurs counts how often c occurs
+string::size_type find_char(const string &s, char c, string::size_type &occurs) {
+    auto ret = s.size();   // position of the first occurrence, if any
+    occurs = 0;            // set the occurrence count parameter
+    for (decltype(ret) i = 0; i != s.size(); ++i) {
+        if (s[i] == c) {
+            if (ret == s.size())
+                ret = i;   // remember the first occurrence of c
+            ++occurs;      // increment the occurrence count
+         }
+    }
+    return ret;            // count is returned implicitly in occurs
+}
+
+auto index = find_char(s, 'o', ctr);
+ 
+After the call, the value of ctr will be the number of times o occurs.
+
+--
+Array Parameters
+
+Arrays have two special properties that affect how we define and use functions that operate on arrays: We cannot copy an array, and when we use an array it is (usually) converted to a pointer. Because we cannot copy an array, we cannot pass an array by value. Because arrays are converted to pointers, when we pass an array to a function, we are actually passing a pointer to the array’s first element.
+
+Even though we cannot pass an array by value, we can write a parameter that looks like an array:
+
+// despite appearances, these three declarations of print are equivalent:
+
+// each function has a single parameter of type const int*
+void print(const int*);
+void print(const int[]);   // shows the intent that the function takes an array
+void print(const int[10]); // dimension for documentation purposes (at best)
+
+int j[2] = {0, 1};
+print(j);  // ok: j is converted to an int* that points to j[0]
+
+Because arrays are passed as pointers, functions ordinarily don’t know the size of the array they are given. They must rely on additional information provided by the caller. There are three common techniques used to manage pointer parameters.
+
+Using a Marker to Specify the Extent of an Array
+
+The first approach to managing array arguments requires the array itself to contain an end marker. C-style character strings are an example of this approach. C-style strings are stored in character arrays in which the last character of the string is followed by a null character. Functions that deal with C-style strings stop processing the array when they see a null character.
+
+Using the Standard Library Conventions
+ 
+A second technique used to manage array arguments is to pass pointers to the first and one past the last element in the array.
+
+Using this approach, we’ll print the elements in an array as follows:
+
+void print(const int *beg, const int *end) {
+    // print every element starting at beg up to but not including end
+    while (beg != end)
+        cout << *beg++ << endl; // print the current element and advance the pointer
+}
+
+To call this function, we pass two pointers:
+
+int j[2] = {0, 1};
+
+print(begin(j), end(j));
+
+Explicitly Passing a Size Parameter
+
+A third approach for array arguments, which is common in C programs and older C++ programs, is to define a second parameter that indicates the size of the array.
+
+// const int ia[] is equivalent to const int* ia
+// size is passed explicitly and used to control access to elements of ia
+
+void print(const int ia[], size_t size) {
+    for (size_t i = 0; i != size; ++i) {
+        cout << ia[i] << endl;
+    }
+}
+
+int j[] = { 0, 1 };  // int array of size 2
+print(j, end(j) - begin(j));
+
+--
+Array Parameters and const
+ 
+Note that all three versions of our print function defined their array parameters as pointers to const. The discussion in § 6.2.3 applies equally to pointers as to references. When a function does not need write access to the array elements, the array parameter should be a pointer to const. A parameter should be
+a plain pointer to a nonconst type only if the function needs to change element values.
+
+--
+Array Reference Parameters
+ 
+Just as we can define a variable that is a reference to an array, we can define a parameter that is a reference to an array.
+
+void print(int (&arr)[10]) {
+    for (auto elem : arr)
+        cout << elem << endl;
+}
+
+Because the size of an array is part of its type, it is safe to rely on the dimension in the body of the function. However, the fact that the size is part of the type limits the usefulness of this version of print. We may call this function only for an array of exactly ten ints:
+
+j[2] = {0, 1};
+int k[10] = {0,1,2,3,4,5,6,7,8,9};
+
+print(j);    // error: argument is not an array of ten ints
+print(k);    // ok: argument is an array of ten ints
+
+--
+Passing a Multidimensional Array
+
+As with any array, a multidimensional array is passed as a pointer to its first element. Because we are dealing with an array of arrays, that element is an array, so the pointer is a pointer to an array. The size of the second (and any subsequent) dimension is part of the element type and must be specified:
+
+// matrix points to the first element in an array whose elements are arrays of ten ints
+void print(int (*matrix)[10], int rowSize) { /* . . . */ }
+
+declares matrix as a pointer to an array of ten ints.
+
+We can also define our function using array syntax. As usual, the compiler ignores the first dimension, so it is best not to include it:
+
+// equivalent definition
+void print(int matrix[][10], int rowSize) { /* . . . */ }
+
+--
+Returning a Pointer to an Array
+
+Because we cannot copy an array, a function cannot return an array. However, a function can return a pointer or a reference to an array Unfortunately, the syntax used to define functions that return pointers or references to arrays can be intimidating. Fortunately, there are ways to simplify such declarations. The most straightforward way is to use a type alias
+
+typedef int arrT[10];  // arrT is a synonym for the type array of ten ints
+
+using arrtT = int[10]; // equivalent declaration of arrT; 
+
+arrT* func(int i);     // func returns a pointer to an array of five ints
+
+Declaring a Function That Returns a Pointer to an Array
+ 
+To declare func without using a type alias, we must remember that the dimension of an array follows the name being defined:
+  
+int arr[10];          // arr is an array of ten ints
+int *p1[10];          // p1 is an array of ten pointers
+int (*p2)[10] = &arr; // p2 points to an array of ten ints
+ 
+As with these declarations, if we want to define a function that returns a pointer to an array, the dimension must follow the function’s name. However, a function includes a parameter list, which also follows the name. The parameter list precedes the
+dimension. Hence, the form of a function that returns a pointer to an array is:
+
+Type (*function(parameter_list))[dimension]
+
+As a concrete example, the following declares func without using a type alias:
+
+int (*func(int i))[10];
+
+Using a Trailing Return Type (C++11)
+
+Under the new standard, another way to simplify the declaration of func is by using a trailing return type.
+
+A trailing return type follows the parameter list and is preceded by ->. To signal that the return follows the parameter list, we use auto where the return type ordinarily appears:
+
+// fcn takes an int argument and returns a pointer to an array of ten ints
+auto func(int i) -> int(*)[10];
+
+Using decltype
+
+As another alternative, if we know the array(s) to which our function can return a pointer, we can use decltype to declare the return type.
+
+int odd[] = {1,3,5,7,9};
+int even[] = {0,2,4,6,8};
+// returns a pointer to an array of five int elements
+decltype(odd) *arrPtr(int i)
+{
+    return (i % 2) ? &odd : &even; // returns a pointer to the array
+}
+
+--
+Functions with Varying Parameters
+
+Sometimes we do not know in advance how many arguments we need to pass to a function.
+
+The new standard provides two primary ways to write a function that takes a varying number of arguments: If all the arguments have the same type, we can pass a library type named initializer_list. If the argument types vary, we can write a special kind of function, known as a variadic template.
+
+C++ also has a special parameter type, ellipsis, that can be used to pass a varying number of arguments.
+
+--
+initializer_list Parameters (C++11)
+
+We can write a function that takes an unknown number of arguments of a single type by using an initializer_list parameter. An initializer_list is a library type that represents an array of values of the specified type. This type is defined in the initializer_list header. The operations that initializer_list provides are listed below:
+
+initializer_list<T> lst: Default initialization, an empty list of element sof type T.
+
+initializer_list<T> lst(a, b, c...): lst has as many elements as there are initializers, elements are copies of the corresponding initializers. Elements in the list are const.
+
+lst2(lst), lst2 = lst: Copying or assigning an initializer_list does not copy the elements in the list. After the copy, the original and the copy share the elements.
+
+lst.size(): Number of elements in the list.
+
+lst.begin(), lst.end(): Returns a pointer to the first and one past the last elments in the lst.
+
+Example:
+
+initializer_list<int> li;    // initializer_list of ints
+
+Unlike vector, the elements in an initializer_list are always const values; there is no way to change the value of an element in an initializer_list.
+
+void error_msg(initializer_list<string> il) {
+    for (auto beg = il.begin(); beg != il.end(); ++beg)
+        cout << *beg << " " ;
+    cout << endl;
+}
+
+When we pass a sequence of values to an initializer_list parameter, we must enclose the sequence in curly braces:
+
+error_msg({"functionX", "okay"});
+
+A function with an initializer_list parameter can have other parameters as well.
+
+void error_msg(ErrCode e, initializer_list<string> il)
+
+error_msg(ErrCode(0), {"functionX", "okay"});
+
+--
+Ellipsis Parameters
+
+Ellipsis parameters are in C++ to allow programs to interface to C code that uses a C library facility named varargs. Generally an ellipsis parameter should not be used for other purposes.
+
+Ellipsis parameters should be used only for types that are common to both C and C++. In particular, objects of most class types are not copied properly when passed to an ellipsis parameter.
+
+An ellipsis parameter may appear only as the last element in a parameter list and may take either of two forms:
+ 
+void foo(parm_list, ...);
+void foo(...);
+
+--
+(findreturn)
+return
+
+A return statement terminates the function that is currently executing and returns control to the point from which the function was called. There are two forms of return statements:
+ 
+return;
+return expression;
+
+Functions with No Return Value
+
+A return with no value may be used only in a function that has a return type of void. Functions that return void are not required to contain a return. In a void function, an implicit return takes place after the function’s last statement.
+  
+Typically, void functions use a return to exit the function at an intermediate point. This use of return is analogous to the use of a break statement to exit a loop.
+
+Functions That Return a Value
+
+Every return in a function with a return type other than void must return a value.
+
+Never Return a Reference or Pointer to a Local Object
+
+When a function completes, its storage is freed. After a function
+terminates, references to local objects refer to memory that is no longer valid:
+
+// disaster: this function returns a reference to a local object
+const string &manip() {
+    string ret;
+   // transform ret in some way
+   if (!ret.empty())
+       return ret;     // WRONG: returning a reference to a local object!
+   else
+       return "Empty"; // WRONG: "Empty" is a local temporary string
+}
+
+If a function returns a pointer, reference or object of class type, we can use the result of a call to call a member of the resulting object:
+
+auto sz = shorterString(s1, s2).size();
+
+Reference Returns Are Lvalues. we can assign to the result of a function that returns a reference to nonconst:
+
+char &get_val(string &str, string::size_type ix) {
+    return str[ix]; // get_val assumes the given index is valid
+}
+
+get_val(s, 0) = 'A'; // changes s[0] to A
+
+It may be surprising to see a function call on the left-hand side of an assignment. However, nothing special is involved.
+
+--
+List Initializing the Return Value (C++11)
+
+Under the new standard, functions can return a braced list of values.
+
+vector<string> process() {
+    // . . .
+    return {"functionX", expected, actual};
+}
+
+--
+Return from main
+
+There is one exception to the rule that a function with a return type other than void must return a value: The main function is allowed to terminate without a return. If control reaches the end of main and there is no return, then the compiler implicitly
+inserts a return of 0.
+
+The value returned from main is treated as a status indicator. A zero return indicates success; most other values indicate failure. A nonzero value has a machine-dependent meaning. To make return values machine independent, the cstdlib header defines two preprocessor variables that we can use to indicate success or failure:
+
+int main() {
+    if (some_failure)
+        return EXIT_FAILURE;  // defined in cstdlib
+    else
+        return EXIT_SUCCESS;  // defined in cstdlib
+}
+ 
+Because these are preprocessor variables, we must not precede them with std::, nor may we mention them in using declarations.
+
+--
+Recursion
+
+A function that calls itself, either directly or indirectly, is a recursive function.
+
+// calculate val!, which is 1 * 2 * 3 . . . * val
+int factorial(int val) {
+    if (val > 1)
+        return factorial(val-1) * val;
+    return 1;
+}
+
+There must always be a path through a recursive function that does not involve a recursive call; otherwise, the function will recurse “forever”.
+
+The main function may not call itself.
 
 
+--
+(findstatic)
+Local static objects
+Static variables
 
+It can be useful to have a local variable whose lifetime continues across calls to the function. We obtain such objects by defining a local variable as static. Each local static object is initialized before the first time execution passes through the object’s definition. Local statics are not destroyed when a function ends; they are destroyed when the program terminates.
 
+As a trivial example, here is a function that counts how many times it is called. This program will print the numbers from 1 through 10 inclusive.
+ 
+size_t count_calls() {
+    static size_t ctr = 0;  // value will persist across calls
+    return ++ctr;
+}
 
+int main() {
+    for (size_t i = 0; i != 10; ++i)
+        cout << count_calls() << endl;
+    return 0;
+}
+ 
+If a local static has no explicit initializer, it is value initialized, meaning that local statics of built-in type are initialized to zero.
 
+--
+Function Declarations
 
+Like any other name, the name of a function must be declared before we can use it. As with variables, a function may be defined only once but may be declared multiple times.
 
+A function declaration is just like a function definition except that a declaration has no function body. In a declaration, a semicolon replaces the function body.
+ 
+Because a function declaration has no body, there is no need for parameter names. Hence, parameter names are often omitted in a declaration. Although parameter names are not required, they can be used to help users of the function understand what the function does:
+ 
+void print(vector<int>::const_iterator beg, vector<int>::const_iterator end);
 
+Function declarations are also known as the function prototype.
 
+Function Declarations Go in Header Files
+ 
+Recall that variables are declared in header files and defined in source files. For the same reasons, functions should be declared in header files and defined in source files.
 
+It may be tempting—and would be legal—to put a function declaration directly in each source file that uses the function. However, doing so is tedious and error-prone. When we use header files for our function declarations, we can ensure that all the
+declarations for a given function agree. The source file that defines a function should include the header that contains that function’s declaration.
 
+--
+(findoverload)
+Overloaded Functions
 
+Functions that have the same name but different parameter lists and that appear in the same scope are overloaded.
 
+Examples:
 
+void print(const char *cp);
+void print(const int *beg, const int *end);
+void print(const int ia[], size_t size);
 
+When we call these functions, the compiler can deduce which function we want based on the argument type we pass:
+
+print("Hello World");        // calls print(const char*)
+print(j, end(j) - begin(j)); // calls print(const int*, size_t)
+print(begin(j), end(j));     // calls print(const int*, const int*)
+
+Function overloading eliminates the need to invent—and remember—names that exist only to help the compiler figure out which function to call.
+
+The main function may not be overloaded.
+
+Overloaded functions must differ in the number or the type(s) of their parameters.
+
+It is an error for two functions to differ only in terms of their return types.
+ 
+Two parameter lists can be identical, even if they don’t look the same.
+
+Although overloading lets us avoid having to invent (and remember) names for common operations, we should only overload operations that actually do similar things. There are some cases where providing different function names adds information that makes the program easier to understand.
+
+Function matching (also known as overload resolution) is the process by which a particular function call is associated with a
+specific function from a set of overloaded functions.
+
+Names do not overload across scopes.
+
+--
+Default Arguments
+
+string screen(sz ht = 24, sz wid = 80, char backgrnd = ' ');
+ 
+Here we’ve provided a default for each parameter. A default argument is specified as an initializer for a parameter in the parameter list. We may define defaults for one or more parameters. However, if a parameter has a default argument, all the parameters that follow it must also have default arguments.
+
+If we want to use the default argument, we omit that argument when we call the function.
+
+window = screen();  // equivalent to screen(24,80,' ')
+
+window = screen(66);// equivalent to screen(66,80,' ')
+window = screen(66, 256);      // screen(66,256,' ')
+window = screen(66, 256, '#'); // screen(66,256,'#')
+ 
+Arguments in the call are resolved by position. 
+
+The default arguments are used for the trailing (right-most) arguments of a call:
+
+window = screen(, , '?'); // error: can omit only trailing arguments
+window = screen('?');     // calls screen('?',80,' ')
+
+Part of the work of designing a function with default arguments is ordering the parameters so that those least likely to use a default value appear first and those most likely to use a default appear last.
+
+Default Argument Declarations
+ 
+Although it is normal practice to declare a function once inside a header, it is legal to redeclare a function multiple times. However, each parameter can have its default specified only once in a given scope. Thus, any subsequent declaration can add a
+default only for a parameter that has not previously had a default specified. As usual, defaults can be specified only if all parameters to the right already have defaults.
+
+Local variables may not be used as a default argument.
+
+--
+Inline and constexpr Functions
 
