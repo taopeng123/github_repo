@@ -1,5 +1,5 @@
-stopa 313:
-6.5.2. Inline and constexpr Functions
+stopa 342:
+7.1.4. Constructors
 
 ==
 findcbegin                   C begin
@@ -41,6 +41,8 @@ findcin                      cin
 findmath                     Math operators
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
+findistream                  Example of using istream
+findostream                  Example of using ostream
 finddeclaration              declaration vs definition
 finddefinition               declaration vs definition
 findcast                     Cast
@@ -56,12 +58,13 @@ findreference                Reference
 findpassbyvalue              Pass by value
 findpassbyreference          Pass by reference
 findpointer                  Pointer
+findpointertoarray           Pointer to array & array of pointers
+findreferencetoarray         Reference to array & array of references
+findpointertofunction        Pointer to function
+findreturnpointer            Return pointer from a function
 findconst                    Constant
-findconstant                 Constant
+findconstparameter           const in function parameter
 findconstantexpression       Constant expression
-findstruct                   Struct
-findclass                    Class
-findnew                      The new operator
 findsleep                    Sleep
 findescape                   Escape sequence
 findstring                   string
@@ -99,6 +102,15 @@ findfunction                 function
 findreturn                   return
 findstatic                   Static variables
 findoverload                 Overloaded Functions
+findinlinefunctions          Inline Functions
+findconstexprfunctions       constexpr Functions
+findassert                   assert
+findndebug                   NDEBUG
+findstruct                   struct
+findclass                    class
+findmemberfunction           member function
+findconstmemberfunction      const member functions
+findnew                      The new operator
 
 =============
 (findcbegin)
@@ -353,74 +365,6 @@ Example: none.
 Extern function:
 Can be used in other files. If a function definition has no keyword "extern", then it is still extern by default. Before using extern function in another file, need to declare it using "extern". 
 Example: none.
-
-==
-(findpassbyvalue)              
-(findpassbyreference)          
-Pass by value vs Pass by reference
-
-From online:
-
-C++ Passing by value vs. passing by reference
-
-First of all, this article is NOT going to explain C++ references and pointers. If you are not clear on what these are then this is quite probably the wrong article for you and you really should probably go read here, here or here.
-
-In C++ all arguments are passed to functions by value. In other words, a copy of the value is taken and that is what the function has to work with. If you want to modify the original value you must either pass a pointer or reference to the original value you wish to modify. Of course, even the pointer or reference are still passed by value. Pointers and references are just another C++ type and when they are passed around you do so by value.
-
-Now, what about the case where we don't want to modify the value? There's no need to pass by reference or pointer, right? Wrong! Now, in the case of fundemental types it probably doesn't make a huge deal of difference since these are unlikely to be any more complicated that a pointer or reference type; howver, in the case of fully blown class objects, such as string, vector, map, set or any other (including your own class objects) it can make a huge difference. You see, passing by value can be very expensive both in terms of memory usage and performance (time / space complexity)
-
-Classes have copy constructors, which are defined to facilitate the correct copying semantics for a class. Now in C++ there are two types of copy, shallow and deep. A shallow copy is where all the values of the class are copied but pointers are not followed. A deep copy is where pointers are followed and all the objects that they point to are also copied, thus creating a copy of all the "deep" objects, too. Any class that contains references to other objects should (unless there is a very good reason not to) provide both an assignment and copy constructor such that the class is always copied deeply.
-
-Consider the std::vector class. This class contains an internal buffer of memory that is managed by the vector. In reality, we can assume that the vector contains a pointer that points to memory allocated on the heap. The vector class implements a copy constructor that will perform a deep copy on a vector object if a copy is taken. This is the only sane thing to do, otherwise we have two objects referencing the same memory and then we have issues of ownership. In other words, which of the vectors is now responsible for managing and freeing that memory and what happens to the other vector if that memory is released? Of course, it'll be left with a dangling pointer that is referencing invalid memory! Bad mojo for all!!!
-
-Now, imagine we have a vector class that contains thousands of items. If we pass this object to a function by value the whole of the internal buffer will be copied. Not only is this really very inefficient in terms of the time it will take to allocate the memory and copy the values from the original vector to the copy it also increases memory usage greatly and, as a side effect, the risk of memory fragmentation. Imagine if this same vector is copied around again and again (maybe in a loop); it should be pretty clear just how inefficient this is.
-
-The solution is to pass things around by const reference (or const pointer in C). The cost of passing things around by const reference is trivial and about as expensive as passing around an int value. Not only is it so much more efficient to pass objects in this way, but the semantics of your function become way clearer. Just looking at the function prototype tells us that the value being passed is never meant to be modified by this function. You are helping to enforce your objects interface contract.
-
-Let's see a trivial example. 
-#include <vector>
-#include <chrono>
-#include <iostream>
-
-void foo(std::vector<int> byValue)
-{
-// do nothing
-}
-
-void bar(std::vector<int> const & byRef)
-{
-// do nothing
-}
-
-int main()
-{
-   auto && v = std::vector<int>(0x7FFFFFF);
-
-   auto && x1 = std::chrono::steady_clock::now();
-   foo(v);
-   auto && x2 = std::chrono::steady_clock::now();
-   bar(v);
-   auto && x3 = std::chrono::steady_clock::now();
-
-   auto && d1 = std::chrono::duration_cast<std::chrono::nanoseconds>(x2 - x1);
-   auto && d2 = std::chrono::duration_cast<std::chrono::nanoseconds>(x3 - x2);
-
-   std::cout
-         << "Time to call foo: " << d1.count() << std::endl
-         << "Time to call bar: " << d2.count() << std::endl;
-}
-
-Select all
- 
-Open in new window
-
-
-When running this on my Windows 7 laptop, build with Visual Studio 2013 and executed in as a Release build the call by value takes approximately 1 second whilst the call by reference takes less than a nanosecond. That makes the pass by value a billion times slower! Of course, this is a contrived example and on different machines with different compilers YMMV, but hopefully it serves to demonstrate just how slow passing by value can, when compared to passing by reference!
-
-In the case of passing by value the cost in terms of both time and space complexity is O(N), where N is the number of bytes to be copied. Passing by reference will cost O(1), which is a significant improvement. Okay, the pedants amongst you may wish to argue that even for a reference it's O(N), because a reference is composed of bytes. True, but the big (massive) difference that the size of a reference is always constant and will be in the order of a few bytes (4 on a 32 bit machine, 8 on a 64 bit machine) and not hundreds, thousands, millions or even billion in the case of non-fundamental objects.
-
-Note: that some compilers may optimize out the calls to the functions foo and bar due to the fact they don't do anything. This is most likely to happen if you have aggressive optimisation enabled on your compiler. You can either disable this or add some code to these functions to make use of the passed references. Whilst disabling optimisation may skew the results in an absolute sense, the relative comparison should still hold up because what we're truly interested in here is the asymtoptic variance (Big O) rather than wall clock time!
-
 
 ==
 (findpointerc)
@@ -1200,6 +1144,68 @@ There is no way to rebind a reference to refer to a different object.
 Because references are not objects, they don’t have addresses. Hence, we may not define a pointer to a reference.
 
 ==
+(findpassbyvalue)              
+(findpassbyreference)          
+Pass by value vs Pass by reference
+
+From online:
+
+C++ Passing by value vs. passing by reference
+
+First of all, this article is NOT going to explain C++ references and pointers. If you are not clear on what these are then this is quite probably the wrong article for you and you really should probably go read here, here or here.
+
+In C++ all arguments are passed to functions by value. In other words, a copy of the value is taken and that is what the function has to work with. If you want to modify the original value you must either pass a pointer or reference to the original value you wish to modify. Of course, even the pointer or reference are still passed by value. Pointers and references are just another C++ type and when they are passed around you do so by value.
+
+Now, what about the case where we don't want to modify the value? There's no need to pass by reference or pointer, right? Wrong! Now, in the case of fundemental types it probably doesn't make a huge deal of difference since these are unlikely to be any more complicated that a pointer or reference type; howver, in the case of fully blown class objects, such as string, vector, map, set or any other (including your own class objects) it can make a huge difference. You see, passing by value can be very expensive both in terms of memory usage and performance (time / space complexity)
+
+Classes have copy constructors, which are defined to facilitate the correct copying semantics for a class. Now in C++ there are two types of copy, shallow and deep. A shallow copy is where all the values of the class are copied but pointers are not followed. A deep copy is where pointers are followed and all the objects that they point to are also copied, thus creating a copy of all the "deep" objects, too. Any class that contains references to other objects should (unless there is a very good reason not to) provide both an assignment and copy constructor such that the class is always copied deeply.
+
+Consider the std::vector class. This class contains an internal buffer of memory that is managed by the vector. In reality, we can assume that the vector contains a pointer that points to memory allocated on the heap. The vector class implements a copy constructor that will perform a deep copy on a vector object if a copy is taken. This is the only sane thing to do, otherwise we have two objects referencing the same memory and then we have issues of ownership. In other words, which of the vectors is now responsible for managing and freeing that memory and what happens to the other vector if that memory is released? Of course, it'll be left with a dangling pointer that is referencing invalid memory! Bad mojo for all!!!
+
+Now, imagine we have a vector class that contains thousands of items. If we pass this object to a function by value the whole of the internal buffer will be copied. Not only is this really very inefficient in terms of the time it will take to allocate the memory and copy the values from the original vector to the copy it also increases memory usage greatly and, as a side effect, the risk of memory fragmentation. Imagine if this same vector is copied around again and again (maybe in a loop); it should be pretty clear just how inefficient this is.
+
+The solution is to pass things around by const reference (or const pointer in C). The cost of passing things around by const reference is trivial and about as expensive as passing around an int value. Not only is it so much more efficient to pass objects in this way, but the semantics of your function become way clearer. Just looking at the function prototype tells us that the value being passed is never meant to be modified by this function. You are helping to enforce your objects interface contract.
+
+Let's see a trivial example. 
+#include <vector>
+#include <chrono>
+#include <iostream>
+
+void foo(std::vector<int> byValue)
+{
+// do nothing
+}
+
+void bar(std::vector<int> const & byRef)
+{
+// do nothing
+}
+
+int main()
+{
+   auto && v = std::vector<int>(0x7FFFFFF);
+
+   auto && x1 = std::chrono::steady_clock::now();
+   foo(v);
+   auto && x2 = std::chrono::steady_clock::now();
+   bar(v);
+   auto && x3 = std::chrono::steady_clock::now();
+
+   auto && d1 = std::chrono::duration_cast<std::chrono::nanoseconds>(x2 - x1);
+   auto && d2 = std::chrono::duration_cast<std::chrono::nanoseconds>(x3 - x2);
+
+   std::cout
+         << "Time to call foo: " << d1.count() << std::endl
+         << "Time to call bar: " << d2.count() << std::endl;
+}
+
+When running this on my Windows 7 laptop, build with Visual Studio 2013 and executed in as a Release build the call by value takes approximately 1 second whilst the call by reference takes less than a nanosecond. That makes the pass by value a billion times slower! Of course, this is a contrived example and on different machines with different compilers YMMV, but hopefully it serves to demonstrate just how slow passing by value can, when compared to passing by reference!
+
+In the case of passing by value the cost in terms of both time and space complexity is O(N), where N is the number of bytes to be copied. Passing by reference will cost O(1), which is a significant improvement. Okay, the pedants amongst you may wish to argue that even for a reference it's O(N), because a reference is composed of bytes. True, but the big (massive) difference that the size of a reference is always constant and will be in the order of a few bytes (4 on a 32 bit machine, 8 on a 64 bit machine) and not hundreds, thousands, millions or even billion in the case of non-fundamental objects.
+
+Note: that some compilers may optimize out the calls to the functions foo and bar due to the fact they don't do anything. This is most likely to happen if you have aggressive optimisation enabled on your compiler. You can either disable this or add some code to these functions to make use of the passed references. Whilst disabling optimisation may skew the results in an absolute sense, the relative comparison should still hold up because what we're truly interested in here is the asymtoptic variance (Big O) rather than wall clock time!
+
+==
 (findpointer)
 Pointer
 
@@ -1247,6 +1253,11 @@ Variables defined inside a function ordinarily are not stored at a fixed address
 Tao: this is also the reason why my program did something wrong when I tried to return a pointer to a variable defined inside a function (see more below).
 
 --
+(findpointertoarray)
+(findreferencetoarray)
+Pointer to array & array of pointers
+Reference to array & array of references
+
 //Principle: the symbol that is closest to the variable name comes to the first in the type name
 
 int* parr[42]; // parr is an array of 42 pointers to int. From this, tao sees why tao likes to write "int*" rather than "int *"
@@ -1270,6 +1281,65 @@ Reference to a vector: vector<int>& = ...
 There is no vector of references. 
 
 --
+(findpointertofunction)
+Pointer to function
+
+A function pointer is just that—a pointer that denotes a function rather than an object. Like any other pointer, a function pointer points to a particular type. A function’s type is determined by its return type and the types of its parameters. The function’s name is not part of its type. For example:
+
+// compares lengths of two strings
+bool lengthCompare(const string &, const string &);
+
+has type 
+
+bool(const string&, const string&). 
+
+To declare a pointer that can point at this function, we declare a pointer in place of the function name:
+
+// pf points to a function returning bool that takes two const string references
+bool (*pf)(const string &, const string &); // uninitialized
+
+// declares a function named pf that returns a bool*
+bool *pf(const string &, const string &);
+
+Using Function Pointers
+
+When we use the name of a function as a value, the function is automatically converted to a pointer. For example, we can assign the address of lengthCompare to pf as follows:
+
+pf = lengthCompare; // pf now points to the function named lengthCompare
+pf = &lengthCompare; // equivalent assignment: address-of operator is optional
+
+Moreover, we can use a pointer to a function to call the function to which the pointer points. We can do so directly—there is no need to dereference the pointer:
+
+bool b1 = pf("hello", "goodbye"); // calls lengthCompare
+bool b2 = (*pf)("hello", "goodbye"); // equivalent call
+
+Function Pointer Parameters
+
+Just as with arrays, we cannot define parameters of function type but can have a parameter that is a pointer to function. As with arrays, we can write a parameter that looks like a function type, but it will be treated as a pointer:
+
+// third parameter is a function type and is automatically treated as a pointer to function
+void useBigger(const string &s1, const string &s2, bool pf(const string &, const string &));
+
+// equivalent declaration: explicitly define the parameter as a pointer to function
+void useBigger(const string &s1, const string &s2, bool (*pf)(const string &, const string &));
+
+Returning a Pointer to Function
+
+As with arrays, we can’t return a function type but can return a
+pointer to a function type.
+
+Using auto or decltype for Function Pointer Types
+
+If we know which function(s) we want to return, we can use decltype to simplify writing a function pointer return type. 
+
+string::size_type sumLength(const string&, const string&);
+
+decltype(sumLength) *getFcn(const string &);
+
+The only tricky part in declaring getFcn is to remember that when we apply decltype to a function, it returns a function type, not a pointer to function type. We must add a * to indicate that we are returning a pointer, not a function.
+
+--
+(findreturnpointer)
 Return pointer from a function (from online):
 
 It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable. Tao: otherwise the caller function would get a pointer containing wrong address value (from practice).
@@ -1312,7 +1382,6 @@ int main () {
 
 ==
 (findconst)
-(findconstant)
 const
 
 We can make a variable unchangeable by defining the variable’s type as const.
@@ -1343,8 +1412,7 @@ Summary from the above:
 
 We use the term top-level const to indicate that the pointer itself is a const. When a pointer can point to a const object, we refer to that const as a low-level const.
 
-The distinction between top-level and low-level matters when we copy an object.
-When we copy an object, top-level consts are ignored. Example:
+The distinction between top-level and low-level matters when we copy an object. When we copy an object, top-level consts are ignored. Example:
 
 const int ci = i, &cr = ci;
 auto b = ci; // b is an int (top-level const in ci is dropped)
@@ -1374,57 +1442,6 @@ vector<int> v = {1, 3, 5, 7, 9};
 
 for (auto x : v)
     cout << x << ' ';
-
-==
-(findstruct)
-Struct
-
-struct Sales_data {
-    string bookNo;
-    unsigned units_sold = 0;
-    double revenue = 0.0;
-}; //Tao: note the ;
-
-Sales_data accum;
-Sales_data* salesptr;
-
-==
-(findclass)
-Class
-
-Classes ordinarily are not defined inside functions.
-
-In order to ensure that the class definition is the same in each file, classes are usually defined in header files.
-
-Tao: note public and private has no identitation (from online examples, and sublime also removes these identitaction automatically).
-Tao: note the ; at the end of a class.
-
-class Sales_data {
-public:
-    Sales_data() = default; // default constructor
-    Sales_data(string &s, double p) : bookNo(s), revenue(p) {}  
-
-private:
-    string bookNo;
-    double revenue = 0.0;
-    
-    double price() {
-        ...
-    }
-};
-
-If our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us (know as the synthesized default constructor).
-
-Sales_data item;
-Screen myScreen(5, 3);
-
---
-(findnew)
-The new operator
-
-From online:
-Using the new operator returns a pointer to the object:
-Node *n = new Node(); 
 
 ==
 (findsleep)
@@ -3204,13 +3221,15 @@ Using References to Avoid Copies
  
 It can be inefficient to copy objects of large class types or large containers. Moreover, some class types (including the IO types) cannot be copied. Functions must use reference parameters to operate on objects of a type that cannot be copied.
 
-As an example, we’ll write a function to compare the length of two strings. Because strings can be long, we’d like to avoid copying them, so we’ll make our parameters references. Because comparing two strings does not involve changing the strings, we’ll make the parameters references to const. Reference parameters that are not changed inside a function should be
-references to const.
+(findconstparameter)
+As an example, we’ll write a function to compare the length of two strings. Because strings can be long, we’d like to avoid copying them, so we’ll make our parameters references. Because comparing two strings does not involve changing the strings, we’ll make the parameters references to const. Reference parameters that are not changed inside a function should be references to const.
 
 // compare the length of two strings
 bool isShorter(const string &s1, const string &s2) {
     return s1.size() < s2.size();
 }
+
+Tao did not see any functions returning a const. If I see it, record it here.
 
 Use Reference to const When Possible
 
@@ -3643,5 +3662,346 @@ default only for a parameter that has not previously had a default specified. As
 Local variables may not be used as a default argument.
 
 --
-Inline and constexpr Functions
+(findinlinefunctions)
+Inline Functions
+
+We can define shorterString as an inline function by putting the keyword inline before the function’s return type:
+
+// inline version: find the shorter of two strings
+inline const string & shorterString(const string &s1, const string &s2) {
+	return s1.size() <= s2.size() ? s1 : s2;
+}
+
+A function specified as inline (usually) is expanded “in line” at each call. If shorterString were defined as inline, then this call
+
+cout << shorterString(s1, s2) << endl;
+
+(probably) would be expanded during compilation into something like
+
+cout << (s1.size() < s2.size() ? s1 : s2) << endl;
+
+The run-time overhead of making shorterString a function is thus removed.
+
+The inline specification is only a request to the compiler. The compiler may choose to ignore this request.
+
+In general, the inline mechanism is meant to optimize small, straight-line functions that are called frequently. Many compilers will not inline a recursive function. A 75-line function will almost surely not be expanded inline.
+
+--
+(findconstexprfunctions)
+constexpr Functions
+
+A constexpr function is a function that can be used in a constant expression. A constexpr function is defined like any other function but must meet certain restrictions: The return type and the type of each parameter in a must be a literal type, and the function body must contain exactly one return statement:
+
+constexpr int new_sz() { return 42; }
+constexpr int foo = new_sz(); // ok: foo is a constant expression
+
+When it can do so, the compiler will replace a call to a constexpr function with its resulting value. In order to be able to expand the function immediately, constexpr functions are implicitly inline.
+
+A constexpr function body may contain other statements so long as those
+statements generate no actions at run time. For example, a constexpr function may contain null statements, type aliases (§ 2.5.1, p. 67), and using declarations.
+
+A constexpr function is permitted to return a value that is not a constant:
+
+// scale(arg) is a constant expression if arg is a constant expression
+constexpr size_t scale(size_t cnt) { return new_sz() * cnt; }
+
+Put inline and constexpr Functions in Header Files 
+
+Unlike other functions, inline and constexpr functions may be defined multiple times in the program. After all, the compiler needs the definition, not just the declaration, in order to expand the code. However, all of the definitions of a given inline or constexpr must match exactly. As a result, inline and constexpr functions normally are defined in headers.
+
+--
+(findassert)
+The assert Preprocessor Macro
+
+C++ programmers sometimes use a technique similar to header guards to conditionally execute debugging code. The idea is that the program will contain debugging code that is executed only while the program is being developed. When the application is completed and ready to ship, the debugging code is turned off. This approach uses two preprocessor facilities: assert and NDEBUG.
+
+The assert Preprocessor Macro assert is a preprocessor macro. A preprocessor macro is a preprocessor variable that acts somewhat like an inline function. The assert macro takes a single expression, which it uses as a condition:
+
+assert(expr);
+
+evaluates expr and if the expression is false (i.e., zero), then assert writes a message and terminates the program. If the expression is true (i.e., is nonzero), then assert does nothing.
+
+The assert macro is defined in the cassert header. As we’ve seen, preprocessor names are managed by the preprocessor not the compiler. As a result, we use preprocessor names directly and do not provide a using declaration for them. That is, we refer to assert, not std::assert, and provide no using declaration for assert. 
+
+As with preprocessor variables, macro names must be unique within the program. Programs that include the cassert header may not define a variable, function, or other entity named assert. In practice, it is a good idea to avoid using the name assert for our own purposes even if we don’t include cassert. Many headers include the cassert header, which means that even if you don’t directly include that file, your programs are likely to have it included anyway.
+
+The assert macro is often used to check for conditions that “cannot happen.” For example, a program that does some manipulation of input text might know that all words it is given are always longer than a threshold. That program might contain a statement such as
+
+assert(word.size() > threshold);
+
+--
+(findndebug)
+The NDEBUG Preprocessor Variable
+
+The behavior of assert depends on the status of a preprocessor variable named NDEBUG. If NDEBUG is defined, assert does nothing. By default, NDEBUG is not defined, so, by default, assert performs a run-time check.
+
+We can “turn off” debugging by providing a #define to define NDEBUG.
+Alternatively, most compilers provide a command-line option that lets us define preprocessor variables:
+
+g++ -D NDEBUG main.C 
+
+has the same effect as writing #define NDEBUG at the beginning of main.C.
+
+In addition to using assert, we can write our own conditional debugging code using NDEBUG. If NDEBUG is not defined, the code between the #ifndef and the #endif is executed. If NDEBUG is defined, that code is ignored:
+
+void print(const int ia[], size_t size) {
+	#ifndef NDEBUG
+
+	// _ _func_ _ is a local static defined by the compiler that holds the function's name
+
+	cerr << _ _func_ _ << ": array size is " << size << endl;
+
+	#endif
+	// ...
+}
+
+Here we use a variable named _ _func_ _ to print the name of the function we are debugging. The compiler defines _ _func_ _ in every function. It is a local static array of const char that holds the name of the function.
+
+In addition to _ _func_ _, which the C++ compiler defines, the preprocessor defines four other names that can be useful in debugging:
+
+_ _FILE_ _ string literal containing the name of the file
+_ _LINE_ _ integer literal containing the current line number
+_ _TIME_ _ string literal containing the time the file was compiled
+_ _DATE_ _ string literal containing the date the file was compiled
+
+We might use these constants to report additional information in error messages:
+
+if (word.size() < threshold)
+	cerr << "Error: " << _ _FILE_ _
+		 << " : in function " << _ _func_ _
+		 << " at line " << _ _LINE_ _ << endl
+		 << " Compiled on " << _ _DATE_ _
+		 << " at " << _ _TIME_ _ << endl
+		 << " Word read was \"" << word
+		 << "\": Length too short" << endl;
+
+If we give this program a string that is shorter than the threshold, then the following error message will be generated:
+
+Error: wdebug.cc : in function main at line 27
+Compiled on Jul 11 2012 at 20:50:03
+Word read was "foo": Length too short
+
+==
+(findstruct)
+Struct
+
+struct Sales_data {
+    string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+}; //Tao: note the ;
+
+Sales_data accum;
+Sales_data* salesptr;
+
+==
+(findclass)
+class
+
+Classes ordinarily are not defined inside functions.
+
+In order to ensure that the class definition is the same in each file, classes are usually defined in header files.
+
+Tao: note public and private has no identitation (from online examples, and sublime also removes these identitaction automatically).
+Tao: note the ; at the end of a class.
+
+class Sales_data {
+public:
+    Sales_data() = default; // default constructor
+    Sales_data(string &s, double p) : bookNo(s), revenue(p) {}  
+
+private:
+    string bookNo;
+    double revenue = 0.0;
+    
+    double price() {
+        ...
+    }
+};
+
+If our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us (know as the synthesized default constructor).
+
+Sales_data item;
+Screen myScreen(5, 3);
+
+--
+(findmemberfunction)
+member function
+
+We define and declare member functions similarly to ordinary functions. Member functions must be declared inside the class. Member
+functions may be defined inside the class itself or outside the class body. Nonmember functions that are part of the interface, such as add, read, and print, are declared and defined outside the class.
+
+struct Sales_data {
+	// new members: operations on Sales_data objects
+	std::string isbn() const { return bookNo; } //Tao: will explain const later
+	Sales_data& combine(const Sales_data&);
+	double avg_price() const;
+
+	// data members:
+	std::string bookNo;
+	unsigned units_sold = 0;
+	double revenue = 0.0;
+};
+
+// nonmember Sales_data interface functions
+Sales_data add(const Sales_data&, const Sales_data&);
+std::ostream &print(std::ostream&, const Sales_data&);
+std::istream &read(std::istream&, Sales_data&);
+
+Note: Functions defined in the class are implicitly inline
+
+Member functions access the object on which they were called through an extra, implicit parameter named this. When we call a member function, this is initialized with the address of the object on which the function was invoked. For example, when we call
+
+total.isbn() //tao: total is an object of Sales_data
+
+the compiler passes the address of total to the implicit this parameter in isbn. It is as if the compiler rewrites this call as
+
+// pseudo-code illustration of how a call to a member function is translated
+Sales_data::isbn(&total)
+
+which calls the isbn member of Sales_data passing the address of total.
+
+Inside a member function, we can refer directly to the members of the object on which the function was called. We do not have to use a member access operator to use the members of the object to which this points. Any direct use of a member of the class is assumed to be an implicit reference through this. That is, when isbn uses bookNo, it is implicitly using the member to which this points. It is as if we had written this->bookNo.
+
+The this parameter is defined for us implicitly. Indeed, it is illegal for us to define a parameter or variable named this. Inside the body of a member function, we can use this. It would be legal, although unnecessary, to define isbn as
+
+std::string isbn() const { return this->bookNo; }
+
+Because this is intended to always refer to “this” object, this is a const pointer. We cannot change the address that this holds.
+
+It is worth noting that isbn can use bookNo even though bookNo is defined after isbn. The compiler processes classes in two steps—
+the member declarations are compiled first, after which the member function bodies, if any, are processed. Thus, member function bodies may use other members of their class regardless of where in the class those members appear.
+
+Defining a Member Function outside the Class
+
+As with any other function, when we define a member function outside the class body, the member’s definition must match its declaration. If the member was declared as a const member function (search for find constmemberfunction), then the definition must also specify const after the parameter list. The name of a member defined outside the class must include the name of the class of which it is a member:
+
+double Sales_data::avg_price() const {
+	if (units_sold)
+		return revenue/units_sold;
+	else
+		return 0;
+}
+
+The function name, Sales_data::avg_price, uses the scope operator to say that we are defining the function named avg_price that is declared in the scope of the Sales_data class. Once the compiler sees the function name, the rest of the code is interpreted as being inside the scope of the class. Thus, when avg_price refers to revenue and units_sold, it is implicitly referring to the members of Sales_data.
+
+--
+(findconstmemberfunction)
+const member functions
+
+Tao's summary:
+1. const member function is like the following (note the const)
+   string isbn() const { return bookNo; }
+2. Purpose of const member function:
+   non-const member function can not be called by a const object.
+   const member function can be called by a const object.
+   
+Tao: this was the quesion asked by Teacher Ma's son.
+Tao: copied all the content of this topic (const member functions) to the followings.
+
+The other important part about the isbn function is the keyword const that follows the parameter list. The purpose of that const is to modify the type of the implicit this pointer.
+
+By default, the type of this is a const pointer to the nonconst version of the class type. For example, by default, the type of this in a Sales_data member function is Sales_data *const. Although this is implicit, it follows the normal initialization rules, which means that (by default) we cannot bind this to a const object. This fact, in turn, means that we cannot call an ordinary member function on a const object.
+
+If isbn were an ordinary function and if this were an ordinary pointer parameter, we would declare this as const Sales_data *const. After all, the body of isbn doesn’t change the object to which this points, so our function would be more flexible if this were a pointer to const.
+
+However, this is implicit and does not appear in the parameter list. There is no place to indicate that this should be a pointer to const. The language resolves this problem by letting us put const after the parameter list of a member function. A const following the parameter list indicates that this is a pointer to const. Member functions that use const in this way are const member functions.
+
+We can think of the body of isbn as if it were written as
+
+// pseudo-code illustration of how the implicit this pointer is used
+// this code is illegal: we may not explicitly define the this pointer ourselves
+// note that this is a pointer to const because isbn is a const member
+std::string Sales_data::isbn(const Sales_data *const this)
+{ return this->isbn; }
+
+The fact that this is a pointer to const means that const member functions cannot change the object on which they are called. Thus, isbn may read but not write to the data members of the objects on which it is called.
+
+Note: Objects that are const, and references or pointers to const objects, may call only const member functions.
+
+--
+Defining a Function to Return “This” Object
+
+The combine function is intended to act like the compound assignment operator, +=. The object on which this function is called represents the left-hand operand of the assignment. The right-hand operand is passed as an explicit argument:
+
+Sales_data& Sales_data::combine(const Sales_data &rhs) {
+	units_sold += rhs.units_sold; // add the members of rhs into
+	revenue += rhs.revenue; // the members of ''this'' object
+	return *this; // return the object on which the function was called
+}
+
+When our transaction-processing program calls
+
+total.combine(trans); // update the running total
+
+the address of total is bound to the implicit this parameter and rhs is bound to trans. Thus, when combine executes
+
+units_sold += rhs.units_sold; // add the members of rhs into
+
+the effect is to add total.units_sold and trans.units_sold, storing the result back into total.units_sold.
+
+The interesting part about this function is its return type and the return statement. Ordinarily, when we define a function that operates like a built-in operator, our function should mimic the behavior of that operator. The built-in assignment operators return their left-hand operand as an lvalue. To return an lvalue, our combine function must return a reference. Because the left-hand operand is a Sales_data object, the return type is Sales_data&.
+
+As we’ve seen, we do not need to use the implicit this pointer to access the members of the object on which a member function is executing. However, we do need to use this to access the object as a whole:
+
+return *this; // return the object on which the function was called
+
+Here the return statement dereferences this to obtain the object on which the function is executing. That is, for the call above, we return a reference to total.
+
+--
+Defining Nonmember Class-Related Functions
+
+Class authors often define auxiliary functions, such as our add, read, and print functions. Although such functions define operations that are conceptually part of the interface of the class, they are not part of the class itself.
+
+We define nonmember functions as we would any other function. As with any other function, we normally separate the declaration of the function from its definition. Functions that are conceptually part of a class, but not defined inside the class, are typically declared (but not defined) in the same header as the class itself. That way users need to include only one file to use any part of the interface.
+
+The read and print functions do the same job as the code in xxx and not surprisingly, the bodies of our functions look a lot like the code presented there:
+
+(findistream)
+(findostream)
+
+// input transactions contain ISBN, number of copies sold, and sales price
+istream &read(istream &is, Sales_data &item) {
+	double price = 0;
+	is >> item.bookNo >> item.units_sold >> price;
+	item.revenue = price * item.units_sold;
+	return is;
+}
+
+ostream &print(ostream &os, const Sales_data &item) {
+	os << item.isbn() << " " << item.units_sold << " "
+	   << item.revenue << " " << item.avg_price();
+	return os;
+}
+
+The read function reads data from the given stream into the given object. The print function prints the contents of the given object on the given stream.
+
+However, there are two points worth noting about these functions. First, both read and write take a reference to their respective IO class types. The IO classes are types that cannot be copied, so we may only pass them by reference. Moreover, reading or writing to a stream changes that stream, so both functions take ordinary references, not references to const.
+
+The second thing to note is that print does not print a newline. Ordinarily, functions that do output should do minimal formatting. That way user code can decide whether the newline is needed.
+
+--
+(findnew)
+The new operator
+
+From online:
+Using the new operator returns a pointer to the object:
+Node *n = new Node(); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
