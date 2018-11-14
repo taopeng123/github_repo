@@ -1,5 +1,4 @@
-stopa 342:
-7.1.4. Constructors
+stopa 361: 7.3.3. Class Types
 
 ==
 findcbegin                   C begin
@@ -54,6 +53,7 @@ findstaticallytyped          Statically typed launage
 finddatatype                 Data types
 findbool                     bool
 findtypedef                  typedef
+findtypealias                Type alias
 findreference                Reference
 findpassbyvalue              Pass by value
 findpassbyreference          Pass by reference
@@ -108,9 +108,13 @@ findassert                   assert
 findndebug                   NDEBUG
 findstruct                   struct
 findclass                    class
+findpublic                   public
+findprivate                  private
 findmemberfunction           member function
 findconstmemberfunction      const member functions
 findnew                      The new operator
+findconstructor              constructor
+findfriend                   friend
 
 =============
 (findcbegin)
@@ -763,6 +767,12 @@ Old-style casts are less visible than are named casts. Because they are easily o
 typedef
 
 typedef double wages; // wages is a synonym for double
+
+--
+(findtypealias)
+Type alias
+
+using pos = std::string::size_type; // pos is a synonym for std::string::size_type
 
 ==
 (findinclude)
@@ -3794,6 +3804,8 @@ struct Sales_data {
 Sales_data accum;
 Sales_data* salesptr;
 
+To see the difference between struct and class, search for "find public", and look at the end of that part.
+
 ==
 (findclass)
 class
@@ -3802,8 +3814,10 @@ Classes ordinarily are not defined inside functions.
 
 In order to ensure that the class definition is the same in each file, classes are usually defined in header files.
 
-Tao: note public and private has no identitation (from online examples, and sublime also removes these identitaction automatically).
-Tao: note the ; at the end of a class.
+Tao: don't foreget the ; at the end of a class!
+
+Tao: note public and private has no identitation. There is no identiation in this book, and in leetcode default code, in online examples, and sublime also removes these identitaction automatically.
+
 
 class Sales_data {
 public:
@@ -3823,6 +3837,51 @@ If our class does not explicitly define any constructors, the compiler will impl
 
 Sales_data item;
 Screen myScreen(5, 3);
+
+--
+(findpublic)
+(findprivate)
+
+Access specifiers (public & private)
+
+public:
+
+Members defined after a public specifier are accessible to all parts of the program. The public members define the interface to the class.
+
+private:
+
+Members defined after a private specifier are accessible to the member functions of the class but are not accessible to code that uses the class. The private sections encapsulate (i.e., hide) the implementation.
+
+Example:
+
+class Sales_data {
+public: // tao: this line has no identation (same in leetcode)
+    Sales_data() = default;
+    Sales_data(const std::string &s, unsigned n, double p):
+    bookNo(s), units_sold(n), revenue(p*n) { }
+    Sales_data(const std::string &s): bookNo(s) { }
+    Sales_data(std::istream&);
+    std::string isbn() const { return bookNo; }
+    Sales_data &combine(const Sales_data&);
+
+private: // tao: this line has no identation (same in leetcode)
+    double avg_price() const { 
+        return units_sold ? revenue/units_sold : 0; 
+    }
+    std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+
+A class may contain zero or more access specifiers, and there are no restrictions on how often an access specifier may appear. Each access specifier specifies the access level of the succeeding members. The specified access level remains in effect until the next access specifier or the end of the class body.
+
+We also made another, more subtle, change: We used the class keyword rather than struct to open the class definition. This change is strictly stylistic; we can define a class type using either keyword. The only difference between struct and class is
+the default access level.
+
+If we use the struct keyword, the members defined before the first access specifier are public; if we use class, then
+the members are private.
+
+As a matter of programming style, when we define a class intending for all of its members to be public, we use struct. If we intend to have private members, then we use class.
 
 --
 (findmemberfunction)
@@ -3884,6 +3943,8 @@ double Sales_data::avg_price() const {
 }
 
 The function name, Sales_data::avg_price, uses the scope operator to say that we are defining the function named avg_price that is declared in the scope of the Sales_data class. Once the compiler sees the function name, the rest of the code is interpreted as being inside the scope of the class. Thus, when avg_price refers to revenue and units_sold, it is implicitly referring to the members of Sales_data.
+
+As with nonmember functions, member functions may be overloaded so long as the functions differ by the number and/or types of parameters.
 
 --
 (findconstmemberfunction)
@@ -3987,6 +4048,368 @@ The new operator
 From online:
 Using the new operator returns a pointer to the object:
 Node *n = new Node(); 
+
+--
+(findconstructor)              
+constructor
+
+Constructors have the same name as the class. Unlike other functions, constructors have no return type. Like other functions, constructors have a (possibly empty) parameter list and a (possibly empty) function body. A class can have multiple constructors. Like any other overloaded function, the constructors must differ from each other in the number or types of their parameters.
+
+Unlike other member functions, constructors may not be declared as const. When we create a const object of a class type, the object does not assume its “constness” until after the constructor completes the object’s initialization. Thus, constructors can write to const objects during their construction.
+
+The Synthesized Default Constructor
+
+Our Sales_data class does not define any constructors, yet the programs we’ve written that use Sales_data objects compile and run correctly:
+
+Sales_data total;
+
+We did not supply an initializer for these objects, so we know that they are default initialized. Classes control default initialization by defining a special constructor, known as the default constructor. The default constructor is one that takes no arguments.
+
+As we’ll, see the default constructor is special in various ways, one of which is that if our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us
+
+The compiler-generated constructor is known as the synthesized default
+constructor. For most classes, this synthesized constructor initializes each data member of the class as follows:
+
+• If there is an in-class initializer, use it to initialize the member.
+• Otherwise, default-initialize the member.
+
+Some Classes Cannot Rely on the Synthesized Default Constructor Only fairly simple classes—such as the current definition of Sales_data—can rely on the synthesized default constructor. The most common reason that a class must define its own default constructor is that the compiler generates the default for us only if we do not define any other constructors for the class. If we define any constructors, the
+class will not have a default constructor unless we define that constructor ourselves. The basis for this rule is that if a class requires control to initialize an object in one case, then the class is likely to require control in all cases.
+
+Note: The compiler generates a default constructor automatically only if a class declares no constructors.
+
+A second reason to define the default constructor is that for some classes, the synthesized default constructor does the wrong thing. Remember that objects of builtin or compound type (such as arrays and pointers) that are defined inside a block have undefined value when they are default initialized. The same rule applies to members of built-in type that are default initialized. Therefore, classes that
+have members of built-in or compound type should ordinarily either initialize those members inside the class or define their own version of the default constructor. Otherwise, users could create objects with members that have undefined value.
+
+A third reason that some classes must define their own default constructor is that sometimes the compiler is unable to synthesize one. For example, if a class has a member that has a class type, and that class doesn’t have a default constructor, then the compiler can’t initialize that member. For such classes, we must define our own version of the default constructor.
+
+Constructor example:
+
+struct Sales_data {
+    // constructors added
+    Sales_data() = default;
+    Sales_data(const std::string &s): bookNo(s) { } 
+    Sales_data(const std::string &s, unsigned n, double p):
+    bookNo(s), units_sold(n), revenue(p*n) { }
+    Sales_data(std::istream &);
+
+    // other members as before
+    std::string isbn() const { return bookNo; }
+    Sales_data& combine(const Sales_data&);
+    double avg_price() const;
+    std::string bookNo;
+    unsigned units_sold = 0; //Tao: in-class initializer, see below
+    double revenue = 0.0; //Tao: in-class initializer, see below
+};
+
+
+In the constructor, the code between the colon and the curly braces is a constructor initializer list, which specifies initial values for one or more data members of the object being created. The constructor initializer is a list of member names, each of which is followed by that member’s initial value in parentheses (or inside curly braces). Multiple member initializations are separated by commas.
+
+When a member is omitted from the constructor initializer list, it is implicitly initialized using the same process as is used by the synthesized default constructor.
+
+It is usually best for a constructor to use an in-class initializer if one exists and gives the member the correct value. On the other hand, if your compiler does not yet support in-class initializers, then every constructor should explicitly initialize every member of built-in type.
+
+It is worth noting that both constructors have empty function bodies. The only work these constructors need to do is give the data members their values. If there is no further work, then the function body is empty.
+
+Defining a Constructor outside the Class Body
+
+Unlike our other constructors, the constructor that takes an istream does have work to do. Inside its function body, this constructor calls read to give the data members new values:
+
+The function read below will read a transaction from is into this object 
+
+Tao: read is a user defined function. read returns *this. I recorded some notes about functions that return *this somewhere below.
+
+Sales_data::Sales_data(std::istream &is) {
+    read(is, *this); 
+}
+
+Constructors have no return type, so this definition starts with the name of the function we are defining. As with any other member function, when we define a constructor outside of the class body, we must specify the class of which the
+constructor is a member. Thus, Sales_data::Sales_data says that we’re defining the Sales_data member named Sales_data. This member is a constructor because it has the same name as its class.
+
+In this constructor there is no constructor initializer list, although technically speaking, it would be more correct to say that the constructor initializer list is empty. Even though the constructor initializer list is empty, the members of this object are still initialized before the constructor body is executed.
+
+Members that do not appear in the constructor initializer list are initialized by the corresponding in-class initializer (if there is one) or are default initialized.
+
+--
+Copy, Assignment, and Destruction
+
+In addition to defining how objects of the class type are initialized, classes also control what happens when we copy, assign, or destroy objects of the class type. 
+
+Objects are copied in several contexts, such as when we initialize a variable (tao: can be either =, or int a(b), confirmed) or when we pass or return an object by value. Objects are assigned when we use the assignment operator (tao: =, confirmed). Objects are destroyed when they cease to exist, such as when a local object is destroyed on exit from the block in which it was created. Objects stored in a vector (or an array) are
+destroyed when that vector (or array) is destroyed.
+
+If we do not define these operations, the compiler will synthesize them for us. Ordinarily, the versions that the compiler generates for us execute by copying, assigning, or destroying each member of the object. For example, in our bookstore program, when the compiler executes this assignment
+
+total = trans; // process the next book
+
+it executes as if we had written
+
+// default assignment for Sales_data is equivalent to:
+total.bookNo = trans.bookNo;
+total.units_sold = trans.units_sold;
+total.revenue = trans.revenue;
+
+Some Classes Cannot Rely on the Synthesized Versions
+
+--
+(findfriend)                   
+friend
+
+A class can allow another class or function to access its nonpublic members by making that class or function a friend. A class makes a function its friend by including a declaration for that function preceded by the keyword friend. Friend declarations may appear only inside a class definition; they may appear anywhere in the class. Ordinarily it is a good idea to group friend declarations together at the beginning or end of the class definition.
+
+Example:
+
+class Sales_data {
+
+// friend declarations for nonmember Sales_data operations added
+// tao: the following friend lines have no identation in the book
+friend Sales_data add(const Sales_data&, const Sales_data&);
+friend std::istream &read(std::istream&, Sales_data&);
+friend std::ostream &print(std::ostream&, const Sales_data&);
+
+// other members and access specifiers as before
+
+public:
+    Sales_data() = default;
+    Sales_data(const std::string &s, unsigned n, double p):
+    bookNo(s), units_sold(n), revenue(p*n) { }
+    Sales_data(const std::string &s): bookNo(s) { }
+    Sales_data(std::istream&);
+    std::string isbn() const { return bookNo; }
+    Sales_data &combine(const Sales_data&);
+
+private:
+    std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+
+// declarations for nonmember parts of the Sales_data interface
+
+Sales_data add(const Sales_data&, const Sales_data&);
+std::istream &read(std::istream&, Sales_data&);
+std::ostream &print(std::ostream&, const Sales_data&);
+
+--
+Type Member
+
+In addition to defining data and function members, a class can define its own local names for types. Type names defined by a class are subject to the same access controls as any other member and may be either public or private:
+
+Unlike ordinary members, members that define types must appear before they are used. As a result, type members usually appear at the beginning of the class.
+
+Example:
+
+class Screen {
+public:
+    typedef std::string::size_type pos;
+private:
+    pos cursor = 0;
+    pos height = 0, width = 0;
+    std::string contents;
+};
+
+We defined pos in the public part of Screen because we want users to use that name.
+
+We can equivalently use a type alias:
+
+class Screen {
+public:
+    // alternative way to declare a type member using a type alias
+    using pos = std::string::size_type;
+    // other members as before
+};
+
+--
+Making Members inline
+
+class Screen {
+public:
+    typedef std::string::size_type pos;
+    Screen() = default; // needed because Screen has another constructor
+    // cursor initialized to 0 by its in-class initializer
+    Screen(pos ht, pos wd, char c): height(ht), width(wd),
+    contents(ht * wd, c) { }
+
+    // get the character at the cursor
+    // implicitly inline
+    char get() const {
+      return contents[cursor]; 
+    } 
+
+    inline char get(pos ht, pos wd) const; // explicitly inline
+    Screen &move(pos r, pos c); // can be made inline later
+
+private:
+    pos cursor = 0;
+    pos height = 0, width = 0;
+    std::string contents;
+};
+
+Classes often have small functions that can benefit from being inlined. As we’ve seen, member functions defined inside the class are automatically inline. Thus, Screen’s constructors and the version of get that returns the character denoted by the cursor are inline by default.
+
+We can explicitly declare a member function as inline as part of its declaration inside the class body. Alternatively, we can specify inline on the function definition that appears outside the class body:
+
+inline // we can specify inline on the definition
+Screen &Screen::move(pos r, pos c) {
+    pos row = r * width; // compute the row location
+    cursor = row + c ; // move cursor to the column within that row
+    return *this; // return this object as an lvalue
+}
+
+//tao: checked and it has no inline specifier
+char Screen::get(pos r, pos c) const { // declared as inline in the class 
+    pos row = r * width; // compute row location
+    return contents[row + c]; // return character at the given column
+}
+
+Although we are not required to do so, it is legal to specify inline on both the declaration and the definition. However, specifying inline only on the definition outside the class can make the class easier to read.
+
+For the same reasons that we define inline functions in headers, inline member functions should be defined in the same header as the corresponding class definition.
+
+--
+mutable Data Members
+
+A mutable data member is never const, even when it is a member of a const object. Accordingly, a const member function may change a mutable member.
+
+class Screen {
+public:
+    void some_member() const;
+
+private:
+    mutable size_t access_ctr; // may change even in a const object
+    // other members as before
+};
+
+void Screen::some_member() const {
+    ++access_ctr; // keep a count of the calls to any member function
+    // whatever other work this member needs to do
+}
+
+--
+Initializers for Data Members of Class Type
+
+class Window_mgr {
+private:
+    std::vector<Screen> screens{Screen(24, 80, ' ') };
+};
+
+As we’ve seen, in-class initializers must use either the = form of initialization (which we used when we initialized the the data members of Screen) or the direct form of initialization using curly braces (as we do for screens).
+
+--
+Functions That Return *this
+
+class Screen {
+public:
+    Screen &set(char);
+    Screen &set(pos, pos, char);
+    // other members as before
+};
+
+inline Screen &Screen::set(char c) {
+    contents[cursor] = c; // set the new value at the current cursor location
+    return *this; // return this object as an lvalue
+}
+
+inline Screen &Screen::set(pos r, pos col, char ch) {
+    contents[r*width + col] = ch; // set specified location to given value
+    return *this; // return this object as an lvalue
+}
+
+Our set members return a reference to the object on which
+they are called. Functions that return a reference are lvalues, which means that they return the object itself, not a copy of the object. If we concatenate a sequence of these actions into a single expression:
+
+// tao: the move function also returns *this
+// move the cursor to a given position, and set that character
+
+myScreen.move(4,0).set('#');
+
+these operations will execute on the same object. 
+
+--
+Returning *this from a const Member Function
+
+Tao: first search for "find constmemberfunction"
+
+We’ll add an operation, which we’ll name display, to print the contents of the Screen. If display is a const member, then this (tao: the this pointer is returned by display) is a pointer to const and *this is a const object. if display returns a reference to const, we won’t be able to embed display into a series of actions (tao: see reason after the following code): 
+
+Screen myScreen;
+// if display returns a const reference, the call to set is an error
+myScreen.display(cout).set('*');
+
+we can only call const member functions on a const object. We can call either version on a nonconst object, but the nonconst version will be a better match.
+
+In the following example, we’ll define a private member named do_display to do the actual work of printing the Screen. Each of the display operations will call this function and then return the object on which it is executing:
+
+class Screen {
+public:
+    // display overloaded on whether the object is const or not
+    Screen &display(std::ostream &os) { 
+        do_display(os); return *this; 
+    }
+
+    const Screen &display(std::ostream &os) const { 
+        do_display(os); return *this; 
+    }
+
+private:
+    // function to do the work of displaying a Screen
+    void do_display(std::ostream &os) const {
+        os << contents;
+    }
+    // other members as before
+};
+
+When we call display on an object, whether that object is const determines which version of display is called:
+
+Screen myScreen(5,3);
+const Screen blank(5, 3);
+myScreen.set('#').display(cout); // calls non const version
+blank.display(cout); // calls const version
+
+
+
+--
+Benefits of Encapsulation:
+
+Encapsulation provides two important advantages:
+
+- User code cannot inadvertently corrupt the state of an encapsulated object.
+
+- The implementation of an encapsulated class can change over time without requiring changes in user-level code.
+
+By defining data members as private, the class author is free to make changes in the data. If the implementation changes, only the class code needs to be examined to see what effect the change may have. User code needs to change only when the interface changes. If the data are public, then any code that used the old data members might be broken. It would be
+necessary to locate and rewrite any code that relied on the old representation before the program could be used again.
+
+Another advantage of making data members private is that the data are protected from mistakes that users might introduce. If there is a bug that corrupts an object’s state, the places to look for the bug are localized: Only code that is part of the implementation could be responsible for the error. The search for the mistake is limited, greatly easing the problems of
+maintenance and program correctness.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
