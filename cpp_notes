@@ -1,5 +1,10 @@
 stopa 381: 7.5.4. Implicit Class-Type Conversions
 
+To study separately:
+1. destructor, from book
+2. new operator, from online
+3. delte pointers, from online
+
 ==
 findcbegin                   C begin
 findscanfc                   scanf in C
