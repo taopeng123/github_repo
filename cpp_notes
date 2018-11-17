@@ -1,10 +1,5 @@
-Recoreded pages from the file c_primer_5th_edition.pdf.pdf: 
+Recoreded pages in the file c_primer_5th_edition.pdf.pdf: 
 Page 1 - Page 393 (end of Part I).
-
-To study separately:
-1. destructor, from book
-2. new operator, from online
-3. delte pointers, from online
 
 ==
 findcbegin                   C begin
@@ -70,6 +65,8 @@ findreferencetoarray         Reference to array & array of references
 findpointertofunction        Pointer to function
 findreturnpointer            Return pointer from a function
 findreturnreference          Return reference from a function
+finddynamicmemory            Dynamic memory
+findnew                      new operator
 findconst                    Constant
 findconstparameter           const in function parameter
 findconstantexpression       Constant expression
@@ -127,6 +124,7 @@ findnew                      The new operator
 findconstructor              constructor
 findfriend                   friend
 findstaticmember             static Class Members
+finddestructor               destructor
 
 =============
 (findcbegin)
@@ -1515,6 +1513,24 @@ int& func() {
    static int x;
    return x;     // Safe, x lives outside this scope
 }
+
+==
+(finddynamicmemory)            
+Dynamic memory
+
+(findnew)                      
+new operator
+
+Tao: the followings are selected from the book:
+
+Dynamically allocated objects have a lifetime that is independent
+of where they are created; they exist until they are explicitly freed.
+
+In C++, dynamic memory is managed through a pair of operators: "new", which allocates, and optionally initializes, an object in dynamic memory and returns a pointer to that object; and "delete", which takes a pointer to a dynamic object, destroys that object, and frees the associated memory.
+
+//pi points to a dynamically allocated, unnamed, uninitialized int:
+int *pi = new int; 
+
 
 ==
 (findconst)
@@ -4959,5 +4975,97 @@ private:
 };
  
 A nonstatic data member may not be used as a default argument because its value is part of the object of which it is a member. Using a nonstatic data member as a default argument provides no object from which to obtain the member’s value and so is an error.
+
+--
+(finddestructor)               
+destructor
+
+This destructor notes records the file c_primer_5th_edition.pdf.pdf everything in section "13.1.3. The Destructor".
+
+Destructors do whatever work is needed to free the resources used by an object and destroy the data members of the object.
+
+The destructor is a member function with the name of the class prefixed by a tilde (~). It has no return value and takes no parameters. Because it takes no parameters, it cannot be overloaded. There is always only one destructor for a given class.
+
+class Sales_data {
+public:
+    ~Sales_data() { } // destructor
+    ...
+};
+
+What a Destructor Does
+
+Just as a constructor has an initialization part and a function body, a destructor has a function body and a destruction part. In a constructor, members are initialized before the function body is executed, and members are initialized in the same order as they appear in the class. In a destructor, the function body is executed first and then the members are destroyed. Members are destroyed in reverse order from the order in which they were initialized.
+
+The function body of a destructor does whatever operations the class designer wishes to have executed subsequent to the last use of an object. Typically, the destructor frees resources an object allocated during its lifetime.
+
+In a destructor, there is nothing akin to the constructor initializer list to control how members are destroyed; the destruction part is implicit. What happens when a member is destroyed depends on the type of the member. Members of class type are destroyed by running the member’s own destructor. The built-in types do not have destructors, so nothing is done to destroy members of built-in type. 
+
+The implicit destruction of a member of built-in pointer type does not delete the object to which that pointer points.
+
+When a Destructor Is Called
+
+The destructor is used automatically whenever an object of its type is destroyed:
+
+• Variables are destroyed when they go out of scope.
+• Members of an object are destroyed when the object of which they are a part is destroyed.
+• Elements in a container—whether a library container or an array—are destroyed when the container is destroyed.
+• Dynamically allocated objects are destroyed when the delete operator is applied to a pointer to the object.
+• Temporary objects are destroyed at the end of the full expression in which the temporary was created.
+
+Because destructors are run automatically, our programs can allocate resources and (usually) not worry about when those resources are released.
+
+For example, the following fragment defines four Sales_data objects:
+
+{ // new scope
+    // p and p2 point to dynamically allocated objects
+    Sales_data *p = new Sales_data; // p is a built-in pointer
+    auto p2 = make_shared<Sales_data>(); // p2 is a shared_ptr
+    Sales_data item(*p); // copy constructor copies *p into item
+    vector<Sales_data> vec; // local object
+    vec.push_back(*p2); // copies the object to which p2 points
+    delete p; // destructor called on the object pointed to
+    by p
+} // exit local scope; destructor called on item, p2, and vec
+// destroying p2 decrements its use count; if the count goes to 0, the object is freed
+// destroying vec destroys the elements in vec
+
+The destructor is not run when a reference or a pointer to an object goes out of scope.
+
+The Synthesized Destructor
+
+The compiler defines a synthesized destructor for any class that does not define its own destructor. As with the copy constructor and the copy-assignment operator, for some classes, the synthesized destructor is defined to disallow objects of the type
+from being destroyed. Otherwise, the synthesized destructor has an empty function body.
+
+For example, the synthesized Sales_data destructor is equivalent to:
+
+class Sales_data {
+public:
+    // no work to do other than destroying the members, which happens automatically
+    ~Sales_data() { }
+    // other members as before
+};
+
+The members are automatically destroyed after the (empty) destructor body is run.
+
+It is important to realize that the destructor body does not directly destroy the members themselves. Members are destroyed as part of the implicit destruction phase that follows the destructor body. A destructor body executes in addition to the
+memberwise destruction that takes place as part of destroying an object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
