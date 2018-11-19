@@ -1522,14 +1522,149 @@ new operator
 
 Tao: the followings are selected from the book:
 
-Dynamically allocated objects have a lifetime that is independent
-of where they are created; they exist until they are explicitly freed.
+Dynamically allocated objects have a lifetime that is independent of where they are created; they exist until they are explicitly freed.
 
 In C++, dynamic memory is managed through a pair of operators: "new", which allocates, and optionally initializes, an object in dynamic memory and returns a pointer to that object; and "delete", which takes a pointer to a dynamic object, destroys that object, and frees the associated memory.
+
+The followings covers all of the section "12.1.2. Managing Memory Directly":
+
+The language itself defines two operators that allocate and free dynamic memory. The new operator allocates memory, and delete frees memory allocated by new.
+
+Objects allocated on the free store are unnamed, so new offers no way to name the objects that it allocates. Instead, new returns a pointer to the object it allocates:
 
 //pi points to a dynamically allocated, unnamed, uninitialized int:
 int *pi = new int; 
 
+This new expression constructs an object of type int on the free store and returns a pointer to that object. 
+
+By default, dynamically allocated objects are default initialized, which means that objects of built-in or compound type have undefined value; objects of class type are initialized by their default constructor.
+
+string *ps = new string; // initialized to empty string
+int *pi = new int; // pi points to an uninitialized int
+
+We can initialize a dynamically allocated object using direct initialization. We can use traditional construction (using parentheses), and under the new standard, we can also use list initialization (with curly braces):
+
+int *pi = new int(1024); // object to which pi points has value 1024
+string *ps = new string(10, '9'); // *ps is "9999999999"
+
+// vector with ten elements with values from 0 to 9
+vector<int> *pv = new vector<int>{0,1,2,3,4,5,6,7,8,9};
+
+We can also value initialize a dynamically allocated object by following the type name with a pair of empty parentheses:
+
+string *ps1 = new string; // default initialized to the empty string
+string *ps = new string(); // value initialized to the empty string
+int *pi1 = new int; // default initialized; *pi1 is undefined
+int *pi2 = new int(); // value initialized to 0; *pi2 is 0
+
+For the same reasons as we usually initialize variables, it is also a good idea to initialize dynamically allocated objects.
+
+When we provide an initializer inside parentheses, we can use auto to deduce the type of the object we want to allocate from that initializer. However, because the compiler uses the initializer’s type to deduce the type to allocate, we can use auto only with a single initializer inside parentheses:
+
+auto p1 = new auto(obj); // p points to an object of the type of obj that object is initialized from obj
+auto p2 = new auto{a,b,c}; // error: must use parentheses for the initializer
+
+It is legal to use new to allocate const objects:
+
+// allocate and initialize a const int
+const int *pci = new const int(1024);
+
+// allocate a default-initialized const empty string
+const string *pcs = new const string;
+
+Like any other const, a dynamically allocated const object must be initialized. A const dynamic object of a class type that defines a default constructor may be initialized implicitly. Objects of other types must be explicitly initialized. Because the allocated object is const, the pointer returned by new is a pointer to const.
+
+Memory Exhaustion
+
+Although modern machines tend to have huge memory capacity, it is always possible
+that the free store will be exhausted. Once a program has used all of its available memory, new expressions will fail. By default, if new is unable to allocate the requested storage, it throws an exception of type bad_alloc. We can prevent new from throwing an exception by using a different form of new:
+
+// if allocation fails, new returns a null pointer
+int *p1 = new int; // if allocation fails, new throws std::bad_alloc
+int *p2 = new (nothrow) int; // if allocation fails, new returns a null pointer
+
+This form of new is referred to as placement new. A placement new expression lets us pass additional arguments to new. In this case, we pass an object named nothrow that is defined by the library.
+
+When we pass nothrow to new, we tell new that it must not throw an exception. If this form of new is unable to allocate the requested storage, it will return a null pointer. Both bad_alloc and nothrow are defined in the new header.
+
+Freeing Dynamic Memory
+
+In order to prevent memory exhaustion, we must return dynamically allocated memory to the system once we are finished using it. We return memory through a delete expression. A delete expression takes a pointer to the object we want to free:
+
+delete p; // p must point to a dynamically allocated object or be null
+
+Like new, a delete expression performs two actions: It destroys the object to which
+its given pointer points, and it frees the corresponding memory.
+
+Although the value of a const object cannot be modified, the object itself can be destroyed.
+
+Dynamically Allocated Objects Exist until They Are Freed
+
+As we saw earlier, memory that is managed through a shared_ptr is automatically deleted when the last shared_ptr is destroyed. The same is not true for memory we manage using built-in pointers. A dynamic object managed through a built-in pointer exists until it is explicitly deleted.
+
+Functions that return pointers (rather than smart pointers) to dynamic memory put burden on their callers—the caller must remember to delete the memory:
+
+// factory returns a pointer to a dynamically allocated object
+Foo* factory(T arg) {
+    // process arg as appropriate
+    return new Foo(arg); // caller is responsible for deleting this memory
+}
+
+Like our earlier factory function (§ 12.1.1, p. 453), this version of factory
+allocates an object but does not delete it. Callers of factory are responsible for
+freeing this memory when they no longer need the allocated object. Unfortunately, all
+too often the caller forgets to do so:
+
+void use_factory(T arg) {
+    Foo *p = factory(arg);
+    // use p but do not delete it
+} // p goes out of scope, but the memory to which p points is not freed!
+
+Here, our use_factory function calls factory, which allocates a new object of type Foo. When use_factory returns, the local variable p is destroyed. That variable is a built-in pointer, not a smart pointer.
+
+Unlike class types, nothing happens when objects of built-in type are destroyed. In particular, when a pointer goes out of scope, nothing happens to the object to which the pointer points. If that pointer points to dynamic memory, that memory is not automatically freed.
+
+Warning: Dynamic memory managed through built-in pointers (rather than smart
+pointers) exists until it is explicitly freed.
+
+In this example, p was the only pointer to the memory allocated by factory. Once
+use_factory returns, the program has no way to free that memory. Depending on
+the logic of our overall program, we should fix this bug by remembering to free the
+memory inside use_factory:
+
+void use_factory(T arg) {
+    Foo *p = factory(arg);
+    // use p
+    delete p; // remember to free the memory now that we no longer need it
+}
+
+or, if other code in our system needs to use the object allocated by use_factory,
+we should change that function to return a pointer to the memory it allocated:
+
+Foo* use_factory(T arg) {
+    Foo *p = factory(arg);
+    // use p
+    return p; // caller must delete the memory
+}
+
+Resetting the Value of a Pointer after a delete ...
+
+When we delete a pointer, that pointer becomes invalid. Although the pointer is invalid, on many machines the pointer continues to hold the address of the (freed) dynamic memory. After the delete, the pointer becomes what is referred to as a
+dangling pointer. A dangling pointer is one that refers to memory that once held an object but no longer does so.
+
+Dangling pointers have all the problems of uninitialized pointers (tao: like trying to accessing the object pointed by the dangling pointer). We can avoid the problems with dangling pointers by deleting the memory associated with a pointer just before the pointer itself goes out of scope. That way there is no chance to use the pointer after the memory associated with the pointer is freed. If we need to keep the pointer around, we can assign nullptr to the pointer after we use delete. Doing so makes it clear that the pointer points to no object.
+
+...Provides Only Limited Protection
+
+A fundamental problem with dynamic memory is that there can be several pointers that point to the same memory. Resetting the pointer we use to delete that memory lets us check that particular pointer but has no effect on any of the other pointers that
+still point at the (freed) memory. For example:
+
+int *p(new int(42)); // p points to dynamic memory
+auto q = p; // p and q point to the same memory
+delete p; // invalidates both p and q
+p = nullptr; // indicates that p is no longer bound to an object
+
+Here both p and q point at the same dynamically allocated object. We delete that memory and set p to nullptr, indicating that the pointer no longer points to an object. However, resetting p has no effect on q, which became invalid when we deleted the memory to which p (and q!) pointed. In real systems, finding all the pointers that point to the same memory is surprisingly difficult.
 
 ==
 (findconst)
