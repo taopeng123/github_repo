@@ -1610,10 +1610,7 @@ Foo* factory(T arg) {
     return new Foo(arg); // caller is responsible for deleting this memory
 }
 
-Like our earlier factory function (§ 12.1.1, p. 453), this version of factory
-allocates an object but does not delete it. Callers of factory are responsible for
-freeing this memory when they no longer need the allocated object. Unfortunately, all
-too often the caller forgets to do so:
+Like our earlier factory function, this version of factory allocates an object but does not delete it. Callers of factory are responsible for freeing this memory when they no longer need the allocated object. Unfortunately, all too often the caller forgets to do so:
 
 void use_factory(T arg) {
     Foo *p = factory(arg);
@@ -1627,10 +1624,7 @@ Unlike class types, nothing happens when objects of built-in type are destroyed.
 Warning: Dynamic memory managed through built-in pointers (rather than smart
 pointers) exists until it is explicitly freed.
 
-In this example, p was the only pointer to the memory allocated by factory. Once
-use_factory returns, the program has no way to free that memory. Depending on
-the logic of our overall program, we should fix this bug by remembering to free the
-memory inside use_factory:
+In this example, p was the only pointer to the memory allocated by factory. Once use_factory returns, the program has no way to free that memory. Depending on the logic of our overall program, we should fix this bug by remembering to free the memory inside use_factory:
 
 void use_factory(T arg) {
     Foo *p = factory(arg);
