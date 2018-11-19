@@ -120,7 +120,6 @@ findpublic                   public
 findprivate                  private
 findmemberfunction           member function
 findconstmemberfunction      const member functions
-findnew                      The new operator
 findconstructor              constructor
 findfriend                   friend
 findstaticmember             static Class Members
@@ -4304,14 +4303,6 @@ The read function reads data from the given stream into the given object. The pr
 However, there are two points worth noting about these functions. First, both read and write take a reference to their respective IO class types. The IO classes are types that cannot be copied, so we may only pass them by reference. Moreover, reading or writing to a stream changes that stream, so both functions take ordinary references, not references to const.
 
 The second thing to note is that print does not print a newline. Ordinarily, functions that do output should do minimal formatting. That way user code can decide whether the newline is needed.
-
---
-(findnew)
-The new operator
-
-From online:
-Using the new operator returns a pointer to the object:
-Node *n = new Node(); 
 
 --
 (findconstructor)              
