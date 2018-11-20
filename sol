@@ -916,8 +916,74 @@ Question:
 
 Given the head of a graph, return a deep copy (clone) of the graph. Each node in the graph contains a label (int) and a list (List[UndirectedGraphNode]) of its neighbors. There is an edge between the given node and each of the nodes in its neighbors.
 
+Tao: from leetcode discussion, many people say that the question is actually a directed graph.
+
 ==
 Key:
 
 ==
 C++ code:
+
+BFS 
+(tao's code simplied according to leetcode discussion):
+
+#include <vector>
+#include <queue>
+#include <unordered_map>
+#include <unordered_set>
+using namespace std;
+
+class Solution {
+private:
+    unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> node_map;
+
+public:
+    UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+        if(!node) return node;
+        
+        queue<UndirectedGraphNode*> q;
+        q.push(node);
+
+        UndirectedGraphNode* node_copy = new UndirectedGraphNode(node->label);
+        node_map[node] = node_copy;
+
+        while(!q.empty()) {
+            UndirectedGraphNode* front = q.front();
+            q.pop();
+            
+            UndirectedGraphNode* front_copy = node_map[front];
+
+            for(UndirectedGraphNode* nb: front->neighbors) {
+                if(node_map.find(nb) == node_map.end()) {
+                    UndirectedGraphNode* nb_copy = new UndirectedGraphNode(nb->label);
+                    node_map[nb] = nb_copy;    
+                    q.push(nb);              
+                } 
+
+                front_copy->neighbors.push_back(node_map[nb]);
+            }
+
+        }
+
+        return node_copy;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

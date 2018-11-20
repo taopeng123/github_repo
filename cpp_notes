@@ -1376,7 +1376,8 @@ The only tricky part in declaring getFcn is to remember that when we apply declt
 Return pointer from a function (from tutorialspoint):
 
 Tao's summary from below:
-It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable.
+1. It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable.
+2. Can return a pointer created by the "new" operator. Extracted from "find new": Dynamically allocated objects have a lifetime that is independent of where they are created; they exist until they are explicitly freed. Functions that return pointers (rather than smart pointers) to dynamic memory put burden on their callers—the caller must remember to delete the memory. We returned pointer created by "new" in leetcode, like pr_133 (leetcode discussion also did this).
 
 As we have seen in last chapter how C++ allows to return an array from a function, similar way C++ allows you to return a pointer from a function. To do so, you would have to declare a function returning a pointer as in the following example −
 
@@ -2681,11 +2682,16 @@ int main()
 (findmap)
 map
 
+Tao: the simplest way to insert into a map is the same as Python (ie, same way as updating an existing element value), no need to use insert function. At least two people in leetcode discussion did in this way.
+
+unordered_map<Node*, Node*> mp;
+Node* copy = new Node(node -> label);
+mp[node] = copy;
+
 From geeksforgeeks:
 
 Functions associated with Map:
 
-pair insert(keyvalue,mapvalue) – Adds a new element to the map
 find(const g) – Returns an iterator to the element with key value ‘g’ in the map if found, else returns the iterator to end
 begin() – Returns an iterator to the first element in the map
 end() – Returns an iterator to the theoretical element that follows last element in the map
@@ -2693,6 +2699,7 @@ end() – Returns an iterator to the theoretical element that follows last eleme
 size() – Returns the number of elements in the map
 empty() – Returns whether the map is empty
 
+pair insert(keyvalue,mapvalue) – Adds a new element to the map
 max_size() – Returns the maximum number of elements that the map can hold
 erase(iterator position) – Removes the element at the position pointed by the iterator
 erase(const g)– Removes the key value ‘g’ from the map
