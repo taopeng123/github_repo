@@ -17,7 +17,7 @@ struct Problem {
 
 class Stats {
 private:
-	string sol_file;
+	const string sol_file;
 	unordered_map<int, Problem*> problem_map;
 	int num_problems;
 
