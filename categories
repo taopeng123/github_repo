@@ -1,7 +1,7 @@
 *************************** 
 **         List          ** 
 *************************** 
-1111 | 21. Merge Two Sorted Lists, Easy. 在我電腦上不用寫ListNode這個class, 每個List題目的文件夾中都已經有ListNode.class了.
+1111 | 21. Merge Two Sorted Lists, Easy. 
 0111 | 148. Sort List, Medium
 0111 | 147. Insertion Sort List, Medium 
 1111 | 206. Reverse Linked List, Easy 
@@ -82,7 +82,7 @@
 *************************** 
 **        Graph          ** 
 *************************** 
-010 | 133. Clone Graph, Medium. 
+0101 | 133. Clone Graph, Medium. 
 010 | 127. Word Ladder, Medium. 注意題目的例子中的wordList中不包括beginWord和endWord, 但實際的test case中, wordList是包括beginWord和endWord的!
 010 | 126. Word Ladder II, Hard.
 001 | 207. Course Schedule, Medium. 
@@ -94,7 +94,7 @@
 **       String          ** 
 *************************** 
 共49題
-011 | 8. String to Integer (atoi), Easy 
+0111 | 8. String to Integer (atoi), Easy 
 011 | 14. Longest Common Prefix, Easy 
 111 | 38. Count and Say, Easy 
 011 | 28. Implement strStr(), Easy. "aa", "" -> 0. "", "aa" -> -1. needle可能比haystack長.
@@ -156,7 +156,7 @@
 **         Array         ** 
 *************************** 
 共54題
-011 | 1. Two Sum, Medium. 輸入數組中元素可能有重復的.
+0111 | 1. Two Sum, Medium. 
 111 | 167. Two Sum II - Input array is sorted, Medium 
 011 | 170. Two Sum III - Data structure design, Easy. 
 001 | 15. 3Sum, Medium 

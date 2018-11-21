@@ -3,7 +3,7 @@ Note:
 - C++ code uses C++ 2011, Python code uses Python 3.
   So C++ code needs to be compiled using: std=c++11,
   and Python code needs to be run using: python3 filename.py
-- When recording my code here, do not paste the include statements.
+- When recording my code here, do not paste the include statements. Only pasete when I included some uncommon things, like <climits>.
 
 ************************************************
 Summary:
@@ -14,7 +14,7 @@ Summary:
   the way is to look into the yyy in while(...){yyy} or while(!cur && yyy) {...}. If yyy used cur->val, then should add !cur in the condition. Similarly, if yyy used cur->next->val, then should add !cur->next in the condition.
 
 =================================================
-category_list
+category_xxx
 
 ************************
 pr_xx
@@ -1056,6 +1056,12 @@ Remember: Tao once proved that "value * 10 + d > 2147483647" is equivalent to "v
 C++ code:
 (Tao's code simplified according to Tao's earlier Java code):
 
+#include<iostream>
+#include<vector>
+#include<string>
+#include<climits> //Include this for INT_MAX, INT_MIN
+using namespace std;
+
 class Solution {
 public:
     int myAtoi(string str) {
@@ -1099,9 +1105,55 @@ public:
     }
 };
 
+=================================================
+category_array
 
+************************
+pr_1. Two Sum, Medium
 
+Question:
 
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+Example:
+
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+
+==
+Key: Use map. Put an element as key, and the index of this element as value. The only tricky part is to deal with duplicate elements in the input array.
+
+==
+C++ code:
+(The leetcode discussion code is simpler, but tao's code is easier to work out, so still use tao's code below).
+
+class Solution {
+private:
+    unordered_map<int, int> int_map;
+
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        if(n < 2) return nums;
+
+        vector<int> res;
+
+        for(int i = 0; i < n; ++i) {
+            int cur = nums[i];
+            int other = target - cur;
+
+            if(int_map.find(cur) == int_map.end()) int_map[cur] = i;
+            if(int_map.find(other) != int_map.end() && int_map[other] != i)  
+                res = {int_map[other], i};          
+        }
+
+        return res;
+    }
+};
 
 
 
