@@ -3,6 +3,7 @@ Note:
 - C++ code uses C++ 2011, Python code uses Python 3.
   So C++ code needs to be compiled using: std=c++11,
   and Python code needs to be run using: python3 filename.py
+- When recording my code here, do not paste the include statements.
 
 ************************************************
 Summary:
@@ -25,9 +26,6 @@ Key:
 
 ==
 C++ code:
-
-==
-Python code:
 
 ************************
 pr_21, Merge Two Sorted Lists, Easy
@@ -919,19 +917,13 @@ Given the head of a graph, return a deep copy (clone) of the graph. Each node in
 Tao: from leetcode discussion, many people say that the question is actually a directed graph.
 
 ==
-Key:
+Key: Both BFS and DFS use a map to save the mapping from the original node and its copy.
 
 ==
 C++ code:
 
 BFS 
 (tao's code simplied according to leetcode discussion):
-
-#include <vector>
-#include <queue>
-#include <unordered_map>
-#include <unordered_set>
-using namespace std;
 
 class Solution {
 private:
@@ -969,10 +961,143 @@ public:
     }
 };
 
+--
+DFS:
 
+class Solution {
+private:
+    unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> node_map;
 
+public:
+    UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+        if(!node) return node;
+        UndirectedGraphNode* node_copy = new UndirectedGraphNode(node->label);
+        node_map[node] = node_copy;
+                
+        for(UndirectedGraphNode* nb: node->neighbors) {
 
+            if(node_map.find(nb) == node_map.end()) {
+                UndirectedGraphNode* nb_copy = cloneGraph(nb);
+                node_map[nb] = nb_copy;
+                node_copy->neighbors.push_back(nb_copy);
+            } else {
+                node_copy->neighbors.push_back(node_map[nb]);
+            }
+            
+        }
 
+        return node_copy;
+    }
+};
+
+=================================================
+category_string
+
+************************
+pr_8. String to Integer (atoi), Easy 
+
+Question:
+
+Implement atoi which converts a string to an integer.
+
+The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
+
+The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+
+If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+
+If no valid conversion could be performed, a zero value is returned.
+
+Note:
+
+Only the space character ' ' is considered as whitespace character.
+Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31,  2^31 − 1]. If the numerical value is out of the range of representable values, INT_MAX (2^31 − 1) or INT_MIN (−2^31) is returned.
+
+Example 1:
+
+Input: "42"
+Output: 42
+
+Example 2:
+
+Input: "   -42"
+Output: -42
+Explanation: The first non-whitespace character is '-', which is the minus sign.
+             Then take as many numerical digits as possible, which gets 42.
+
+Example 3:
+
+Input: "4193 with words"
+Output: 4193
+Explanation: Conversion stops at digit '3' as the next character is not a numerical digit.
+
+Example 4:
+
+Input: "words and 987"
+Output: 0
+Explanation: The first non-whitespace character is 'w', which is not a numerical 
+             digit or a +/- sign. Therefore no valid conversion could be performed.
+Example 5:
+
+Input: "-91283472332"
+Output: -2147483648
+Explanation: The number "-91283472332" is out of the range of a 32-bit signed integer.
+             Thefore INT_MIN (−231) is returned.
+
+==
+Key: Just remember the corner cases: 
+"+1": positive sign
+"-000000000000001": leading 0
+overflow.
+
+Remember: Tao once proved that "value * 10 + d > 2147483647" is equivalent to "value > (2147483647 - d) / 10)". Do not waste time to prove it again, just remember it.
+
+==
+C++ code:
+(Tao's code simplified according to Tao's earlier Java code):
+
+class Solution {
+public:
+    int myAtoi(string str) {
+        if(str.size() == 0) return 0;
+
+        //trim
+        str.erase(0, str.find_first_not_of(' '));
+        str.erase(str.find_last_not_of(' ') + 1);
+
+        int sign = 1, res = 0;
+
+        if(str[0] == '-' || str[0] == '+') {
+            if(str[0] == '-') sign = -1;
+            str.erase(0, 1);
+        }
+
+        if(!isdigit(str[0])) return 0;
+
+        //Remove leading 0
+        while(str[0] == '0') str.erase(0, 1);
+
+        for(char c: str) {
+            if(!isdigit(c)) break;
+            int digit = c - '0';
+
+            //The following is from res * 10 + digit > INT_MAX
+            if(sign > 0 && res > (INT_MAX - digit) / 10) return INT_MAX;
+
+            //The following is from res * 10 + digit > -INT_MIN
+            //Note it can not be written as res > (-INT_MIN - digit) / 10, 
+            //because -INT_MIN is 1 bigger than INT_MAX, so -INT_MIN overflows,
+            //so we need to multiply both sides by -1 to avoid writting -INT_MIN: 
+            //-res < (INT_MIN + digit) / 10 
+
+            if(sign < 0 && -res < (INT_MIN + digit) / 10) return INT_MIN;
+
+            res = res * 10 + digit;
+        }
+
+        return sign * res;
+    }
+};
 
 
 

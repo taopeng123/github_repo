@@ -54,7 +54,11 @@ findbool                     bool
 findtypedef                  typedef
 findtypealias                Type alias
 findinitialization           Two forms of initialization
-findinclude                  Need to include
+findmax                      max
+findintmax                   INT_MAX
+findmaxint                   INT_MAX
+findintmin                   INT_MIN
+findminint                   INT_MIN
 findheader                   Headers
 findreference                Reference
 findpassbyvalue              Pass by value
@@ -77,6 +81,7 @@ findsubstring                Substring (get and find substring)
 findsplit                    split a string
 findfind                     find the position of a substring in a string
 findtrim                     trim
+finderase                    erase
 findargs                     Command line argument 
 findcommandlineargument      Command line argument 
 findvector                   vector
@@ -784,6 +789,45 @@ Type alias
 using pos = std::string::size_type; // pos is a synonym for std::string::size_type
 
 ==
+(findmax)
+max
+
+#include <algorithm>  
+
+max(1, 2)
+
+==
+(findintmax)
+(findmaxint)
+(findintmin)
+(findminint)
+INT_MAX and INT_MIN
+
+From geeksforgeeks:
+
+Most of the times, in competitive programming, there is a need to assign the variable, the maximum or minimum value that data type can hold, but remembering such a large and precise number comes out to be a difficult job. Therefore, C++ has certain macros to represent these numbers, so that these can be directly assigned to the variable without actually typing the whole number.
+
+INT_MAX is a macro that specifies that an integer variable cannot store any value beyond this limit.
+INT_MIN specifies that an integer variable cannot store any value below this limit.
+
+Values of INT_MAX and INT_MIN may vary from compiler to compiler. Following are typical values in a compiler where integers are stored using 32 bits.
+
+Value of INT_MAX is +2147483647.
+Value of INT_MIN is -2147483648.
+
+// C++ program to print values of INT_MAX 
+// and INT_MIN 
+
+#include <climits>
+
+int main() { 
+   printf("%d\n", INT_MAX); //Output: 2147483647
+   printf("%d", INT_MIN); //Output: -2147483648
+   return 0; 
+} 
+
+
+==
 (findinitialization)
 Two forms of initialization
 
@@ -793,13 +837,6 @@ Sales_data item2 = null_book; // the copy form of initialization
 It is tempting to think of initialization as a form of assignment, but initialization and assignment are different operations in C++. 
 
 Initialization is not assignment. Initialization happens when a variable is given a value when it is created. Assignment obliterates an object’s current value and replaces that value with a new one.
-
-==
-(findinclude)
-Need to include
-
-INT_MIN, INT_MAX: need to #include <climits>
-max(1, 2): need to #include <algorithm>  
 
 ==
 (findheader)
@@ -1948,6 +1985,18 @@ strcpy (tab2, temp.c_str());
 (findtrim)
 trim
 
+Tao: the simplest way to trim the spaces at beginning and end of a string is:
+
+string str = "   35   ";
+
+str.erase(0, str.find_first_not_of(' '));
+str.erase(str.find_last_not_of(' ') + 1);
+
+cout << str << endl; //Output: 35
+cout << str.size() << endl; //Ouptut: 2
+
+From online:
+
 There is no standard way of trimming a string, but it’s possible to implement using the methods in the string class:
 
 Left trim: Use find_first_not_of() to find the characters to erase
@@ -1958,7 +2007,7 @@ Use erase() to actually erase the characters.
 Here is my implementation. It defaults to trimming whitespace characters but you can specify any string of characters as the second argument.
 
 string& ltrim(string& str, const string& chars = "\t\n\v\f\r ") {
-    str.erase(0, str.find_first_not_of(chars));
+    str.erase(0, str.find_first_not_of(chars)); //tao: see erase() by searching "find erase"
     return str;
 }
  
@@ -1979,6 +2028,43 @@ Example:
 
 string str = " test ";
 trim(str);
+
+==
+(finderase)
+erase
+
+std::string::erase in C++
+
+The function erases a part of the string content, shortening the length of the string. The characters affected depend on the member function version used:
+Return value : erase() returns *this.
+
+string& string ::erase ()
+Erases all characters in a string
+
+string& string ::erase (size_type pos)
+Erases all characters after position ‘pos’. 
+Throw out_of_range if idx > size().
+
+string& string ::erase (size_type idx, size_type len ) 
+Erases at most, len characters of *this, starting at index idx. 
+If len is missing, all remaining characters are removed. 
+Throw out_of_range if idx > size().
+Example: 
+string str("Hello World!");
+str.erase(1, 4); //str = "H World!", tao: yes it is in-place, confirmed.
+
+string& string ::erase (iterator pos)
+Erase the single character at iterator position pos.
+Return the first character after the last character removed
+If no such character is remaining then, returns 
+string::end() i.e. position after the last character.
+
+string& string ::erase (iterator beg, iterator end )
+Erase the single character at iterator position pos.
+Erases all characters of the range [ beg, end)
+Returns end i.e. the first character after the last character removed.
+If no such character is remaining then, returns 
+string::end() i.e. position after the last character
 
 ==
 (findargs)                    
