@@ -16,9 +16,12 @@ Summary:
 ************************************************
 Categories:
 
+category_begin
+
 *************************** 
 **         List          ** 
 *************************** 
+
 1111 | 21. Merge Two Sorted Lists, Easy. 
 0111 | 148. Sort List, Medium
 0111 | 147. Insertion Sort List, Medium 
@@ -174,7 +177,7 @@ Categories:
 **         Array         ** 
 *************************** 
 共54題
-0111 | 1. Two Sum, Medium. 
+0111 | 1. Two Sum, Medium. Note the elements in input array can have duplicates.
 111 | 167. Two Sum II - Input array is sorted, Medium 
 011 | 170. Two Sum III - Data structure design, Easy. 
 001 | 15. 3Sum, Medium 
@@ -350,6 +353,7 @@ Categories:
 --0 | 260. Single Number III, Medium.
 --1 | 393. UTF-8 Validation, Medium. Leetcode自推中有對題意的解釋.
 
+category_end
 
 =================================================
 category_xxx
