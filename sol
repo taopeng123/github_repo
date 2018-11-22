@@ -249,7 +249,7 @@ category_begin
 **        Board          ** 
 *************************** 
 共14題
-111 | 36. Valid Sudoku, Easy. 注意board數組中的元素是char類型的, 而不是int
+1111 | 36. Valid Sudoku, Easy. 注意board數組中的元素是char類型的, 而不是int
 011 | 51. N-Queens, Hard. 規則就是要求 每個皇后所在的横竪斜上(不只是一步, 而是整個横竖斜大直線上)都沒有其它皇后.
 011 | 52. N-Queens II, Hard 
 010 | 37. Sudoku Solver, Hard. 按9*9的board寫, 也能通過.
@@ -1497,7 +1497,196 @@ public:
     }
 };
 
+=================================================
+category_board
 
+************************
+pr_36. Valid Sudoku, Easy
+
+Question:
+
+Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+Each row must contain the digits 1-9 without repetition.
+Each column must contain the digits 1-9 without repetition.
+Each of the 9 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+
+(Tao: there is a picture here, which is the same as the input matrix below in Example 1)
+
+A partially filled sudoku which is valid.
+
+The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+
+Example 1:
+
+Input:
+[
+  ["5","3",".",".","7",".",".",".","."],
+  ["6",".",".","1","9","5",".",".","."],
+  [".","9","8",".",".",".",".","6","."],
+  ["8",".",".",".","6",".",".",".","3"],
+  ["4",".",".","8",".","3",".",".","1"],
+  ["7",".",".",".","2",".",".",".","6"],
+  [".","6",".",".",".",".","2","8","."],
+  [".",".",".","4","1","9",".",".","5"],
+  [".",".",".",".","8",".",".","7","9"]
+]
+
+Output: true
+
+Example 2:
+
+Input:
+[
+  ["8","3",".",".","7",".",".",".","."],
+  ["6",".",".","1","9","5",".",".","."],
+  [".","9","8",".",".",".",".","6","."],
+  ["8",".",".",".","6",".",".",".","3"],
+  ["4",".",".","8",".","3",".",".","1"],
+  ["7",".",".",".","2",".",".",".","6"],
+  [".","6",".",".",".",".","2","8","."],
+  [".",".",".","4","1","9",".",".","5"],
+  [".",".",".",".","8",".",".","7","9"]
+]
+
+Output: false
+
+Explanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
+
+Note:
+
+A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+Only the filled cells need to be validated according to the mentioned rules.
+The given board contain only digits 1-9 and the character '.'.
+The given board size is always 9x9.
+
+==
+Key: Brute force. To check the sub-boxes (called "blocks" by tao), the easiest way is to write a 4-layer loop. This way can be worked out without thinking. The challenging thing is how to check blocks in a 2-layer loop.
+
+Tao's way of checking the blocks in a 2-layer loop in the code below is different from leetcode discussion (and Code Ganker's Java code uses a 3-layer loop). But they are similar, and Tao's way is easier to understand. So I use Tao's way.
+
+The way to figure out Tao's way is following:
+
+I name the blocks in each position as below:
+
+block_0  block_3   block_6
+block_1  block_4   block_7
+block_2  block_5   block_8
+
+In the following, i and j are loop variables.
+The i in (i, j) loop and block_i are the same number.
+
+Let me use r to denote row index, c to denote column index. 
+The following formula gives the row and column of an element in block_i:
+
+r = (i % 3) * 3 + j / 3
+c = (i / 3) * 3 + j % 3
+
+The above formula can be derived from the following example:
+
+block_0    block_1    block_3
+
+i j r c    i j r c    i j r c
+
+0 0 0 0    1 0 3 0    3 0 0 3
+0 1 0 1    1 1 3 1    3 1 0 4
+0 2 0 2    1 2 3 2    3 2 0 5
+
+0 3 1 0    1 3 4 0    3 3 1 3
+0 4 1 1    1 4 4 1    3 4 1 4
+0 5 1 2    1 5 4 2    3 5 1 5
+
+0 6 2 0    1 6 5 0    3 6 2 3
+0 7 2 1    1 7 5 1    3 7 2 4
+0 8 2 2    1 8 5 2    3 8 2 5
+
+==
+C++ code:
+
+The following 3-pass code is recommended, because it is easier to write and understand. It can be easily re-written to a 1-pass code which is also pasted below this code.
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+    	unordered_set<char> char_set;
+
+    	//Check rows
+    	for(int i = 0; i < 9; ++i) {
+    		for(int j = 0; j < 9; ++j) {
+    			char c = board[i][j];
+    			if(c == '.') continue;
+    			if(char_set.find(c) == char_set.end()) char_set.insert(c);
+	 			else return false;
+    		}
+    		char_set.clear();
+    	}
+       
+    	//Check columns
+    	for(int i = 0; i < 9; ++i) {
+    		for(int j = 0; j < 9; ++j) {
+    			char c = board[j][i];
+    			if(c == '.') continue;
+    			if(char_set.find(c) == char_set.end()) char_set.insert(c);
+	 			else return false;
+    		}
+    		char_set.clear();
+    	}
+
+    	//Check blocks
+    	for(int i = 0; i < 9; ++i) {
+    		for(int j = 0; j < 9; ++j) {
+    			int row = (i % 3) * 3 + j / 3;
+				int col = (i / 3) * 3 + j % 3;
+    			char c = board[row][col];
+    			if(c == '.') continue;
+    			if(char_set.find(c) == char_set.end()) char_set.insert(c);
+	 			else return false;
+    		}
+    		char_set.clear();
+    	}		
+
+        return true;
+    }
+};
+
+The above code can be easily re-written as a 1-pass code as below, but I do not recommend this code because it is harder to understand:
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+    	unordered_set<char> row_set;
+    	unordered_set<char> column_set;
+    	unordered_set<char> block_set;
+
+    	for(int i = 0; i < 9; ++i) {
+    		for(int j = 0; j < 9; ++j) {
+
+    			char row_c = board[i][j];
+    			char column_c = board[j][i];
+    			char block_c = board[(i % 3) * 3 + j / 3][(i / 3) * 3 + j % 3];
+
+    			if(row_c == '.') {}
+    			else if(row_set.find(row_c) == row_set.end()) row_set.insert(row_c);
+	 			else return false;
+
+	 			if(column_c == '.') {}
+	 			else if(column_set.find(column_c) == column_set.end()) column_set.insert(column_c);
+	 			else return false;
+
+	 			if(block_c == '.') {}
+	 			else if(block_set.find(block_c) == block_set.end()) block_set.insert(block_c);
+	 			else return false;
+
+    		}
+
+    		row_set.clear();
+    		column_set.clear();
+    		block_set.clear();
+    	}
+
+        return true;
+    }
+};
 
 
 
