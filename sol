@@ -14,6 +14,23 @@ Summary:
   the way is to look into the yyy in while(...){yyy} or while(!cur && yyy) {...}. If yyy used cur->val, then should add !cur in the condition. Similarly, if yyy used cur->next->val, then should add !cur->next in the condition.
 
 ************************************************
+Template:
+
+=================================================
+category_xxx
+
+************************
+pr_xx
+
+Question:
+
+==
+Key:
+
+==
+C++ code:
+
+************************************************
 Categories:
 
 category_begin
@@ -177,7 +194,7 @@ category_begin
 **         Array         ** 
 *************************** 
 共54題
-0111 | 1. Two Sum, Medium. Note the elements in input array can have duplicates.
+0111 | 1. Two Sum, Medium. 
 111 | 167. Two Sum II - Input array is sorted, Medium 
 011 | 170. Two Sum III - Data structure design, Easy. 
 001 | 15. 3Sum, Medium 
@@ -249,7 +266,7 @@ category_begin
 **        Board          ** 
 *************************** 
 共14題
-1111 | 36. Valid Sudoku, Easy. 注意board數組中的元素是char類型的, 而不是int
+1111 | 36. Valid Sudoku, Easy. 
 011 | 51. N-Queens, Hard. 規則就是要求 每個皇后所在的横竪斜上(不只是一步, 而是整個横竖斜大直線上)都沒有其它皇后.
 011 | 52. N-Queens II, Hard 
 010 | 37. Sudoku Solver, Hard. 按9*9的board寫, 也能通過.
@@ -275,7 +292,7 @@ category_begin
 共10題
 注意本類題目不是所有題都用item-res遞歸法, 甚至可能可以不用遞歸法.
 
-011 | 46. Permutations, Medium 
+0111 | 46. Permutations, Medium 
 011 | 47. Permutations II, Hard 
 011 | 60. Permutation Sequence, Medium. 題意: 排列順序是按數字大小排的, 例如132比123大, 故132在123之後.
 111 | 77. Combinations, Medium 
@@ -291,7 +308,7 @@ category_begin
 **       Interval        ** 
 *************************** 
 共8題
-011 | 56. Merge Intervals, Hard  [1, 2]和[3, 4]不算有overlap, 要[1, 2]和[2, 4]才算有overlap. [2, 2]也算一個interval.
+0111 | 56. Merge Intervals, Hard  
 011 | 57. Insert Interval, Hard. overlap的convention和56題一樣.
 011 | 252. Meeting Rooms, Easy 
 010 | 253. Meeting Rooms II, Medium 
@@ -354,20 +371,6 @@ category_begin
 --1 | 393. UTF-8 Validation, Medium. Leetcode自推中有對題意的解釋.
 
 category_end
-
-=================================================
-category_xxx
-
-************************
-pr_xx
-
-Question:
-
-==
-Key:
-
-==
-C++ code:
 
 ************************
 pr_21, Merge Two Sorted Lists, Easy
@@ -1466,6 +1469,8 @@ Given nums = [2, 7, 11, 15], target = 9,
 Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 
+Tao: note the elements in input array can have duplicates.
+
 ==
 Key: Use map. Put an element as key, and the index of this element as value. The only tricky part is to deal with duplicate elements in the input array.
 
@@ -1559,6 +1564,8 @@ A Sudoku board (partially filled) could be valid but is not necessarily solvable
 Only the filled cells need to be validated according to the mentioned rules.
 The given board contain only digits 1-9 and the character '.'.
 The given board size is always 9x9.
+
+Tao: note that in the code, the type of elments in board is char, not int.
 
 ==
 Key: Brute force. To check the sub-boxes (called "blocks" by tao), the easiest way is to write a 4-layer loop. This way can be worked out without thinking. The challenging thing is how to check blocks in a 2-layer loop.
@@ -1687,6 +1694,164 @@ public:
         return true;
     }
 };
+
+=================================================
+category_combinatorics
+
+************************
+pr_46. Permutations, Medium
+
+Question:
+
+Given a collection of distinct integers, return all possible permutations.
+
+Example:
+
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+
+
+==
+Key: Recursion. Put aside the first element, permute all other elements, then put the first element into all possible positions.
+
+==
+C++ code:
+
+(CodeGanker's classic Java code is more complicated. Leetcode discussion code is similar as Tao's following code.)
+
+class Solution {
+private:
+	vector<vector<int>> permute_subvec(vector<int>& nums, int i) {
+		vector<vector<int>> res;
+
+		if(i == nums.size() - 1) {
+			vector<int> last = {nums[i]};
+			res.push_back(last);
+			return res;
+		}
+
+		vector<vector<int>> sub = permute_subvec(nums, i + 1);
+
+		for(vector<int> vec: sub) {
+			for(int j = 0; j <= vec.size(); ++j) {//Tried to use iterator but had run-time error.
+				vec.insert(vec.begin() + j, nums[i]);
+				vector<int> vec_copy = vec;
+				res.push_back(vec_copy);
+				vec.erase(vec.begin() + j);
+			}
+		}
+
+		return res;
+	}
+
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+    	vector<vector<int>> res;
+    	if(nums.size() == 0) return res;
+        return permute_subvec(nums, 0);
+    }
+};
+
+=================================================
+category_interval
+
+************************
+pr_56. Merge Intervals, Hard
+
+Question:
+
+Given a collection of intervals, merge all overlapping intervals.
+
+Example 1:
+
+Input: [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+
+Example 2:
+
+Input: [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+Tao: 
+1. [1, 2] and [3, 4] does not overlap. [1, 2] and [2, 4] overlaps and will be merged to [1, 4].
+2. [2, 2] is also an interval.
+
+==
+Key: First sort the intervals. Then traverse the intervals, use two pointers pre and cur. If pre and cur overlaps, merge them.
+
+==
+C++ code:
+
+(Tao's code below was simplified according to leetcode discussion code)
+
+class Solution {
+private:
+	static bool compare_interval(Interval x, Interval y) {
+		return x.start < y.start; //Dos not work if written as x.start <= y.start, not sure why.
+	}
+
+public:
+    vector<Interval> merge(vector<Interval>& intervals) {
+     	int n = intervals.size();
+     	if(n <= 1) return intervals;
+     	
+     	vector<Interval> res;
+	
+		sort(intervals.begin(), intervals.end(), compare_interval);
+
+		Interval pre = intervals[0];
+				
+		for(int i = 1; i < n; ++i) {
+			Interval cur = intervals[i];
+
+			//pre and cur overlaps
+			if(cur.start <= pre.end) {
+				//Merge pre and cur, notice the trick of changing pre.end.
+				pre.end = max(pre.end, cur.end); 
+			} else {
+				res.push_back(pre);
+				pre = cur;
+			}
+
+		}
+
+		res.push_back(pre);
+
+		return res;   
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

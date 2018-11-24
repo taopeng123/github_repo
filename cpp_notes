@@ -85,6 +85,7 @@ finderase                    erase
 findargs                     Command line argument 
 findcommandlineargument      Command line argument 
 findvector                   vector
+findsortvector               Sort a vector
 findunorderedcontainers      Unordered associative containers
 findunorderedset             unordered_set
 findset                      set
@@ -703,6 +704,137 @@ int main() {
 Note that the main() function should be outside any class, which is opposite to Java.
 
 ==
+Google C++ Style Guide:
+
+https://google.github.io/styleguide/cppguide.html
+
+==
+Google's naming conventions:
+
+(https://google.github.io/styleguide/cppguide.html#General_Naming_Rules)
+
+Naming
+The most important consistency rules are those that govern naming. The style of a name immediately informs us what sort of thing the named entity is: a type, a variable, a function, a constant, a macro, etc., without requiring us to search for the declaration of that entity. The pattern-matching engine in our brains relies a great deal on these naming rules.
+
+Naming rules are pretty arbitrary, but we feel that consistency is more important than individual preferences in this area, so regardless of whether you find them sensible or not, the rules are the rules.
+
+General Naming Rules
+Names should be descriptive; avoid abbreviation.
+
+Give as descriptive a name as possible, within reason. Do not worry about saving horizontal space as it is far more important to make your code immediately understandable by a new reader. Do not use abbreviations that are ambiguous or unfamiliar to readers outside your project, and do not abbreviate by deleting letters within a word. Abbreviations that would be familiar to someone outside your project with relevant domain knowledge are OK. As a rule of thumb, an abbreviation is probably OK if it's listed in Wikipedia.
+
+int price_count_reader;    // No abbreviation.
+int num_errors;            // "num" is a widespread convention.
+int num_dns_connections;   // Most people know what "DNS" stands for.
+int lstm_size;             // "LSTM" is a common machine learning abbreviation.
+int n;                     // Meaningless.
+int nerr;                  // Ambiguous abbreviation.
+int n_comp_conns;          // Ambiguous abbreviation.
+int wgc_connections;       // Only your group knows what this stands for.
+int pc_reader;             // Lots of things can be abbreviated "pc".
+int cstmr_id;              // Deletes internal letters.
+FooBarRequestInfo fbri;    // Not even a word.
+Note that certain universally-known abbreviations are OK, such as i for an iteration variable and T for a template parameter.
+
+For some symbols, this style guide recommends names to start with a capital letter and to have a capital letter for each new word (a.k.a. "Camel Case" or "Pascal case"). When abbreviations or acronyms appear in such names, prefer to capitalize the abbreviations or acronyms as single words (i.e StartRpc(), not StartRPC()).
+
+Template parameters should follow the naming style for their category: type template parameters should follow the rules for type names, and non-type template parameters should follow the rules for variable names.
+
+File Names
+
+Filenames should be all lowercase and can include underscores (_) or dashes (-). Follow the convention that your project uses. If there is no consistent local pattern to follow, prefer "_".
+
+Examples of acceptable file names:
+
+my_useful_class.cc
+my-useful-class.cc
+myusefulclass.cc
+myusefulclass_test.cc // _unittest and _regtest are deprecated.
+
+C++ files should end in .cc and header files should end in .h. Files that rely on being textually included at specific points should end in .inc (see also the section on self-contained headers).
+
+Do not use filenames that already exist in /usr/include, such as db.h.
+
+In general, make your filenames very specific. For example, use http_server_logs.h rather than logs.h. A very common case is to have a pair of files called, e.g., foo_bar.h and foo_bar.cc, defining a class called FooBar.
+
+Type Names
+
+Type names start with a capital letter and have a capital letter for each new word, with no underscores: MyExcitingClass, MyExcitingEnum.
+
+The names of all types — classes, structs, type aliases, enums, and type template parameters — have the same naming convention. Type names should start with a capital letter and have a capital letter for each new word. No underscores. For example:
+
+// classes and structs
+class UrlTable { ...
+class UrlTableTester { ...
+struct UrlTableProperties { ...
+
+// typedefs
+typedef hash_map<UrlTableProperties *, string> PropertiesMap;
+
+// using aliases
+using PropertiesMap = hash_map<UrlTableProperties *, string>;
+
+// enums
+enum UrlTableErrors { ...
+
+Variable Names
+
+The names of variables (including function parameters) and data members are all lowercase, with underscores between words. Data members of classes (but not structs) additionally have trailing underscores. For instance: a_local_variable, a_struct_data_member, a_class_data_member_.
+
+Common Variable names
+
+For example:
+
+string table_name;  // OK - uses underscore.
+string tablename;   // OK - all lowercase.
+string tableName;   // Bad - mixed case.
+
+Class Data Members
+
+Data members of classes, both static and non-static, are named like ordinary nonmember variables, but with a trailing underscore.
+
+class TableInfo {
+  ...
+ private:
+  string table_name_;  // OK - underscore at end.
+  string tablename_;   // OK.
+  static Pool<TableInfo>* pool_;  // OK.
+};
+
+Struct Data Members
+
+Data members of structs, both static and non-static, are named like ordinary nonmember variables. They do not have the trailing underscores that data members in classes have.
+
+struct UrlTableProperties {
+  string name;
+  int num_entries;
+  static Pool<UrlTableProperties>* pool;
+};
+See Structs vs. Classes for a discussion of when to use a struct versus a class.
+
+Constant Names
+
+Variables declared constexpr or const, and whose value is fixed for the duration of the program, are named with a leading "k" followed by mixed case. Underscores can be used as separators in the rare cases where capitalization cannot be used for separation. For example:
+
+const int kDaysInAWeek = 7;
+const int kAndroid8_0_0 = 24;  // Android 8.0.0
+All such variables with static storage duration (i.e. statics and globals, see Storage Duration for details) should be named this way. This convention is optional for variables of other storage classes, e.g. automatic variables, otherwise the usual variable naming rules apply.
+
+Function Names
+
+Regular functions have mixed case; accessors and mutators may be named like variables.
+
+Ordinarily, functions should start with a capital letter and have a capital letter for each new word.
+
+AddTableEntry()
+DeleteUrl()
+OpenFileOrDie()
+
+(The same naming rule applies to class- and namespace-scope constants that are exposed as part of an API and that are intended to look like functions, because the fact that they're objects rather than functions is an unimportant implementation detail.)
+
+Accessors and mutators (get and set functions) may be named like variables. These often correspond to actual member variables, but this is not required. For example, int count() and void set_count(int count).
+
+==
 (finddatatype)                 
 Data types
 
@@ -759,6 +891,10 @@ double b = (double) a;
 //double -> int
 double a = 3.0;
 double b = (int) a;
+
+//char -> string
+//constructor string s(int n, char x): Create a string of size n and fill the string with character x.
+string s(1, 'a'); //s = "a"
 
 --
 cast:
@@ -2154,8 +2290,27 @@ int main ()
 }
 Edit & Run
 
+--
+The following experiment shows that vectors are also saved contiguously in memory, same as array:
+
+vector<int> vec = {1, 2, 3, 4, 5};
+int n = vec.size();
+
+for(int *p = &vec[0]; p < &vec[n]; ++p) cout << *p << " ";
+cout << endl;
+
+Output: 1 2 3 4 5
 
 --
+Vector of objects:
+
+From my leetcode code:
+
+vector<Interval> res;
+res.push_back(*iterator); // *iterator is an object of Interval
+
+--
+(findsortvector)
 Sort a vector:
 
 // C++ program to sort a vector in non-decreasing 
@@ -2170,7 +2325,7 @@ int main()
   
     sort(v.begin(), v.end()); 
   
-    for (auto x : v) cout << x << " "; //Ouptut: 0 1 2 3 4 5 6 7 8 9
+    for (auto x : v) cout << x << " "; //Ouptut is sorted: 0 1 2 3 4 5 6 7 8 9
   
     return 0; 
 } 
@@ -2208,8 +2363,10 @@ using namespace std;
 struct Interval { 
     int start, end; 
 }; 
-  
-// Tao's experience shows that the following function compareInterval should be defined outside of a class (it can be used either inside or outside a class).
+ 
+// Tao: in the following compare function, if for i1 < i2 it returns true, then in the sort, smaller elements will be put in front.
+
+// Tao's experience shows that the following function compareInterval should be defined outside of a class (it can be used either inside or outside a class). If I must put it inside a class, define it as a static function: static bool compareInterval(Interval i1, Interval i2) {...}
 // Compares two intervals according to staring times. 
 bool compareInterval(Interval i1, Interval i2) 
 { 
@@ -2272,6 +2429,115 @@ int binarySearch(int first, int last, int search4, vector<int>& random);
 vector<int> random(100);
 // ...
 found = binarySearch(first, last, search4, random);
+
+--
+Return a vector from function (from online):
+
+In leetcode, the default code follows this pattern:
+Input parameter is a reference to vector, output is a vector:
+
+vector<vector<int>> permute(vector<int>& nums) { 
+    vector<vector<int>> res;
+    ...
+    return res; //Practice shows it is OK to return a vector defined inside a function (unlike pointer).
+}
+
+vector<Interval> merge(vector<Interval>& intervals) {
+    ...
+    return intervals; //Practice shows it is OK to return the input reference.
+}
+
+Question:
+
+Efficient way to return a std::vector in c++
+
+How much data is copied, when returning a std::vector in a function and how big an optimization will it be to place the std::vector in free-store (on the heap) and return a pointer instead i.e. is:
+
+std::vector *f()
+{
+  std::vector *result = new std::vector();
+  /*
+    Insert elements into result
+  */
+  return result;
+} 
+more efficient than:
+
+std::vector f()
+{
+  std::vector result;
+  /*
+    Insert elements into result
+  */
+  return result;
+} 
+
+Answer:
+
+In C++11, this is the preferred way:
+
+std::vector<X> f();
+
+That is, return by value.
+
+With C++11, std::vector has move-semantics, which means the local vector declared in your function will be moved on return and in some cases even the move can be elided by the compiler.
+
+Question:
+
+Why is it OK to return vector from function?
+
+Please consider this code. I have seen this type of code several times. words is a local vector. How is it possible to return it from a function? Can we guarantee it will not die?
+
+ std::vector<std::string> read_file(const std::string& path)
+ {
+    std::ifstream file("E:\\names.txt");
+
+    if (!file.is_open())
+    {
+        std::cerr << "Unable to open file" << "\n";
+        std::exit(-1);
+    }
+
+    std::vector<string> words;//this vector will be returned 
+    std::string token;
+
+    while (std::getline(file, token, ','))
+    {
+        words.push_back(token);
+    }
+
+    return words;
+}
+
+Pre C++11:
+The function will not return the local variable but rather a copy of it. Your compiler might however perform an optimization where no actual copy action is made.
+
+See this question & answer for further details
+
+C++11:
+The function will move the value, see this answer for further details
+
+Question:
+
+What is std::move(), and when should it be used?
+
+What is it?
+What does it do?
+When should it be used?
+Good links are appreciated.
+
+Answer:
+
+Wikipedia Page on C++11 R-value references and move constructors
+
+1. In C++11, in addition to copy constructors, objects can have move constructors.
+(And in addition to copy assignment operators, they have move assignment operators.)
+
+2. The move constructor is used instead of the copy constructor, if the object has type "rvalue-reference" (Type &&).
+
+3. std::move() is a cast that produces an rvalue-reference to an object, to enable moving from it. It's a new C++ way to avoid copies. For example, using a move constructor, a std::vector could just copy its internal pointer to data to the new object, leaving the moved object in an incorrect state, avoiding to copy all data. This would be C++-valid.
+
+Try googling for move semantics, rvalue, perfect forwarding.
 
 --
 vector<int> v;
@@ -2437,8 +2703,8 @@ Modifiers:
 assign() – It assigns new value to the vector elements by replacing old ones
 push_back() – It push the elements into a vector from the back
 pop_back() – It is used to pop or remove elements from a vector from the back.
-insert() – It inserts new elements before the element at the specified position
-erase() – It is used to remove elements from a container from the specified position or range.
+insert() – It inserts new elements before the element at the specified position. (tao: online example: v1.insert(v1.begin()+i, v2[i]))
+erase() – It is used to remove elements from a container from the specified position or range. (tao: online example: vec.erase(vec.begin() + 1))
 swap() – It is used to swap the contents of one vector with another vector of same type and size.
 clear() – It is used to remove all the elements of the vector container
 emplace() – It extends the container by inserting new element at position
@@ -4288,6 +4554,17 @@ Sales_data* salesptr;
 
 To see the difference between struct and class, search for "find public", and look at the end of that part.
 
+--
+From Google C++ Style Guide:
+
+Structs vs. Classes
+
+Use a struct only for passive objects that carry data; everything else is a class.
+
+structs should be used for passive objects that carry data, and may have associated constants, but lack any functionality other than access/setting the data members. The accessing/setting of fields is done by directly accessing the fields rather than through method invocations. Methods should not provide behavior but should only be used to set up the data members, e.g., constructor, destructor, Initialize(), Reset(), Validate().
+
+If more functionality is required, a class is more appropriate. If in doubt, make it a class.
+
 ==
 (findclass)
 class
@@ -4319,6 +4596,7 @@ If our class does not explicitly define any constructors, the compiler will impl
 
 Sales_data item;
 Screen myScreen(5, 3);
+Screen myScreen = Screen(5, 3);//Added by Tao, works in practice.
 
 Sales_data obj(); // oops! declares a function, not an object
 Sales_data obj2; // ok: obj2 is an object, not a function
@@ -4578,6 +4856,27 @@ struct Sales_data {
     double revenue = 0.0; //Tao: in-class initializer, see below
 };
 
+Constructor examples from Leetcode default code:
+
+struct Interval {
+    int start;
+    int end;
+    Interval() : start(0), end(0) {}
+    Interval(int s, int e) : start(s), end(e) {}
+};
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+}; 
 
 In the constructor, the code between the colon and the curly braces is a constructor initializer list, which specifies initial values for one or more data members of the object being created. The constructor initializer is a list of member names, each of which is followed by that member’s initial value in parentheses (or inside curly braces). Multiple member initializations are separated by commas.
 
