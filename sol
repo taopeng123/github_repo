@@ -321,7 +321,7 @@ category_begin
 **   Arithmetics implementation   ** 
 ************************************ 
 共26題
-011 | 7. Reverse Integer, Easy 
+0111 | 7. Reverse Integer, Easy 
 111 | 66. Plus One, Easy. 題目的意思是  輪入數組代表的數  是十进製的, 不是二进製. digit[0]是最高位.
 000 | 65. Valid Number, Hard 
 111 | 70. Climbing Stairs, Easy. 題意是樓梯共有n階, 而不是說人總共必須跨n次.
@@ -352,7 +352,7 @@ category_begin
 **  System implementation  ** 
 ***************************** 
 共4題
-010 | 146. LRU Cache, Hard. 
+0101 | 146. LRU Cache, Hard. 
 011 | 232. Implement Queue using Stacks, Easy. 
 111 | 225. Implement Stack using Queues, Easy. 
 001 | 155. Min Stack, Easy. Convention: 若Min Stack為空, 則top()返回0, pop()直接return, getMin()返回0.
@@ -1797,7 +1797,7 @@ C++ code:
 class Solution {
 private:
 	static bool compare_interval(Interval x, Interval y) {
-		return x.start < y.start; //Dos not work if written as x.start <= y.start, not sure why.
+		return x.start < y.start; //If written as x.start <= y.start, then the following sort gives correct result but is very slow. Not sure why.
 	}
 
 public:
@@ -1831,12 +1831,175 @@ public:
     }
 };
 
+=================================================
+category_arithmetics
 
+************************
+pr_7. Reverse Integer, Easy 
 
+Question:
 
+Given a 32-bit signed integer, reverse digits of an integer.
 
+Example 1:
 
+Input: 123
+Output: 321
 
+Example 2:
+
+Input: -123
+Output: -321
+Example 3:
+
+Input: 120
+Output: 21
+
+Note:
+Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31,  2^31 − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+
+Tao: the problem assues that an int in C++ is 32 bits (4 bytes), which is different from the 2 bytes int my cpp_notes.
+
+==
+Key: Reverse the input x using "res = res * 10 + (x % 10)". Rememeber to deal with overflow before calculating res in this formula. If x is negative, call reverse(-x). The only corner case of this problem is when x = INT_MIN, -x overflows, so in this case just return 0 directly. 
+
+==
+C++ code:
+
+#include<iostream>
+#include<climits>
+using namespace std;
+
+class Solution {
+public:
+    int reverse(int x) {
+    	if(x == INT_MIN) return 0;
+    	if(x < 0) return -reverse(-x);
+
+        int res = 0;
+
+        while(x > 0) {
+        	int last = x % 10;
+        	if(res > (INT_MAX - last) / 10) return 0;
+        	res = res * 10 + last;
+        	x /= 10;
+        }
+
+        return res;
+    }
+};
+
+=================================================
+category_system
+
+************************
+pr_146. LRU Cache, Hard
+
+Question:
+
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+
+Follow up:
+Could you do both operations in O(1) time complexity?
+
+Example:
+
+LRUCache cache = new LRUCache( 2 /* capacity */ );
+
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns -1 (not found)
+cache.put(4, 4);    // evicts key 1
+cache.get(1);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.get(4);       // returns 4
+
+Tao: both put and get increase the priority of the element. For put, if a key is already there, it updates the value and makes this element the highest priority, if a key is not there, it creates the node and makes this element the highest priority.
+
+==
+Key: Use a doubly linked list and a map. The node of the list contains information of (key, value). The map's key is the key, value is pointer to the node. Whenever an element is visited, move it to the front of the list. When the cache reaches its capacity, remove the tail of the list. CodeGanker also did in this way.
+
+==
+C++ code:
+
+struct Node {
+	int key, val;
+	Node* prev;
+	Node* next;
+	Node(int key_, int val_): key(key_), val(val_), prev(NULL), next(NULL) {}
+};
+
+class LRUCache {
+private:
+	int cap;
+	unordered_map<int, Node*> node_map;
+	//Practice shows that the following two lines can not be written as: Node* prev, next;
+	Node* head; 
+	Node* tail;
+
+	void move_to_top(Node* node) {
+		if(head == tail || head == node) return;
+		if(tail == node) tail = node->prev;
+    	if(node->prev) node->prev->next = node->next;
+    	if(node->next) node->next->prev = node->prev;
+    	node->next = head;
+   		head->prev = node;
+   		head = node; 	
+	}
+
+	void remove_tail() {
+		node_map.erase(tail->key);
+		if(tail->prev) tail->prev->next = NULL;
+		tail = tail->prev;
+	}
+
+public:
+    LRUCache(int capacity) {
+        cap = capacity;
+    }
+    
+    int get(int key) {
+        if(node_map.find(key) == node_map.end()) { 
+        	return -1;	
+        } else {
+        	Node* node = node_map[key];
+        	move_to_top(node);
+        	return node->val;
+        }
+    }
+    
+    void put(int key, int value) {
+    	Node* node;
+        
+        if(node_map.find(key) == node_map.end()) {
+        	if(node_map.size() == cap) remove_tail();
+
+        	node = new Node(key, value);
+
+        	if(node_map.size() == 0) {
+        		head = node;
+        		tail = node;
+        	} else {
+	        	node->next = head;
+	       		head->prev = node;
+	       		head = node; 
+       		}
+       		
+       		node_map[key] = node;
+
+        } else {
+        	node = node_map[key];
+        	node->val = value;
+        	move_to_top(node);
+        }
+        
+    }
+};
 
 
 

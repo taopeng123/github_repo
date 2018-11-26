@@ -94,6 +94,8 @@ findmap                      map
 findstack                    stack
 findqueue                    queue
 findpriorityqueue            priority_queue
+finddeque                    deque
+finddequeue                  deque
 finditerator                 iterator
 findarray                    array
 findand                      AND operator
@@ -838,6 +840,17 @@ Accessors and mutators (get and set functions) may be named like variables. Thes
 (finddatatype)                 
 Data types
 
+Type     Size
+bool     NA
+char     8 bits
+int      16 bits
+long     32 bits
+float    6 significant digits
+double   10 siginifcant digits
+
+8 bits = 1 byte
+(Remember: "bit" is shorter than "byte")
+
 The arithmetic types are divided into two categories: integral types (which include character and boolean types, tao: should also include int) and floating-point types.
 
 Tao: integral types means: int, character, boolean types. The concept of integral types will be used later.
@@ -957,8 +970,8 @@ Value of INT_MIN is -2147483648.
 #include <climits> 
 
 int main() { 
-   printf("%d\n", INT_MAX); //Output: 2147483647
-   printf("%d", INT_MIN); //Output: -2147483648
+   printf("%d\n", INT_MAX); //Output: 2147483647, which equals 2^31 − 1
+   printf("%d", INT_MIN); //Output: -2147483648, which equals −2^31
    return 0; 
 } 
 
@@ -1432,6 +1445,7 @@ int ival = 42;
 int *p = &ival; // p holds the address of ival; p is a pointer to ival
 int v = *p; //v = 42, dereference operator *
 *p = 0; //Assign new value to ival
+int* p1, p2; //Tao: practice shows this is wrong, should define different pointers in different lines.
 
 //Null pointer. The following three lines are equivalent, to assign null pointer to p.
 int *p = 0;
@@ -3312,6 +3326,118 @@ int main ()
   
     return 0; 
 } 
+
+==
+(finddeque)
+(finddequeue)
+deque
+
+Tao's summary:
+
+#include <deque> 
+deque<int> gquiz; 
+gquiz.push_back(10); 
+gquiz.push_front(20); 
+ngquiz.front();
+ngquiz.back();
+ngquiz.pop_front();
+ngquiz.pop_back();
+ngquiz.clear();
+ngquiz.erase();
+
+1. dequename.erase(position)
+2. dequename.erase(startingposition, endingposition)
+
+Examples:
+
+Input: mydeque{1, 2, 3, 4, 5}, pos= 2
+mydeque.erase(pos);
+Output : 1, 2, 4, 5
+
+Input: mydeque{1, 2, 3, 4, 5, 6, 7, 8}, pos1= 3, pos2= 6
+mydeque.erase(pos1, pos2);
+Output : 1, 2, 3, 8
+
+--
+From geeksforgeeks:
+
+Double ended queues are sequence containers with the feature of expansion and contraction on both the ends. They are similar to vectors, but are more efficient in case of insertion and deletion of elements at the end, and also the beginning. Unlike vectors, contiguous storage allocation may not be guaranteed.
+
+The functions for deque are same as vector, with an addition of push and pop operations for both front and back.
+
+#include <iostream> 
+#include <deque> 
+  
+using namespace std; 
+  
+void showdq(deque <int> g) 
+{ 
+    deque <int> :: iterator it; 
+    for (it = g.begin(); it != g.end(); ++it) 
+        cout << '\t' << *it; 
+    cout << '\n'; 
+} 
+  
+int main() 
+{ 
+    deque <int> gquiz; 
+    gquiz.push_back(10); 
+    gquiz.push_front(20); 
+    gquiz.push_back(30); 
+    gquiz.push_front(15); 
+    cout << "The deque gquiz is : "; 
+    showdq(gquiz); 
+  
+    cout << "\ngquiz.size() : " << gquiz.size(); 
+    cout << "\ngquiz.max_size() : " << gquiz.max_size(); 
+  
+    cout << "\ngquiz.at(2) : " << gquiz.at(2); 
+    cout << "\ngquiz.front() : " << gquiz.front(); 
+    cout << "\ngquiz.back() : " << gquiz.back(); 
+  
+    cout << "\ngquiz.pop_front() : "; 
+    gquiz.pop_front(); 
+    showdq(gquiz); 
+  
+    cout << "\ngquiz.pop_back() : "; 
+    gquiz.pop_back(); 
+    showdq(gquiz); 
+  
+    return 0;
+
+The output of the above program is :
+
+The deque gquiz is :     15    20    10    30
+
+gquiz.size() : 4
+gquiz.max_size() : 4611686018427387903
+gquiz.at(2) : 10
+gquiz.front() : 15
+gquiz.back() : 30
+gquiz.pop_front() :     20    10    30
+
+gquiz.pop_back() :     20    10
+
+Methods of Deque:
+
+deque insert() function in C++ STL: Returns an iterator that points to the first of the newly inserted elements.
+deque rbegin() function in C++ STL: Returns a reverse iterator which points to the last element of the deque (i.e., its reverse beginning).
+deque rend() function in C++ STL: Returns a reverse iterator which points to the position before the beginning of the deque (which is considered its reverse end).
+deque cbegin() in C++ STL: Returns an iterator pointing to the first element of the container.
+deque max_size() function in C++ STL: Returns the maximum number of elements that a deque container can hold.
+deque assign() function in C++ STL: Assign values to the same or different deque container.
+deque resize() function in C++ STL: Function which changes the size of the deque.
+deque::push_front() in C++ STL: This function is used to push elements into a deque from the front.
+deque::push_back() in C++ STL: This function is used to push elements into a deque from the back.
+deque::pop_front() and deque::pop_back() in C++ STL: pop_front() function is used to pop or remove elements from a deque from the front. pop_back() function is used to pop or remove elements from a deque from the back.
+deque::front() and deque::back() in C++ STL: front() function is used to reference the first element of the deque container. back() function is used to reference the last element of the deque container.
+deque::clear() and deque::erase() in C++ STL: clear() function is used to remove all the elements of the deque container, thus making its size 0. erase() function is used to remove elements from a container from the specified position or range.
+deque::empty() and deque::size() in C++ STL: empty() function is used to check if the deque container is empty or not. size() function is used to return the size of the deque container or the number of elements in the deque container.
+deque::operator= and deque::operator[] in C++ STL:
+operator= operator is used to assign new contents to the container by replacing the existing contents. operator[] operator is used to reference the element present at position given inside the operator.
+deque::at() and deque::swap() in C++ STL: at() function is used reference the element present at the position given as the parameter to the function. swap() function is used to swap the contents of one deque with another deque of same type and size.
+deque::begin() and deque::end in C++ STL: begin() function is used to return an iterator pointing to the first element of the deque container. end() function is used to return an iterator pointing to the last element of the deque container.
+deque::emplace_front() and deque::emplace_back() in C++ STL: emplace_front() function is used to insert a new element into the deque container, the new element is added to the beginning of the deque. emplace_back() function is used to insert a new element into the deque container, the new element is added to the end of the deque.
 
 ==
 (finditerator)
