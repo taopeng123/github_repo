@@ -361,7 +361,7 @@ category_begin
 **   Bit manipulation    ** 
 *************************** 
 共6題
-010 | 190. Reverse Bits, Easy. 雖然191題比本題簡單點, 但最好還是先做本題, 因為本題含對負數的討論. 若要輪出來檢查, 則可用Integer.toString(13, 2), 結果為1101, 即13的二进製碼(已record到java p404). 注意本題的代碼欄中要求的是 you need treat n as an unsigned value, 但函數中要求的是int: public int reverseBits(int n). 這是因為Java中沒有usigned類型, 所以我們要把int當成一個unsigned
+0101 | 190. Reverse Bits, Easy. 
 111 | 191. Number of 1 Bits, Easy. n可為負數.
 011 | 201. Bitwise AND of Numbers Range, Medium 
 011 | 89. Gray Code, Medium. Convention: Input 0 expected [0]
@@ -2001,9 +2001,57 @@ public:
     }
 };
 
+=================================================
+category_bit
 
+************************
+pr_190. Reverse Bits, Easy
 
+Question:
 
+Reverse bits of a given 32 bits unsigned integer.
+
+Example:
+
+Input: 43261596
+Output: 964176192
+Explanation: 43261596 represented in binary as 00000010100101000001111010011100, 
+             return 964176192 represented in binary as 00111001011110000010100101000000.
+Follow up:
+If this function is called many times, how would you optimize it?
+
+Tao: 
+
+uint32_t: unsigned integer type with width of exactly 8, 16, 32 and 64 bits respectively. Defined in header <cstdint>.
+
+For checking, printing numbers in binary format:
+#include <bitset>
+using namespace std;
+int v = 5;
+cout << bitset<32>(v); //32 means outputs 32 bits
+
+Correct: 00000000000000000000000000000001 -> 10000000000000000000000000000000
+Wrong:   00000000000000000000000000000001 -> 00000000000000000000000000000001
+
+==
+Key: Obtain the last digit of n (n >> i & 1). Left shift result (res << 1), and adds the last digit of n to the left shifed res. Try to use only bit operations.
+
+==
+C++ code:
+
+Below uses leecode discussion and William's code combined, which uses only bit operations. Tao's code used plus and % operators which may be slower than bit operations.
+
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+    	uint32_t res = 0;
+
+        for(int i = 0; i < 32; ++i) 
+        	res = (res << 1) | (n >> i & 1);
+        
+        return res;
+    }
+};
 
 
 

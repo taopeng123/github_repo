@@ -856,6 +856,14 @@ The arithmetic types are divided into two categories: integral types (which incl
 Tao: integral types means: int, character, boolean types. The concept of integral types will be used later.
 
 --
+Printing numbers in binary format:
+
+#include <bitset>
+using namespace std;
+int v = 5;
+cout << bitset<32>(v); //32 means outputs 32 bits
+
+--
 (findbool)
 bool:
 
@@ -3672,15 +3680,12 @@ NOT: !
 Bitwise operators:
 AND: &
 OR:  |
-XOR: ^ (eg: expr1 ^ expr2)
+XOR: ^ (a^b is equivalent to a != b)
 NOT: ~ (eg: ~expr) 
 Left shift: << (eg: expr1 << expr2)
 Right shift: >> (eg: expr1 >> expr2)
 
-a^b is equivalent as a != b
-
-The left-shift operator (the << operator) inserts 0-valued bits on the right. The behavior of the right-shift operator (the >> operator) depends on the type of the left-hand operand: If that operand is unsigned, then the operator inserts 0-valued
-bits on the left; if it is a signed type, the result is implementation defined—either copies of the sign bit or 0-valued bits are inserted on the left.
+The left-shift operator (the << operator) inserts 0-valued bits on the right. The behavior of the right-shift operator (the >> operator) depends on the type of the left-hand operand: If that operand is unsigned, then the operator inserts 0-valued bits on the left; if it is a signed type, the result is implementation defined—either copies of the sign bit or 0-valued bits are inserted on the left.
 
 The bitwise NOT operator (the ~ operator) generates a new value with the bits of its operand inverted. Each 1 bit is set to 0; each 0 bit is set to 1.
 
@@ -3691,6 +3696,11 @@ cout << "Helo" << endl;
 
 --
 Remainder (modulus) operator: %
+
+--
+Compound assignments:
++=   -=   *=   /=   %=   (arithmetic operators)
+<<=  >>=   &=   ^=   |=  (bitwise operators)
 
 --
 Order of Evaluation
@@ -3705,11 +3715,6 @@ the object’s identity (its location in memory).
 
 --
 In assignment, if the types of the left and right operands differ, the right-hand operand is converted to the type of the left.
-
---
-Compound assignments:
-+=   -=   *=   /=   %=   (arithmetic operators)
-<<=  >>=   &=   ^=   |=  (bitwise operators)
 
 --
 (findincrement)
