@@ -4,6 +4,8 @@ Note:
   So C++ code needs to be compiled using: std=c++11,
   and Python code needs to be run using: python3 filename.py
 - When recording my code here, do not paste the include statements. Only pasete when I included some uncommon things, like <climits>.
+- Only use prxxx in categories and in the solution. Elsewhere should use pr xxx. This way helps searching for prxxx.
+- Tao's summary about DP: pr 139. Word Break, Medium
 
 ************************************************
 Summary:
@@ -17,10 +19,10 @@ Summary:
 Template:
 
 =================================================
-category_xxx
+catxxx
 
 ************************
-pr_xx
+prxx
 
 Question:
 
@@ -33,347 +35,340 @@ C++ code:
 ************************************************
 Categories:
 
-category_begin
+catbegin
 
-*************************** 
-**         List          ** 
-*************************** 
+=================================================
+catlist
 
-1111 | 21. Merge Two Sorted Lists, Easy. 
-0111 | 148. Sort List, Medium
-0111 | 147. Insertion Sort List, Medium 
-1111 | 206. Reverse Linked List, Easy 
-1111 | 92. Reverse Linked List II, Medium 
-011 | 25. Reverse Nodes in k-Group, Hard. 題目的意思是每次都要反轉k個, 直到剩下的元素個數不够k個, 如題目中的For k = 2, you should return: 2->1->4->3->5, 即1->2反轉了, 3->4也要反轉, 而剩下的只有一個5, 不够反轉, 所以就不繼續反轉了. 另外, 當k大於list長度時, 則甚麼都不做, 返回原list 
-011 | 234. Palindrome Linked List, Easy 
-111 | 61. Rotate List, Medium. k可以大於list長度
-111 | 143. Reorder List, Medium.  
-111 | 141. Linked List Cycle, Medium
-011 | 142. Linked List Cycle II, Medium 
-011 | 138. Copy List with Random Pointer, Hard. 
-111 | 83. Remove Duplicates from Sorted List, Easy 
-011 | 82. Remove Duplicates from Sorted List II, Medium 
-011 | 86. Partition List, Medium 
-011 | 24. Swap Nodes in Pairs, Medium 
-111 | 19. Remove Nth Node From End of List, Easy 
-111 | 160. Intersection of Two Linked Lists, Easy 
-111 | 203. Remove Linked List Elements, Easy 
-011 | 237. Delete Node in a Linked List, Easy 
-011 | 23. Merge k Sorted Lists, Hard 
+1111 | pr21. Merge Two Sorted Lists, Easy. 
+0111 | pr148. Sort List, Medium
+0111 | pr147. Insertion Sort List, Medium 
+1111 | pr206. Reverse Linked List, Easy 
+1111 | pr92. Reverse Linked List II, Medium 
+011 | pr25. Reverse Nodes in k-Group, Hard. 題目的意思是每次都要反轉k個, 直到剩下的元素個數不够k個, 如題目中的For k = 2, you should return: 2->1->4->3->5, 即1->2反轉了, 3->4也要反轉, 而剩下的只有一個5, 不够反轉, 所以就不繼續反轉了. 另外, 當k大於list長度時, 則甚麼都不做, 返回原list 
+011 | pr234. Palindrome Linked List, Easy 
+111 | pr61. Rotate List, Medium. k可以大於list長度
+111 | pr143. Reorder List, Medium.  
+111 | pr141. Linked List Cycle, Medium
+011 | pr142. Linked List Cycle II, Medium 
+011 | pr138. Copy List with Random Pointer, Hard. 
+111 | pr83. Remove Duplicates from Sorted List, Easy 
+011 | pr82. Remove Duplicates from Sorted List II, Medium 
+011 | pr86. Partition List, Medium 
+011 | pr24. Swap Nodes in Pairs, Medium 
+111 | pr19. Remove Nth Node From End of List, Easy 
+111 | pr160. Intersection of Two Linked Lists, Easy 
+111 | pr203. Remove Linked List Elements, Easy 
+011 | pr237. Delete Node in a Linked List, Easy 
+011 | pr23. Merge k Sorted Lists, Hard 
  
-*************************** 
-**         Tree          ** 
-*************************** 
+=================================================
+cattree
 
-0011 | 94. Binary Tree Inorder Traversal, Medium 
-011 | 144. Binary Tree Preorder Traversal, Medium 
-000 | 145. Binary Tree Postorder Traversal, Hard 
-0111 | 102. Binary Tree Level Order Traversal, Easy 
-011 | 107. Binary Tree Level Order Traversal II, Easy 
-011 | 103. Binary Tree Zigzag Level Order Traversal, Medium 
-1111 | 100. Same Tree, Easy. 
-011 | 101. Symmetric Tree, Easy 
-011 | 116. Populating Next Right Pointers in Each Node, Medium. 
-001 | 117. Populating Next Right Pointers in Each Node II, Hard.  
-111 | 104. Maximum Depth of Binary Tree, Easy. 
-111 | 111. Minimum Depth of Binary Tree, Easy. 
-011 | 156. Binary Tree Upside Down, Medium 
-011 | 199. Binary Tree Right Side View, Medium 
-111 | 226. Invert Binary Tree, Easy 
-001 | 129. Sum Root to Leaf Numbers, Medium. 
-111 | 112. Path Sum, Easy. 
-011 | 113. Path Sum II, Medium. 
-000 | 124. Binary Tree Maximum Path Sum, Hard. 題意節點的值可為負數.
-011 | 110. Balanced Binary Tree, Easy. 
-001 | 114. Flatten Binary Tree to Linked List, Medium. 題意flatten後每個節點的左兒子為null, 若不弄成null, 則通不過或報超時.
-011 | 105. Construct Binary Tree from Preorder and Inorder Traversal, Medium 
-011 | 106. Construct Binary Tree from Inorder and Postorder Traversal, Medium 
-011 | 222. Count Complete Tree Nodes, Medium 
---0 | 298. Binary Tree Longest Consecutive Sequence, Medium. 題意是最長序列要是遞增的.
---0 | 314. Binary Tree Vertical Order Traversal, Medium
+0011 | pr94. Binary Tree Inorder Traversal, Medium 
+011 | pr144. Binary Tree Preorder Traversal, Medium 
+000 | pr145. Binary Tree Postorder Traversal, Hard 
+0111 | pr102. Binary Tree Level Order Traversal, Easy 
+011 | pr107. Binary Tree Level Order Traversal II, Easy 
+011 | pr103. Binary Tree Zigzag Level Order Traversal, Medium 
+1111 | pr100. Same Tree, Easy. 
+011 | pr101. Symmetric Tree, Easy 
+011 | pr116. Populating Next Right Pointers in Each Node, Medium. 
+001 | pr117. Populating Next Right Pointers in Each Node II, Hard.  
+111 | pr104. Maximum Depth of Binary Tree, Easy. 
+111 | pr111. Minimum Depth of Binary Tree, Easy. 
+011 | pr156. Binary Tree Upside Down, Medium 
+011 | pr199. Binary Tree Right Side View, Medium 
+111 | pr226. Invert Binary Tree, Easy 
+001 | pr129. Sum Root to Leaf Numbers, Medium. 
+111 | pr112. Path Sum, Easy. 
+011 | pr113. Path Sum II, Medium. 
+000 | pr124. Binary Tree Maximum Path Sum, Hard. 題意節點的值可為負數.
+011 | pr110. Balanced Binary Tree, Easy. 
+001 | pr114. Flatten Binary Tree to Linked List, Medium. 題意flatten後每個節點的左兒子為null, 若不弄成null, 則通不過或報超時.
+011 | pr105. Construct Binary Tree from Preorder and Inorder Traversal, Medium 
+011 | pr106. Construct Binary Tree from Inorder and Postorder Traversal, Medium 
+011 | pr222. Count Complete Tree Nodes, Medium 
+--0 | pr298. Binary Tree Longest Consecutive Sequence, Medium. 題意是最長序列要是遞增的.
+--0 | pr314. Binary Tree Vertical Order Traversal, Medium
 
-*************************** 
-**   Binary Search Tree  ** 
-*************************** 
-0111 | 230. Kth Smallest Element in a BST, Medium 
-000 | 99. Recover Binary Search Tree, Hard. 本題遞歸法也可以.
-011 | 235. Lowest Common Ancestor of a Binary Search Tree, Easy 
-011 | 236. Lowest Common Ancestor of a Binary Tree, Medium. 題意輸入的樹中可能有相同值的節點.
-010 | 96. Unique Binary Search Trees. Medium.
-010 | 95. Unique Binary Search Trees II, Medium. 
-011 | 173. Binary Search Tree Iterator, Medium. 
-001 | 98. Validate Binary Search Tree, Medium. 題意root為null時, 也算BST.
-011 | 108. Convert Sorted Array to Binary Search Tree, Medium 
-001 | 109. Convert Sorted List to Binary Search Tree, Medium 
---1 | 255. Verify Preorder Sequence in Binary Search Tree, Medium   
+=================================================
+catbst
 
-*************************** 
-**         Trie          ** 
-*************************** 
-0111 | 208. Implement Trie (Prefix Tree), Medium 
-010 | 211. Add and Search Word - Data structure design, Medium 
-001 | 79. Word Search, Medium. 不是Trie題 
-000 | 212. Word Search II, Hard. 題意結果要sort.
---1 | 422. Valid Word Square, Easy.
---1 | 425. Word Squares, Hard. 輸入數組中的單詞可以重復使用.
+0111 | pr230. Kth Smallest Element in a BST, Medium 
+000 | pr99. Recover Binary Search Tree, Hard. 本題遞歸法也可以.
+011 | pr235. Lowest Common Ancestor of a Binary Search Tree, Easy 
+011 | pr236. Lowest Common Ancestor of a Binary Tree, Medium. 題意輸入的樹中可能有相同值的節點.
+010 | pr96. Unique Binary Search Trees. Medium.
+010 | pr95. Unique Binary Search Trees II, Medium. 
+011 | pr173. Binary Search Tree Iterator, Medium. 
+001 | pr98. Validate Binary Search Tree, Medium. 題意root為null時, 也算BST.
+011 | pr108. Convert Sorted Array to Binary Search Tree, Medium 
+001 | pr109. Convert Sorted List to Binary Search Tree, Medium 
+--1 | pr255. Verify Preorder Sequence in Binary Search Tree, Medium   
 
-*************************** 
-**        Graph          ** 
-*************************** 
-0101 | 133. Clone Graph, Medium. 
-010 | 127. Word Ladder, Medium. 注意題目的例子中的wordList中不包括beginWord和endWord, 但實際的test case中, wordList是包括beginWord和endWord的!
-010 | 126. Word Ladder II, Hard.
-001 | 207. Course Schedule, Medium. 
-010 | 210. Course Schedule II, Medium. 注意本題只是Medium.
---1 | 261. Graph Valid Tree, Medium. 若輸入edges=[]: 則n=1時返回true, n!=時返回false.
---0 | 332. Reconstruct Itinerary, Medium.
+=================================================
+cattrie
 
-*************************** 
-**       String          ** 
-*************************** 
-共49題
-0111 | 8. String to Integer (atoi), Easy 
-011 | 14. Longest Common Prefix, Easy 
-111 | 38. Count and Say, Easy 
-011 | 28. Implement strStr(), Easy. "aa", "" -> 0. "", "aa" -> -1. needle可能比haystack長.
-111 | 242. Valid Anagram, Easy. Anagram：单词里的字母的种类和数目没有改变，只是改变了字母的排列顺序。
-011 | 49. Group Anagrams, Medium 
-011 | 68. Text Justification, Hard. [""], 0 -> [""]. [""], 2 -> ["  "]
---0 | 418. Sentence Screen Fitting, Medium.
-011 | 71. Simplify Path, Medium. 
-011 | 43. Multiply Strings, Medium 
-011 | 6. ZigZag Conversion, Easy 
-111 | 58. Length of Last Word, Easy. "a " -> 1
-011 | 157. Read N Characters Given Read4, Easy. 題意: read4(buffer)作用從文件中讀入到buffer中, read(buf, n)作用是從文件中讀入到buf中. buffer和buf不是同一個數組, buf是從buffer中讀入的. read4中已實現文件offset: 比如第一次調用read4時, read4讀到文件中的a處, 第二次調用read4時, read4就從文件中a的下一個字符開始讀. Reader4這個類我E3已經寫好了, 直接調用就是. 測試時注意文件末尾都有一個ascii=10的newline符作為結束符.
-011 | 158. Read N Characters Given Read4 II - Call multiple times, Hard
-011 | 3. Longest Substring Without Repeating Characters, Medium  
-001 | 159. Longest Substring with At Most Two Distinct Characters, Hard. 題目中即e和c為那兩個distinct characters. 注意題目是說at most 2 dinstinct characters, 而不是at most 2 repeating characters. 
---1 | 340. Longest Substring with At Most K Distinct Characters, Hard.
-111 | 165. Compare Version Numbers, Easy. 輸入的version有可能為"1", "1.0", "0.0.1" 
-011 | 179. Largest Number, Medium 
-011 | 9. Palindrome Number, Easy 
-011 | 125. Valid Palindrome, Easy 
-011 | 5. Longest Palindromic Substring, Medium 
-010 | 214. Shortest Palindrome, Hard 
-011 | 131. Palindrome Partitioning, Medium. II要比本題簡單些, 但本題也不難, 所以還是先做本題
-001 | 132. Palindrome Partitioning II, Hard 
-011 | 249. Group Shifted Strings, Easy 
-000 | 30. Substring with Concatenation of All Words, Hard. 
-011 | 186. Reverse Words in a String II, Medium. 本題其實比151題簡單 
-011 | 151. Reverse Words in a String, Medium. 本題與186題的題意不同之處: 本題的input可有leading or trailing spaces, input可有multiple spaces between two words, 本題空簡複雜度可以為 O(n), 而186題要求為O(1). 
-011 | 246. Strobogrammatic Number, Easy.  
-011 | 247. Strobogrammatic Number II, Medium. 文件correct-output-for-check中有正確輸出, 以供檢查. 
-011 | 248. Strobogrammatic Number III, Hard. 文件correct-output-for-check中有正確輸出, 以供檢查. 
-011 | 93. Restore IP Addresses, Medium. 一個有效的IP地址由4個數字(我給每個這樣數字叫vrangh)組成, 每個vrangh在0到255之間inclusively. 若vrangh只有一位數, 則它可以為0; 否則若vrangh位數大於一, 則不能以0開頭.  
-011 | 139. Word Break, Medium. 
-011 | 140. Word Break II, Hard. 有一個較長的non-breakable的test case容易造成超時, 故要先判斷整個s是否breakable
-011 | 22. Generate Parentheses, Medium 
-011 | 241. Different Ways to Add Parentheses, Medium, 輪入可能只有一個數, 沒有運算符
-011 | 20. Valid Parentheses, Easy 
-000 | 32. Longest Valid Parentheses, Hard. 
-011 | 17. Letter Combinations of a Phone Number, Medium 
-011 | 97. Interleaving String, Hard. 輸入String中任何一個都有可能長度為0.
-010 | 115. Distinct Subsequences, Hard 
-011 | 91. Decode Ways, Medium 
-000 | 44. Wildcard Matching, Hard. 
-010 | 10. Regular Expression Matching, Hard. 題意不清楚, 可見key首.
-011 | 161. One Edit Distance, Medium. OJ中題目沒講Edit Distance意思, 可先看72題題目.
-011 | 72. Edit Distance, Hard. 
-010 | 76. Minimum Window Substring, Hard 
-101 | 205. Isomorphic Strings, Easy 
-011 | 187. Repeated DNA Sequences, Medium 
-010 | 87. Scramble String, Hard. 若兩個輸入String是一樣的(如s1=”helo”, s2=”helo”), 則它們也算是互為scramble的.
---1 | 257. Binary Tree Paths, Easy.
---0 | 388. Longest Absolute File Path, Medium. 輸入"a", 輸出0, 因為是找file, 必須有點. 
---1 | 394. Decode String, Medium.
---0 | 471. Encode String with Shortest Length, Hard. 本題是上題反過來.
---0 | 271. Encode and Decode Strings, Medium. 本題跟394和471無關. 本題考查的不是壓縮空間, 而是如何將一群string連接好後再將它們分開.
---1 | 288. Unique Word Abbreviation, Easy.  
+0111 | pr208. Implement Trie (Prefix Tree), Medium 
+010 | pr211. Add and Search Word - Data structure design, Medium 
+001 | pr79. Word Search, Medium. 不是Trie題 
+000 | pr212. Word Search II, Hard. 題意結果要sort.
+--1 | pr422. Valid Word Square, Easy.
+--1 | pr425. Word Squares, Hard. 輸入數組中的單詞可以重復使用.
 
-*************************** 
-**         Array         ** 
-*************************** 
-共54題
-0111 | 1. Two Sum, Medium. 
-111 | 167. Two Sum II - Input array is sorted, Medium 
-011 | 170. Two Sum III - Data structure design, Easy. 
-001 | 15. 3Sum, Medium 
-011 | 16. 3Sum Closest, Medium 
---1 | 259. 3Sum Smaller, Medium
-001 | 18. 4Sum, Medium 
-011 | 88. Merge Sorted Array, Easy 
-011 | 41. First Missing Positive, Hard. 題目中的positive integer是指從1開始的. 非in-place的也可通過(Easy級別). 盡量寫成寫成in-place的. 注意題目要求constant space. 若輸入[], 則要求返回1.
-111 | 59. Spiral Matrix II, Medium. 本題本質就是旋轉遍歴一個正方形數組. 本題是I的特殊情況, 先做本題, 可以幫助推出I中的公式等.
-011 | 54. Spiral Matrix, Medium. 本題本質就是旋轉遍歴一個任意數組. 
-111 | 48. Rotate Image, Medium 
-011 | 11. Container With Most Water, Medium. 返回的是面積.
-000 | 42. Trapping Rain Water, Hard. 求整個數組中的總水量, 而不是單個坑中能放的最大水量 
-111 | 73. Set Matrix Zeroes, Medium 
-011 | 31. Next Permutation, Medium. 题目的意思是：123的全排列按字典顺序為: 123 132 213 231 312 321. 即將123當作一個單詞, 132當作另一個單詞, 則123在字典中是排在132前面的
-111 | 27. Remove Element, Easy 
-111 | 26. Remove Duplicates from Sorted Array, Easy 
-011 | 80. Remove Duplicates from Sorted Array II, Medium 
-011 | 75. Sort Colors, Medium 
-111 | 169. Majority Element, Easy, 爭取不用Map.
-101 | 229. Majority Element II, Medium. 題目中沒說一定有majority, 或多少個majority. 169題說的一定有.
-010 | 189. Rotate Array, Easy 
-010 | 238. Product of Array Except Self, Medium. 注意output array和input array是不同的數組. The output array does not count as extra space. 即不要求in-place.
-011 | 243. Shortest Word Distance, Easy 
-011 | 244. Shortest Word Distance II, Medium 
-011 | 245. Shortest Word Distance III, Medium 
-001 | 251. Flatten 2D Vector, Medium 
-011 | 240. Search a 2D Matrix II. Medium. 本題跟I沒甚麼卵關係. 
-011 | 217. Contains Duplicate, Easy 
-111 | 219. Contains Duplicate II, Easy  
-011 | 220. Contains Duplicate III, Medium. 輸入數組的元素可能為2147483647
-000 | 4. Median of Two Sorted Arrays, Hard. Median的定義為(參考了wiki): 若總共有寄數個數, 則取中間那個數; 若總共有偶數個數, 則取中間的兩個數的平均值. 所以本題返回的是一個double.
-111 | 198. House Robber, Easy 
-011 | 213. House Robber II, Medium 
-011 | 135. Candy, Hard. 注意是neighbors, 即只要和自己左右相鄰的比較就可以了(即按local的順序給糖, 而不是按global的順序給糖)
-011 | 134. Gas Station, Medium. 題目中travel around the circuit意思是回到最初的出發點上.
-011 | 55. Jump Game, Medium. 本題是判斷能否跳完.
-001 | 45. Jump Game II, Hard. 本題是返回跳完所需最少步數.
-011 | 121. Best Time to Buy and Sell Stock, Medium. 
-011 | 122. Best Time to Buy and Sell Stock II, Medium
-001 | 188. Best Time to Buy and Sell Stock IV, Hard. 先做IV, 再做III. III就是IV的特列. 有一個test case的k遠大於數組長度一半, 要先特殊處理. 要時間O(N^2)才能通過.
-111 | 123. Best Time to Buy and Sell Stock III, Hard 
-010 | 53. Maximum Subarray, Medium. 要返回的結果是largest sum, 而不是這個subarray. 網上表明, 本題不存在好的divide and conquer方法, 不要再浪費時間去想divide and conquer, 而用標准的O(N)方法即可.
-011 | 152. Maximum Product Subarray, Medium 
-1111 | 35. Search Insert Position, Medium. 題意是若找不到, 則返回 'target插入後, target在數組中的位置'
-011 | 34. Search for a Range, Medium. 
-011 | 33. Search in Rotated Sorted Array, Hard. 本題的元素無重復, 本題的II即元素有重復的情況
-011 | 81. Search in Rotated Sorted Array II, Medium. 注意本題只要求判斷target在不在數組中, 沒要求返回其位置(本題的I要求返回位置).
-111 | 153. Find Minimum in Rotated Sorted Array, Medium. 本題中的元素是沒有重復的, 本題的II即元素有重復之情況
-011 | 154. Find Minimum in Rotated Sorted Array II, Hard. 
-011 | 162. Find Peak Element, Medium 
-011 | 209. Minimum Size Subarray Sum, Medium.
-010 | 128. Longest Consecutive Sequence, Hard. 沒有consecutive sequence時, 返回1, 如[3,8,29]
-011 | 239. Sliding Window Maximum, Hard. 
-000 | 215. Kth Largest Element in an Array, Medium. 注意不是Kth smallest.
---1 | 256. Paint House, Medium.
---0 | 303. Range Sum Query - Immutable, Easy.
---1 | 304. Range Sum Query 2D - Immutable, Medium.
---0 | 307. Range Sum Query - Mutable, Medium. 這個係列的四道題, 就本題最難.
---1 | 308. Range Sum Query 2D - Mutable, Hard.
---0 | 406. Queue Reconstruction by Height, Medium.
---0 | 361. Bomb Enemy, Medium.
---1 | 281. Zigzag Iterator, Medium.
---1 | 373. Find K Pairs with Smallest Sums, Medium. 注意輸入數組已經是排好序的.
---1 | 346. Moving Average from Data Stream, Easy. 注意題目要求結果是double, 而不是int.
---1 | 283. Move Zeroes, Easy.
+=================================================
+catgraph
 
-*************************** 
-**        Board          ** 
-*************************** 
-共14題
-1111 | 36. Valid Sudoku, Easy. 
-011 | 51. N-Queens, Hard. 規則就是要求 每個皇后所在的横竪斜上(不只是一步, 而是整個横竖斜大直線上)都沒有其它皇后.
-011 | 52. N-Queens II, Hard 
-010 | 37. Sudoku Solver, Hard. 按9*9的board寫, 也能通過.
-011 | 200. Number of Islands, Medium. 盡量用BFS, 不要用DFS. 
-001 | 305. Number of Islands II, Hard.  
-000 | 130. Surrounded Regions, Medium. 題意是大寫字母O, 不是數字0, 也不是小寫字母o.
-011 | 120. Triangle, Medium. 題目中的adjacent number是這麼個意思: 設i為行, j為列, 則triangle[i][j]在下一行的adjacent number為triangle[i+1][j]和triangle[i+1][j+1]兩個.
-011 | 62. Unique Paths, Medium. 注意m為行數, n為列數.
-011 | 63. Unique Paths II, Medium
-011 | 64. Minimum Path Sum, Medium. 本題要返回的是 path sum最小的那條路徑 之path sum
-011 | 174. Dungeon Game, Hard 
-011 | 74. Search a 2D Matrix, Medium. 本題做完後移到本題II前面去.
-011 | 149. Max Points on a Line, Hard. 輸入的點中可能有重合的點, 比如一個可能的輸入為: [[1,1],[1,1],[2,2],[2,2]]
-000 | 84. Largest Rectangle in Histogram, Hard. 本題被我評為Leetcode第一難題. 
-011 | 85. Maximal Rectangle, Hard. 本題要緊跟84題, 不要分開.
-011 | 221. Maximal Square, Medium. 給的是正方形數組, 要求的是正方形. 注意matrix的元素是char, 而不是int.
---0 | 289. Game of Life, Medium.
---0 | 317. Shortest Distance from All Buildings, Hard.
+0101 | pr133. Clone Graph, Medium. 
+010 | pr127. Word Ladder, Medium. 注意題目的例子中的wordList中不包括beginWord和endWord, 但實際的test case中, wordList是包括beginWord和endWord的!
+010 | pr126. Word Ladder II, Hard.
+001 | pr207. Course Schedule, Medium. 
+010 | pr210. Course Schedule II, Medium. 注意本題只是Medium.
+--1 | pr261. Graph Valid Tree, Medium. 若輸入edges=[]: 則n=1時返回true, n!=時返回false.
+--0 | pr332. Reconstruct Itinerary, Medium.
 
-*************************** 
-**     Combinatorics     ** 
-*************************** 
-共10題
+=================================================
+catstring
+
+0111 | pr8. String to Integer (atoi), Easy 
+011 | pr14. Longest Common Prefix, Easy 
+111 | pr38. Count and Say, Easy 
+011 | pr28. Implement strStr(), Easy. "aa", "" -> 0. "", "aa" -> -1. needle可能比haystack長.
+111 | pr242. Valid Anagram, Easy. Anagram：单词里的字母的种类和数目没有改变，只是改变了字母的排列顺序。
+011 | pr49. Group Anagrams, Medium 
+011 | pr68. Text Justification, Hard. [""], 0 -> [""]. [""], 2 -> ["  "]
+--0 | pr418. Sentence Screen Fitting, Medium.
+011 | pr71. Simplify Path, Medium. 
+011 | pr43. Multiply Strings, Medium 
+011 | pr6. ZigZag Conversion, Easy 
+111 | pr58. Length of Last Word, Easy. "a " -> 1
+011 | pr157. Read N Characters Given Read4, Easy. 題意: read4(buffer)作用從文件中讀入到buffer中, read(buf, n)作用是從文件中讀入到buf中. buffer和buf不是同一個數組, buf是從buffer中讀入的. read4中已實現文件offset: 比如第一次調用read4時, read4讀到文件中的a處, 第二次調用read4時, read4就從文件中a的下一個字符開始讀. Reader4這個類我E3已經寫好了, 直接調用就是. 測試時注意文件末尾都有一個ascii=10的newline符作為結束符.
+011 | pr158. Read N Characters Given Read4 II - Call multiple times, Hard
+011 | pr3. Longest Substring Without Repeating Characters, Medium  
+001 | pr159. Longest Substring with At Most Two Distinct Characters, Hard. 題目中即e和c為那兩個distinct characters. 注意題目是說at most 2 dinstinct characters, 而不是at most 2 repeating characters. 
+--1 | pr340. Longest Substring with At Most K Distinct Characters, Hard.
+111 | pr165. Compare Version Numbers, Easy. 輸入的version有可能為"1", "1.0", "0.0.1" 
+011 | pr179. Largest Number, Medium 
+011 | pr9. Palindrome Number, Easy 
+011 | pr125. Valid Palindrome, Easy 
+011 | pr5. Longest Palindromic Substring, Medium 
+010 | pr214. Shortest Palindrome, Hard 
+011 | pr131. Palindrome Partitioning, Medium. II要比本題簡單些, 但本題也不難, 所以還是先做本題
+001 | pr132. Palindrome Partitioning II, Hard 
+011 | pr249. Group Shifted Strings, Easy 
+000 | pr30. Substring with Concatenation of All Words, Hard. 
+011 | pr186. Reverse Words in a String II, Medium. 本題其實比151題簡單 
+011 | pr151. Reverse Words in a String, Medium. 本題與186題的題意不同之處: 本題的input可有leading or trailing spaces, input可有multiple spaces between two words, 本題空簡複雜度可以為 O(n), 而186題要求為O(1). 
+011 | pr246. Strobogrammatic Number, Easy.  
+011 | pr247. Strobogrammatic Number II, Medium. 文件correct-output-for-check中有正確輸出, 以供檢查. 
+011 | pr248. Strobogrammatic Number III, Hard. 文件correct-output-for-check中有正確輸出, 以供檢查. 
+011 | pr93. Restore IP Addresses, Medium. 一個有效的IP地址由4個數字(我給每個這樣數字叫vrangh)組成, 每個vrangh在0到255之間inclusively. 若vrangh只有一位數, 則它可以為0; 否則若vrangh位數大於一, 則不能以0開頭.  
+0111| pr139. Word Break, Medium. 
+011 | pr140. Word Break II, Hard. 有一個較長的non-breakable的test case容易造成超時, 故要先判斷整個s是否breakable
+011 | pr22. Generate Parentheses, Medium 
+011 | pr241. Different Ways to Add Parentheses, Medium, 輪入可能只有一個數, 沒有運算符
+011 | pr20. Valid Parentheses, Easy 
+000 | pr32. Longest Valid Parentheses, Hard. 
+011 | pr17. Letter Combinations of a Phone Number, Medium 
+011 | pr97. Interleaving String, Hard. 輸入String中任何一個都有可能長度為0.
+010 | pr115. Distinct Subsequences, Hard 
+011 | pr91. Decode Ways, Medium 
+000 | pr44. Wildcard Matching, Hard. 
+010 | pr10. Regular Expression Matching, Hard. 題意不清楚, 可見key首.
+011 | pr161. One Edit Distance, Medium. OJ中題目沒講Edit Distance意思, 可先看72題題目.
+011 | pr72. Edit Distance, Hard. 
+010 | pr76. Minimum Window Substring, Hard 
+101 | pr205. Isomorphic Strings, Easy 
+011 | pr187. Repeated DNA Sequences, Medium 
+010 | pr87. Scramble String, Hard. 若兩個輸入String是一樣的(如s1=”helo”, s2=”helo”), 則它們也算是互為scramble的.
+--1 | pr257. Binary Tree Paths, Easy.
+--0 | pr388. Longest Absolute File Path, Medium. 輸入"a", 輸出0, 因為是找file, 必須有點. 
+--1 | pr394. Decode String, Medium.
+--0 | pr471. Encode String with Shortest Length, Hard. 本題是上題反過來.
+--0 | pr271. Encode and Decode Strings, Medium. 本題跟394和471無關. 本題考查的不是壓縮空間, 而是如何將一群string連接好後再將它們分開.
+--1 | pr288. Unique Word Abbreviation, Easy.  
+
+=================================================
+catarray
+
+0111 | pr1. Two Sum, Medium. 
+111 | pr167. Two Sum II - Input array is sorted, Medium 
+011 | pr170. Two Sum III - Data structure design, Easy. 
+001 | pr15. 3Sum, Medium 
+011 | pr16. 3Sum Closest, Medium 
+--1 | pr259. 3Sum Smaller, Medium
+001 | pr18. 4Sum, Medium 
+011 | pr88. Merge Sorted Array, Easy 
+011 | pr41. First Missing Positive, Hard. 題目中的positive integer是指從1開始的. 非in-place的也可通過(Easy級別). 盡量寫成寫成in-place的. 注意題目要求constant space. 若輸入[], 則要求返回1.
+111 | pr59. Spiral Matrix II, Medium. 本題本質就是旋轉遍歴一個正方形數組. 本題是I的特殊情況, 先做本題, 可以幫助推出I中的公式等.
+011 | pr54. Spiral Matrix, Medium. 本題本質就是旋轉遍歴一個任意數組. 
+111 | pr48. Rotate Image, Medium 
+011 | pr11. Container With Most Water, Medium. 返回的是面積.
+000 | pr42. Trapping Rain Water, Hard. 求整個數組中的總水量, 而不是單個坑中能放的最大水量 
+111 | pr73. Set Matrix Zeroes, Medium 
+011 | pr31. Next Permutation, Medium. 题目的意思是：123的全排列按字典顺序為: 123 132 213 231 312 321. 即將123當作一個單詞, 132當作另一個單詞, 則123在字典中是排在132前面的
+111 | pr27. Remove Element, Easy 
+111 | pr26. Remove Duplicates from Sorted Array, Easy 
+011 | pr80. Remove Duplicates from Sorted Array II, Medium 
+011 | pr75. Sort Colors, Medium 
+111 | pr169. Majority Element, Easy, 爭取不用Map.
+101 | pr229. Majority Element II, Medium. 題目中沒說一定有majority, 或多少個majority. 169題說的一定有.
+010 | pr189. Rotate Array, Easy 
+010 | pr238. Product of Array Except Self, Medium. 注意output array和input array是不同的數組. The output array does not count as extra space. 即不要求in-place.
+011 | pr243. Shortest Word Distance, Easy 
+011 | pr244. Shortest Word Distance II, Medium 
+011 | pr245. Shortest Word Distance III, Medium 
+001 | pr251. Flatten 2D Vector, Medium 
+011 | pr240. Search a 2D Matrix II. Medium. 本題跟I沒甚麼卵關係. 
+011 | pr217. Contains Duplicate, Easy 
+111 | pr219. Contains Duplicate II, Easy  
+011 | pr220. Contains Duplicate III, Medium. 輸入數組的元素可能為2147483647
+000 | pr4. Median of Two Sorted Arrays, Hard. Median的定義為(參考了wiki): 若總共有寄數個數, 則取中間那個數; 若總共有偶數個數, 則取中間的兩個數的平均值. 所以本題返回的是一個double.
+111 | pr198. House Robber, Easy 
+011 | pr213. House Robber II, Medium 
+011 | pr135. Candy, Hard. 注意是neighbors, 即只要和自己左右相鄰的比較就可以了(即按local的順序給糖, 而不是按global的順序給糖)
+011 | pr134. Gas Station, Medium. 題目中travel around the circuit意思是回到最初的出發點上.
+011 | pr55. Jump Game, Medium. 本題是判斷能否跳完.
+001 | pr45. Jump Game II, Hard. 本題是返回跳完所需最少步數.
+011 | pr121. Best Time to Buy and Sell Stock, Medium. 
+011 | pr122. Best Time to Buy and Sell Stock II, Medium
+001 | pr188. Best Time to Buy and Sell Stock IV, Hard. 先做IV, 再做III. III就是IV的特列. 有一個test case的k遠大於數組長度一半, 要先特殊處理. 要時間O(N^2)才能通過.
+111 | pr123. Best Time to Buy and Sell Stock III, Hard 
+010 | pr53. Maximum Subarray, Medium. 要返回的結果是largest sum, 而不是這個subarray. 網上表明, 本題不存在好的divide and conquer方法, 不要再浪費時間去想divide and conquer, 而用標准的O(N)方法即可.
+011 | pr152. Maximum Product Subarray, Medium 
+1111 | pr35. Search Insert Position, Medium. 題意是若找不到, 則返回 'target插入後, target在數組中的位置'
+011 | pr34. Search for a Range, Medium. 
+011 | pr33. Search in Rotated Sorted Array, Hard. 本題的元素無重復, 本題的II即元素有重復的情況
+011 | pr81. Search in Rotated Sorted Array II, Medium. 注意本題只要求判斷target在不在數組中, 沒要求返回其位置(本題的I要求返回位置).
+111 | pr153. Find Minimum in Rotated Sorted Array, Medium. 本題中的元素是沒有重復的, 本題的II即元素有重復之情況
+011 | pr154. Find Minimum in Rotated Sorted Array II, Hard. 
+011 | pr162. Find Peak Element, Medium 
+011 | pr209. Minimum Size Subarray Sum, Medium.
+010 | pr128. Longest Consecutive Sequence, Hard. 沒有consecutive sequence時, 返回1, 如[3,8,29]
+011 | pr239. Sliding Window Maximum, Hard. 
+000 | pr215. Kth Largest Element in an Array, Medium. 注意不是Kth smallest.
+--1 | pr256. Paint House, Medium.
+--0 | pr303. Range Sum Query - Immutable, Easy.
+--1 | pr304. Range Sum Query 2D - Immutable, Medium.
+--0 | pr307. Range Sum Query - Mutable, Medium. 這個係列的四道題, 就本題最難.
+--1 | pr308. Range Sum Query 2D - Mutable, Hard.
+--0 | pr406. Queue Reconstruction by Height, Medium.
+--0 | pr361. Bomb Enemy, Medium.
+--1 | pr281. Zigzag Iterator, Medium.
+--1 | pr373. Find K Pairs with Smallest Sums, Medium. 注意輸入數組已經是排好序的.
+--1 | pr346. Moving Average from Data Stream, Easy. 注意題目要求結果是double, 而不是int.
+--1 | pr283. Move Zeroes, Easy.
+
+=================================================
+catboard
+
+1111 | pr36. Valid Sudoku, Easy. 
+011 | pr51. N-Queens, Hard. 規則就是要求 每個皇后所在的横竪斜上(不只是一步, 而是整個横竖斜大直線上)都沒有其它皇后.
+011 | pr52. N-Queens II, Hard 
+010 | pr37. Sudoku Solver, Hard. 按9*9的board寫, 也能通過.
+011 | pr200. Number of Islands, Medium. 盡量用BFS, 不要用DFS. 
+001 | pr305. Number of Islands II, Hard.  
+000 | pr130. Surrounded Regions, Medium. 題意是大寫字母O, 不是數字0, 也不是小寫字母o.
+011 | pr120. Triangle, Medium. 題目中的adjacent number是這麼個意思: 設i為行, j為列, 則triangle[i][j]在下一行的adjacent number為triangle[i+1][j]和triangle[i+1][j+1]兩個.
+011 | pr62. Unique Paths, Medium. 注意m為行數, n為列數.
+011 | pr63. Unique Paths II, Medium
+011 | pr64. Minimum Path Sum, Medium. 本題要返回的是 path sum最小的那條路徑 之path sum
+011 | pr174. Dungeon Game, Hard 
+011 | pr74. Search a 2D Matrix, Medium. 本題做完後移到本題II前面去.
+011 | pr149. Max Points on a Line, Hard. 輸入的點中可能有重合的點, 比如一個可能的輸入為: [[1,1],[1,1],[2,2],[2,2]]
+000 | pr84. Largest Rectangle in Histogram, Hard. 本題被我評為Leetcode第一難題. 
+011 | pr85. Maximal Rectangle, Hard. 本題要緊跟84題, 不要分開.
+011 | pr221. Maximal Square, Medium. 給的是正方形數組, 要求的是正方形. 注意matrix的元素是char, 而不是int.
+--0 | pr289. Game of Life, Medium.
+--0 | pr317. Shortest Distance from All Buildings, Hard.
+
+=================================================
+catcombinatorics
+
 注意本類題目不是所有題都用item-res遞歸法, 甚至可能可以不用遞歸法.
 
-0111 | 46. Permutations, Medium 
-011 | 47. Permutations II, Hard 
-011 | 60. Permutation Sequence, Medium. 題意: 排列順序是按數字大小排的, 例如132比123大, 故132在123之後.
-111 | 77. Combinations, Medium 
-011 | 254. Factor Combinations, Medium. 更多test case(答案代碼算出的), 按(n, res.size()): (1200, 97), (34500, 197), (80000, 521), 
-011 | 39. Combination Sum, Medium. 本題輸入數組中的元素可以重復選. 輸入數組中的元素既然可以重復選, 那麼輸入數組中的元素就沒必需重復了, 所以可以assume輸入數組中的元素無重復. 本題的二與本題正好相反, 輸入數組中的元素既然不能重復選, 所以輸入數組中的元素是可以重復的. 本題及II, III可以算k-sum係列中的.
-011 | 40. Combination Sum II, Medium. 本題輸入數組中的元素不可以重復選.
-011 | 216. Combination Sum III, Medium. 本題題目跟I和II關係不大.
-011 | 78. Subsets, Medium. 
-011 | 90. Subsets II, Medium
+0111 | pr46. Permutations, Medium 
+011 | pr47. Permutations II, Hard 
+011 | pr60. Permutation Sequence, Medium. 題意: 排列順序是按數字大小排的, 例如132比123大, 故132在123之後.
+111 | pr77. Combinations, Medium 
+011 | pr254. Factor Combinations, Medium. 更多test case(答案代碼算出的), 按(n, res.size()): (1200, 97), (34500, 197), (80000, 521), 
+011 | pr39. Combination Sum, Medium. 本題輸入數組中的元素可以重復選. 輸入數組中的元素既然可以重復選, 那麼輸入數組中的元素就沒必需重復了, 所以可以assume輸入數組中的元素無重復. 本題的二與本題正好相反, 輸入數組中的元素既然不能重復選, 所以輸入數組中的元素是可以重復的. 本題及II, III可以算k-sum係列中的.
+011 | pr40. Combination Sum II, Medium. 本題輸入數組中的元素不可以重復選.
+011 | pr216. Combination Sum III, Medium. 本題題目跟I和II關係不大.
+011 | pr78. Subsets, Medium. 
+011 | pr90. Subsets II, Medium
 
 
-*************************** 
-**       Interval        ** 
-*************************** 
-共8題
-0111 | 56. Merge Intervals, Hard  
-011 | 57. Insert Interval, Hard. overlap的convention和56題一樣.
-011 | 252. Meeting Rooms, Easy 
-010 | 253. Meeting Rooms II, Medium 
-010 | 223. Rectangle Area, Easy. 注意本題是求並集, 而不是求交集. rectilinear: 直線的. 
-010 | 218. The Skyline Problem, Hard. buildings[i][j]的i表示第i個building, 即building[i]. 而building[i]是一個有三個元素的數組, 比如building[i] = {Li, Ri, Hi}.
-111 | 228. Summary Ranges, Easy 
-011 | 163. Missing Ranges, Medium. 輸入數組所有元素應該都在[lower, upper]這個范圍內.
+=================================================
+catinterval
 
-************************************ 
-**   Arithmetics implementation   ** 
-************************************ 
-共26題
-0111 | 7. Reverse Integer, Easy 
-111 | 66. Plus One, Easy. 題目的意思是  輪入數組代表的數  是十进製的, 不是二进製. digit[0]是最高位.
-000 | 65. Valid Number, Hard 
-111 | 70. Climbing Stairs, Easy. 題意是樓梯共有n階, 而不是說人總共必須跨n次.
-111 | 13. Roman to Integer, Easy 
-010 | 12. Integer to Roman, Medium 
-011 | 29. Divide Two Integers, Medium. 5/0 = Integer.MAX_VALUE, -5/0 = Integer.MIN_VALUE
-011 | 166. Fraction to Recurring Decimal, Medium. 5/0返回"2147483647", -5/0返回"-2147483648". 本題代碼中可以用除法(a/b)運算, 只是a和b都是int, (a/b)也是int, 而我們要做的就是算出小數結果. 
-111 | 118. Pascal's Triangle, Easy 
-011 | 119. Pascal's Triangle II, Easy. 此題的row convention與數組是一樣的: [1]為第0行.
-011 | 67. Add Binary, Easy.  
-011 | 2. Add Two Numbers, Medium. 2->4->3表示342(三百四十二). 
-111 | 171. Excel Sheet Column Number, Easy. 26进製, 先做此題, 再做下題 
-111 | 168. Excel Sheet Column Title, Easy. 26进製 
-011 | 172. Factorial Trailing Zeroes, Easy. 題目的意思是找n!的右起連續0的個數, 如若n!=23050078000, 則Trailing Zeroes為3個.
-111 | 204. Count Primes, Easy. 最小的素數是2, 而不是1.
-010 | 233. Number of Digit One, Medium 
-000 | 164. Maximum Gap, Hard. 題目的意思是找輪入數組被排序後的最大跳躍, 這裡的跳躍是指 '排序後的數組' 中相鄰兩個數的差. 注意輸入數組是unsorted.
-011 | 50. Pow(x, n), Medium. n可為負
-111 | 231. Power of Two, Easy. 0和負數都不算power of two.
-111 | 69. Sqrt(x), Medium. 
-111 | 150. Evaluate Reverse Polish Notation, Medium 
-011 | 224. Basic Calculator, Medium. 有括號, 無乘除. 
-011 | 227. Basic Calculator II, Medium. 有乘除, 無括號. 本題與I沒有甚麼卵關係. 
-011 | 202. Happy Number, Easy 
---1 | 258. Add Digits, Easy
+0111 | pr56. Merge Intervals, Hard  
+011 | pr57. Insert Interval, Hard. overlap的convention和56題一樣.
+011 | pr252. Meeting Rooms, Easy 
+010 | pr253. Meeting Rooms II, Medium 
+010 | pr223. Rectangle Area, Easy. 注意本題是求並集, 而不是求交集. rectilinear: 直線的. 
+010 | pr218. The Skyline Problem, Hard. buildings[i][j]的i表示第i個building, 即building[i]. 而building[i]是一個有三個元素的數組, 比如building[i] = {Li, Ri, Hi}.
+111 | pr228. Summary Ranges, Easy 
+011 | pr163. Missing Ranges, Medium. 輸入數組所有元素應該都在[lower, upper]這個范圍內.
 
-***************************** 
-**  System implementation  ** 
-***************************** 
-共4題
-0101 | 146. LRU Cache, Hard. 
-011 | 232. Implement Queue using Stacks, Easy. 
-111 | 225. Implement Stack using Queues, Easy. 
-001 | 155. Min Stack, Easy. Convention: 若Min Stack為空, 則top()返回0, pop()直接return, getMin()返回0.
+=================================================
+catarithmetics
 
-*************************** 
-**   Bit manipulation    ** 
-*************************** 
-共6題
-0101 | 190. Reverse Bits, Easy. 
-111 | 191. Number of 1 Bits, Easy. n可為負數.
-011 | 201. Bitwise AND of Numbers Range, Medium 
-011 | 89. Gray Code, Medium. Convention: Input 0 expected [0]
-011 | 136. Single Number, Medium. 找單身狗. 
-011 | 137. Single Number II, Medium. 找單身狗. input [1], output 1. 若想用一個長度為常數(如78629)的數組, 是允許的.
---0 | 260. Single Number III, Medium.
---1 | 393. UTF-8 Validation, Medium. Leetcode自推中有對題意的解釋.
+0111 | pr7. Reverse Integer, Easy 
+111 | pr66. Plus One, Easy. 題目的意思是  輪入數組代表的數  是十进製的, 不是二进製. digit[0]是最高位.
+000 | pr65. Valid Number, Hard 
+111 | pr70. Climbing Stairs, Easy. 題意是樓梯共有n階, 而不是說人總共必須跨n次.
+111 | pr13. Roman to Integer, Easy 
+010 | pr12. Integer to Roman, Medium 
+011 | pr29. Divide Two Integers, Medium. 5/0 = Integer.MAX_VALUE, -5/0 = Integer.MIN_VALUE
+011 | pr166. Fraction to Recurring Decimal, Medium. 5/0返回"2147483647", -5/0返回"-2147483648". 本題代碼中可以用除法(a/b)運算, 只是a和b都是int, (a/b)也是int, 而我們要做的就是算出小數結果. 
+111 | pr118. Pascal's Triangle, Easy 
+011 | pr119. Pascal's Triangle II, Easy. 此題的row convention與數組是一樣的: [1]為第0行.
+011 | pr67. Add Binary, Easy.  
+011 | pr2. Add Two Numbers, Medium. 2->4->3表示342(三百四十二). 
+111 | pr171. Excel Sheet Column Number, Easy. 26进製, 先做此題, 再做下題 
+111 | pr168. Excel Sheet Column Title, Easy. 26进製 
+011 | pr172. Factorial Trailing Zeroes, Easy. 題目的意思是找n!的右起連續0的個數, 如若n!=23050078000, 則Trailing Zeroes為3個.
+111 | pr204. Count Primes, Easy. 最小的素數是2, 而不是1.
+010 | pr233. Number of Digit One, Medium 
+000 | pr164. Maximum Gap, Hard. 題目的意思是找輪入數組被排序後的最大跳躍, 這裡的跳躍是指 '排序後的數組' 中相鄰兩個數的差. 注意輸入數組是unsorted.
+011 | pr50. Pow(x, n), Medium. n可為負
+111 | pr231. Power of Two, Easy. 0和負數都不算power of two.
+111 | pr69. Sqrt(x), Medium. 
+111 | pr150. Evaluate Reverse Polish Notation, Medium 
+011 | pr224. Basic Calculator, Medium. 有括號, 無乘除. 
+011 | pr227. Basic Calculator II, Medium. 有乘除, 無括號. 本題與I沒有甚麼卵關係. 
+011 | pr202. Happy Number, Easy 
+--1 | pr258. Add Digits, Easy
 
-category_end
+=================================================
+catsystem
+
+0101 | pr146. LRU Cache, Hard. 
+011 | pr232. Implement Queue using Stacks, Easy. 
+111 | pr225. Implement Stack using Queues, Easy. 
+001 | pr155. Min Stack, Easy. Convention: 若Min Stack為空, 則top()返回0, pop()直接return, getMin()返回0.
+
+=================================================
+catbit
+
+0101 | pr190. Reverse Bits, Easy. 
+111 | pr191. Number of 1 Bits, Easy. n可為負數.
+011 | pr201. Bitwise AND of Numbers Range, Medium 
+011 | pr89. Gray Code, Medium. Convention: Input 0 expected [0]
+011 | pr136. Single Number, Medium. 找單身狗. 
+011 | pr137. Single Number II, Medium. 找單身狗. input [1], output 1. 若想用一個長度為常數(如78629)的數組, 是允許的.
+--0 | pr260. Single Number III, Medium.
+--1 | pr393. UTF-8 Validation, Medium. Leetcode自推中有對題意的解釋.
+
+catend
+
+=================================================
+catlist
 
 ************************
-pr_21, Merge Two Sorted Lists, Easy
+pr21, Merge Two Sorted Lists, Easy
 
 Question: 
 
@@ -457,7 +452,7 @@ class Solution:
 
 ************************
 
-pr_148, Sort List, Medium
+pr148, Sort List, Medium
 
 Question:
 
@@ -546,7 +541,7 @@ class Solution:
         return merged_head
 
 ************************
-pr_147. Insertion Sort List, Medium
+pr147. Insertion Sort List, Medium
 
 Question:
 
@@ -623,7 +618,7 @@ class Solution:
     	return fake_head.next
 
 ************************
-pr_206. Reverse Linked List, Easy 
+pr206. Reverse Linked List, Easy 
 
 Question:
 
@@ -718,7 +713,7 @@ class Solution:
     	return new_head
 
 ************************
-pr_92. Reverse Linked List II, Medium 
+pr92. Reverse Linked List II, Medium 
 
 Question:
 
@@ -765,10 +760,10 @@ public:
 };
 
 =================================================
-category_tree
+cattree
 
 ************************
-pr_94. Binary Tree Inorder Traversal, Medium 
+pr94. Binary Tree Inorder Traversal, Medium 
 
 Question:
 
@@ -855,7 +850,7 @@ public:
 };
 
 ************************
-pr_102. Binary Tree Level Order Traversal, Easy
+pr102. Binary Tree Level Order Traversal, Easy
 
 Question:
 
@@ -924,7 +919,7 @@ public:
 };
 
 ************************
-pr_100. Same Tree, Easy.
+pr100. Same Tree, Easy.
 
 Question:
 
@@ -982,10 +977,10 @@ public:
 };
 
 =================================================
-category_binary_search_tree
+catbst
 
 ************************
-pr_230. Kth Smallest Element in a BST, Medium 
+pr230. Kth Smallest Element in a BST, Medium 
 
 Question:
 
@@ -1057,74 +1052,12 @@ when the node is not null.
 
 The time complexity of algorithm above will be O(h), h is the height of the input tree. Tao: because h = O(log n),  and binary search's time complexity is also O(log n).
 
-=================================================
-category_array
-
-************************
-pr_35. Search Insert Position, Medium.
-
-Question:
-
-Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
-
-You may assume no duplicates in the array.
-
-Example 1:
-
-Input: [1,3,5,6], 5
-Output: 2
-
-Example 2:
-
-Input: [1,3,5,6], 2
-Output: 1
-
-Example 3:
-
-Input: [1,3,5,6], 7
-Output: 4
-
-Example 4:
-
-Input: [1,3,5,6], 0
-Output: 0
-
-
-==
-Key: Binary search. This problem can be used as a formula for binary search. Tao's code uses the Chiu Chang template: always use while(l < r - 1), which means that after the while, l and r are two neighboring numbers.
-
-==
-C++ code:
-
-class Solution {
-public:
-    int searchInsert(vector<int>& nums, int target) {
-    	int n = nums.size();
-        if(n == 0) return 0;
-
-        int l = 0, r = n - 1;
-
-        while(l < r - 1) {
-        	int m = (l + r) / 2;
-
-        	if(target == nums[m]) return m;
-        	else if(target < nums[m]) r = m;
-        	else l = m;
-        }
-
-        if(target <= nums[l]) return l;
-        if(target <= nums[r]) return r;
-        if(target > nums[r]) return r + 1;
-
-        return 0;
-    }
-};
 
 =================================================
-category_trie
+cattrie
 
 ************************
-pr_208. Implement Trie (Prefix Tree), Medium 
+pr208. Implement Trie (Prefix Tree), Medium 
 
 Question:
 
@@ -1250,10 +1183,10 @@ public:
 };
 
 =================================================
-category_graph
+catgraph
 
 ************************
-pr_133. Clone Graph, Medium.
+pr133. Clone Graph, Medium.
 
 Question:
 
@@ -1336,10 +1269,10 @@ public:
 };
 
 =================================================
-category_string
+catstring
 
 ************************
-pr_8. String to Integer (atoi), Easy 
+pr8. String to Integer (atoi), Easy 
 
 Question:
 
@@ -1450,11 +1383,78 @@ public:
     }
 };
 
+************************
+pr139. Word Break, Medium
+
+Question:
+
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note:
+
+The same word in the dictionary may be reused multiple times in the segmentation.
+You may assume the dictionary does not contain duplicate words.
+
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet", "code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+
+Example 2:
+
+Input: s = "applepenapple", wordDict = ["apple", "pen"]
+Output: true
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+             Note that you are allowed to reuse a dictionary word.
+
+Example 3:
+
+Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output: false
+
+==
+Key: DP. Use res[i] to denote whether 'the string which equals the first i characters in s' can get true in wordBreak. Then derive res[i] from res[0, ... i - 1].
+
+==
+Tao's summary about DP:
+
+The key idea of DP is to store history results to avoid repetitive compuation. In DP, we do not have to overwrite the history results in previous iteration (as in this problem), even though it is common to overwrite.
+
+In DP, should use res[i] to denote 'the string which equals the first i characters in s' can blabla, not to denote s[0, ... i] blabla. Because the latter can not deal with the case when 'the string which equals the first 0 characters in s' can blabla.
+
+==
+C++ code:
+(tao's code improved a little from leetcode discussion)
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+    	int n = s.size();
+    	if(n == 0) return true;
+
+        //res[i] means whether 'the string which equals the first i characters in s' can get true in wordBreak.
+        vector<bool> res(n + 1, false);
+    	res[0] = true;
+         
+    	for(int i = 1; i <= n; ++i) {
+            
+            // Calculate the value of res[i]:
+    		for(int j = 0; j <= i - 1; ++j) {
+    			if(res[j] && find(wordDict.begin(), wordDict.end(), s.substr(j, i - j)) != wordDict.end()) res[i] = true;
+    		}
+    	}
+        
+  		return res[n];     
+    }
+};
+
+
 =================================================
-category_array
+catarray
 
 ************************
-pr_1. Two Sum, Medium
+pr1. Two Sum, Medium
 
 Question:
 
@@ -1502,11 +1502,71 @@ public:
     }
 };
 
+************************
+pr35. Search Insert Position, Medium.
+
+Question:
+
+Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You may assume no duplicates in the array.
+
+Example 1:
+
+Input: [1,3,5,6], 5
+Output: 2
+
+Example 2:
+
+Input: [1,3,5,6], 2
+Output: 1
+
+Example 3:
+
+Input: [1,3,5,6], 7
+Output: 4
+
+Example 4:
+
+Input: [1,3,5,6], 0
+Output: 0
+
+
+==
+Key: Binary search. This problem can be used as a formula for binary search. Tao's code uses the Chiu Chang template: always use while(l < r - 1), which means that after the while, l and r are two neighboring numbers.
+
+==
+C++ code:
+
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+    	int n = nums.size();
+        if(n == 0) return 0;
+
+        int l = 0, r = n - 1;
+
+        while(l < r - 1) {
+        	int m = (l + r) / 2;
+
+        	if(target == nums[m]) return m;
+        	else if(target < nums[m]) r = m;
+        	else l = m;
+        }
+
+        if(target <= nums[l]) return l;
+        if(target <= nums[r]) return r;
+        if(target > nums[r]) return r + 1;
+
+        return 0;
+    }
+};
+
 =================================================
-category_board
+catboard
 
 ************************
-pr_36. Valid Sudoku, Easy
+pr36. Valid Sudoku, Easy
 
 Question:
 
@@ -1696,10 +1756,10 @@ public:
 };
 
 =================================================
-category_combinatorics
+catcombinatorics
 
 ************************
-pr_46. Permutations, Medium
+pr46. Permutations, Medium
 
 Question:
 
@@ -1761,10 +1821,10 @@ public:
 };
 
 =================================================
-category_interval
+catinterval
 
 ************************
-pr_56. Merge Intervals, Hard
+pr56. Merge Intervals, Hard
 
 Question:
 
@@ -1832,10 +1892,10 @@ public:
 };
 
 =================================================
-category_arithmetics
+catarithmetics
 
 ************************
-pr_7. Reverse Integer, Easy 
+pr7. Reverse Integer, Easy 
 
 Question:
 
@@ -1890,10 +1950,10 @@ public:
 };
 
 =================================================
-category_system
+catsystem
 
 ************************
-pr_146. LRU Cache, Hard
+pr146. LRU Cache, Hard
 
 Question:
 
@@ -2002,10 +2062,10 @@ public:
 };
 
 =================================================
-category_bit
+catbit
 
 ************************
-pr_190. Reverse Bits, Easy
+pr190. Reverse Bits, Easy
 
 Question:
 

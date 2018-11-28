@@ -41,8 +41,6 @@ findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
 findistream                  Example of using istream
 findostream                  Example of using ostream
-finddeclaration              declaration vs definition
-finddefinition               declaration vs definition
 findcast                     Cast
 findconvertdatatype          Convert data types
 findfor                      Range for 
@@ -54,6 +52,8 @@ findbool                     bool
 findtypedef                  typedef
 findtypealias                Type alias
 findinitialization           Two forms of initialization
+finddeclaration              declaration vs definition
+finddefinition               declaration vs definition
 findmax                      max
 findintmax                   INT_MAX
 findmaxint                   INT_MAX
@@ -986,6 +986,19 @@ int main() {
 
 ==
 (findinitialization)
+Intialization:
+
+//The followings are all equivalent:
+int a = 0;
+int a = {0};
+int a{0};
+int a(0);
+
+If we do not initialize a string, then it is an empty string. (Seems different from Java).
+
+We recommend initializing every object of built-in type.
+
+--
 Two forms of initialization
 
 Sales_data item1 (null_book); // direct initialization
@@ -994,6 +1007,31 @@ Sales_data item2 = null_book; // the copy form of initialization
 It is tempting to think of initialization as a form of assignment, but initialization and assignment are different operations in C++. 
 
 Initialization is not assignment. Initialization happens when a variable is given a value when it is created. Assignment obliterates an object’s current value and replaces that value with a new one.
+
+--
+Default Initialization
+
+When we define a variable without an initializer, the variable is default initialized. Such variables are given the “default” value. What that default value is depends on the type of the variable and may also depend on where the variable is defined.
+
+The value of an object of built-in type that is not explicitly initialized depends on where it is defined. Variables defined outside any function body are initialized to zero. With one exception, which we cover later, variables of built-in type defined inside a function are uninitialized. The value of an uninitialized variable of built-in type is undefined. It is an error to copy or otherwise try to access the value of a variable whose value is undefined.
+
+Each class controls how we initialize objects of that class type. In particular, it is up to the class whether we can define objects of that type without an initializer. If we can, the class determines what value the resulting object will have.
+
+Most classes let us define objects without explicit initializers. Such classes supply an appropriate default value for us. For example, as we’ve just seen, the library string class says that if we do not supply an initializer, then the resulting string is the empty string:
+
+std::string empty; // empty implicitly initialized to the empty string
+Sales_item item; // default-initialized Sales_item object
+
+Some classes require that every object be explicitly initialized. The compiler will complain if we try to create an object of such a class with no initializer.
+
+Tao's practice:
+
+If we create an array of built-in type inside a function using new as below (remember we must use new if we want to return the array or its elments, recored in this note), the values of the elements are also undefined:
+
+bool *res = new bool[n];
+
+//Note that the following initialization to res[i] is necessary, otherwise the values of res[i] is not defined (values are different in my computer and Leetcode OJ)
+for(int i = 1; i <= n; ++i) res[i] = false;
 
 ==
 (findheader)
@@ -1334,19 +1372,7 @@ Variables must be defined exactly once but can be declared many times.
 
 To use a variable in more than one file requires declarations. To use the same variable in multiple files, we must define that variable in one—and only one—file. Other files that use that variable must declare—but not define—that variable.
 
-==
-(findintialization)
-Intialization:
 
-//The followings are all equivalent:
-int a = 0;
-int a = {0};
-int a{0};
-int a(0);
-
-If we do not initialize a string, then it is an empty string. (Seems different from Java).
-
-We recommend initializing every object of built-in type.
 
 ==
 (findstaticallytyped)
@@ -2330,6 +2356,22 @@ From my leetcode code:
 
 vector<Interval> res;
 res.push_back(*iterator); // *iterator is an object of Interval
+
+--
+How to find out if an item is present in a vector?
+
+You can use std::find from <algorithm>:
+
+std::find(vector.begin(), vector.end(), item) != vector.end()
+This returns a bool (true if present, false otherwise). With your example:
+
+#include <algorithm>
+
+if ( std::find(vector.begin(), vector.end(), item) != vector.end() )
+   do_this();
+else
+   do_that();
+
 
 --
 (findsortvector)
@@ -3665,6 +3707,142 @@ int ia[3][4]
 int (*p)[4] = ia; // p points to an array of four ints
 
 The result of *p is an array of four ints. As usual, when we use an array, it is converted automatically to a pointer to its first element.
+
+--
+Return array from function
+
+Tao: practice shows that we should do the following even returning an element from a local array:
+
+bool *res = new bool[5]; //Correct way
+// bool res[5]; <- wrong way, returned res[2] value will be random
+return res[2];
+
+From geeksforgeeks:
+
+How to return a local array from a C/C++ function?
+
+Consider the below C++ program. Is it right way of returning array from a function?
+
+brightness_4
+#include<iostream> 
+using namespace std; 
+  
+int *fun() 
+{ 
+   int arr[100]; 
+  
+   /* Some operations on arr[] */
+   arr[0] = 10; 
+   arr[1] = 20; 
+     
+   return arr; 
+} 
+  
+int main() 
+{ 
+    int *ptr = fun(); 
+    cout << ptr[0] << " " << ptr[1]; 
+    return 0; 
+} 
+
+In function 'int* fun()':
+6:8: warning: address of local variable 'arr' returned [-Wreturn-local-addr]
+    int arr[100];
+        ^
+The above program is WRONG. It may produce values 10 20 as output or may produce garbage values or may crash. The problem is, we return address of a local variable which is not advised as local variables may not exist in memory after function call is over.
+
+Following are some correct ways of returning array:
+
+Using Dynamically Allocated Array :
+
+Dynamically allocated memory (allocated using new or malloc()) remains their until we delete it using delete or free(). So we can create a dynamically allocated array and we can delete it once we come out of function.
+
+#include<iostream> 
+using namespace std; 
+  
+int *fun() 
+{ 
+   int *arr = new int[100]; 
+  
+   /* Some operations on arr[] */
+   arr[0] = 10; 
+   arr[1] = 20; 
+     
+   return arr; 
+} 
+  
+int main() 
+{ 
+    int *ptr = fun(); 
+    cout << ptr[0] << " " << ptr[1]; 
+    return 0; 
+} 
+
+Output :
+
+10 20
+
+Using static array:
+
+Lifetime of a static variable is throughout the program. So we can always create a local static array and return it.
+
+#include<iostream> 
+using namespace std; 
+  
+int *fun() 
+{ 
+   static int arr[100]; 
+  
+   /* Some operations on arr[] */
+   arr[0] = 10; 
+   arr[1] = 20; 
+     
+   return arr; 
+} 
+  
+int main() 
+{ 
+    int *ptr = fun(); 
+    cout << ptr[0] << " " << ptr[1]; 
+    return 0; 
+} 
+
+Output :
+
+10 20
+
+Using struct:
+
+We can wrap array in a structure/class and return an instance of the struct/class. The reason for this work is, array members of structures are deeply copied. In below program deep copy happens when we returned instance is copied in main.
+
+#include<iostream> 
+using namespace std; 
+  
+struct arrWrap 
+{ 
+   int arr[100]; 
+}; 
+  
+struct arrWrap fun() 
+{ 
+   struct arrWrap x; 
+  
+   x.arr[0] = 10; 
+   x.arr[1] = 20; 
+     
+   return x; 
+} 
+  
+int main() 
+{ 
+   struct arrWrap x = fun(); 
+   cout << x.arr[0] << " " << x.arr[1]; 
+   return 0; 
+} 
+
+Output :
+
+10 20
 
 ==
 (findoperator)
