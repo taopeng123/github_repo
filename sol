@@ -164,8 +164,8 @@ catstring
 011 | pr247. Strobogrammatic Number II, Medium. 文件correct-output-for-check中有正確輸出, 以供檢查. 
 011 | pr248. Strobogrammatic Number III, Hard. 文件correct-output-for-check中有正確輸出, 以供檢查. 
 011 | pr93. Restore IP Addresses, Medium. 一個有效的IP地址由4個數字(我給每個這樣數字叫vrangh)組成, 每個vrangh在0到255之間inclusively. 若vrangh只有一位數, 則它可以為0; 否則若vrangh位數大於一, 則不能以0開頭.  
-0111| pr139. Word Break, Medium. 
-011 | pr140. Word Break II, Hard. 有一個較長的non-breakable的test case容易造成超時, 故要先判斷整個s是否breakable
+0111| pr139. Word Break, Medium 
+0111 | pr140. Word Break II, Hard
 011 | pr22. Generate Parentheses, Medium 
 011 | pr241. Different Ways to Add Parentheses, Medium, 輪入可能只有一個數, 沒有運算符
 011 | pr20. Valid Parentheses, Easy 
@@ -1419,7 +1419,7 @@ Key: DP. Use res[i] to denote whether 'the string which equals the first i chara
 ==
 Tao's summary about DP:
 
-The key idea of DP is to store history results to avoid repetitive compuation. In DP, we do not have to overwrite the history results in previous iteration (as in this problem), even though it is common to overwrite.
+The key idea of DP is to store history results to avoid repetitive compuation (eg, avoid using recursion). In DP, we do not have to overwrite the history results in previous iteration (as in this problem), even though it is common to overwrite.
 
 In DP, should use res[i] to denote 'the string which equals the first i characters in s' can blabla, not to denote s[0, ... i] blabla. Because the latter can not deal with the case when 'the string which equals the first 0 characters in s' can blabla.
 
@@ -1441,6 +1441,7 @@ public:
             
             // Calculate the value of res[i]:
     		for(int j = 0; j <= i - 1; ++j) {
+    			// If res[j] = true and s.substr(j, i - j) is in wordDict, then set res[i] = true:
     			if(res[j] && find(wordDict.begin(), wordDict.end(), s.substr(j, i - j)) != wordDict.end()) res[i] = true;
     		}
     	}
@@ -1449,6 +1450,96 @@ public:
     }
 };
 
+************************
+pr140. Word Break II, Hard
+
+Question:
+
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences.
+
+Note:
+
+The same word in the dictionary may be reused multiple times in the segmentation.
+You may assume the dictionary does not contain duplicate words.
+Example 1:
+
+Input:
+s = "catsanddog"
+wordDict = ["cat", "cats", "and", "sand", "dog"]
+Output:
+[
+  "cats and dog",
+  "cat sand dog"
+]
+Example 2:
+
+Input:
+s = "pineapplepenapple"
+wordDict = ["apple", "pen", "applepen", "pine", "pineapple"]
+Output:
+[
+  "pine apple pen apple",
+  "pineapple pen apple",
+  "pine applepen apple"
+]
+Explanation: Note that you are allowed to reuse a dictionary word.
+Example 3:
+
+Input:
+s = "catsandog"
+wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output:
+[]
+
+Tao: CodeGanker says there is a test case which is a long non-breakable string, this test case often leads to time limit exceeding. So we normally first determine whether s is breakable.
+
+==
+Key: DP. Samiliar to "pr 139. Word Break". The only difference from pr 139 is to change the "vector<bool> res" to "unordered_map<int, vector<string>> res_map", where res_map[i] denotes the vector returned by wordBreak("the string which equals the first i characters in s", wordDict).
+
+==
+C++ code:
+
+class Solution {
+private:
+    //res_map[i] means the output of wordBreak(first_i_characters_of_s, wordDict)
+    unordered_map<int, vector<string>> res_map;
+    
+    bool isBreakable(string s, vector<string>& wordDict) {
+    	(Copy the code of "pr 139. Word Break" here.) 
+    }
+    
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        int n = s.size();
+        if(!isBreakable(s, wordDict)) return res_map[0];
+        
+        res_map[0] = {""};
+        
+        for(int i = 1; i <= n; ++i) {
+            vector<string> vec_i;
+            
+            // Calculate res_map[i]:
+            for(int j = 0; j <= i - 1; ++j) {
+                
+                //res[j], s.substr(j, i - j)                
+                string sub = s.substr(j, i - j);
+                                
+                if(res_map.find(j) != res_map.end() && find(wordDict.begin(), wordDict.end(), sub) != wordDict.end()) {
+                    vector<string> vec_j = res_map[j];                    
+                    for(string str_j: vec_j) {
+                        string push_str = str_j + (str_j.size() > 0 ? " " : "") + sub;
+                        vec_i.push_back(push_str);
+                    }                 
+                }              
+            } // End of j loop
+            
+            if(vec_i.size() > 0) res_map[i] = vec_i; //tao: first copies vec_i, then res_map[i] = the copy.
+
+        } // End of i loop
+        
+        return res_map[n];
+    }
+};
 
 =================================================
 catarray

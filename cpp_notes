@@ -45,13 +45,12 @@ findcast                     Cast
 findconvertdatatype          Convert data types
 findfor                      Range for 
 findrangefor                 Range for 
-findintialization            Intialization
 findstaticallytyped          Statically typed launage
 finddatatype                 Data types
 findbool                     bool
 findtypedef                  typedef
 findtypealias                Type alias
-findinitialization           Two forms of initialization
+findinitialization            Intialization
 finddeclaration              declaration vs definition
 finddefinition               declaration vs definition
 findmax                      max
@@ -1032,6 +1031,9 @@ bool *res = new bool[n];
 
 //Note that the following initialization to res[i] is necessary, otherwise the values of res[i] is not defined (values are different in my computer and Leetcode OJ)
 for(int i = 1; i <= n; ++i) res[i] = false;
+
+For the above, I later used vector:
+vector<bool> res(n, false);
 
 ==
 (findheader)
