@@ -2374,6 +2374,7 @@ if ( std::find(vector.begin(), vector.end(), item) != vector.end() )
 else
    do_that();
 
+Tao's experiment shows that finding an element from a vector is much slower than from a set. 
 
 --
 (findsortvector)

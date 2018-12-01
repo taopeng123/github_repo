@@ -121,7 +121,7 @@ cattrie
 catgraph
 
 0101 | pr133. Clone Graph, Medium. 
-010 | pr127. Word Ladder, Medium. 注意題目的例子中的wordList中不包括beginWord和endWord, 但實際的test case中, wordList是包括beginWord和endWord的!
+0101 | pr127. Word Ladder, Medium. 
 010 | pr126. Word Ladder II, Hard.
 001 | pr207. Course Schedule, Medium. 
 010 | pr210. Course Schedule II, Medium. 注意本題只是Medium.
@@ -1265,6 +1265,132 @@ public:
         }
 
         return node_copy;
+    }
+};
+
+************************
+pr127. Word Ladder, Medium
+
+Question:
+
+Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
+
+Only one letter can be changed at a time.
+Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+Note:
+
+Return 0 if there is no such transformation sequence.
+All words have the same length.
+All words contain only lowercase alphabetic characters.
+You may assume no duplicates in the word list.
+You may assume beginWord and endWord are non-empty and are not the same.
+
+Example 1:
+
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: 5
+
+Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5.
+
+Example 2:
+
+Input:
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+
+Output: 0
+
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+
+Tao: in Leetcode OJ, the input wordList is type vector<string>&, but in all the C++ code in Leetcode Discussion, the type is unordered_set<string>&. So I guess Leetcode OJ changed its function parameter recently. At first I used vector<string>& directly and it exceeded time limit (also runs very slow in my local computer), then I explicitly converted vector<string>& to unordered_set<string>&, then it passed (and runs much faster in my local computer).
+
+==
+Key: BFS. This is a graph problem. The graph of the above Example 1 is as below. Just use ordinary BFS. When it reaches the destination node (endWord), return the level number. 
+
+     hit         1
+      |
+     hot         2
+    /    \
+  dot -- lot     3
+  /        \
+dog ------ log   4
+  \        /
+     cog         5
+
+==
+C++ code:
+
+class Solution {
+private:
+    unordered_map<string, vector<string>> next_map;
+    
+    // Gets all the neighboring nodes of s in the graph
+    vector<string> get_next(string s, unordered_set<string>& wordList) {
+        if(next_map.find(s) != next_map.end()) return next_map[s];
+        
+        vector<string> res;
+            
+        for(int i = 0; i < s.size(); ++i) {
+            char cur_char = s[i];
+            for(char c = 'a'; c <= 'z'; ++c) {
+                s[i] = c;
+                if(c != cur_char && wordList.find(s) != wordList.end()) res.push_back(s);
+            }
+            s[i] = cur_char;
+        }
+        
+        next_map[s] = res;
+        
+        return res;
+    }
+    
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        if(wordList.size() == 0) return 0;
+        queue<string> q;
+        unordered_set<string> visited;
+        unordered_set<string> word_list_set;
+
+        for(string word: wordList) word_list_set.insert(word);
+        
+        q.push(beginWord);
+        visited.insert(beginWord);
+        
+        int cur_num = 1, next_num = 0, level = 0;
+        
+        while(!q.empty()) {
+            string cur = q.front();
+            q.pop();
+            --cur_num;
+                        
+            if(cur == endWord) return (level + 1);
+            
+            vector<string> next_vec = get_next(cur, word_list_set);
+                   
+            if(next_vec.size() == 0) return 0;
+            
+            for(string next: next_vec) {
+                if(visited.find(next) == visited.end()) {
+                    q.push(next);
+                    visited.insert(next);                   
+                    ++next_num;
+                }
+            }
+                  
+           if(cur_num == 0) {
+                cur_num = next_num;
+                next_num = 0;
+                ++level;
+            }
+        }
+        
+        return 0;
     }
 };
 
