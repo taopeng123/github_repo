@@ -15,6 +15,8 @@ Summary:
 - For questions in List, how to determine what xxx to wrote in the while(xxx) {...}, like while(!cur) {...} ?
   the way is to look into the yyy in while(...){yyy} or while(!cur && yyy) {...}. If yyy used cur->val, then should add !cur in the condition. Similarly, if yyy used cur->next->val, then should add !cur->next in the condition.
 
+- If I need to call a function f() recursively: y = f(x), I can always reduce the computation by putting the already computed pairs (x, y) in a map. Then before calling y = f(x), if x is in the map, just fetch the value y directly from the map. If not exits, then call y = f(x). This is proven in "pr 126. Word Ladder II": if I do not store them in map, the running time was roughly 1700 ms and sometimes it has time limit exceeded, after storing in map, the running time was reduced to roughly 500 ms and it never has time limit exceeded.
+
 ************************************************
 Template:
 
@@ -122,7 +124,7 @@ catgraph
 
 0101 | pr133. Clone Graph, Medium. 
 0101 | pr127. Word Ladder, Medium. 
-010 | pr126. Word Ladder II, Hard.
+0101 | pr126. Word Ladder II, Hard.
 001 | pr207. Course Schedule, Medium. 
 010 | pr210. Course Schedule II, Medium. 注意本題只是Medium.
 --1 | pr261. Graph Valid Tree, Medium. 若輸入edges=[]: 則n=1時返回true, n!=時返回false.
@@ -1391,6 +1393,180 @@ public:
         }
         
         return 0;
+    }
+};
+
+************************
+pr126. Word Ladder II, Hard
+
+Question:
+
+Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:
+
+1. Only one letter can be changed at a time
+2. Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+
+Note:
+
+- Return an empty list if there is no such transformation sequence.
+- All words have the same length.
+- All words contain only lowercase alphabetic characters.
+- You may assume no duplicates in the word list.
+-You may assume beginWord and endWord are non-empty and are not the same.
+
+Example 1:
+
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output:
+[
+  ["hit","hot","dot","dog","cog"],
+  ["hit","hot","lot","log","cog"]
+]
+
+Example 2:
+
+Input:
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+
+Output: []
+
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+
+==
+Key: BFS + DFS. First use BFS to get all the layers of the graph and store them in a vector. Then use DFS to get the path: for current word, find the path of each of its children, then add current word to the front of each such paths. Before calling function recursively, save the already calcaluated values in a map to reduce computation.
+
+==
+C++ code:
+
+class Solution {
+private:
+    unordered_map<string, vector<string>> next_map;
+    unordered_set<string> word_list_set;
+    unordered_map<string, vector<vector<string>>> ladders_for_cur_word_map;//Store temporary results before recursive call
+    
+    // Gets all the neighboring nodes of s in the graph
+    vector<string> get_next(string s) {
+        if(next_map.find(s) != next_map.end()) return next_map[s];
+        
+        vector<string> res;
+            
+        for(int i = 0; i < s.size(); ++i) {
+            char cur_char = s[i];
+            for(char c = 'a'; c <= 'z'; ++c) {
+                s[i] = c;
+                if(c != cur_char && word_list_set.find(s) != word_list_set.end()) res.push_back(s);
+            }
+            s[i] = cur_char;
+        }
+        
+        next_map[s] = res;
+        
+        return res;
+    }
+
+public:    
+    vector<vector<string>> findLevels(string beginWord, string endWord) {
+        vector<vector<string>> res;
+        queue<string> q;
+        unordered_set<string> visited;       
+        vector<string> level;
+        
+        q.push(beginWord);
+        visited.insert(beginWord);
+        
+        int cur_num = 1, next_num = 0, level_num = 0;
+        
+        while(!q.empty()) {
+            string cur = q.front();
+            q.pop();
+            level.push_back(cur);
+            --cur_num;
+            
+            vector<string> next_vec = get_next(cur);
+                   
+            if(next_vec.size() == 0) return res;
+            
+            for(string next: next_vec) {
+                if(visited.find(next) == visited.end()) {
+                    q.push(next);
+                    visited.insert(next);                   
+                    ++next_num;
+                }
+            }
+                  
+           if(cur_num == 0) {
+                cur_num = next_num;
+                next_num = 0;
+                res.push_back(level);
+                level.clear();
+                ++level_num;
+            }
+        }
+        
+        return res;    
+    }
+
+    vector<vector<string>> findLaddersForCurWord(string curWord, string endWord, vector<vector<string>>& levels, int cur_level_idx) {
+        if(ladders_for_cur_word_map.find(curWord) != ladders_for_cur_word_map.end()) return ladders_for_cur_word_map[curWord];
+        vector<vector<string>> res;
+        
+        if(curWord == endWord) {
+            vector<string> item = {endWord};
+            res.push_back(item);
+            return res;
+        }
+
+        vector<string> next_level;
+        
+        if(cur_level_idx + 1 < levels.size()) 
+            next_level = levels[cur_level_idx + 1];
+                
+        vector<string> children = get_next(curWord); 
+        
+        for(string next: next_level) {
+            if(find(children.begin(), children.end(), next) != children.end()) {
+                                
+                vector<vector<string>> ladders_for_cur_word;
+                
+                if(ladders_for_cur_word_map.find(next) != ladders_for_cur_word_map.end()) 
+                    //Result already stored in map, fetch it from map:
+                    ladders_for_cur_word =  ladders_for_cur_word_map[next];
+                else 
+                    //Result not stored in map, calculate it:
+                    ladders_for_cur_word = findLaddersForCurWord(next, endWord, levels, cur_level_idx + 1);
+
+                for(vector<string> ladder: ladders_for_cur_word) {
+                    vector<string> item = ladder;
+                    item.insert(item.begin(), curWord);//vector has no push_front() function
+                    res.push_back(item);
+                }
+            }
+
+        }
+        
+        ladders_for_cur_word_map[curWord] = res;
+        
+        return res;
+    }
+
+
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        vector<vector<string>> res;
+        if(wordList.size() == 0) return res;
+    
+        for(string word: wordList) word_list_set.insert(word);
+        
+        vector<vector<string>> levels = findLevels(beginWord, endWord);        
+        
+        res = findLaddersForCurWord(beginWord, endWord, levels, 0);
+
+        return res;
     }
 };
 
