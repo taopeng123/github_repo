@@ -63,6 +63,7 @@ findreference                Reference
 findpassbyvalue              Pass by value
 findpassbyreference          Pass by reference
 findpointer                  Pointer
+findnull                     null pointer
 findpointertoarray           Pointer to array & array of pointers
 findreferencetoarray         Reference to array & array of references
 findpointertofunction        Pointer to function
@@ -1483,6 +1484,7 @@ int v = *p; //v = 42, dereference operator *
 *p = 0; //Assign new value to ival
 int* p1, p2; //Tao: practice shows this is wrong, should define different pointers in different lines.
 
+(findnull)
 //Null pointer. The following three lines are equivalent, to assign null pointer to p.
 int *p = 0;
 int *p = nullptr; 
@@ -2282,7 +2284,7 @@ vector
 using std::vector;
 
 --
-vector<int> v1; //v1 is empty
+vector<int> v1; //v1 is empty (tao: ie, v1.size() = 0, proved by many practices)
 vector<int> v2 = v1; //v2 is a copy of the elements in v1 (tao: copies the values of v1 to v2)
 vector<int> v1(10); //v1 has n copies of a value-initialized object. 10 elements, each initialized to 0.
 vector<string> v1(10); //10 elements, each an empty string
@@ -2650,7 +2652,7 @@ int main()
     for (auto i = g1.cbegin(); i != g1.cend(); ++i) 
         cout << *i << " "; 
   
-    cout << "\nOutput of rbegin and rend: "; 
+    cout << "\nOutput of rbegin and rend: "; //tao: reverse the vector, note it is ++ir, not --ir
     for (auto ir = g1.rbegin(); ir != g1.rend(); ++ir) 
         cout << *ir << " "; 
   

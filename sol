@@ -68,8 +68,8 @@ catlist
 cattree
 
 0011 | pr94. Binary Tree Inorder Traversal, Medium 
-011 | pr144. Binary Tree Preorder Traversal, Medium 
-000 | pr145. Binary Tree Postorder Traversal, Hard 
+0111 | pr144. Binary Tree Preorder Traversal, Medium 
+0001 | pr145. Binary Tree Postorder Traversal, Hard 
 0111 | pr102. Binary Tree Level Order Traversal, Easy 
 011 | pr107. Binary Tree Level Order Traversal II, Easy 
 011 | pr103. Binary Tree Zigzag Level Order Traversal, Medium 
@@ -786,9 +786,9 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 ==
 Key:
 
-Recursive: write a "void helper(TreeNode* node, vector<int>& res)", whose functionality is to in-order traversal the subtree having "node" as its root, and put the result in res. Then in this helper function, call itself on node->left, then add node to res, then call itself on node->right.
+Recursive (same for all in-order, pre-order, post-order): write a function "void helper(TreeNode* cur, vector<int>& res)", whose functionality is to in-order (or pre-order, or post-order) traversal the subtree of cur, and put the result in res. Call helper recursively on cur->left and cur->right. Put the node's value in result vector at proper time.
 
-Iterative: put all nodes on the left edge of the tree into a stack. Each time get a node from the stack, if the right child of this node exisits, then in the subtree which has this node as root, put all nodes on the left edge of this substree into this stack.
+Iterative (same for both in-order and pre-order): put all nodes on the left edge of the tree into a stack. Each time get a node from the stack, if "the right child of this node" (call it right_haha) exisits, then put the all the nodes on the left edge of right_haha subtree into this stack. Put the node's value in result vector at proper time. 
 
 ==
 C++ code (recursive):
@@ -796,21 +796,20 @@ C++ code (recursive):
 //This code was originally from leetcode discussion, and modified by Tao.
 
 class Solution {
-public:
-	vector<int> inorderTraversal(TreeNode* root) {
-		vector<int> res;
-		helper(root, res);
-		return res; //Returns a copy of the vector
-	}
-
 private:
-	void helper(TreeNode* node, vector<int>& res) {
-		if(!node) return;
-
-		helper(node->left, res);
-		res.push_back(node->val);
-		helper(node->right, res);
-	}
+    void helper(TreeNode* cur, vector<int>& res) {        
+        if(cur->left) helper(cur->left, res);
+        res.push_back(cur->val);
+        if(cur->right) helper(cur->right, res);
+    }
+    
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(!root) return res;
+        helper(root, res);
+        return res;
+    }
 };
 
 ==
@@ -849,6 +848,177 @@ public:
 
     	return res;
 	}
+};
+
+************************
+pr144. Binary Tree Preorder Traversal, Medium
+
+Question:
+
+Given a binary tree, return the preorder traversal of its nodes' values.
+
+Example:
+
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [1,2,3]
+Follow up: Recursive solution is trivial, could you do it iteratively?
+
+==
+Key:
+
+Recursive: See "pr 94. Binary Tree Inorder Traversal".
+Iterative: See "pr 94. Binary Tree Inorder Traversal".
+
+==
+C++ code (recursive):
+
+class Solution {
+private:
+    void helper(TreeNode* cur, vector<int>& res) {
+        res.push_back(cur->val);
+        if(cur->left) helper(cur->left, res);
+        if(cur->right) helper(cur->right, res);
+    }
+    
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(!root) return res;
+        helper(root, res);
+        return res;
+    }
+};
+
+==
+C++ code (iterative):
+
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(!root) return res;
+
+        stack<TreeNode*> stack;
+        TreeNode* cur = root;
+
+        while(cur) {
+            stack.push(cur);
+            res.push_back(cur->val);
+            cur = cur->left;        
+        }
+
+        while(!stack.empty()) {
+            TreeNode* top = stack.top();
+            stack.pop();
+
+            if(top->right) {
+                TreeNode* n = top->right;
+                while(n) {
+                    stack.push(n);
+                    res.push_back(n->val);
+                    n = n->left;   
+                }
+            }
+
+        }
+        
+        return res;
+    }
+};
+
+************************
+pr145. Binary Tree Postorder Traversal, Hard 
+
+Question:
+
+Given a binary tree, return the postorder traversal of its nodes' values.
+
+Example:
+
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [3,2,1]
+Follow up: Recursive solution is trivial, could you do it iteratively?
+
+==
+Key:
+
+Recursive: See "pr 94. Binary Tree Inorder Traversal".
+
+Iterative: First do a pre-order traversal (in the code, exchange all "left" and "right"). Then reverse the result vector. Think of it using a three-node tree.
+
+==
+C++ code (recursive):
+
+class Solution {
+private:
+	void helper(TreeNode* cur, vector<int>& res) {
+		if(cur->left) helper(cur->left, res);
+		if(cur->right) helper(cur->right, res);
+		res.push_back(cur->val);
+	}
+
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+    	vector<int> res;
+    	if(!root) return res;
+        helper(root, res);
+        return res;
+    }
+};
+
+==
+C++ code (iterative):
+
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(!root) return res;
+
+        stack<TreeNode*> stack;
+        TreeNode* cur = root;
+
+        while(cur) {
+            stack.push(cur);
+            res.push_back(cur->val);
+            cur = cur->right;        
+        }
+
+        while(!stack.empty()) {
+            TreeNode* top = stack.top();
+            stack.pop();
+
+            if(top->left) {
+                TreeNode* n = top->left;
+                while(n) {
+                    stack.push(n);
+                    res.push_back(n->val);
+                    n = n->right;   
+                }
+            }
+        }
+
+        //Reverse res:
+
+        vector<int> res_reverse;
+
+        for(auto it = res.rbegin(); it != res.rend(); ++it)  
+        	res_reverse.push_back(*it);
+        
+        return res_reverse;
+    }
 };
 
 ************************
