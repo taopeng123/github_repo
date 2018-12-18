@@ -176,7 +176,7 @@ catstring
 011 | pr97. Interleaving String, Hard. 輸入String中任何一個都有可能長度為0.
 010 | pr115. Distinct Subsequences, Hard 
 011 | pr91. Decode Ways, Medium 
-000 | pr44. Wildcard Matching, Hard. 
+0001 | pr44. Wildcard Matching, Hard. 
 010 | pr10. Regular Expression Matching, Hard. 題意不清楚, 可見key首.
 011 | pr161. One Edit Distance, Medium. OJ中題目沒講Edit Distance意思, 可先看72題題目.
 011 | pr72. Edit Distance, Hard. 
@@ -2010,6 +2010,177 @@ public:
         } // End of i loop
         
         return res_map[n];
+    }
+};
+
+************************
+pr44. Wildcard Matching, Hard
+
+Question:
+
+Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*'.
+
+'?' Matches any single character.
+'*' Matches any sequence of characters (including the empty sequence).
+
+The matching should cover the entire input string (not partial).
+
+Note:
+
+s could be empty and contains only lowercase letters a-z.
+p could be empty and contains only lowercase letters a-z, and characters like ? or *.
+
+Example 1:
+
+Input:
+s = "aa"
+p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+
+Example 2:
+
+Input:
+s = "aa"
+p = "*"
+Output: true
+Explanation: '*' matches any sequence.
+
+Example 3:
+
+Input:
+s = "cb"
+p = "?a"
+Output: false
+Explanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'.
+
+Example 4:
+
+Input:
+s = "adceb"
+p = "*a*b"
+Output: true
+Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
+
+Example 5:
+
+Input:
+s = "acdcb"
+p = "a*c?b"
+Output: false
+
+==
+Key: 
+
+DP. Use an array m, and m[i][j] denotes whether "the first i chars of s" mathches "the first j chars of p".
+
+Goal: find m[i][j]
+
+Use the following notations:
+
+---- denotes "the first i - 1 chars of s"
+==== denotes "the first j - 1 chars of p", ---- maches ====
+++++ denotes "the first j - 1 chars of p", ---- does not mach ++++
+
+In ----a, 'a' is the i-th char of s 
+In ====b, 'b' is the j-th char of p 
+
+The "true" and "false" below ----a and ====b is whether ----a matches ====b
+
+There are the following cases:
+
+if m[i-1][j-1] = true:
+
+----a
+====b
+false
+
+----a
+====a
+true
+
+----a
+====?
+true
+
+----a
+====*
+true
+
+The followings should be read without word wrap in the editor:
+
+if m[i-1][j-1] = false:
+
+----a
+++++b
+false
+
+----a
+++++a
+false
+
+----a
+++++?
+false
+(Note that per rule, ? can not be empty)
+
+
+----a
+++++*
+
+
+If ----a is true: then ----a must be true, because we can always choose * as empty
+   ++++                ++++* 
+
+If ----a is false:  
+   ++++                 
+
+	If we choose * as empty, ----a is the same as ----a which is false
+                             ++++*                ++++
+	
+	If we choose * as not empty, 
+    If we choose * as xxb, then result is false. We do not need to consider this case, because the following * as xxa may be true. If * as xxa can be true, then ----a is true
+                                                                                                                                                                 ++++*
+		If we choose * as xxa, then ----a is   ----a  which is   ----
+                                    ++++*    ++++xxa           ++++xx
+
+                               now we need to know the resulf of   ----
+                                                                 ++++xx
+
+                               for this we can remove a rightmost letter from ---- each time, 
+                               if it matches ++++ at some stage then the result is true, otherwise result is false
+
+==
+C++ code:
+
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int ns = s.size();
+        int np = p.size();
+
+        //m[i][j] denotes whether "the first i chars of s" mathches "the first j chars of p".
+        vector<vector<bool>> m(ns + 1, vector<bool>(np + 1, false));
+        m[0][0] = true;
+
+        for(int j = 1; j <= np; ++j) m[0][j] = m[0][j - 1] && (p[j - 1] == '*');
+
+        for(int i = 1; i <= ns; ++i) {
+          for(int j = 1; j <= np; ++j) {
+            char sim1 = s[i - 1], pjm1 = p[j - 1];
+
+            if(m[i - 1][j - 1]) {
+              if(pjm1 == sim1 || pjm1 == '?' || pjm1 == '*') m[i][j] = true;
+            } else {
+              if(pjm1 == '*') {
+                if(m[i][j - 1]) m[i][j] = true;
+                else for(int k = i - 1; k >= 0; --k) if(m[k][j - 1]) m[i][j] = true;
+              } else m[i][j] = false;            
+            }
+          }
+        }
+
+        return m[ns][np];
     }
 };
 
