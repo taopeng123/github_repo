@@ -71,8 +71,8 @@ cattree
 0111 | pr144. Binary Tree Preorder Traversal, Medium 
 0001 | pr145. Binary Tree Postorder Traversal, Hard 
 0111 | pr102. Binary Tree Level Order Traversal, Easy 
-011 | pr107. Binary Tree Level Order Traversal II, Easy 
-011 | pr103. Binary Tree Zigzag Level Order Traversal, Medium 
+0111 | pr107. Binary Tree Level Order Traversal II, Easy 
+0111 | pr103. Binary Tree Zigzag Level Order Traversal, Medium 
 1111 | pr100. Same Tree, Easy. 
 011 | pr101. Symmetric Tree, Easy 
 011 | pr116. Populating Next Right Pointers in Each Node, Medium. 
@@ -1087,6 +1087,171 @@ public:
 		}
 
 		return res;
+    }
+};
+
+************************
+pr107. Binary Tree Level Order Traversal II, Easy 
+
+Question:
+
+Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its bottom-up level order traversal as:
+[
+  [15,7],
+  [9,20],
+  [3]
+]
+
+==
+Key: The code is the same as "pr 102. Binary Tree Level Order Traversal", just with the result reversed at the end.
+
+==
+C++ code:
+
+
+class Solution {
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+		vector<vector<int>> res;
+		if(!root) return res;
+
+		vector<int> item;
+
+		queue<TreeNode*> q;
+		q.push(root);
+		int cur_num = 1, next_num = 0;
+
+		while(!q.empty()) {
+			TreeNode* cur = q.front();
+			item.push_back(cur->val);
+			q.pop();
+			--cur_num;
+
+			if(cur->left) {
+				q.push(cur->left);
+				++next_num;
+			}
+
+			if(cur->right) {
+				q.push(cur->right);
+				++next_num;
+			}
+
+			if(cur_num == 0) {
+				cur_num = next_num;
+				next_num = 0;
+				res.push_back(item); //Pass by value (pass a copy of item)
+				item.clear();
+			}
+		}
+        
+        reverse(res.begin(), res.end());
+
+		return res;
+    }
+};
+
+************************
+pr103. Binary Tree Zigzag Level Order Traversal, Medium
+
+Question:
+
+Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+
+For example:
+
+Given binary tree [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+
+==
+Key: Use two stacks. Put the 1st level in stack1, put the 2nd level in stack2, and so on.
+
+==
+C++ code:
+(Tao's code modified according to the earlier Java code).
+
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        if(!root) return res;
+
+        vector<int> item;
+
+        stack<TreeNode*> stack1;
+        stack<TreeNode*> stack2;
+
+        stack1.push(root);
+        
+        int cur_num = 1, next_num = 0, level = 1;
+
+        while(!stack1.empty() || !stack2.empty()) {
+ 
+        	if(level % 2 == 1) {
+        		TreeNode* cur = stack1.top();
+	        	stack1.pop();
+	        	item.push_back(cur->val);
+	        	--cur_num;
+
+	        	if(cur->left) {
+	        		stack2.push(cur->left);
+	        		++next_num;
+	        	}
+
+	        	if(cur->right) {
+	        		stack2.push(cur->right);
+	        		++next_num;
+	        	}
+
+        	} else {
+        		TreeNode* cur = stack2.top();
+	        	stack2.pop();
+	        	item.push_back(cur->val);
+	        	--cur_num;
+
+	        	if(cur->right) {
+	        		stack1.push(cur->right);
+	        		++next_num;
+	        	}
+
+	        	if(cur->left) {
+	        		stack1.push(cur->left);
+	        		++next_num;
+	        	}
+        	}
+
+        	if(cur_num == 0) {
+        		cur_num = next_num;
+        		next_num = 0;
+        		res.push_back(item); //Pass by value (pass a copy of item)
+        		item.clear();
+        		++level;
+        	}
+
+        }
+
+        return res;
     }
 };
 

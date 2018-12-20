@@ -2678,7 +2678,7 @@ capacity() – Returns the size of the storage space currently allocated to the 
 resize() – Resizes the container so that it contains ‘g’ elements.
 empty() – Returns whether the container is empty.
 shrink_to_fit() – Reduces the capacity of the container to fit its size and destroys all elements beyond the capacity.
-reserve() – Requests that the vector capacity be at least enough to contain n elements.
+reserve() – Requests that the vector capacity be at least enough to contain n elements. Tao: after calling reverse(vec.begin(),vec.end()), vector vec is reversed. reverse() does not return a vector, it reverses the original vector.
 
 // C++ program to illustrate the 
 // capacity function in vector 
