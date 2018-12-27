@@ -1,5 +1,4 @@
-Recoreded pages in the file c_primer_5th_edition.pdf.pdf: 
-Page 1 - Page 393 (end of Part I).
+stopa: search for stopa in this file.
 
 ==
 findcbegin                   C begin
@@ -39,6 +38,7 @@ findcin                      cin
 findmath                     Math operators
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
+findio                       IO
 findistream                  Example of using istream
 findostream                  Example of using ostream
 findcast                     Cast
@@ -1323,6 +1323,45 @@ void process_one_file(string input_file_name, string output_file) {
     output_file.close();
     input_file.close();
 }
+
+==
+(findio)
+IO
+
+The C++ language does not deal directly with input and output. Instead, IO is handled by a family of types defined in the standard library.
+
+Our programs have already used many IO library facilities:
+• istream (input stream) type, which provides input operations
+• ostream (output stream) type, which provides output operations
+• cin, an istream object that reads the standard input
+• cout, an ostream object that writes to the standard output
+• cerr, an ostream object, typically used for program error messages, that
+writes to the standard error
+• The >> operator, which is used to read input from an istream object
+• The << operator, which is used to write output to an ostream object
+• The getline function, which reads a line of input from a given istream into a given string
+
+To support these different kinds of IO processing, the library defines a collection of IO types in addition to the istream and ostream types that we have already used.
+
+These types, which are listed in Table 8.1, are defined in three separate headers: iostream defines the basic types used to read from and write to a stream, fstream defines the types used to read and write named files, and sstream defines the types used to read and write in-memory strings.
+
+The library lets us ignore the differences among these different kinds of streams by using inheritance. Ordinarily, we can use an object of an inherited class as if it were an object of the same type as the class from which it inherits.
+
+The types ifstream and istringstream inherit from istream. Thus, we can use objects of type ifstream or istringstream as if they were istream objects. We can use objects of these types in the same ways as we have used cin. For example, we can call getline on an ifstream or istringstream object, and we can use the >> to read data from an ifstream or istringstream. Similarly, the types ofstream and ostringstream inherit from ostream. Therefore, we can use objects of these types in the same ways that we have used cout.
+
+Everything that we cover in the remainder of this section applies equally to
+plain streams, file streams, and string streams and to the char or widecharacter stream versions.
+
+we cannot copy or assign objects of the IO types:
+
+ofstream out1, out2;
+out1 = out2; // error: cannot assign stream objects
+ofstream print(ofstream); // error: can't initialize the ofstream parameter
+out2 = print(out2); // error: cannot copy stream objects
+
+Because we can’t copy the IO types, we cannot have a parameter or return type that is one of the stream types (§ 6.2.1, p. 209). Functions that do IO typically pass and return the stream through references. Reading or writing an IO object changes its state, so the reference must not be const.
+
+stopa: p401, 8.1.2. Condition States
 
 ==
 (findmath)
