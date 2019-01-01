@@ -19,6 +19,8 @@ findreadfromwebpage                Read from webpage
 findwhile                          while
 findif                             if
 findcast                           cast
+findround                          Round to nearest integer
+findprecision                      Display a float with two decimal places:
 findbreak                          break
 findcontinue                       continue
 findfor                            for
@@ -62,7 +64,11 @@ findsleep                          sleep
 findtime                           Output current local time
 findpandas                         Pandas
 findreadcsv                        Read csv file to a dataframe
+finddataframe                      DataFrame
 findcreatedataframe                Create DataFrame
+findrank                           Rank
+findcorrelation                    Correlation
+findaddcolumn                      Add a column
 findplot                           Plot in Python, using matplotlib
 finddates                          Dates in pandas
 findjoin                           Join
@@ -574,6 +580,7 @@ Math functions
 
 import math 
 math.exp(-45.17) # The method exp() returns returns exponential of x: e^x.
+math.sqrt(100)
 
 ==
 (findprint)
@@ -697,6 +704,22 @@ The continue statement is used to tell Python to skip the rest of the statements
 The break statement is used to break out of a loop statement i.e. stop the execution of a looping statement, even if the loop condition has not become False or the sequence of items has been completely iterated over.
 
 An important note is that if you break out of a for or while loop, any corresponding loop else block is not executed.
+
+--
+(findround)
+Round to nearest integer:
+
+int(round(x))
+
+--
+(findprecision)
+Display a float with two decimal places:
+
+>>> '%.2f' % 1.234
+'1.23'
+
+>>> '%.2f' % 5.0
+'5.00'
 
 ==
 (findfor)
@@ -1955,6 +1978,8 @@ Read csv file to a dataframe:
 
 df = pd.read_csv("data/AAPL.csv")
 
+Practice shows it will read the data as appropriate data types automatically.
+
 --
 Only read in selected columns (col1, col2):
 
@@ -1982,6 +2007,7 @@ df2 = df1.dropna()
 df2 = df1.dropna(subset = ["col1"]) # Drop only the rows which have col1 equals NaN.
 
 ==
+(finddataframe)
 (findcreatedataframe)
 # Create DataFrame:
 
@@ -1999,6 +2025,11 @@ df
 
 You will also observe there is a column that is not named and has values 0, 1, 2, 3. And this is not from the .csv. These are called index for the data frame, which help you to access rows.
 
+--
+Add a new column from computation:
+
+df['col_c'] = 2 * df['col_a'] + df['col_a'] * df['col_b']
+
 ==
 (findhead)
 (findtail)
@@ -2010,42 +2041,47 @@ df.tail() # Last 5 rows
 df.head(5)
 df.tail(3)
 
-==
-(findslice)
-(findselect)
-Slice dataframe
-Select rows and columns
+--
+(findaddcolumn)
+Add a column
 
-Select rows:
+In the same way as adding to dictionary:
 
-df[10:21] # Data from index 10 to 20, because 21 is not inclusive in the range. This operation is called slicing and it is a very important operation in Python pandas
-
-df.ix[10:21] # Equivalent as df[10:21], just looks more Pythonic and robust.
-
-Select colums:
-df['col1'] <- the returned type is not dataframe!
-df[['A', 'B', 'C']]: returns a dataframe with columns A, B, C
-
-print df['col1']
+# Tao: the new df contains all the old columns and the new column
+df['new_column'] = 2 * df['col_a'] + df['col_b']
 
 --
-Select rows and columns:
-df[1:5, ['A', 'B']] # Selects rows 1 to 4, columns A and B.
-df.ix[1:5, ['A', 'B']] # Equivalent as above
+(findrank)
+Rank
+
+df:
+
+           coverage	 name	reports	 year
+Cochice	    25	     Jason	4	     2012
+Pima	    94	     Molly	24	     2012
+Santa Cruz	57	     Tina	31	     2013
+Maricopa	62	     Jake	2	     2014
+Yuma	    70	     Amy	3	     2014
+
+# Create a new column that is the rank of the value of coverage in ascending order
+# Tao: the new df contains all the old columns and the new column
+
+df['coverageRanked'] = df['coverage'].rank(ascending = True)
+
+df:
+
+           coverage	 name	reports	 year  coverageRanked
+Cochice	    25	     Jason	4	     2012  1
+Pima	    94	     Molly	24	     2012  5
+Santa Cruz	57	     Tina	31	     2013  2
+Maricopa	62	     Jake	2	     2014  3
+Yuma	    70	     Amy	3	     2014  4
 
 --
-df[df.A > 0]
+(findcorrelation)
+Correlation
 
-                   A         B         C         D
-2013-01-01  0.469112 -0.282863 -1.509059 -1.135632
-2013-01-02  1.212112 -0.173215  0.119209 -1.044236
-2013-01-04  0.721555 -0.706771 -1.039575  0.271860
-
---
-# select * from a_df
-# where label = 100
-
-a_df[a_df.label == 100]
+df['A'].corr(df['B'])
 
 --
 (findiloc)
@@ -2126,11 +2162,13 @@ Examples of loc:
 
 # Select rows with index values 'Andrade' and 'Veness', with all columns between 'city' and 'email'
 data.loc[['Andrade', 'Veness'], 'city':'email']
+
 # Select same rows, with just 'first_name', 'address' and 'city' columns
 data.loc['Andrade':'Veness', ['first_name', 'address', 'city']]
  
 # Change the index to be based on the 'id' column
 data.set_index('id', inplace=True)
+
 # select the row with 'id' = 487
 data.loc[487]
 
@@ -2160,6 +2198,43 @@ idx = data['company_name'].apply(lambda x: len(x.split(' ')) == 4)
 data.loc[idx, ['email', 'first_name', 'company']]
 
 ==
+(findslice)
+(findselect)
+Slice dataframe
+Select rows and columns
+
+Select rows:
+
+df[10:21] # Data from index 10 to 20, because 21 is not inclusive in the range. This operation is called slicing and it is a very important operation in Python pandas
+
+df.ix[10:21] # Equivalent as df[10:21], just looks more Pythonic and robust.
+
+Select colums:
+df['col1'] <- the returned type is not dataframe!
+df[['A', 'B', 'C']]: returns a dataframe with columns A, B, C
+
+print df['col1']
+
+--
+Select rows and columns:
+df[1:5, ['A', 'B']] # Selects rows 1 to 4, columns A and B.
+df.ix[1:5, ['A', 'B']] # Equivalent as above
+
+--
+df[df.A > 0]
+
+                   A         B         C         D
+2013-01-01  0.469112 -0.282863 -1.509059 -1.135632
+2013-01-02  1.212112 -0.173215  0.119209 -1.044236
+2013-01-04  0.721555 -0.706771 -1.039575  0.271860
+
+--
+# select * from a_df
+# where label = 100
+
+a_df[a_df.label == 100]
+
+==
 (findmax)
 (findstatistics)
 Max
@@ -2171,7 +2246,6 @@ df.mean() # Return the mean of each column
 df.median()
 df.std() # Standard deviation
 
-
 df.kurtosis() 
 
 Kurtosis:
@@ -2181,6 +2255,13 @@ with a Gaussian distribution. If negative.... less...
 
 Correlation:
 df.corr(method = 'pearson') # df only has two columns, this returns the correlation of the two columns.
+
+--
+sqrt, square, power
+
+import numpy as np
+df_sqrt = np.sqrt(df['col_a'])
+df_square = np.power(df['col_a'], 2)
 
 --
 (findlinearregression)
@@ -2195,7 +2276,6 @@ beta, alpha = np.polyfit(df['col1'], df['col2'], 1)
 
 1 means polynomial degree is 1 (linear).
 So the line is y = beta * x + alpha
-
 
 --
 (findsort)
@@ -2310,9 +2390,83 @@ C     D       3
 E     F       2
 G     H       1
 
+--
+# Sort within each group:
+
+Sort the PVE score within each job_id:
+
+score_df['rank'] = score_df.groupby(['job_id'])['score'].rank(ascending = True)
+
 ==
 (findplot)
 Plot in Python, using matplotlib
+
+Tao's standard way:
+
+tao_df is a DataFrame.
+
+tao_df:
+
+col_a  col_b  col_c
+ 1     0.1    0.3
+ 2     0.2    0.2
+ 3     0.3    0.1
+
+The following code will make two curves in the same plot.
+The first curve uses the values of col_a as x-axis, the values of col_b as y-axis.
+The second curve uses the values of col_a as x-axis, the values of col_c as y-axis.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Plot curves:
+plt.plot(tao_df['col_a'], tao_df['col_b'], label = 'Values of b', color = 'blue') # label sets the legend text
+plt.plot(tao_df['col_a'], tao_df['col_c'], label = 'Values of c', color = 'red') # label sets the legend text
+plt.xlabel('Values of a')
+plt.ylabel('Magnitudes')
+plt.title('Tao plot')
+plt.legend()
+plt.show()
+
+# Plot scatters:
+dot_size = 3
+plt.scatter(tao_df['col_a'], tao_df['col_b'], label = 'Values of b', color = 'blue', s = dot_size) # label sets the legend text
+plt.plot(tao_df['col_a'], tao_df['col_c'], label = 'Values of c', color = 'red', s = dot_size) # label sets the legend text
+plt.xlabel('Values of a')
+plt.ylabel('Magnitudes')
+plt.title('Tao plot')
+plt.legend()
+plt.show()
+
+--
+Make multiple plots side-by-side:
+
+Should use Python 3:
+
+# One row, two columns:
+from matplotlib import pyplot as plt
+fig, axes = plt.subplots(1, 2)
+
+# Sets size of each subplot. If axis text is hidden, the increase the height.
+fig.set_figheight(15)
+fig.set_figwidth(15)
+
+axes[0].plot(data['row_num'], data['score_pve'], label = 'score_pve', color = 'blue')
+axes[1].plot(data['row_num'], data['score_pve'], label = 'score_pve', color = 'blue')
+
+# Two rows, two columns:
+fig, axes = plt.subplots(2, 2)
+axes[0, 0].plot(data['row_num'], data['score_pve_scaled'], label = 'score_pve', color = 'blue')
+axes[0, 0].set_xlabel('user_id')
+axes[0, 0].set_ylabel('score')
+axes[0, 0].set_title('Hello')
+axes[0, 0].text(1000, 0.5, "Helo", dict(size=10, color='black')) # Add text in each subplot
+axes[0, 1].plot(data['row_num'], data['score_pve_scaled'], label = 'score_pve', color = 'blue')
+axes[1, 0].plot(data['row_num'], data['score_pve_scaled'], label = 'score_pve', color = 'blue')
+axes[1, 1].plot(data['row_num'], data['score_pve_scaled'], label = 'score_pve', color = 'blue')
+
+--
+Using dataframe.plot():
 
 import pandas as pd
 import matplotlib.pyplot as plot
@@ -2342,31 +2496,7 @@ plot.show()
 plot.axvline(5, color = 'w', linestyle = 'dashed', linewidth = 2)
 plot.show()
 
---
-Plot two curves in the same figure:
-
-import pandas as pd
-import matplotlib.pyplot as plot
-
-df[['col1', 'col2']].plot() # Yes, double squre brackets.
-plot.show()
-
-df.plot() # Plot all the columns, each column as a curve.
-
-Plot two histograms in the same figure:
-df['col1'].hist(bins = 20, label = 'col1')
-df['col2'].hist(bins = 20, label = 'col2')
-plot.legend(loc = 'upper right')
-plot.show()
-
-(did not work):
-Plot two columns of single DataFrame on Y axis:
-total_year_df.plot(x='year', y=['action', 'comedy'], figsize=(10,5), grid=True)
-
---
 Add title and labels:
-
-import matplotlib.pyplot as plot
 
 ax = df.plot(title = 'prices', fontsize = 2)
 ax.set_xlabel("date")
@@ -2692,6 +2822,7 @@ Random number
 
 import numpy as np  
 np.random.random() # Returns a random number, not sure about the range.
+
 
 
 

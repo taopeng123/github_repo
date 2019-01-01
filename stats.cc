@@ -27,7 +27,7 @@ private:
 
 		while(getline(ifs, line)) {
 			//Skip irrelevant lines
-			if(line == "category_end") break;
+			if(line == "catend") break;
 			if(line.find("|") == string::npos) continue;
 
 			//Find history_str
@@ -35,7 +35,7 @@ private:
 			string history_str = line.substr(0, bar_position - 1);
 			
 			//Find problem_id_int
-			line.erase(0, bar_position + 2); //Now line = "191. Number of 1 Bits, Easy. n可為負數."
+			line.erase(0, bar_position + 4); //Now line = "191. Number of 1 Bits, Easy. n可為負數."
 			int dot_position = line.find(".");
 			int problem_id_int = stoi(line.substr(0, dot_position));
 
