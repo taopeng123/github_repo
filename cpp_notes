@@ -1,4 +1,4 @@
-stopareview: search for stopareview in this file.
+stopareview: p105, 2.5. Dealing with Types
 
 stopa: search for stopa in this file.
 
@@ -88,6 +88,7 @@ findnew                      new operator
 findconst                    Constant
 findconstparameter           const in function parameter
 findconstantexpression       Constant expression
+findconstexpr                Constant expression
 findsleep                    Sleep
 findescape                   Escape sequence
 findstring                   string
@@ -2218,8 +2219,7 @@ int ival = 1024;
 int &refVal = ival; // refVal refers to (is another name for) ival
 int &refVal2; // error: a reference must be initialized
 
-Ordinarily, when we initialize a variable, the value of the initializer is copied into the object we are creating. When we define a reference, instead of copying the initializer’s value, we bind the reference to its initializer. Once initialized, a reference remains
-bound to its initial object. There is no way to rebind a reference to refer to a different object. Because there is no way to rebind a reference, references must be initialized
+Ordinarily, when we initialize a variable, the value of the initializer is copied into the object we are creating. When we define a reference, instead of copying the initializer’s value, we bind the reference to its initializer. Once initialized, a reference remains bound to its initial object. There is no way to rebind a reference to refer to a different object. Because there is no way to rebind a reference, references must be initialized (tao: same as const).
 
 Because references are not objects, they don’t have addresses. Hence, we may not define a pointer to a reference.
 
@@ -2310,52 +2310,152 @@ Note: that some compilers may optimize out the calls to the functions foo and ba
 (findpointer)
 Pointer
 
-stopareview: p84, 2.3.2. Pointers
-
-A pointer holds the address of another object. 
-A pointer is an object in its own right. 
-A pointer can be assigned and copied.
-A pointer can point to several different objects over its lifetime.
-A pointer do NOT need to be initialized at the time it is defined.
-
-We can use the address operator & to get the address of an object.
-We can use the dereference operator * to access the object being pointed.
-
    declaration  operator
 &  reference    obtain address
 *  pointer      yield object
 
+A pointer is a compound type that “points to” another type. Like references, pointers are used for indirect access to other objects. Unlike a reference, a pointer is an object in its own right. Pointers can be assigned and copied; a single pointer can point to several different objects over its lifetime. Unlike a reference, a pointer need NOT be initialized at the time it is defined. Like other built-in types, pointers defined at block scope have undefined value if they are not initialized.
+
+Pointers are often hard to understand. Debugging problems due to pointer
+errors bedevil even experienced programmers.
+
+We define a pointer type by writing a declarator of the form *d, where d is the name being defined. The * must be repeated for each pointer variable:
+
+int *ip1, *ip2; // both ip1 and ip2 are pointers to int
+double dp, *dp2; // dp2 is a pointer to double; dp is a double
+int* p1, p2; //Tao: practice shows this is wrong, should define different pointers in different lines.
+
+A pointer holds the address of another object. We get the address of an object by usin the address-of operator (the & operator):
+
+int ival = 42;
+int *p = &ival; // p holds the address of ival; p is a pointer to ival
+
+Because references are not objects, they don’t have addresses. Hence, we may not define a pointer to a reference.
+
+With two exceptions, which we cover later, the types of the pointer and the object to which it points must match:
+
+double *pd = &dval; // ok: initializer is the address of a double
+double *pd2 = pd; // ok: initializer is a pointer to double
+
+--
+Pointer Value
+
+The value (i.e., the address) stored in a pointer can be in one of four states:
+
+1. It can point to an object.
+
+2. It can point to the location just immediately past the end of an object.
+
+3. It can be a null pointer, indicating that it is not bound to any object.
+
+4. It can be invalid; values other than the preceding three are invalid.
+It is an error to copy or otherwise try to access the value of an invalid pointer.
+
+--
+When a pointer points to an object, we can use the dereference operator (the * operator) to access that object:
+
 int ival = 42;
 int *p = &ival; // p holds the address of ival; p is a pointer to ival
 int v = *p; //v = 42, dereference operator *
-*p = 0; //Assign new value to ival
-int* p1, p2; //Tao: practice shows this is wrong, should define different pointers in different lines.
 
+Dereferencing a pointer yields the object to which the pointer points. We can assign to that object by assigning to the result of the dereference:
+
+*p = 0; //Assign new value to ival
+
+We may dereference only a valid pointer that points to an object. 
+
+--
 (findnull)
+A null pointer does not point to any object. There are several ways to obtain a null pointer:
+
 //Null pointer. The following three lines are equivalent, to assign null pointer to p.
 int *p = 0;
-int *p = nullptr; 
-int *p = NULL;//Must #include<cstdlib>, modern programs should avoid using NULL <- tao: practice confirms that cstdlib is also included in std namespace, so if we already wrote "using namespace std;", then we do not need to #include<cstdlib>
+int *p = nullptr; // equivalent to int *p = 0. See more below.
+int *p = NULL;//// equivalent to int *p = 0. See more below.
 
-Recommended: If there is no object to bind to a pointer, then initialize the pointer to nullptr or 0.
+nullptr:
+The most direct approach is to initialize the pointer using the literal nullptr, which was introduced by the new standard. nullptr is a literal that has a special type that can be converted to any other pointer type.
 
-There is an automatic conversion from arithmetic or pointer
-types to bool. If the pointer or arithmetic value is zero, the conversion yields false; any other value yields true
+NULL:
+Modern C++ programs generally should avoid using NULL and use nullptr instead. Older programs sometimes use a preprocessor variable named NULL, which the cstdlib header defines as 0. Must #include<cstdlib>.  Tao: practice confirms that cstdlib is also included in std namespace, so if we already wrote "using namespace std;", then we do not need to #include<cstdlib>
+
+We’ll describe the preprocessor in a bit more detail later. What’s useful to know now is that the preprocessor is a program that runs before the compiler. Preprocessor variables are managed by the preprocessor, and are not part of the std namespace. As a result, we refer to them directly without the std:: prefix.
+
+When we use a preprocessor variable, the preprocessor automatically replaces the variable by its value. Hence, initializing a pointer to NULL is equivalent to initializing it to 0. Modern C++ programs generally should avoid using NULL and use nullptr instead.
+
+It is illegal to assign an int variable to a pointer, even if the variable’s value happens to be 0.
+
+Our recommendation to initialize all variables is particularly important for pointers. If possible, define a pointer only after the object to which it should point has been defined. If there is no object to bind to a pointer, then initialize the pointer to nullptr or zero.
+
+--
+pi = &ival; //we assign a new value to pi, which changes the address that pi holds.
+*pi = 0; // value in ival is changed; pi is unchanged
+
+--
+We can use a pointer in a condition. If the pointer is 0, then the condition is false. Any nonzero pointer evaluates as true. Tao: for example: if(p) {...}, which is often used in leetcode.
 
 if(p) {...} is equivalent to if(p != NULL) {...}. If p == 0, then p = false. Any nonzero pointer evaluates as true. This is consistent with converting int to bool.
 
 if(!p) is equivalent to if(p == NULL) <- Remember: if p buxin, ie p == NULL
 if(p) is equivalent to if(p != NULL) <- Rememebr: if p xin, ie p != NULL
 
+--
+Two pointers are equal (using ==) if they hold the same address and unequal otherwise.
 
-Two pointers are equal (using ==) if they hold the same address.
+--
+void* Pointers
 
+The type void* is a special pointer type that can hold the address of any object. Like any other pointer, a void* pointer holds an address, but the type of the object at that address is unknown:
+
+double obj = 3.14, *pd = &obj;
+
+void *pv = &obj; // ok: void* can hold the address value of any data pointer type. obj can be an object of any type
+
+pv = pd; // pv can hold a pointer to any type
+
+There are only a limited number of things we can do with a void* pointer: We can compare it to another pointer, we can pass it to or return it from a function, and we can assign it to another void* pointer. We cannot use a void* to operate on the object it addresses—we don’t know that object’s type (tao: so we do not know how many bytes to read from memory for the object), and the type determines what operations we can perform on the object.
+
+Generally, we use a void* pointer to deal with memory as memory, rather than using the pointer to access the object stored in that memory. We’ll cover using void* pointers in this way later. Later will show how we can retrieve the address stored in a void* pointer.
+
+--
 double obj = 3.14;
 void *pv = &obj; // The type void* is a special pointer type that can hold the address of any object.
 
 Avadoles:
 Variables defined inside a function ordinarily are not stored at a fixed address.
 Tao: this is also the reason why my program did something wrong when I tried to return a pointer to a variable defined inside a function (see more below).
+
+--
+Understanding Compound Type Declaration
+
+// i is an int; p is a pointer to int; r is a reference to int
+int i = 1024, *p = &i, &r = i;
+
+//tao: the follwing is equivalent to int *p;
+int* p; // legal but might be misleading
+
+Pointers to Pointers
+
+In general, there are no limits to how many type modifiers (tao: & and *) can be applied to a declarator. We indicate each pointer level by its own *. That is, we write ** for a pointer to a pointer.
+
+int ival = 1024;
+int *pi = &ival; // pi points to an int
+int **ppi = &pi; // ppi points to a pointer to an int
+
+ppi -> pi -> ival (has value 1024)
+
+Tao: pointer also has addess.
+
+Dereferencing a pointer to a pointer yields a pointer.
+
+References to Pointers
+
+A reference is not an object. Hence, we may not have a pointer to a reference. However, because a pointer is an object, we can define a reference to a pointer:
+
+int *p; // p is a pointer to int
+int *&r = p; // r is a reference to the pointer p
+
+The easiest way to understand the type of r is to read the definition right to left. The symbol closest to the name of the variable (in this case the & in &r) is the one that has the most immediate effect on the variable’s type. Thus, we know that r is a reference.
 
 --
 (findpointertoarray)
@@ -2737,48 +2837,131 @@ Here both p and q point at the same dynamically allocated object. We delete that
 (findconst)
 const
 
-We can make a variable unchangeable by defining the variable’s type as const.
-const object MUST be initilized after being created.
+We can make a variable unchangeable by defining the variable’s type as const. 
 
-const int bufSize = 512;
-extern const int bufSize = 512; // A const that is accessible to other files
+Because we can’t change the value of a const object after we create it, it must be initialized (tao: same as reference). As usual, the initializer may be an arbitrarily complicated expression.
 
-//Reference to const:
+const int bufSize = 512; 
+
+Any attempt to assign to bufSize is an error:
+
+bufSize = 512; // error: attempt to write to const object
+
+--
+Reference to const
+
+As with any other object, we can bind a reference to an object of a const type. To do so we use a reference to const, which is a reference that refers to a const type. Unlike an ordinary reference, a reference to const cannot be used to change the object to which the reference is bound:
+
 const int ci = 1024;
-const int &r1 = ci; // Both reference and underlying object are const. See following summary for remember.
+const int &r1 = ci; // ok: both reference and underlying object are const
+r1 = 42; // error: r1 is a reference to const
+int &r2 = ci; // error: non const reference to a const object
 
-//const refrence: no such thing
+See following summary for remember.
 
-//Pointer to const:
-const double pi = 3.14;
-const double *cptr = &pi; // Store the address of a const object only in a pointer to const. See following summary for remember.
+we can bind a reference to const to a nonconst object, a literal, or a more general expression:
 
-//const pointer:
-int *const curErr = &errNumb; // curErr will always point to errNumb. See following summary for remember.
+int i = 42;
+const int &r1 = i; // we can bind a const int& to a plain int object
+const int &r2 = 42; // ok: r1 is a reference to const
+const int &r3 = r1 * 2; // ok: r3 is a reference to const
+int &r4 = r * 2; // error: r4 is a plain, non const reference
 
+A Reference to const May Refer to an Object That Is Not const
+
+int i = 42;
+int &r1 = i; // r1 bound to i
+const int &r2 = i; // r2 also bound to i; but cannot be used to change i
+r1 = 0; // r1 is not const; i is now 0
+r2 = 0; // error: r2 is a reference to const
+
+Binding r2 to the (nonconst) int i is legal. However, we cannot use r2 to change i. Even so, the value in i still might change. We can change i by assigning to it directly, or by assigning to another reference bound to i, such as r1.
+
+--
+const refrence: no such thing
+
+--
+Pointer to const:
+
+We may store the address of a const object only in a pointer to const:
+
+onst double pi = 3.14; // pi is const; its value may not be changed
+double *ptr = &pi; // error: ptr is a plain pointer
+const double *cptr = &pi; // ok: cptr may point to a double that is const
+*cptr = 42; // error: cannot assign to *cptr
+
+See following summary for remember.
+
+We can use a pointer to const to point to a nonconst object:
+
+double dval = 3.14; // dval is a double; its value can be changed
+cptr = &dval; // ok: but can't change dval through cptr
+
+--
+const pointer:
+
+Unlike references, pointers are objects. Hence, as with any other object type, we can have a pointer that is itself const. Like any other const object, a const pointer must be initialized, and once initialized, its value (i.e., the address that it holds) may not be changed. We indicate that the pointer is const by putting the const after the *.
+
+int errNumb = 0;
+int *const curErr = &errNumb; // curErr will always point to errNumb
+const double pi = 3.14159;
+const double *const pip = &pi; // pip is a const pointer to a const
+object
+
+See following summary for remember.
+
+The fact that a pointer is itself const says nothing about whether we can use the pointer to change the underlying object.
+
+--
 Summary from the above:
 1. int is always on the left of *, like int *
-2. const can be on the left or right of int *, like const int *, int * const
+2. const can be on the left or right of int *, like: const int *, int * const
 3. Principle: the symbol that is closest to the variable name is comes to the first in the type name: 
    const double *cptr = &pi: cptr is a pointer to const
    int *const curErr = &errNumb: curErr is a const pointer
 
-We use the term top-level const to indicate that the pointer itself is a const. When a pointer can point to a const object, we refer to that const as a low-level const.
+--
+Top-Level const
+
+We use the term top-level const to indicate that the pointer itself is a const. When a pointer can point to a const object, we refer to that const as a low-level const. More generally, top-level const indicates that an object itself is const. Low-level const appears in the base type of compound types such as pointers or references.
+
+int i = 0;
+int *const p1 = &i; // we can't change the value of p1; const is top-level
+const int ci = 42; // we cannot change ci; const is top-level
+const int *p2 = &ci; // we can change p2; const is low-level
+const int *const p3 = p2; // right-most const is top-level, left-most is not
+const int &r = ci; // const in reference types is always low-level
 
 The distinction between top-level and low-level matters when we copy an object. When we copy an object, top-level consts are ignored. Example:
 
-const int ci = i, &cr = ci;
+const int ci = i;
 auto b = ci; // b is an int (top-level const in ci is dropped)
 
 On the other hand, low-level const is never ignored. When we copy an object, both objects must have the same low-level const qualification or there must be a conversion between the types of the two objects. In general, we can convert a nonconst to const but not the other way round.
 
-const and reference must be initialized.
+--
+const in multiple files
+
+When we split a program into multiple files, every file that uses the const must have access to its initializer. In order to see the initializer, the variable must be defined in every file that wants to use the variable’s value. To support this usage, yet avoid multiple definitions of the same variable, const variables are defined as local to the file. When we define a const with the same name in multiple files, it is as if we had written definitions for separate variables in each file.
+
+Sometimes we have a const variable that we want to share across multiple files but whose initializer is not a constant expression. In this case, we don’t want the compiler to generate a separate variable in each file. Instead, we want the const object to behave like other (nonconst) variables. We want to define the const in one file, and declare it in the other files that use that object.
+
+To define a single instance of a const variable, we use the keyword extern on both its definition and declaration(s):
+
+// file_1.cc defines and initializes a const that is accessible to other files
+extern const int bufSize = fcn();
+
+// file_1.h
+extern const int bufSize; // same bufSize as defined in file_1.cc
 
 --
 (findconstantexpression)
+(findconstexpr)
 Constant expression
 
-A constant expression is an expression whose value cannot change and that can be evaluated at compile time. A literal is a constant expression. A const object that is initialized from a constant expression is also a constant expression. Examples:
+A constant expression is an expression whose value cannot change and that can be evaluated at compile time. A literal is a constant expression. A const object that is initialized from a constant expression is also a constant expression. 
+
+Whether a given object (or expression) is a constant expression depends on the types and the initializers. For example:
 
 const int max_files = 20; // max_files is a constant expression
 const int limit = max_files + 1; // limit is a constant expression
@@ -2786,6 +2969,43 @@ int staff_size = 27; // staff_size is not a constant expression
 const int sz = get_size(); // sz is not a constant expression
 
 Even though sz is a const, the value of its initializer is not known until run time. Hence, sz is not a constant expression.
+
+constexpr Variables
+
+Under the new standard, we can ask the compiler to verify that a variable is a constant expression by declaring the variable in a constexpr declaration. Variables declared as constexpr are implicitly const and must be initialized by constant expressions:
+
+constexpr int mf = 20; // 20 is a constant expression
+constexpr int limit = mf + 1; // mf + 1 is a constant expression
+constexpr int sz = size(); // ok only if size is a constexpr function
+
+Although we cannot use an ordinary function as an initializer for a constexpr variable, we’ll see later that the new standard lets us define certain functions as constexpr. Such functions must be simple enough that the compiler can evaluate them at compile time. We can use constexpr functions in the initializer of a constexpr variable.
+
+Generally, it is a good idea to use constexpr for variables that you intend to use as constant expressions.
+
+--
+Literal Types
+
+Because a constant expression is one that can be evaluated at compile time, there are limits on the types that we can use in a constexpr declaration. The types we can use in a constexpr are known as “literal types” because they are simple enough to have literal values.
+
+Of the types we have used so far, the arithmetic, reference, and pointer types are literal types. Our Sales_item class and the library IO and string types are not literal types. Hence, we cannot define variables of these types as constexprs. We’ll see other kinds of literal types later.
+
+Although we can define both pointers and reference as constexprs, the objects we use to initialize them are strictly limited. We can initialize a constexpr pointer from the nullptr literal or the literal (i.e., constant expression) 0. We can also point to (or bind to) an object that remains at a fixed address.
+
+For reasons we’ll cover later, variables defined inside a function
+ordinarily are not stored at a fixed address. Hence, we cannot use a constexpr pointer to point to such variables. On the other hand, the address of an object defined outside of any function is a constant expression, and so may be used to initialize a constexpr pointer. We’ll see later, that functions may define variables that exist across calls to that function. Like an object defined outside any function, these special local objects also have fixed addresses. Therefore, a constexpr
+reference may be bound to, and a constexpr pointer may address, such variables.
+
+--
+Pointers and constexpr
+
+It is important to understand that when we define a pointer in a constexpr declaration, the constexpr specifier applies to the pointer, not the type to which the pointer points:
+
+const int *p = nullptr; // p is a pointer to a const int
+constexpr int *q = nullptr; // q is a const pointer to int
+
+Despite appearances, the types of p and q are quite different; p is a pointer to const, whereas q is a constant pointer. The difference is a consequence of the fact that constexpr imposes a top-level const on the objects it defines.
+
+Like any other constant pointer, a constexpr pointer may point to a const or a nonconst type.
 
 ==
 (findfor)
