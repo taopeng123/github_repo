@@ -1,4 +1,9 @@
-stopareview: p105, 2.5. Dealing with Types
+todo:
+
+Search online, what does a funciton do for input parameter and returned value when it is:
+- string
+- vector
+- object
 
 stopa: search for stopa in this file.
 
@@ -41,6 +46,7 @@ findcompileseparate          Separate Compilation
 findcomment                  Comments
 findcout                     cout
 findcin                      cin 
+findgetline                  getline
 findmath                     Math operators
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
@@ -57,13 +63,20 @@ findstaticallytyped          Statically typed launage
 findtype                     Data types
 finddatatype                 Data types
 findbool                     bool
-findtypedef                  typedef
 findtypealias                Type alias
+findtypedef                  typedef
+finddecltype                 decltype
+findauto                     auto
 findliteral                  Literals
 findvariable                 Variables
 findidentifier               Identifiers
 findscope                    Scope of a Name
 findinitialization           Intialization
+findlistinitialization       List Initialization
+finddefaultinitialization    Default Initialization
+findvalueinitialization      Value Initialization
+finddirectinitialization     Direct Initialization
+findcopyinitialization       Copy Initialization
 finddeclaration              declaration 
 finddefinition               definition
 findmax                      max
@@ -73,6 +86,7 @@ findintmin                   INT_MIN
 findminint                   INT_MIN
 findheader                   Headers
 findinclude                  Headers
+findpreprocessor             preprocessor
 findreference                Reference
 findpassbyvalue              Pass by value
 findpassbyreference          Pass by reference
@@ -1159,16 +1173,106 @@ Expressions that mix signed and unsigned values can yield surprising results whe
 Programs usually should avoid implementation-defined behavior, such as assuming that the size of an int is a fixed and known value. Such programs are said to be nonportable.
 
 ==
+(findtypealias)
 (findtypedef)
+Type alias
 typedef
 
-typedef double wages; // wages is a synonym for double
+A type alias is a name that is a synonym(同義詞) for another type. Type aliases let us simplify complicated type definitions, making those types easier to use. 
 
---
-(findtypealias)
-Type alias
+We can define a type alias in one of two ways. Traditionally, we use a typedef:
+
+typedef double wages; // wages is a synonym for double
+typedef wages base, *p; // base is a synonym for double, p for double*
+
+The new standard introduced a second way to define a type alias, via an alias declaration:
+
+using SI = Sales_item; // SI is a synonym for Sales_item
+
+wages hourly, weekly; // same as double hourly, weekly;
+SI item; // same as Sales_item item
 
 using pos = std::string::size_type; // pos is a synonym for std::string::size_type
+
+--
+(findauto)
+auto
+
+(Tao deliberately put auto in front of decltype)
+
+It is not uncommon to want to store the value of an expression in a variable. To declare the variable, we have to know the type of that expression. When we write a program, it can be surprisingly difficult—and sometimes even impossible—to
+determine the type of an expression. Under the new standard, we can let the compiler figure out the type for us by using the auto type specifier. Unlike type specifiers, such as double, that name a specific type, auto tells the compiler to deduce the type from the initializer. By implication, a variable that uses auto as its type specifier must have an initializer:
+
+auto item = val1 + val2; // the type of item is deduced from the type of the result of adding val1 and val2, item initialized to the result of val1 + val2
+
+Here the compiler will deduce the type of item from the type returned by applying + to val1 and val2. If val1 and val2 are Sales_item objects, item will have type Sales_item. If those variables are type double, then item has type double, and so on.
+
+As with any other type specifier, we can define multiple variables using auto. Because a declaration can involve only a single base type, the initializers for all the variables in the declaration must have types that are consistent with each other:
+
+auto i = 0, *p = &i; // ok: i is int and p is a pointer to int
+auto sz = 0, pi = 3.14; // error: inconsistent types for sz and pi
+
+when we use a reference as an initializer, the initializer is the corresponding object. The compiler uses that object’s type for auto’s type deduction:
+
+int i = 0, &r = i;
+auto a = r; // a is an int (r is an alias for i, which has type int)
+
+Second, auto ordinarily ignores top-level consts. As usual in
+initializations, low-level consts, such as when an initializer is a pointer to const, are kept:
+
+const int ci = i, &cr = ci;
+auto b = ci; // b is an int (top-level const in ci is dropped)
+auto c = cr; // c is an int (cr is an alias for ci whose const is top-level)
+auto d = &i; // d is an int*(& of an int object is int*)
+auto e = &ci; // e is const int*(& of a const object is low-level const)
+
+If we want the deduced type to have a top-level const, we must say so explicitly:
+
+const auto f = ci; // deduced type of ci is int; f has type const int
+
+--
+(finddecltype)
+decltype
+
+Sometimes we want to define a variable with a type that the compiler deduces from an expression but do not want to use that expression to initialize the variable. For such cases, the new standard introduced a second type specifier, decltype, which
+returns the type of its operand. The compiler analyzes the expression to determine its type but does not evaluate the expression:
+
+decltype(f()) sum = x; // sum has whatever type f returns
+
+Here, the compiler does not call f, but it uses the type that such a call would return as the type for sum. That is, the compiler gives sum the same type as the type that would be returned if we were to call f.
+
+The way decltype handles top-level const and references differs subtly from the way auto does. When the expression to which we apply decltype is a variable, decltype returns the type of that variable, including top-level const and references:
+
+const int ci = 0, &cj = ci;
+decltype(ci) x = 0; // x has type const int
+decltype(cj) y = x; // y has type const int& and is bound to x
+decltype(cj) z; // error: z is a reference and must be initialized
+
+Because cj is a reference, decltype(cj) is a reference type. Like any other reference, z must be initialized.
+
+It is worth noting that decltype is the only context in which a variable defined as a reference is not treated as a synonym for the object to which it refers.
+
+decltype and References
+
+When we apply decltype to an expression that is not a variable, we get the type that that expression yields. As we’ll see later, some expressions will cause decltype to yield a reference type. Generally speaking, decltype returns a reference type for expressions that yield objects that can stand on the left-hand side of the assignment:
+
+// decltype of an expression can be a reference type
+int i = 42, *p = &i, &r = i;
+decltype(r + 0) b; // ok: addition yields an int; b is an (uninitialized) int
+decltype(*p) c; // error: c is int& and must be initialized. Tao: note &i means the address of i, &i has nothing to do with reference.
+
+Here r is a reference, so decltype(r) is a reference type. If we want the type to which r refers, we can use r in an expression, such as r + 0, which is an expression that yields a value that has a nonreference type.
+
+On the other hand, the dereference operator is an example of an expression for which decltype returns a reference. As we’ve seen, when we dereference a pointer, we get the object to which the pointer points. Moreover, we can assign to that object.
+Thus, the type deduced by decltype(*p) is int&, not plain int.
+
+Another important difference between decltype and auto is that the deduction done by decltype depends on the form of its given expression. What can be confusing is that enclosing the name of a variable in parentheses affects the type returned by decltype. When we apply decltype to a variable without any parentheses, we get the type of that variable. If we wrap the variable’s name in one or more sets of parentheses, the compiler will evaluate the operand as an expression. A variable is an expression that can be the left-hand side of an assignment. As a result, decltype on such an expression yields a reference:
+
+// decltype of a parenthesized variable is always a reference
+decltype((i)) d; // error: d is int& and must be initialized
+decltype(i) e; // ok: e is an (uninitialized) int
+
+Remember that decltype((variable)) (note, double parentheses) is always a reference type, but decltype(variable) is a reference type only if variable is a reference.
 
 ==
 (findliteral)
@@ -1338,6 +1442,7 @@ Initialization in C++ is a surprisingly complicated topic and one we will return
 Initialization is not assignment. Initialization happens when a variable is given a value when it is created. Assignment obliterates an object’s current value and replaces that value with a new one.
 
 --
+(findlistinitialization)
 List Initialization
 
 One way in which initialization is a complicated topic is that the language defines several different forms of initialization. For example, we can use any of the following four different ways to define an int variable named a and initialize it to 0:
@@ -1357,6 +1462,7 @@ int a{ld}, b = {ld}; // error: narrowing conversion required
 int c(ld), d = ld; // ok: but value will be truncated
 
 --
+(finddefaultinitialization)
 Default Initialization
 
 When we define a variable without an initializer, the variable is default initialized. Such variables are given the “default” value. What that default value is depends on the type of the variable and may also depend on where the variable is defined.
@@ -1391,10 +1497,41 @@ If we do not initialize a string, then it is an empty string. (Seems different f
 We recommend initializing every object of built-in type. It is not always necessary, but it is easier and safer to provide an initializer until you can be certain it is safe to omit the initializer.
 
 --
-Two forms of initialization
+(findvalueinitialization)
+Value Initialization
 
-Sales_data item1 (null_book); // direct initialization
+Tao: from the following, I conclude that value initialization is just another name of default initialization.
+
+Copied from elsewhere in this note:
+
+If a local static has no explicit initializer, it is value initialized, meaning that local statics of built-in type are initialized to zero.
+
+The default constructor is used automatically whenever an object is default or value initialized.
+
+--
+(finddirectinitialization)
+(findcopyinitialization)
+direct and copy initialization
+
+Sales_data item1(null_book); // direct initialization
 Sales_data item2 = null_book; // the copy form of initialization 
+
+Summary from below (it is a waste of time to suspect this summary):
+
+Direct initialization means to use (), eg: a(b)
+Copy initialization means to =, eg: a = b
+
+Copied from "find string":
+
+Direct and Copy Forms of Initialization 
+
+Earlier we saw that C++ has several different forms of initialization. Using strings, we can start to understand how these forms differ from one another. When we initialize a variable using =, we are asking the compiler to copy initialize the object by copying the initializer on the right-hand side into the object being created. Otherwise, when we omit the =, we use direct initialization.
+
+When we have a single initializer, we can use either the direct or copy form of initialization. When we initialize a variable from more than one value, such as in the initialization of s4 above, we must use the direct form of initialization:
+
+string s5 = "hiya"; // copy initialization
+string s6("hiya"); // direct initialization
+string s7(10, 'c'); // direct initialization; s7 is cccccccccc
 
 ==
 (finddeclaration)
@@ -1489,6 +1626,54 @@ bind
 using namespace std;
 
 --
+Although as we’ll see later, we can define a class inside a function, such classes have limited functionality. As a result, classes ordinarily are not defined inside functions. When we define a class outside of a function, there may be only one
+definition of that class in any given source file. In addition, if we use a class in several different files, the class’ definition must be the same in each file.
+
+In order to ensure that the class definition is the same in each file, classes are usually defined in header files. Typically, classes are stored in headers whose name derives from the name of the class. For example, the string library type is defined in
+the string header. Similarly, as we’ve already seen, we will define our Sales_data class in a header file named Sales_data.h.
+
+Headers (usually) contain entities (such as class definitions and const and constexpr variables) that can be defined only once in any given file. However, headers often need to use facilities from other headers. For example, because our Sales_data class has a string member, Sales_data.h must #include the string header. As we’ve seen, programs that use Sales_data also need to include the string header in order to use the bookNo member. As a result, programs that use Sales_data will include the string header twice: once directly and once as a side effect of including Sales_data.h. Because a header might be included more than once, we need to write our headers in a way that is safe even if the header is included multiple times (tao: the solution is to use the preprocessor, search for "find preprocessor").
+
+Whenever a header is updated, the source files that use that header must be recompiled to get the new or changed declarations.
+
+--
+Advice: Use the C++ Versions of C Library Headers
+
+In addition to facilities defined specifically for C++, the C++ library incorporates the C library. Headers in C have names of the form name .h. The C++ versions of these headers are named c name—they remove the .h suffix and precede the name with the letter c. The c indicates that the header is part of the C library.
+
+Hence, cctype has the same contents as ctype.h, but in a form that is appropriate for C++ programs. In particular, the names defined in the cname headers are defined inside the std namespace, whereas those defined in the .h versions are not.
+
+Ordinarily, C++ programs should use the cname versions of headers and not the name .h versions. That way names from the standard library are consistently found in the std namespace. Using the .h headers puts the burden on the programmer to remember which library names are inherited from C and which are unique to C++.
+
+--
+(findpreprocessor)
+preprocessor
+
+The most common technique for making it safe to include a header multiple times relies on the preprocessor. The preprocessor is a program that runs before the compiler and changes the source text of our programs. Our programs already rely on one preprocessor facility, #include. When the preprocessor sees a #include, it replaces the #include with the contents of the specified header.
+
+C++ programs also use the preprocessor to define header guards. Header guards rely on preprocessor variables. Preprocessor variables have one of two possible states: defined or not defined. The #define directive takes a name and defines that name as a preprocessor variable. There are two other directives that test whether a given preprocessor variable has or has not been defined: #ifdef is true if the variable has been defined, and #ifndef is true if the variable has not been defined. If the test is true, then everything following the #ifdef or #ifndef is processed up to the matching #endif.
+
+We can use these facilities to guard against multiple inclusion as follows:
+
+tao: the following is the .h file which defines Sales_data. The benefit of the preprocessor in this .h file is that this .h file can be included in multiple files, and there will be no conflict, because SALES_DATA_H will be defined in the first file that includes this .h file, other files will have ifndef = false and will not execute this .h file.
+
+#ifndef SALES_DATA_H
+#define SALES_DATA_H
+#include <string>
+struct Sales_data {
+    std::string bookNo;
+    unsigned units_sold = 0;
+    double revenue = 0.0;
+};
+#endif
+
+Warning: Preprocessor variable names do not respect C++ scoping rules.
+
+Preprocessor variables, including names of header guards, must be unique throughout the program. To avoid name clashes with other entities in our programs, preprocessor variables usually are written in all uppercase.
+
+Headers should have guards, even if they aren’t (yet) included by another header. Header guards are trivial to write, and by habitually defining them you don’t need to decide whether they are needed.
+
+--
 #include <iostream>
 #include "Sales_item.h"
 
@@ -1513,33 +1698,6 @@ Headers (usually) contain entities (such as class definitions and const variable
 Code inside headers ordinarily should not use "using declarations". The reason is that the contents of a header are copied into the including program’s text. If a header has a using declaration, then every program that includes that header gets that same using declaration. As a result, a program that didn’t intend to use the specified library name might encounter unexpected name conflicts.
 
 In addition to facilities defined specifically for C++, the C++ library incorporates the C library. Headers in C have names of the form name .h. The C++ versions of these headers are named c name—they remove the .h suffix and precede the name with the letter c. The c indicates that the header is part of the C library. Hence, cctype has the same contents as ctype.h, but in a form that is appropriate for C++ programs. In particular, the names defined in the cname headers are defined inside the std namespace, whereas those defined in the .h versions are not. Ordinarily, C++ programs should use the cname versions of headers and not the name .h versions.
-
---
-preprocessor
-
-The most common technique for making it safe to include a header multiple times relies on the preprocessor. The preprocessor is a program that runs before the compiler and changes the source text of our programs.
-
-Our programs already rely on one preprocessor facility, #include. When the preprocessor sees a #include, it replaces the #include with the contents of the specified header.
-
-C++ programs also use the preprocessor to define header guards. Header guards rely on preprocessor variables. Preprocessor variables have one of two possible states: defined or not defined. The #define directive takes a name and defines that name as a preprocessor variable. There are two other directives that test whether a given preprocessor variable has or has not been defined: #ifdef is true if the variable has been defined, and #ifndef is true if the variable has not been defined. 
-
-If the test is true, then everything following the #ifdef or #ifndef is processed up to the matching #endif.
-
-tao: the following is the .h file which defines Sales_data. The benefit of the preprocessor in this .h file is that this .h file can be included in multiple files, and there will be no conflict, because SALES_DATA_H will be defined in the first file that includes this .h file, other files will have ifndef = false and will not execute this .h file.
-
-#ifndef SALES_DATA_H
-#define SALES_DATA_H
-#include <string>
-struct Sales_data {
-    std::string bookNo;
-    unsigned units_sold = 0;
-    double revenue = 0.0;
-};
-#endif
-
-Preprocessor variables, including names of header guards, must be unique throughout the program. To avoid name clashes with other entities in our programs, preprocessor variables usually are written in all uppercase.
-
-Headers should have guards, even if they aren’t (yet) included by another header. Header guards are trivial to write, and by habitually defining them you don’t need to decide whether they are needed.
 
 --
 How to include header in another folder (from online):
@@ -1740,11 +1898,51 @@ The input operator (the >> operator) behaves analogously to the output operator.
 cout << v1 + v2 << endl; //Tao: expressions can be in cout.
 
 --
-// s is a string
-os << s //Writes s onto output stream os. Reurns os.
-is >> s //Reads whitespace-separated string from is into s. Returns is. 
+s is a string:
 
-getline(is, s) //Reads a line of input from is into s. Returns is.
+os << s: Writes s onto output stream os. Returns os.
+is >> s: Reads whitespace-seperated string from is into s. Returns s.
+getline(is, s): Reads a line of input from is into s. Returns s.
+
+string s; // empty string
+cin >> s; // read a whitespace-separated string into s. Tao: note that this code does not end with endl.
+cout << s << endl; // write s to the output
+
+The string input operator (tao eg: cin) reads and discards any leading whitespace (e.g., spaces, newlines, tabs). It then reads
+characters until the next whitespace character is encountered.
+So, if the input to this program is Hello World! (note leading and trailing spaces), then the output will be Hello with no extra spaces.
+
+We can chain together multiple reads or writes:
+
+string s1, s2;
+cin >> s1 >> s2; // read first input into s1, second into s2
+cout << s1 << s2 << endl; // write both strings
+
+If we give this version of the program the same input, Hello World!, our output would
+be “HelloWorld!”
+
+Reading an Unknown Number of strings
+
+string word;
+while (cin >> word) // read until end-of-file
+cout << word << endl; // write each word followed by a new line
+
+--
+(findgetline)
+getline
+
+Sometimes we do not want to ignore the whitespace in our input. In such cases, we can use the getline function instead of the >> operator.
+
+int main()
+{
+	string line;
+	// read input a line at a time until end-of-file
+	while (getline(cin, line))
+		cout << line << endl;
+	return 0;
+}
+
+Because line does not contain a newline, we must write our own (tao: endl). As usual, we use endl to end the current line and flush the buffer.
 
 --
 Printing numbers in binary format:
@@ -1801,7 +1999,18 @@ Careful readers will note that this program uses std::cout and std::endl rather 
 
 One side effect of the library's use of a namespace is that when we use a name from the library, we must say explicitly that we want to use the name from the std namespace. Writing std::cout uses the scope operator (the :: operator) to say that we want to use the name cout that is defined in the namespace std. Later will show a simpler way to access names from the library.
 
-==
+A using declaration lets us use a name from a namespace without qualifying the name with a namespace_name:: prefix. A using declaration has the form
+
+using namespace::name;
+
+Once the using declaration has been made, we can access name directly:
+
+using std::cin;
+cin >> i; // ok: cin is a synonym for std::cin
+
+Code inside headers ordinarily should not use using declarations. The reason is that the contents of a header are copied into the including program’s text.
+
+--
 The C++ language does not deal directly with input and output. Instead, IO is handled by a family of types defined in the standard library.
 
 Our programs have already used many IO library facilities:
@@ -3018,6 +3227,21 @@ vector<int> v = {1, 3, 5, 7, 9};
 for (auto x : v)
     cout << x << ' ';
 
+string str("some string");
+for (auto c : str) // tao: c is a char
+	cout << c << endl; 
+
+Using a Range for to Change the Characters in a string
+
+If we want to change the value of the characters in a string, we must define the loop variable as a reference type. Remember that a reference is just another name for a given object. When we use a reference as our control variable, that variable is bound to each element in the sequence in turn. Using the reference,
+we can change the character to which the reference is bound.
+
+string s("Hello World!!!");
+// convert s to uppercase
+for (auto &c : s) // for every char in s (note: c is a reference)
+	c = toupper(c); // c is a reference, so the assignment changes the char in s
+cout << s << endl;	
+
 ==
 (findsleep)
 Sleep
@@ -3044,45 +3268,76 @@ string
 
 A string literal, which is a sequence of characters enclosed in double quotation marks.
 
---
+The string and vector types are abstractions of the more primitive built-in array type. Arrays are less convenient to use than the library string and vector types.
+
+A string is a variable-length sequence of characters. To use the string type, we must include the string header.
+
 #include <string>
 using std::string;
 
-string s1;
-string s2 = s1; //copy initialization, s2 is a copy of s1
-string s3 = "hiya"; //direct initialization
-
-When we initialize a variable using =, we are asking the compiler to copy initialize the object by copying the initializer on the right-hand side into the object being created. Otherwise, when we omit the =, we use direct initialization.
-
+--
 string literal: the compiler appends a null character ('\0') to every string literal. Thus, the actual size of a string literal is one more than its apparent size.
 
 s.empty() //Returns bool
 s.size() //Returns number, which is a string::size_type, see below
-s[3] //Returns a reference to the char. The subscript operator (the [ ] operator) takes a string::size_type.
-s[0] = 'a'; //Charaters in a string can be changed in C++! Different from Java.
-s1 + s2 //Returns string
-s1 += s2 //Equivalent to s1 = s1 + s2
-s1 = s2 //Replaces characters in s1 with a copy of s2.
-s1 == s2 //s1 and s2 are equal if they contain the same characters. Equality is case-sensitive.
-s1 != s2
-s1 <= s2 //Comparisons are case-sensitive and use dictionary ordering.
+s[3] //Returns a reference to the char. Type of index is string::size_type. Tao: index can also be int.
+s[0] = 'a'; //So long as the string is not const, we can assign a new value to the character that the subscript operator returns.
 
-From online: create a string with five dot characters:
-string foo = string(5, '.') // foo = "....."
+--
+string operations:
 
+s.empty(): Returns true if s is empty; otherwise returns false.
+s.size(): Returns the number of characters in s. Tao: returned type is string::size_type.
+s[n]: Returns a reference to the char at position n in s; positions start at 0.
+s1 + s2: Returns a string that is the concatenation of s1 and s2.
+s1 += s2: Tao: equivalent to s1 = s1 + s2
+s1 = s2: Replaces characters in s1 with a copy of s2.
+s1 == s2, s1 != s2: s1 and s2 are equal if they contain the same characters. Equality is case-sensitive. 
+<, <=, <, <=: Comparisons are case-sensitive and use dictionary ordering.
+
+string s2 = s.erase (pos, len); //Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, from online)
+
+s2.append("helo"); // equivalent as below. The parameter of append() can only be string, it can not be char.
+s.insert(s.size(), "helo"); 
+
+--
 string::size_type:
-The string class—and most other library types—defines several companion types. These companion types make it possible to use the library types in a machine-independent manner. The type size_type is one of these companion types. Although we don’t know the precise type of string::size_type, we do know that it is an unsigned type big enough to hold the size of any string. Because size returns an unsigned type, it is essential to remember that expressions that mix signed and unsigned data can have surprising results. You can avoid problems due to conversion between unsigned and int by not using ints in expressions that use size().
 
-The string library lets us convert both character literals and character string literals to strings. Because we can use these literals where a string is expected.
+s.size() returns a string::size_type value. This type requires a bit of explanation.
 
-When we mix strings and string or character literals, at least one operand to each
-+ operator must be of string type: 
+The string class—and most other library types—defines several companion types. These companion types make it possible to use the library types in a machine-independent manner. The type size_type is one of these companion types. 
+
+Although we don’t know the precise type of string::size_type, we do know that it is an unsigned type big enough to hold the size of any string. Any variable used to store the result from the string size operation should be of type string::size_type.
+
+Admittedly, it can be tedious to type string::size_type. Under the new standard, we can ask the compiler to provide the appropriate type by using auto or decltype:
+
+auto len = line.size(); // len has type string::size_type  
+
+Because size returns an unsigned type, it is essential to remember that expressions that mix signed and unsigned data can have surprising results. For example, if n is an int that holds a negative value, then s.size() < n will almost surely evaluate as true. It yields true because the negative value in n will
+convert to a large unsigned value. Tao: Avadoles.
+
+You can avoid problems due to conversion between unsigned and int by not using ints in expressions that use size().
+
+--
+The string library lets us convert both character literals and character string literals to strings. Because we can use these literals where a string is expected, we can rewrite the previous program as follows:
+
+string s1 = "hello", s2 = "world"; // no punctuation in s1 or s2
+string s3 = s1 + ", " + s2 + '\n';
+
+When we mix strings and string or character literals, at least one operand to each + operator must be of string type:
+
 string s4 = s1 + ", "; // ok: adding a string and a literal
-string s5 = "hello" + ", "; // error: no string operand (tao: both are string literals, which are not string type variables, see below)
+string s5 = "hello" + ", "; // error: no string operand (tao: both are string literals, which are not string type variables)
+string s6 = s1 + ", " + "world"; // ok: each + has a string operand
+string s7 = "hello" + ", " + s2; // error: can't add string liter
 
 For historical reasons, and for compatibility with C, string literals are not standard library strings. It is important to remember that these types differ when you use string literals and library strings.
 
-//The followings should include the "cctype" header:
+--
+Dealing with the Characters in a string
+
+The followings should include the "cctype" header:
+
 //c is a character
 isalnum(c) //true if c is a letter or a digit.
 isalpha(c) //true if c is a letter
@@ -3093,10 +3348,48 @@ tolower(c) //If c is an upercase letter, returns its lowercase equivalent, other
 toupper(c) //If c is a lowercase letter, returns its upercase equivalent, otherwise returns c unchanged
 isspace(c) //true if c is whitespace (ie, a space, tab, vertical tab, return, newline, or formfeed)
 
-string s2 = s.erase (pos, len); //Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, from online)
+--
+#include <string>
+using std::string;
 
-s2.append("helo"); // equivalent as below. The parameter of append() can only be string, it can not be char.
-s.insert(s.size(), "helo"); 
+string s1; // default initialization; s1 is the empty string
+string s2 = s1; //copy initialization, s2 is a copy of s1
+string s3 = "hiya"; //direct initialization, s3 is a copy of the string literal. Tao: according to definition, this is copy initialization, this example is arbitrary and misleading, and it is a waste of time to jiujie this example.
+string s4(10, 'c'); // s4 is cccccccccc
+
+--
+Ways to Initialize a string:
+
+string s1: Default initialization; s1 is the empty string.
+string s2(s1): s2 is a copy of s1.
+string s2 = s1: Equivalent to s2(s1), s2 is a copy of s1.
+string s3("value"): s3 is a copy of the string literal, not including the null (tao: the null at the end of the string).
+string s3 = "value": Equivalent to s3("value"), s3 is a copy of the string literal.
+string s4(n, 'c'): Initialize s4 with n copies of the character 'c'.
+
+We can default initialize a string, which creates an empty string; that is, a string with no characters. When we supply a string literal, the characters from that literal—up to but not including the null character at the end of the literal—are copied into the newly created string. When we supply a count
+and a character, the string contains that many copies of the given character.
+
+Direct and Copy Forms of Initialization (tao: the followings are also copied to "find copyinitialization")
+
+Earlier we saw that C++ has several different forms of initialization. Using strings, we can start to understand how these forms differ from one another. When we initialize a variable using =, we are asking the compiler to copy initialize the object by copying the initializer on the right-hand side into the object being created. Otherwise, when we omit the =, we use direct initialization.
+
+When we have a single initializer, we can use either the direct or copy form of initialization. When we initialize a variable from more than one value, such as in the initialization of s4 above, we must use the direct form of initialization:
+
+string s5 = "hiya"; // copy initialization
+string s6("hiya"); // direct initialization
+string s7(10, 'c'); // direct initialization; s7 is cccccccccc
+
+When we want to use several values, we can indirectly use the copy form of initialization by explicitly creating a (temporary) object to copy:
+
+string s8 = string(10, 'c'); // copy initialization; s8 is cccccccccc. Tao: note the "string" on the right hand side, it creates a temporary string.
+
+The initializer of s8—string(10, 'c')—creates a string of the given size and character value and then copies that value into s8. It is as if we had written
+
+string temp(10, 'c'); // temp is cccccccccc
+string s8 = temp; // copy temp into s8
+
+Although the code used to initialize s8 is legal, it is less readable and offers no compensating advantage over the way we initialized s7.
 
 --
 In some computers (like my Thinkpad), some functions (like ifstream) needs the input to string to be defined as type: const char*, for example:
@@ -3522,34 +3815,105 @@ using std::vector;
 
 --
 vector<int> v1; //v1 is empty (tao: ie, v1.size() = 0, proved by many practices)
+
 vector<int> v2 = v1; //v2 is a copy of the elements in v1 (tao: copies the values of v1 to v2)
+
 vector<int> v1(10); //v1 has n copies of a value-initialized object. 10 elements, each initialized to 0.
+
 vector<string> v1(10); //10 elements, each an empty string
+
 vector<int> v1(n, val); //v1 has n elements with value val
+
 vector<vector<int>> v(10, vector<int>(10,1)); //From online. v is a 10*10 vector, all elements initialized to 1.
-vector<int> v1 = {1, 2, 3};//C++11, does not work in the old C++ version
+
+vector<int> v1 = {1, 2, 3};//C++11 standard.
+
 vector<int> v1{1,2,3};//Does not work
+
+--
+Ways to initialize a vector:
+
+vector<T> v1: vector that holds objects of type T. Default initialization; v1 is empty.
+
+vector<T> v2(v1): v2 has a copy of each element in v1.
+
+vector<T> v2 = v1: Equivalent to v2(v1), v2 is a copy of the elements in v1.
+
+vector<T> v3(n, val): v3 has n elements with value val.
+
+vector<T> v4(n): v4 has n copies of a value-initialized object. See more below.
+
+vector<T> v5{a, b, c...}: v5 has many elements as there are initializers; elements are initialized by corresponding initializers.
+
+vector<T> v5 = {a, b, c...}: Equivalent to v5{a, b, c...}.
 
 Searched online, in the old C++ version, to initialize a vector, we can only use push_back(). 
 
+--
+vector<T> v4(n): v4 has n copies of a value-initialized object
+
+A restrictions on this form of initialization is that some classes require that we always supply an explicit initializer. If our vector holds objects of a type that we cannot default initialize, then we must supply an initial element value; it is not possible to create vectors of such types by supplying only a size.
+
+--
+v.push_back(3) //Adds an element with value 3 to end of v
+
+v.empty() //Returns a bool
+
+v.size() //Returns a number, which is of type vector<int>::size_type
+
+v[5] //Returns a reference to the element
+
+v1 = v2 //Replaces the elements in v1 with a copy of the elements in v2
+
+v1 == v2 //Equal if each element in v1 is equal to the corresponding element in v2. 
+
+v1 != v2
+
+v1 <= v2 //Have their normal meanings using dictionary ordering.
+vec.clear() //Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
+
+--
+vector operations:
+
+In addition to push_back, vector provides only a few other operations, most of which are similar to the corresponding operations on strings.
+
+v.push_back(t): Adds an element with value t to end of v.
+
+v.empty(): Returns true if v is empty; otherwise returns false.
+
+v.size(): Returns the number of elements in v. Returns a value of the size_type, eg: vector<int>::size_type
+
+v[n]: Returns a reference to the element at position n in v. Subscripts for vector start at 0; the type of a subscript is the
+corresponding size_type, eg: vector<int>::size_type
+
+v1 = v2: Replaces the elements in v1 with a copy of the elements in v2.
+
+v1 = {a, b, c...}: Replaces the elements in v1 with a copy of the elements in the comma-sperated list.
+
+v1 == v2, v1 != v2: v1 and v2 are equal if they have the same number of elements and each element in v1 is equal to the corresponding element in v2.
+
+<, <=, >, >=: Have their normal meanings using dictionary ordering.
+
+--
 vector<vector<double> > v1 //correct, note the space between > >
 vector<vector<double>> v1 //wrong <- tao: in the Mac (or C++11?), this is also correct.
 
 vector< vector<int> > a(n,vector<int>(n)); //a is an 2D (n*n) vector, from HackerRank
 
-v.push_back(3) //Adds an element with value 3 to end of v
-v.empty() //Returns a bool
-v.size() //Returns a number, which is of type vector<int>::size_type
-v[5] //Returns a reference to the element
-v1 = v2 //Replaces the elements in v1 with a copy of the elements in v2
-v1 == v2 //Equal if each element in v1 is equal to the corresponding element in v2. 
-v1 != v2
-v1 <= v2 //Have their normal meanings using dictionary ordering.
-vec.clear() //Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
-
+--
 We can define vectors to hold objects of most any type. Because references are not objects, we cannot have a vector of references.
 
 vector is a template, not a type. Types generated from vector must include the element type, for example, vector<int>.
+
+We can define vectors to hold objects of most any type. Because references are not objects, we cannot have a vector of references.
+
+The string and vector types are abstractions of the more primitive built-in array type. Arrays are less convenient to use than the library string and vector types.
+
+Some compilers may require the old-style declarations for a vector of vectors, for example, vector<vector<int> > (tao: there is an extra space).
+
+We cannot use a range for if the body of the loop adds elements to the vector. The body of a range for must not change the size of the sequence over which it is iterating.
+
+Attempting to subscript elements that do not exist is, unfortunately, an extremely common and pernicious programming error. So-called buffer overflow errors are the result of subscripting elements that don’t exist. Such bugs are the most common cause of security problems in PC and other applications.
 
 --
 Traverse a vector (in C++ 11):
@@ -4751,16 +5115,25 @@ Iterators support only a few operations, which are listed below (tao: these oper
 
 (In the folllowng, an example of iter is: auto iter = v.begin())
 *iter //Returns a reference to the element denoted by the iterator iter.
+
 iter->mem //Dereferences iter and fetches the memeber named mem from the underlying element. Equivalent to (*iter).mem
+
 ++iter //Increments iter to refer to the next element in the container.
+
 --iter //Decrements iter to refer to the previous element in the container.
+
 iter1 == iter2 //Two iterators are equal if they denote the same element or if they are the off-the-end iterator for the same container.
+
 iter1 != iter2
+
 iter + n // Adding (substracting) an integral value n to (from) an iterator yields an iterator that many elements forward (backward) within the container.
+
 iter - n
 iter += n
 iter -= n
+
 iter1 - iter2 //Returns the distance between the iterators. The result type is a signed integral type named difference_type. Both vector and string define difference_type. This type is signed, because subtraction might have a negative result.
+
 iter1 <= iter2 //One iterator is less than another if it refers to an element that appears in the container before the one referred to by the other iterator.
 
 Example: capitalize the first character of a string:
@@ -5873,7 +6246,6 @@ There must always be a path through a recursive function that does not involve a
 
 The main function may not call itself.
 
-
 --
 (findstatic)
 Local static objects
@@ -6110,10 +6482,29 @@ struct Sales_data {
     string bookNo;
     unsigned units_sold = 0;
     double revenue = 0.0;
-}; //Tao: note the ;
+}; //Tao: don't forget the ;
 
-Sales_data accum;
-Sales_data* salesptr;
+We’ll assume that our Sales_data class is defined inside Sales_data.h.
+
+#include <iostream>
+#include <string>
+#include "Sales_data.h"
+int main()
+{
+	Sales_data data1, data2;
+	Sales_data* salesptr;
+	// code to read into data1 and data2
+	// code to check whether data1 and data2 have the same ISBN
+	// and if so print the sum of data1 and data2
+
+	std::cin >> data1.bookNo >> data1.units_sold >> price;
+}
+
+Our new program includes the string header. We need that header because our code will have to manage the bookNo member, which has type string.
+
+Under the new standard, we can supply an in-class initializer (tao: like the "double revenue = 0.0" above) for a data member. When we create objects, the in-class initializers will be used to initialize the data members. Members without an initializer are default initialized
+
+Each object has its own copy of the class data members. Modifying the data members of one object does not change the data in any other Sales_data object.
 
 To see the difference between struct and class, search for "find public", and look at the end of that part.
 
