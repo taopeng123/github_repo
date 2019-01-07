@@ -1,10 +1,3 @@
-todo:
-
-Search online, what does a funciton do for input parameter and returned value when it is:
-- string
-- vector
-- object
-
 stopa: search for stopa in this file.
 
 ==
@@ -95,8 +88,6 @@ findnull                     null pointer
 findpointertoarray           Pointer to array & array of pointers
 findreferencetoarray         Reference to array & array of references
 findpointertofunction        Pointer to function
-findreturnpointer            Return pointer from a function
-findreturnreference          Return reference from a function
 finddynamicmemory            Dynamic memory
 findnew                      new operator
 findconst                    Constant
@@ -149,7 +140,11 @@ findcontinue                 continue
 findgoto                     goto
 findexception                Exception
 findfunction                 function
+findparameter                Examples of function input parameters from Leetcode
 findreturn                   return
+findreturnvector             Return a vector from function
+findreturnpointer            Return pointer from a function
+findreturnreference          Return reference from a function
 findstatic                   Static variables
 findoverload                 Overloaded Functions
 findinlinefunctions          Inline Functions
@@ -2752,149 +2747,6 @@ decltype(sumLength) *getFcn(const string &);
 
 The only tricky part in declaring getFcn is to remember that when we apply decltype to a function, it returns a function type, not a pointer to function type. We must add a * to indicate that we are returning a pointer, not a function.
 
---
-(findreturnpointer)
-Return pointer from a function (from tutorialspoint):
-
-Tao's summary from below:
-1. It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable.
-2. Can return a pointer created by the "new" operator. Extracted from "find new": Dynamically allocated objects have a lifetime that is independent of where they are created; they exist until they are explicitly freed. Functions that return pointers (rather than smart pointers) to dynamic memory put burden on their callers—the caller must remember to delete the memory. We returned pointer created by "new" in leetcode, like pr_133 (leetcode discussion also did this).
-
-As we have seen in last chapter how C++ allows to return an array from a function, similar way C++ allows you to return a pointer from a function. To do so, you would have to declare a function returning a pointer as in the following example −
-
-int * myFunction() {
-   .
-   .
-   .
-}
-
-Second point to remember is that, it is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable. Tao: if return the address of a local variable, the caller function would get a pointer containing wrong address value (from practice).
-
-Now, consider the following function, which will generate 10 random numbers and return them using an array name which represents a pointer i.e., address of first array element.
-
- Live Demo
-#include <iostream>
-#include <ctime>
- 
-using namespace std;
- 
-// function to generate and retrun random numbers.
-int * getRandom( ) {
-   static int  r[10];
- 
-   // set the seed
-   srand( (unsigned)time( NULL ) );
-   
-   for (int i = 0; i < 10; ++i) {
-      r[i] = rand();
-      cout << r[i] << endl;
-   }
- 
-   return r;
-}
- 
-// main function to call above defined function.
-int main () {
-   // a pointer to an int.
-   int *p;
- 
-   p = getRandom();
-   for ( int i = 0; i < 10; i++ ) {
-      cout << "*(p + " << i << ") : ";
-      cout << *(p + i) << endl;
-   }
- 
-   return 0;
-}
-When the above code is compiled together and executed, it produces result something as follows −
-
-624723190
-1468735695
-807113585
-976495677
-613357504
-1377296355
-1530315259
-1778906708
-1820354158
-667126415
-*(p + 0) : 624723190
-*(p + 1) : 1468735695
-*(p + 2) : 807113585
-*(p + 3) : 976495677
-*(p + 4) : 613357504
-*(p + 5) : 1377296355
-*(p + 6) : 1530315259
-*(p + 7) : 1778906708
-*(p + 8) : 1820354158
-*(p + 9) : 667126415
-
---
-(findreturnreference)
-Return reference from a function (from tutorialspoint):
-
-Tao's summary from below
-1. Using (not limited to returning) reference is recommended rather than using pointer.
-2. It is not legal to return a reference to local var. But you can always return a reference on a static variable.
-
-A C++ program can be made easier to read and maintain by using references rather than pointers. A C++ function can return a reference in a similar way as it returns a pointer.
-
-When a function returns a reference, it returns an implicit pointer to its return value. This way, a function can be used on the left side of an assignment statement. For example, consider this simple program −
-
-#include <iostream>
-#include <ctime>
- 
-using namespace std;
- 
-double vals[] = {10.1, 12.6, 33.1, 24.1, 50.0};
- 
-double& setValues( int i ) {
-   return vals[i];   // return a reference to the ith element
-}
- 
-// main function to call above defined function.
-int main () {
- 
-   cout << "Value before change" << endl;
-   for ( int i = 0; i < 5; i++ ) {
-      cout << "vals[" << i << "] = ";
-      cout << vals[i] << endl;
-   }
- 
-   setValues(1) = 20.23; // change 2nd element
-   setValues(3) = 70.8;  // change 4th element
- 
-   cout << "Value after change" << endl;
-   for ( int i = 0; i < 5; i++ ) {
-      cout << "vals[" << i << "] = ";
-      cout << vals[i] << endl;
-   }
-   return 0;
-}
-When the above code is compiled together and executed, it produces the following result −
-
-Value before change
-vals[0] = 10.1
-vals[1] = 12.6
-vals[2] = 33.1
-vals[3] = 24.1
-vals[4] = 50
-Value after change
-vals[0] = 10.1
-vals[1] = 20.23
-vals[2] = 33.1
-vals[3] = 70.8
-vals[4] = 50
-
-When returning a reference, be careful that the object being referred to does not go out of scope. So it is not legal to return a reference to local var. But you can always return a reference on a static variable.
-
-int& func() {
-   int q;
-   //! return q; // Compile time error
-   static int x;
-   return x;     // Safe, x lives outside this scope
-}
-
 ==
 (finddynamicmemory)            
 Dynamic memory
@@ -4078,136 +3930,6 @@ using namespace std;
 
 int x[] = { 1, 2, 3, 4, 5 };
 vector<int> v(begin(x), end(x));
-
---
-Pass a vector to a function (from online):
-
-It depends on if you want to pass the vector as a reference or as a pointer (I am disregarding the option of passing it by value as clearly undesirable).
-
-As a pointer:
-
-int binarySearch(int first, int last, int search4, vector<int>* random);
-
-vector<int> random(100);
-// ...
-found = binarySearch(first, last, search4, &random);
-
-As a reference:
-
-int binarySearch(int first, int last, int search4, vector<int>& random);
-
-vector<int> random(100);
-// ...
-found = binarySearch(first, last, search4, random);
-
---
-Return a vector from function (from online):
-
-In leetcode, the default code follows this pattern:
-Input parameter is a reference to vector, output is a vector:
-
-vector<vector<int>> permute(vector<int>& nums) { 
-    vector<vector<int>> res;
-    ...
-    return res; //Practice shows it is OK to return a vector defined inside a function (unlike pointer).
-}
-
-vector<Interval> merge(vector<Interval>& intervals) {
-    ...
-    return intervals; //Practice shows it is OK to return the input reference.
-}
-
-Question:
-
-Efficient way to return a std::vector in c++
-
-How much data is copied, when returning a std::vector in a function and how big an optimization will it be to place the std::vector in free-store (on the heap) and return a pointer instead i.e. is:
-
-std::vector *f()
-{
-  std::vector *result = new std::vector();
-  /*
-    Insert elements into result
-  */
-  return result;
-} 
-more efficient than:
-
-std::vector f()
-{
-  std::vector result;
-  /*
-    Insert elements into result
-  */
-  return result;
-} 
-
-Answer:
-
-In C++11, this is the preferred way:
-
-std::vector<X> f();
-
-That is, return by value.
-
-With C++11, std::vector has move-semantics, which means the local vector declared in your function will be moved on return and in some cases even the move can be elided by the compiler.
-
-Question:
-
-Why is it OK to return vector from function?
-
-Please consider this code. I have seen this type of code several times. words is a local vector. How is it possible to return it from a function? Can we guarantee it will not die?
-
- std::vector<std::string> read_file(const std::string& path)
- {
-    std::ifstream file("E:\\names.txt");
-
-    if (!file.is_open())
-    {
-        std::cerr << "Unable to open file" << "\n";
-        std::exit(-1);
-    }
-
-    std::vector<string> words;//this vector will be returned 
-    std::string token;
-
-    while (std::getline(file, token, ','))
-    {
-        words.push_back(token);
-    }
-
-    return words;
-}
-
-Pre C++11:
-The function will not return the local variable but rather a copy of it. Your compiler might however perform an optimization where no actual copy action is made.
-
-See this question & answer for further details
-
-C++11:
-The function will move the value, see this answer for further details
-
-Question:
-
-What is std::move(), and when should it be used?
-
-What is it?
-What does it do?
-When should it be used?
-Good links are appreciated.
-
-Answer:
-
-Wikipedia Page on C++11 R-value references and move constructors
-
-1. In C++11, in addition to copy constructors, objects can have move constructors.
-(And in addition to copy assignment operators, they have move assignment operators.)
-
-2. The move constructor is used instead of the copy constructor, if the object has type "rvalue-reference" (Type &&).
-
-3. std::move() is a cast that produces an rvalue-reference to an object, to enable moving from it. It's a new C++ way to avoid copies. For example, using a move constructor, a std::vector could just copy its internal pointer to data to the new object, leaving the moved object in an incorrect state, avoiding to copy all data. This would be C++-valid.
-
-Try googling for move semantics, rvalue, perfect forwarding.
 
 --
 vector<int> v;
@@ -5880,6 +5602,66 @@ The return type can be void, which means that the function does not return a val
 The return type may not be an array type or a function type. However, a function may return a pointer to an array or a function. 
 
 --
+(findparameter)
+
+Examples of function input parameters from Leetcode:
+
+Summary of parameter type
+
+string: string
+vector: reference to vector
+object: pointer or reference to object
+
+** string **
+
+bool isAnagram(string s, string t) {
+    
+}
+
+int myAtoi(string str) {
+    
+}
+
+int strStr(string haystack, string needle) {
+    
+}
+
+** vector **
+
+int firstMissingPositive(vector<int>& nums) {
+    
+}
+
+vector<vector<string>> groupAnagrams(vector<string>& strs) {
+    
+}
+
+void rotate(vector<vector<int>>& matrix) {
+    
+}
+
+** object ** 
+
+vector<int> inorderTraversal(TreeNode* root) {
+    
+}
+
+UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+    
+}
+
+struct Interval {
+    int start;
+    int end;
+    Interval() : start(0), end(0) {}
+    Interval(int s, int e) : start(s), end(e) {}
+};
+
+vector<Interval> merge(vector<Interval>& intervals) {
+    
+}
+
+--
 Argument Passing
 
 If the parameter is a reference, then the parameter is bound to its argument. Otherwise, the argument’s value is copied.
@@ -6160,6 +5942,262 @@ void foo(...);
 (findreturn)
 return
 
+todo: search for return string, return object
+
+--
+(findreturnvector)
+Return a vector from function (from online):
+
+In leetcode, the default code follows this pattern:
+Input parameter is a reference to vector, output is a vector:
+
+vector<vector<int>> permute(vector<int>& nums) { 
+    vector<vector<int>> res;
+    ...
+    return res; //Practice shows it is OK to return a vector defined inside a function (unlike pointer).
+}
+
+vector<Interval> merge(vector<Interval>& intervals) {
+    ...
+    return intervals; //Practice shows it is OK to return the input reference.
+}
+
+Question:
+
+Efficient way to return a std::vector in c++
+
+How much data is copied, when returning a std::vector in a function and how big an optimization will it be to place the std::vector in free-store (on the heap) and return a pointer instead i.e. is:
+
+std::vector *f()
+{
+  std::vector *result = new std::vector();
+  /*
+    Insert elements into result
+  */
+  return result;
+} 
+more efficient than:
+
+std::vector f()
+{
+  std::vector result;
+  /*
+    Insert elements into result
+  */
+  return result;
+} 
+
+Answer:
+
+In C++11, this is the preferred way:
+
+std::vector<X> f();
+
+That is, return by value.
+
+With C++11, std::vector has move-semantics, which means the local vector declared in your function will be moved on return and in some cases even the move can be elided by the compiler.
+
+Question:
+
+Why is it OK to return vector from function?
+
+Please consider this code. I have seen this type of code several times. words is a local vector. How is it possible to return it from a function? Can we guarantee it will not die?
+
+ std::vector<std::string> read_file(const std::string& path)
+ {
+    std::ifstream file("E:\\names.txt");
+
+    if (!file.is_open())
+    {
+        std::cerr << "Unable to open file" << "\n";
+        std::exit(-1);
+    }
+
+    std::vector<string> words;//this vector will be returned 
+    std::string token;
+
+    while (std::getline(file, token, ','))
+    {
+        words.push_back(token);
+    }
+
+    return words;
+}
+
+Pre C++11:
+The function will not return the local variable but rather a copy of it. Your compiler might however perform an optimization where no actual copy action is made.
+
+See this question & answer for further details
+
+C++11:
+The function will move the value, see this answer for further details
+
+Question:
+
+What is std::move(), and when should it be used?
+
+What is it?
+What does it do?
+When should it be used?
+Good links are appreciated.
+
+Answer:
+
+Wikipedia Page on C++11 R-value references and move constructors
+
+1. In C++11, in addition to copy constructors, objects can have move constructors.
+(And in addition to copy assignment operators, they have move assignment operators.)
+
+2. The move constructor is used instead of the copy constructor, if the object has type "rvalue-reference" (Type &&).
+
+3. std::move() is a cast that produces an rvalue-reference to an object, to enable moving from it. It's a new C++ way to avoid copies. For example, using a move constructor, a std::vector could just copy its internal pointer to data to the new object, leaving the moved object in an incorrect state, avoiding to copy all data. This would be C++-valid.
+
+Try googling for move semantics, rvalue, perfect forwarding.
+
+--
+(findreturnpointer)
+Return pointer from a function (from tutorialspoint):
+
+Tao's summary from below:
+1. It is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable.
+2. Can return a pointer created by the "new" operator. Extracted from "find new": Dynamically allocated objects have a lifetime that is independent of where they are created; they exist until they are explicitly freed. Functions that return pointers (rather than smart pointers) to dynamic memory put burden on their callers—the caller must remember to delete the memory. We returned pointer created by "new" in leetcode, like pr_133 (leetcode discussion also did this).
+
+As we have seen in last chapter how C++ allows to return an array from a function, similar way C++ allows you to return a pointer from a function. To do so, you would have to declare a function returning a pointer as in the following example −
+
+int * myFunction() {
+   .
+   .
+   .
+}
+
+Second point to remember is that, it is not good idea to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable. Tao: if return the address of a local variable, the caller function would get a pointer containing wrong address value (from practice).
+
+Now, consider the following function, which will generate 10 random numbers and return them using an array name which represents a pointer i.e., address of first array element.
+
+ Live Demo
+#include <iostream>
+#include <ctime>
+ 
+using namespace std;
+ 
+// function to generate and retrun random numbers.
+int * getRandom( ) {
+   static int  r[10];
+ 
+   // set the seed
+   srand( (unsigned)time( NULL ) );
+   
+   for (int i = 0; i < 10; ++i) {
+      r[i] = rand();
+      cout << r[i] << endl;
+   }
+ 
+   return r;
+}
+ 
+// main function to call above defined function.
+int main () {
+   // a pointer to an int.
+   int *p;
+ 
+   p = getRandom();
+   for ( int i = 0; i < 10; i++ ) {
+      cout << "*(p + " << i << ") : ";
+      cout << *(p + i) << endl;
+   }
+ 
+   return 0;
+}
+When the above code is compiled together and executed, it produces result something as follows −
+
+624723190
+1468735695
+807113585
+976495677
+613357504
+1377296355
+1530315259
+1778906708
+1820354158
+667126415
+*(p + 0) : 624723190
+*(p + 1) : 1468735695
+*(p + 2) : 807113585
+*(p + 3) : 976495677
+*(p + 4) : 613357504
+*(p + 5) : 1377296355
+*(p + 6) : 1530315259
+*(p + 7) : 1778906708
+*(p + 8) : 1820354158
+*(p + 9) : 667126415
+
+--
+(findreturnreference)
+Return reference from a function (from tutorialspoint):
+
+Tao's summary from below
+1. Using (not limited to returning) reference is recommended rather than using pointer.
+2. It is not legal to return a reference to local var. But you can always return a reference on a static variable.
+
+A C++ program can be made easier to read and maintain by using references rather than pointers. A C++ function can return a reference in a similar way as it returns a pointer.
+
+When a function returns a reference, it returns an implicit pointer to its return value. This way, a function can be used on the left side of an assignment statement. For example, consider this simple program −
+
+#include <iostream>
+#include <ctime>
+ 
+using namespace std;
+ 
+double vals[] = {10.1, 12.6, 33.1, 24.1, 50.0};
+ 
+double& setValues( int i ) {
+   return vals[i];   // return a reference to the ith element
+}
+ 
+// main function to call above defined function.
+int main () {
+ 
+   cout << "Value before change" << endl;
+   for ( int i = 0; i < 5; i++ ) {
+      cout << "vals[" << i << "] = ";
+      cout << vals[i] << endl;
+   }
+ 
+   setValues(1) = 20.23; // change 2nd element
+   setValues(3) = 70.8;  // change 4th element
+ 
+   cout << "Value after change" << endl;
+   for ( int i = 0; i < 5; i++ ) {
+      cout << "vals[" << i << "] = ";
+      cout << vals[i] << endl;
+   }
+   return 0;
+}
+When the above code is compiled together and executed, it produces the following result −
+
+Value before change
+vals[0] = 10.1
+vals[1] = 12.6
+vals[2] = 33.1
+vals[3] = 24.1
+vals[4] = 50
+Value after change
+vals[0] = 10.1
+vals[1] = 20.23
+vals[2] = 33.1
+vals[3] = 70.8
+vals[4] = 50
+
+When returning a reference, be careful that the object being referred to does not go out of scope. So it is not legal to return a reference to local var. But you can always return a reference on a static variable.
+
+int& func() {
+   int q;
+   //! return q; // Compile time error
+   static int x;
+   return x;     // Safe, x lives outside this scope
+}
+
+--
 A return statement terminates the function that is currently executing and returns control to the point from which the function was called. There are two forms of return statements:
  
 return;
