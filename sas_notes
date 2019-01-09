@@ -1,0 +1,84 @@
+stopa book p3 top
+
+findbeginsas                SAS begin
+findstartsas                Steps to start and end SAS
+findquickstart              Steps to start and end SAS
+findsasstart                Steps to start and end SAS
+
+==
+(findbeginsas)
+SAS begin
+
+The book recommended by Xiaoxia course:
+
+Applied Statistics and the SAS Programming Language 5th edition
+Authors: Ronald P Cody Ron Cody Ron P Cody Jeffrey K Smith
+
+Most of this note is from this book.
+
+==
+(findstartsas)
+(findquickstart)
+(findsasstart)
+
+Steps to start SAS:
+
+1. Start "Oracle VM VirtualBox"
+
+2. In VirtualBox, select "SAS University Edition vApp", and then select Machine > Start > Normal Start. It might take a few minutes for the virtual machine to start.
+
+Note: When the virtual machine is running, the screen with the SAS logo is replaced with a black console screen (called the Welcome window). You can minimize this window, but do not close the Welcome window until you are ready to end your SAS session.
+
+3. In a web browser on your local computer, enter http://localhost:10080
+
+4. From the SAS University Edition: Information Center, click Start SAS Studio.
+
+--
+Steps to end SAS:
+
+1. Close the browser.
+
+2. Close the black window. Then a small window pops out: Close Virtual Machine, select "Power off the machine", click "OK"
+
+3. Close the Virtual Box window.
+
+==
+A statement end in a semicolon.
+
+Groups of SAS statements that define your data and create a SAS data set are called a DATA step; SAS statements that requst prefefined routines are called a PROC (short for PROCEDURE) step.
+
+==
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
