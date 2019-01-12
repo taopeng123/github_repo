@@ -1,9 +1,19 @@
-stopa book p3 top
+stopa: pdf page 33, Chapter 2 Describing Data
 
 findbeginsas                SAS begin
 findstartsas                Steps to start and end SAS
 findquickstart              Steps to start and end SAS
 findsasstart                Steps to start and end SAS
+findinput                   INPUT
+findsquare                  Sqare
+findlogicaloperators        Logical operators
+findoperators               Logical operators
+findsort                    SORT
+findprint                   PRINT
+findmeans                   MEANS
+findfreq                    FREQ
+findfrequency               FREQ
+findcomment                 comment
 
 ==
 (findbeginsas)
@@ -29,7 +39,8 @@ Steps to start SAS:
 
 Note: When the virtual machine is running, the screen with the SAS logo is replaced with a black console screen (called the Welcome window). You can minimize this window, but do not close the Welcome window until you are ready to end your SAS session.
 
-3. In a web browser on your local computer, enter http://localhost:10080
+3. In a web browser on your local computer, enter:
+   http://localhost:10080
 
 4. From the SAS University Edition: Information Center, click Start SAS Studio.
 
@@ -45,26 +56,275 @@ Steps to end SAS:
 ==
 A statement end in a semicolon.
 
-Groups of SAS statements that define your data and create a SAS data set are called a DATA step; SAS statements that requst prefefined routines are called a PROC (short for PROCEDURE) step.
+Groups of SAS statements that define your data and create a SAS data set are called a DATA step; SAS statements that requst predefined routines are called a PROC (short for PROCEDURE) step.
+
+Terminology:
+
+SQL      SAS
+column   variable
+row      observation
 
 ==
+Example data set (ie, table in SQL):
+
+-------------------------------------------
+SUBJECT   GENDER                  HOMEWORK
+NUMBER   (M or F)  EXAM1  EXAM2    GRADE
+-------------------------------------------
+10         M         80    84       A
+ 7         M         85    89       A
+ 4         F         90    86       B
+20         M         82    85       B
+25         F         94    94       A
+14         F         88    84       C
+-------------------------------------------
+
+==
+Example SAS program:
+
+DATA TEST;
+	INPUT SUBJECT 1-2 GENDER $ 4 EXAM1 6-8 EXAM2 10-12
+		HW_GRADE $ 14;
+DATALINES;
+10 M  80  84 A
+7  M  85  89 A
+4  F  90  86 B
+20 M  82  85 B
+25 F  94  94 A
+14 F  88  84 C
+;
+PROC MEANS DATA=TEST;
+RUN;
+
+tao: positions (the 1-2 in "SUBJECT 1-2", and 1-2 is inclusive)
+position: 12345678901234
+    data: 10 M  80  84 A
+
+The first four lines (tao: DATALINES is the fourth line) make up the DATA step. In this example, the DATA step begins with the word DATA and ends with the word DATALINES.
+
+Line 1 tells the program that we want to create a SAS data set called TEST. 
+
+The first ariable is SUBJECT and can be found in columns 1 and 2 of the data line. The dollar sign after GENDER means that GENDER is a character (alphanumeric) variable, that is, a variable that can have letters or numbers as data values. 
+
+The DATALINES statement says that the DATA statements are done and the next thing the program should look for are the data themselves. 
+
+==
+Right-justify your numberic data values:
+  87
+  42
+   9
+  26
+   4
+SAS software doesn't care whether you right-justify numeric data or not, but other statiscal programs will, and right-justification is standard.   
+
+We specify which procedure right after the word PROC. THere are are running a procedure called MEANS. 
+
+The RUN statement is necessary only when SAS program are run under the Display Manager. The RUN statement tells SAS that there are no more statments for the preceding procedure and to go ahead and do the calculations. If we have several PROCs in a row, we need only a single RUN statement at the end of the program. However, as a stylistic standard, we prefer to end every procedure with a RUN statement.
+
+==
+Avoid getting means for SUBJECT:
+
+PROC MEANS DATA=TEST;
+	VAR EXAM1 EXAM2;
+RUN;
+
+The VAR statment specifies on which variables to run PROC MEANS.
+
+PROC MEANS can compute many other statistics. You can specify just which pieces you want in the PROC MEANS statement. For example:
+
+PROC MEANS DATA=TEST N MEAN STD STDERR MAXDEC=1;
+	VAR EXAM1 EXAM2;
+RUN;
+
+MAXDEC=1 means that the statistics will be rounded to one decimal place.
+
+==
+DATA EXAMPLE;
+	INPUT SUBJECT GENDER $ EXAM1 EXAM2
+		HW_GRADE $;
+	FINAL = (EXAM1 + EXAM2) / 2;
+	IF FINAL GE 0 AND FINAL LT 65 THEN GRADE='F';
+	ELSE IF FINAL GE 65 AND FINAL LT 75 THEN GRADE='C';
+	ELSE IF FINAL GE 75 AND FINAL LT 85 THEN GRADE='B';
+	ELSE IF FINAL GE 85 THEN GRADE='A';
+DATALINES;
+10 M  80  84 A
+7  M  85  89 A
+4  F  90  86 B
+20 M  82  85 B
+25 F  94  94 A
+14 F  88  84 C
+;
+PROC SORT DATA=EXAMPLE;
+	BY SUBJECT;
+RUN;
+
+PROC PRINT DATA=EXAMPLE; <- tao: now the data is sorted by SUBJECT
+	TITLE "Roster in Student Number Order";
+	ID SUBJECT;
+	VAR EXAM1 EXAM2 FINAL HW_GRADE GRADE; <- tao: see VAR in the above example
+RUN;
+
+PROC MEANS DATA=EXAMPLE N MEAN STD STDERR MAXDEC=1;
+	TITLE "Descriptive Statistics";
+	VAR EXAM1 EXAM2 FINAL;
+RUN;
+
+PROC FREQ DATA=EXAPLE;
+	TABLES GENDER HW_GRADE GRADE;
+RUN;
 
 
+Output of this program:
+
+Roster in Student Number Order
+
+SUBJECT EXAM1 EXAM2 FINAL HW_GRADE GRADE
+ 4       90    86   88.0     B      A
+ 7       85    89   87.0     A      A
+ ... ...
+
+Descriptive Statistics
+
+The MEANS Procedure
+
+Variable  N   Mean   Std Dev   Std Error
+EXAM1     6   86.5     5.2       2.1
+EXAM2     6   87.0     3.9       1.6
+FINAL     6   86.8     4.2       1.7
+
+The FREQ Procedure
+
+                             Cummulative   Cummulative
+GENDER  Frequency  Percent    Frequency      Percent
+F          3        50.00       3             50.00
+M          3        50.00       6            100.00
+
+                             Cummulative   Cummulative
+HW_GRADE  Frequency  Percent    Frequency      Percent
+A           3        50.00       3             50.00
+B           2        33.33       5             83.33
+C           1        16.67       6            100.00
+
+                             Cummulative   Cummulative
+HW_GRADE  Frequency  Percent    Frequency      Percent
+A           4        66.67       4             66.67
+B           2        33.33       6            100.00
 
 
+==
+(findinput)
+INPUT
+
+The input we saw earlier:
+
+INPUT SUBJECT 1-2 GENDER $ 4 EXAM1 6-8 EXAM2 10-12
+	HW_GRADE $ 14;
+
+The input we saw in the above example(notice that there are no column numbers following the variable names):
+
+INPUT SUBJECT GENDER $ EXAM1 EXAM2
+	HW_GRADE $;
+
+This form of an INPUT statement (no numbers) is called list input. To use this form of INPUT, the data values must be separated by one or more blanks. If you use one of the other possible delmiters, you need to modify the program acoordingly. In this way, we have to make special provisions for missing values. We can use a period to represent the missing value:
+
+10 M . 84 A
+
+==
+(findsquare)
+Sqare of B: B**2
+
+==
+(findlogicaloperators)
+(findoperators)
+
+Logical operators:
+
+Expression  Symbol
+    EQ        =
+    LT        <
+    LE        <=
+    GT        >
+    GE        >=
+    NE        ^=
+    NOT       ^
+
+==
+(findsort)
+SORT
+
+PROC SORT DATA=EXAMPLE;
+	BY GENDER SUBJECT;
+RUN;
+
+==
+(findprint)
+PRINT
+
+PROC PRINT DATA=EXAMPLE; 
+	TITLE "Roster in Student Number Order";
+	ID SUBJECT;
+	VAR EXAM1 EXAM2 FINAL HW_GRADE GRADE; 
+RUN;
+
+The PRINT procedure is used to list the data values in a SAS data set. We have followed our PROC PRINT statement with three statements that supply information to the procedure. These are the TITLE, ID, and VAR statements.
+
+The words following TITLE are placed in single or double quotes and will be printed across the top of each of the SAS output pages. The ID variable, SUBJECT in this case, will cause the program to print the variable SUBJECT in the first column of the report, omitting the column labeled OBS, which the program will print when an ID variable is absent.
+
+As with many SAS procedures, the supplymentary statements following a PROC can be placed in any order.
+
+==
+(findmeans)
+MEANS
+
+PROC MEANS DATA=EXAMPLE N MEAN STD STDERR MAXDEC=1;
+	TITLE "Descriptive Statistics";
+	VAR EXAM1 EXAM2 FINAL;
+RUN;
+
+==
+(findfreq)
+(findfrequency)
+FREQ
+
+PROC FREQ DATA=EXAPLE;
+	TABLES GENDER HW_GRADE GRADE;
+RUN;
+
+(See the above output)
+
+A slash means an option. We do not want the cumulative statiscs printed:
+
+PROC FREQ DATA=EXAPLE;
+	TABLES GENDER HW_GRADE GRADE/ NOCUM;
+RUN;
 
 
+ORDER=FREQ enables the frequency table to be arraged in frequency order:
 
+PROC FREQ DATA=EXAPLE ORDER=FREQ; 
+	TABLES GENDER HW_GRADE GRADE/ NOCUM; 
+RUN;
 
+In the above, ORDER=FREQ is procedure option, NOCUM is statement option.
 
+==
+(findcomment)
+comment
 
+Two ways of comments:
 
+1. Begin with * and end with ;
+   
+   *Hello how are you
+    I am fine
+    Thank you;
 
-
-
-
-
-
+2. Begin with /* and end with */    
+   
+   /* Hello how are you
+      I am fine
+      Thank you */
 
 
 
