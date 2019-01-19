@@ -47,8 +47,9 @@ catlist
 0111 | pr147. Insertion Sort List, Medium 
 1111 | pr206. Reverse Linked List, Easy 
 1111 | pr92. Reverse Linked List II, Medium 
-011 | pr25. Reverse Nodes in k-Group, Hard. 題目的意思是每次都要反轉k個, 直到剩下的元素個數不够k個, 如題目中的For k = 2, you should return: 2->1->4->3->5, 即1->2反轉了, 3->4也要反轉, 而剩下的只有一個5, 不够反轉, 所以就不繼續反轉了. 另外, 當k大於list長度時, 則甚麼都不做, 返回原list 
-011 | pr234. Palindrome Linked List, Easy 
+E4 not do pr25:
+011 | pr25. Reverse Nodes in k-Group, Hard. 
+0111 | pr234. Palindrome Linked List, Easy 
 111 | pr61. Rotate List, Medium. k可以大於list長度
 111 | pr143. Reorder List, Medium.  
 111 | pr141. Linked List Cycle, Medium
@@ -758,6 +759,94 @@ public:
         nodeM->next = cur;
 
         return fakeHead->next;
+    }
+};
+
+************************
+pr25. Reverse Nodes in k-Group, Hard
+
+Question:
+
+Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+
+k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+
+Example:
+
+Given this linked list: 1->2->3->4->5
+
+For k = 2, you should return: 2->1->4->3->5
+
+For k = 3, you should return: 3->2->1->4->5
+
+Note:
+
+Only constant extra memory is allowed.
+You may not alter the values in the list's nodes, only nodes itself may be changed.
+
+==
+Key:
+
+==
+C++ code:
+
+************************
+pr234. Palindrome Linked List, Easy 
+
+Question:
+
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+==
+Key: First find the middle of the list, break the list into two. Reverse the second list, and compare it with the first list. To reverse list, can call the function of "pr 206. Reverse Linked List". 
+
+==
+C++ code:
+
+class Solution {
+private:
+	ListNode* reverseList(ListNode* head) {
+        (Copy the code of pr 206 here).
+    }
+
+public:
+    bool isPalindrome(ListNode* head) {
+    	if(!head || !head->next) return true;
+
+    	//Find middle:
+
+    	ListNode* walker = head;
+    	ListNode* runner = head;
+
+    	while(runner->next && runner->next->next) {
+    		walker = walker->next;
+    		runner = runner->next->next;
+    	}
+
+    	//Break the list:
+
+    	ListNode* p1 = head; //p1 is the head of list 1
+    	ListNode* p2 = reverseList(walker->next); //p2 is the head of list 2
+
+    	//Compare:
+    	while(p2) {
+    		if(p1->val != p2->val) return false;
+    		p1 = p1->next;
+    		p2 = p2->next;
+    	}
+
+        return true;
     }
 };
 
