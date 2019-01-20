@@ -2542,6 +2542,14 @@ double *pd = &dval; // ok: initializer is the address of a double
 double *pd2 = pd; // ok: initializer is a pointer to double
 
 --
+In Leetcode, the standard position of * is
+ListNode* head
+not
+ListNode *head
+
+So I will following the Leetcode style.
+
+--
 Pointer Value
 
 The value (i.e., the address) stored in a pointer can be in one of four states:
