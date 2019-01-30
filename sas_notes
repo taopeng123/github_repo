@@ -1,4 +1,4 @@
-stopa: pdf page 47, D. Histograms, ....
+stopa: pdf page 78, Chapter 3
 
 findbeginsas                SAS begin
 findstartsas                Steps to start and end SAS
@@ -29,6 +29,7 @@ findqqplot                  Quantile-Quantile plot
 findprobplot                Probability plot
 findbarchart                Bar chart
 findbargraph                Bar chart
+findplot                    Plot data
 
 ==
 (findbeginsas)
@@ -499,14 +500,145 @@ If your variable is normally distributed, the probability plot should be a strai
 (findbargraph)
 Bar chart
 
+Can generate a frequency bar chart showing the same information as PROC FREQ, using PROC CHART or PROC GCHART. The procedure without the "G" is the older procedure that produces rather ugly charts.
 
+PROC GCHART DATA=HTWT;
+	VBAR GENDER;
+RUN;
 
+The term HBAR in place of VBAR will generate a chart with horizontal bars instead of the vertical bars obtained from VBAR.
 
+Graphics options and pattern descriptions (can omit):
 
+GOPTIONS RESET=ALL
+	FTEXT='Arial/bo'
+	CBACK=WHITE
+	CTEXT=BLACK
+	HPOS=25
+	GUNIT=PCT
+	HTEXT=2;
+PATTERN VALUE=1 COLOR=BLACK;
 
+The MIDPOINTS groups the height. General form of MIDPOINTS:
+MIDPOINTS = start to end by interval;
 
+PROC GCHART DATA=HTWT;
+	VBAR HEIGHT / MIDPOINTS = 60 TO 74 BY 2;
+RUN;
 
+If we leave out any options when we are charting a continuous variable, PROC GCHART will use its own grouping algorithm to select the number of levels and the midpoints for the plot.
 
+Treat the WEEK values as discrete values:
+VBAR WEEK / DISCRETE;
+
+Use EMPTY to obtain only the bar outline:
+
+PATTERN VALUE=EMPTY COLOR=BLACK;
+AXIS1 LABEL=('Department');
+PROC GCHART DATA=E_MART;
+	VBAR DEPT / MAXIS=AXIS1;
+RUN;
+
+To see the sales distributions of each department side by side (DOLLAR8.0 means the dollar sign and commas would be printed for the money value):
+
+PATTERN VALUE=L2 COLOR=BLACK;
+PROC GCHART DATA=E_MART;
+	VBAR SALES / GROUP=DEPT MIDPOINTS=4500 TO 5500 BY 1000;
+	FORMAT SALES DOLLAR8.0;
+RUN;
+
+Have the y-axis represent a sales sum rather than a frequency or count:
+
+PROC GCHART DATA=E_MART;
+	VBAR YEAR / SUMVAR=SALES TYPE=SUM DISCRETE;
+	FORMAT SALES DOLLAR8.;
+RUN;
+
+To see mean sales by year:
+
+PROC GCHART DATA=E_MART;
+	VBAR YEAR / SUMVAR=SALES TYPE=MEAN DISCRETE;
+	FORMAT SALES DOLLAR8.;
+RUN;
+
+SUBGROUP: break the bar into either different colors or corsshatch patterns:
+
+PATTERN1 COLOR=BLACK VALUE=X1;
+PATTERN2 COLOR=BLACK VALUE=L2;
+
+PROC GCHART DATA=E_MART;
+	VBAR YEAR / SUBGROUP=DEPT
+		        SUMVAR=SALES
+		        TYPE=SUM
+		        DISCRETE;
+	FORMAT SALES DOLLAR8.;
+RUN;
+QUIT;
+
+See the mean sales by YEAR and DEPT, use both GROUP and SUMVAR:
+
+PROC GCHART DATA=E_MART;
+	VBAR YEAR / GROUP=DEPT SUMVAR=SALES TYPE=SUM DISCRETE;
+	FORMAT SALES DOLLAR8.;
+RUN;
+
+==
+(findplot)
+Plot data
+
+Generate a scatter plot of WEIGHT (on the y-axis) versus HEIGHT (on the x-axis):
+
+Using PROC PLOT:
+
+PROC PLOT DATA=HTWT;
+	PLOT WEIGHT*HEIGHT;
+RUN;
+
+Using PROC GPLOT:
+
+PROC GPLOT DATA=HTWT;
+	TITLE "Scatter Plot of WEIGHT by HEIGHT";
+	TITLE2 "Using all the Defaults";
+	PLOT WEIGHT*HEIGHT;
+RUN;
+
+Change the plotting symbols and print in black:
+SYMBOL VALUE=DOT COLOR=BLACK;
+
+SYMBOL examples: DOT, CIRCLE, SQUARE, PLUS, TRIANGLE.
+
+Use the BY to create separate plots for males and females:
+
+PROC SORT DATA=HTWT;
+	BY GENDER;
+RUN;
+PROC PLOT DATA=HTWT;
+	BY GENDER;
+	PLOT WEITHT*HEIGHT;
+RUN;
+
+Display the data for males nad females on a single graph, with different ploting symbols:
+
+Use PLOT:
+
+PROC PLOT DATA=HTWT;
+	PLOT WEIGHT*HEIGHT=GENDER;
+RUN;
+
+Use GPLOT:
+
+SYMBOL1 V=CIRCLE COLOR=BLACK;
+SYMBOL2 V=SQUARE COLOR=BLACK;
+*** Note: SYMBOL and SYMBOL1 are equivalent;
+PROC GPLOT DATA=HTWT;
+	PLOT WEIGHT*HEIGHT=GENDER;
+RUN;
+
+Change the symbol: 
+In PLOT:
+PLOT WEIGHT*HEIGHT='*';
+In GPLOT:
+PLOT WEIGHT*HEIGHT=2;
 
 
 
