@@ -47,8 +47,7 @@ catlist
 0111 | pr147. Insertion Sort List, Medium 
 1111 | pr206. Reverse Linked List, Easy 
 1111 | pr92. Reverse Linked List II, Medium 
-E4 not do pr25:
-011 | pr25. Reverse Nodes in k-Group, Hard. 
+0111 | pr25. Reverse Nodes in k-Group, Hard. 
 0111 | pr234. Palindrome Linked List, Easy 
 111 | pr61. Rotate List, Medium. k可以大於list長度
 111 | pr143. Reorder List, Medium.  
@@ -784,11 +783,49 @@ Note:
 Only constant extra memory is allowed.
 You may not alter the values in the list's nodes, only nodes itself may be changed.
 
+Tao: Even in the question it says k <= length of list, in the test cases there are still some k > length of list, in this case, just do nothing and return the original list.
+
 ==
-Key:
+Key: First find the total length of the list, then divide the list into groups of length k. Then for each group, call the funcion reverseBetween in "pr 92. Reverse Linked List II". Note that reversing the first group changes the head.
 
 ==
 C++ code:
+
+class Solution {
+private:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        (Copy the code of "pr 92. Reverse Linked List II")
+    }
+
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+    	if(!head || !head->next) return head; 
+
+    	// Find length:
+    	int len = 0;
+
+    	ListNode* p = head;
+
+    	while(p) {
+    		p = p->next;
+    		++len;
+    	}
+        
+        if(k > len) return head;
+
+    	// Divide into groups:
+
+    	int n_groups = len / k;
+
+    	ListNode* new_head = reverseBetween(head, 1, k); //Reversing the first group changes the head.
+
+    	for(int i = 1; i < n_groups; ++i) {
+    		reverseBetween(new_head, i * k + 1, i * k + k);
+    	}
+
+        return new_head;
+    }
+};
 
 ************************
 pr234. Palindrome Linked List, Easy 

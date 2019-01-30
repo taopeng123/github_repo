@@ -1,9 +1,11 @@
-stopa: pdf page 33, Chapter 2 Describing Data
+stopa: pdf page 47, D. Histograms, ....
 
 findbeginsas                SAS begin
 findstartsas                Steps to start and end SAS
 findquickstart              Steps to start and end SAS
 findsasstart                Steps to start and end SAS
+findsample                  Sample SAS program
+findif                      IF
 findinput                   INPUT
 findsquare                  Sqare
 findlogicaloperators        Logical operators
@@ -11,9 +13,19 @@ findoperators               Logical operators
 findsort                    SORT
 findprint                   PRINT
 findmeans                   MEANS
+findunivariate              UNIVARIATE
+findnormal                  Normality
+findboxplot                 boxplot
 findfreq                    FREQ
 findfrequency               FREQ
 findcomment                 comment
+findor                      OR
+findand                     AND
+finddo                      DO
+findclass                   CLASS
+findhistogram               Histogram
+findqqplot                  Quantile-Quantile plot
+findprobplot                Probability plot
 
 ==
 (findbeginsas)
@@ -25,6 +37,8 @@ Applied Statistics and the SAS Programming Language 5th edition
 Authors: Ronald P Cody Ron Cody Ron P Cody Jeffrey K Smith
 
 Most of this note is from this book.
+
+All the code examples in this book (the part read) are recorded here.
 
 ==
 (findstartsas)
@@ -80,7 +94,8 @@ NUMBER   (M or F)  EXAM1  EXAM2    GRADE
 -------------------------------------------
 
 ==
-Example SAS program:
+(findsample)
+Sample SAS program:
 
 DATA TEST;
 	INPUT SUBJECT 1-2 GENDER $ 4 EXAM1 6-8 EXAM2 10-12
@@ -100,7 +115,7 @@ tao: positions (the 1-2 in "SUBJECT 1-2", and 1-2 is inclusive)
 position: 12345678901234
     data: 10 M  80  84 A
 
-The first four lines (tao: DATALINES is the fourth line) make up the DATA step. In this example, the DATA step begins with the word DATA and ends with the word DATALINES.
+The first four lines (tao: DATALINES is the fourth line) make up the DATA step. In this example, the DATA step begins with the word DATA and ends with the word DATALINES. Older versions of SAS software used the term CARDS instead of DATALINES.
 
 Line 1 tells the program that we want to create a SAS data set called TEST. 
 
@@ -139,6 +154,9 @@ RUN;
 MAXDEC=1 means that the statistics will be rounded to one decimal place.
 
 ==
+(findif)
+IF
+
 DATA EXAMPLE;
 	INPUT SUBJECT GENDER $ EXAM1 EXAM2
 		HW_GRADE $;
@@ -273,6 +291,12 @@ The words following TITLE are placed in single or double quotes and will be prin
 
 As with many SAS procedures, the supplymentary statements following a PROC can be placed in any order.
 
+--
+To only print the first five rows of data:  
+
+proc print data=cigarettes (obs=5); 
+run;
+
 ==
 (findmeans)
 MEANS
@@ -280,6 +304,34 @@ MEANS
 PROC MEANS DATA=EXAMPLE N MEAN STD STDERR MAXDEC=1;
 	TITLE "Descriptive Statistics";
 	VAR EXAM1 EXAM2 FINAL;
+RUN;
+
+proc means data=cigarettes mean stddev min q1 median q3 max maxdec=3; 
+var tar; 
+run;
+
+==
+(findunivariate)
+UNIVARIATE
+
+By default, we get the first 18 items of the list of statistics:
+
+PROC UNIVARIATE DATA=HTWT;
+	TITLE "More Descriptive Statistics";
+	VAR HEIGHT WEIGHT;
+RUN;
+
+==
+(findnormal)
+(findboxplot)
+Normality, boxplot:
+
+To request, additionally, a test of normality, a stem-and-leaf plot, and a boxplot, we would add the options NORMAL and PLOT as follows:
+
+PROC UNIVARIATE DATA=HTWT NORMAL PLOT;
+	TITLE "More Descriptive Statistics";
+	VAR HEIGHT WEIGHT;
+	ID SUBJECT;
 RUN;
 
 ==
@@ -298,7 +350,6 @@ A slash means an option. We do not want the cumulative statiscs printed:
 PROC FREQ DATA=EXAPLE;
 	TABLES GENDER HW_GRADE GRADE/ NOCUM;
 RUN;
-
 
 ORDER=FREQ enables the frequency table to be arraged in frequency order:
 
@@ -325,6 +376,132 @@ Two ways of comments:
    /* Hello how are you
       I am fine
       Thank you */
+
+==
+(findor)
+(findand)
+(finddo)
+OR, AND, DO
+
+This is an example on using or statements (and and statements) and do statements in the data statement.  
+
+data cars; 
+input model $ year make $ seats color $; 
+if year lt 1975 then status='classic'; 
+if model='Corvette' or model='Camaro' then make='Chevrolet'; 
+if model='Miata' then do;  
+	make='Mazda';  
+	seats=2; 
+end; 
+cards; 
+Corvette 1955 . 2 black 
+XJ6 1995 Jaguar 2 teal 
+Mustang 1966 Ford 4 red 
+Miata 2002 . . silver 
+CRX 2001 Honda 2 black 
+Camaro 2000 . 4 red ;  
+
+proc print data=cars; 
+title "Our Complicated Car List"; 
+id model; 
+run; 
+
+==
+(findclass)
+CLASS
+
+To obtain summary statistics for each gender using a class statement, you do NOT need to sort the data.
+
+proc means data=grades; 
+class gender; 
+var final; 
+title "These are not cars"; 
+run;
+
+Basic numeric summaries for the movies’ variable WorldGross by Genre.  
+
+proc means data=HollywoodMovies2011 n mean std min q1 median q3 max maxdec=3; 
+class Genre; 
+var WorldGross; 
+title "World Gross (in millions of USD): Movies in 2011"; 
+run; 
+
+==
+(findhistogram)
+Histogram
+
+MIDPOINTS sets the numbers shown in the x-axis. 
+NORMAL superimposes a normal curve on the histogram, to visually compare your distribution to a normal distribution.
+INSET adds a box that can display selected statistics. (5.2) and (6.3) are formats of the number.
+
+GOPTIONS RESET=ALL
+	     FTEXT='Arial/bo'
+	     CBACK=WHITE
+	     COLORS=(BLACK)
+	     GUNIT=PCT
+	     HTEXT=2
+	     HPOS=15;
+PROC UNIVARIATE DATA=HTWT;
+	TITLE "More Descriptive Statistics";
+	VAR HEIGHT WEIGHT;
+	HISTOGRAM HEIGHT / MIDPOINTS=60 TO 75 BY 5 NORMAL;
+	INSET MEAN='Mean' (5.2)
+		STD='Standard Deviation' (6.3) / FONT='Arial'
+		                                 POS=NW
+		                                 HEIGHT=3;
+RUN;
+QUIT;
+
+==
+(findqqplot)
+Quantile-Quantile plot (QQ plot)
+
+In a QQ plot, the y-axis is the variable chosen, the x-axis is the normal quantiles (eg: -1.5, -1, -0.5, 0, 0.5, 1, 1.5).
+
+If your variable is normally distributed, the QQ plot should be a straight line.
+
+PROC UNIVARIATE DATA=HTWT;
+	TITLE "More Descriptive Statistis";
+	VAR HEIGHT WEIGHT;
+	QQPLOT HEIGHT;
+RUN;
+QUIT;
+
+==
+(findprobplot)
+Probability plot
+
+A probability plot for WEIGHT would be requested by the following statement:
+
+PROBPLOT WEIGHT;
+
+In the plot, the y-axis is the variable chosen, the x-axis is normal percentiles (eg: 5, 10, 25, 50, 75, 90, 95).
+
+If your variable is normally distributed, the probability plot should be a straight line.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
