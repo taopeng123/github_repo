@@ -13,19 +13,22 @@ findoperators               Logical operators
 findsort                    SORT
 findprint                   PRINT
 findmeans                   MEANS
-findunivariate              UNIVARIATE
-findnormal                  Normality
-findboxplot                 boxplot
-findfreq                    FREQ
-findfrequency               FREQ
 findcomment                 comment
 findor                      OR
 findand                     AND
 finddo                      DO
-findclass                   CLASS
+findby                      By (same as GROUP BY in SQL)
+findclass                   CLASS (same as GROUP BY in SQL)
+findfreq                    FREQ (same as GROUP BY COUNT in SQL)
+findfrequency               FREQ (same as GROUP BY COUNT in SQL)
+findunivariate              UNIVARIATE
+findnormal                  Normality
+findboxplot                 boxplot
 findhistogram               Histogram
 findqqplot                  Quantile-Quantile plot
 findprobplot                Probability plot
+findbarchart                Bar chart
+findbargraph                Bar chart
 
 ==
 (findbeginsas)
@@ -311,55 +314,6 @@ var tar;
 run;
 
 ==
-(findunivariate)
-UNIVARIATE
-
-By default, we get the first 18 items of the list of statistics:
-
-PROC UNIVARIATE DATA=HTWT;
-	TITLE "More Descriptive Statistics";
-	VAR HEIGHT WEIGHT;
-RUN;
-
-==
-(findnormal)
-(findboxplot)
-Normality, boxplot:
-
-To request, additionally, a test of normality, a stem-and-leaf plot, and a boxplot, we would add the options NORMAL and PLOT as follows:
-
-PROC UNIVARIATE DATA=HTWT NORMAL PLOT;
-	TITLE "More Descriptive Statistics";
-	VAR HEIGHT WEIGHT;
-	ID SUBJECT;
-RUN;
-
-==
-(findfreq)
-(findfrequency)
-FREQ
-
-PROC FREQ DATA=EXAPLE;
-	TABLES GENDER HW_GRADE GRADE;
-RUN;
-
-(See the above output)
-
-A slash means an option. We do not want the cumulative statiscs printed:
-
-PROC FREQ DATA=EXAPLE;
-	TABLES GENDER HW_GRADE GRADE/ NOCUM;
-RUN;
-
-ORDER=FREQ enables the frequency table to be arraged in frequency order:
-
-PROC FREQ DATA=EXAPLE ORDER=FREQ; 
-	TABLES GENDER HW_GRADE GRADE/ NOCUM; 
-RUN;
-
-In the above, ORDER=FREQ is procedure option, NOCUM is statement option.
-
-==
 (findcomment)
 comment
 
@@ -407,24 +361,87 @@ id model;
 run; 
 
 ==
+(findby)
+By (same as GROUP BY in SQL)
+
+Run PROC MEANS for each value of GENDER. 
+Remember to always sort the data set first by the same BY variable:
+
+PROC SORT DATA=HTWT;
+	BY GENDER;
+RUN;
+
+PROC MEANS DATA=HTWT N MEAN STD MAXDEC=2;
+	BY GENDER;
+	VAR HEIGHT WEIGHT;
+RUN;
+
+
+==
 (findclass)
-CLASS
+CLASS (same as GROUP BY in SQL)
 
-To obtain summary statistics for each gender using a class statement, you do NOT need to sort the data.
+An alternative to using a BY statement is the use of a CLASS statement. 
 
-proc means data=grades; 
-class gender; 
-var final; 
-title "These are not cars"; 
-run;
+The advantage of using a CLASS statement is that you do NOT hae to sort the data set first. On the downside, use of a CLASS statement requires considerably more memory than a BY statment.
 
-Basic numeric summaries for the movies’ variable WorldGross by Genre.  
+PROC MEANS DATA=HTWT N MEAN STD MAXDEC=2;
+	CLASS GENDER;
+	VAR HEIGHT WEIGHT;
+RUN;
 
-proc means data=HollywoodMovies2011 n mean std min q1 median q3 max maxdec=3; 
-class Genre; 
-var WorldGross; 
-title "World Gross (in millions of USD): Movies in 2011"; 
-run; 
+==
+(findfreq)
+(findfrequency)
+FREQ (same as GROUP BY COUNT in SQL)
+
+The following is same as in SQL:
+SELECT COUNT(1) FROM EXAPLE
+GROUP BY GENDER HW_GRADE GRADE;
+
+
+PROC FREQ DATA=EXAPLE;
+	TABLES GENDER HW_GRADE GRADE;
+RUN;
+
+A slash means an option. We do not want the cumulative statiscs printed:
+
+PROC FREQ DATA=EXAPLE;
+	TABLES GENDER HW_GRADE GRADE/ NOCUM;
+RUN;
+
+To omit both cumulative statistics and percentages:
+TABLES GENDER / NOCUM NOPERCENT;
+
+ORDER=FREQ enables the frequency table to be arraged in frequency order:
+
+PROC FREQ DATA=EXAPLE ORDER=FREQ; 
+	TABLES GENDER HW_GRADE GRADE/ NOCUM; 
+RUN;
+
+In the above, ORDER=FREQ is procedure option, NOCUM is statement option.
+
+==
+(findunivariate)
+UNIVARIATE
+
+By default, we get the first 18 items of the list of statistics:
+
+PROC UNIVARIATE DATA=HTWT;
+	VAR HEIGHT WEIGHT;
+RUN;
+
+==
+(findnormal)
+(findboxplot)
+Normality, boxplot:
+
+To request, additionally, a test of normality, a stem-and-leaf plot, and a boxplot, we would add the options NORMAL and PLOT as follows:
+
+PROC UNIVARIATE DATA=HTWT NORMAL PLOT;
+	VAR HEIGHT WEIGHT;
+	ID SUBJECT;
+RUN;
 
 ==
 (findhistogram)
@@ -442,7 +459,6 @@ GOPTIONS RESET=ALL
 	     HTEXT=2
 	     HPOS=15;
 PROC UNIVARIATE DATA=HTWT;
-	TITLE "More Descriptive Statistics";
 	VAR HEIGHT WEIGHT;
 	HISTOGRAM HEIGHT / MIDPOINTS=60 TO 75 BY 5 NORMAL;
 	INSET MEAN='Mean' (5.2)
@@ -461,7 +477,6 @@ In a QQ plot, the y-axis is the variable chosen, the x-axis is the normal quanti
 If your variable is normally distributed, the QQ plot should be a straight line.
 
 PROC UNIVARIATE DATA=HTWT;
-	TITLE "More Descriptive Statistis";
 	VAR HEIGHT WEIGHT;
 	QQPLOT HEIGHT;
 RUN;
@@ -478,6 +493,16 @@ PROBPLOT WEIGHT;
 In the plot, the y-axis is the variable chosen, the x-axis is normal percentiles (eg: 5, 10, 25, 50, 75, 90, 95).
 
 If your variable is normally distributed, the probability plot should be a straight line.
+
+==
+(findbarchart)
+(findbargraph)
+Bar chart
+
+
+
+
+
 
 
 
