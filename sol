@@ -74,7 +74,7 @@ cattree
 0111 | pr107. Binary Tree Level Order Traversal II, Easy 
 0111 | pr103. Binary Tree Zigzag Level Order Traversal, Medium 
 1111 | pr100. Same Tree, Easy. 
-011 | pr101. Symmetric Tree, Easy 
+0111 | pr101. Symmetric Tree, Easy 
 011 | pr116. Populating Next Right Pointers in Each Node, Medium. 
 001 | pr117. Populating Next Right Pointers in Each Node II, Hard.  
 111 | pr104. Maximum Depth of Binary Tree, Easy. 
@@ -1436,6 +1436,105 @@ public:
         if(p->val != q->val) return false; 
 
         return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+    }
+};
+
+************************
+pr101. Symmetric Tree, Easy 
+
+Question:
+
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+
+But the following [1,2,2,null,3,null,3] is not:
+    1
+   / \
+  2   2
+   \   \
+   3    3
+
+Note:
+Bonus points if you could solve it both recursively and iteratively.
+
+Tao: an example of a larger symmmetric tree:
+
+	        1 
+	   /         \
+	   2          2
+	 /   \      /   \
+	3     4     4    3
+   / \   / \   / \  / \
+  5   6 7   8 8  7 6   5
+
+==
+Key:
+
+遞歸法：寫一個函數bool isTwoTreesSymmetric(TreeNode* root1, TreeNode* root2)來判斷兩個樹是否對稱。isTwoTreesSymmetric中遞歸調用它自己。
+
+迭代法：BFS. 用兩個queue。 q1用來放root->left這個樹中的node, 每層按從左到右放。q2用來放root->right這個樹中的node, 每層按從右到左放。Key point是null node 也要放入queue中。每次從q1和q2中取兩個node出來比較。不需要判斷每層是否結束，所以不需要cur_num和next_num兩個變量。
+
+==
+C++ code (遞歸法):
+
+class Solution {
+private: 
+	bool isTwoTreesSymmetric(TreeNode* root1, TreeNode* root2) {
+		if(!root1 && !root2) return true;
+		if(!root1 || !root2) return false;
+		if(root1->val != root2->val) return false;
+
+		return isTwoTreesSymmetric(root1->left, root2->right) && isTwoTreesSymmetric(root1->right, root2->left);
+	}
+
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return true;
+        return isTwoTreesSymmetric(root->left, root->right);
+    }
+};
+
+C++ code (迭代法):
+(按我之前的Java代碼改進過，比Java代碼更簡潔)
+
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return true;
+        if(!root->left && !root->right) return true;
+        if(!root->left || !root->right) return false;
+        if(root->left->val != root->right->val) return false;
+
+        queue<TreeNode*> q1;
+        queue<TreeNode*> q2;
+        q1.push(root->left);
+        q2.push(root->right);
+
+        while(!q1.empty() && !q2.empty()) {
+            TreeNode* cur1 = q1.front();
+            q1.pop();
+
+            TreeNode* cur2 = q2.front();
+            q2.pop();
+
+            if(!cur1 && !cur2) continue;
+            if(!cur1 || !cur2) return false;
+            if(cur1->val != cur2->val) return false;
+           
+            q1.push(cur1->left);         
+            q1.push(cur1->right);              
+            q2.push(cur2->right);  
+            q2.push(cur2->left);
+        }
+        
+        return true;
     }
 };
 
