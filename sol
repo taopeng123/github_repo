@@ -98,7 +98,7 @@ cattree
 catbst
 
 0111 | pr230. Kth Smallest Element in a BST, Medium 
-000 | pr99. Recover Binary Search Tree, Hard. 本題遞歸法也可以.
+000 | pr99. Recover Binary Search Tree, Hard. 
 011 | pr235. Lowest Common Ancestor of a Binary Search Tree, Easy 
 011 | pr236. Lowest Common Ancestor of a Binary Tree, Medium. 題意輸入的樹中可能有相同值的節點.
 010 | pr96. Unique Binary Search Trees. Medium.
@@ -134,7 +134,7 @@ catgraph
 catstring
 
 0111 | pr8. String to Integer (atoi), Easy 
-011 | pr14. Longest Common Prefix, Easy 
+0111 | pr14. Longest Common Prefix, Easy 
 111 | pr38. Count and Say, Easy 
 011 | pr28. Implement strStr(), Easy. "aa", "" -> 0. "", "aa" -> -1. needle可能比haystack長.
 111 | pr242. Valid Anagram, Easy. Anagram：单词里的字母的种类和数目没有改变，只是改变了字母的排列顺序。
@@ -1614,6 +1614,66 @@ when the node is not null.
 
 The time complexity of algorithm above will be O(h), h is the height of the input tree. Tao: because h = O(log n),  and binary search's time complexity is also O(log n).
 
+************************
+pr99. Recover Binary Search Tree, Hard
+
+Question:
+
+Two elements of a binary search tree (BST) are swapped by mistake.
+
+Recover the tree without changing its structure.
+
+Example 1:
+
+Input: [1,3,null,null,2]
+
+   1
+  /
+ 3
+  \
+   2
+
+Output: [3,1,null,null,2]
+
+   3
+  /
+ 1
+  \
+   2
+
+Example 2:
+
+Input: [3,1,4,null,null,2]
+
+  3
+ / \
+1   4
+   /
+  2
+
+Output: [2,1,4,null,null,3]
+
+  2
+ / \
+1   4
+   /
+  3
+
+Follow up:
+
+A solution using O(n) space is pretty straight forward.
+Could you devise a constant space solution?
+
+Tao: 本題遞歸法也可以.
+
+Tao: constant space?
+
+==
+Key:
+
+==
+C++ code:
+
 
 =================================================
 cattrie
@@ -2242,6 +2302,70 @@ public:
         }
 
         return sign * res;
+    }
+};
+
+************************
+pr14. Longest Common Prefix, Easy 
+
+Question:
+
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+
+Note:
+
+All given inputs are in lowercase letters a-z.
+
+==
+Key: 簡單，brute force. 先寫一個函數int getPrefixSize(string& s1, string& s2)，返回s1和s2的prefix長度。在主函數裡，對strs中的每兩個相鄰的string都調用getPrefixSize，最後求出最小的prefix長度。
+
+==
+C++ code (按我的Java代碼簡化過):
+
+class Solution {
+private:
+	int getPrefixSize(string& s1, string& s2) {
+		int n1 = s1.size(), n2 = s2.size();
+		if(n1 == 0 || n2 == 0) return 0;
+
+		if(n1 > n2) return getPrefixSize(s2, s1);
+
+		int i = 0;
+
+		while(i < n1) {
+			if(s1[i] != s2[i]) break;
+			++i;
+		}
+
+		return i;
+	}
+
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        int n = strs.size();
+        if(n == 0) return "";
+        if(n == 1) return strs[0];
+
+        int minPrefix = INT_MAX;
+
+        for(int i = 0; i < n - 1; ++i) {
+        	minPrefix = min(getPrefixSize(strs[i], strs[i + 1]), minPrefix);
+        }
+
+        return strs[0].substr(0, minPrefix);
     }
 };
 
