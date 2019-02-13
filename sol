@@ -195,7 +195,7 @@ catstring
 catarray
 
 0111 | pr1. Two Sum, Medium. 
-111 | pr167. Two Sum II - Input array is sorted, Medium 
+1111 | pr167. Two Sum II - Input array is sorted, Medium 
 011 | pr170. Two Sum III - Data structure design, Easy. 
 001 | pr15. 3Sum, Medium 
 011 | pr16. 3Sum Closest, Medium 
@@ -2747,6 +2747,56 @@ public:
         }
 
         return res;
+    }
+};
+
+************************
+pr167. Two Sum II - Input array is sorted, Medium
+
+Question: 
+
+Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
+
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2.
+
+Note:
+
+Your returned answers (both index1 and index2) are not zero-based.
+
+You may assume that each input would have exactly one solution and you may not use the same element twice.
+
+Example:
+
+Input: numbers = [2,7,11,15], target = 9
+Output: [1,2]
+
+Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
+
+==
+Key: Two pointers. 用l, r兩個index, 若其對應的兩個元素之和小於target則++l, 若小於target則++r.
+
+==
+C++ code:
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int l = 0, r = numbers.size() - 1;
+
+        while(l < r) {
+        	int cur_sum = numbers[l] + numbers[r];
+
+        	if(cur_sum == target) {
+        		vector<int> res = {l + 1, r + 1};
+        		return res;
+        	} else if(cur_sum < target) {
+        		++l;
+        	} else {
+        		--r;
+        	}
+        }
+
+    	return numbers; //永遠不會到這一句
     }
 };
 
