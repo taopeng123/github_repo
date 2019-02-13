@@ -2775,6 +2775,8 @@ Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
 ==
 Key: Two pointers. 用l, r兩個index, 若其對應的兩個元素之和小於target則++l, 若小於target則++r.
 
+E4很困時給出的證明：記正確結果中的兩個index為lExpected, rExpected. 在那兩個移動的index l和r中，要麼l先到達正確值(lExpected)，要麼r先到達正確值(rExpected). 假設l先到達正確值(lExpected), 那麼此時r必在rExpected右邊，l和r所對應的兩個元素之和大於target, 那麼按照本算法, l應當不動，r應當向左移直到到達rExpected. 而對於r先到達正確值(rExpected)之情況，跟l先到達正確值(lExpected)是一樣的。
+
 ==
 C++ code:
 
