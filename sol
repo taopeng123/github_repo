@@ -318,7 +318,7 @@ catinterval
 catarithmetics
 
 0111 | pr7. Reverse Integer, Easy 
-111 | pr66. Plus One, Easy. 題目的意思是  輪入數組代表的數  是十进製的, 不是二进製. digit[0]是最高位.
+1111 | pr66. Plus One, Easy. 題目的意思是  輪入數組代表的數  是十进製的, 不是二进製. digit[0]是最高位.
 000 | pr65. Valid Number, Hard 
 111 | pr70. Climbing Stairs, Easy. 題意是樓梯共有n階, 而不是說人總共必須跨n次.
 111 | pr13. Roman to Integer, Easy 
@@ -3246,6 +3246,57 @@ public:
         }
 
         return res;
+    }
+};
+
+************************
+pr66. Plus One, Easy
+
+Question:
+
+Given a non-empty array of digits representing a non-negative integer, plus one to the integer.
+
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contain a single digit.
+
+You may assume the integer does not contain any leading zero, except the number 0 itself.
+
+Example 1:
+
+Input: [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+
+Example 2:
+
+Input: [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321.
+
+==
+Key: 簡單.題目的意思是 輪入數組代表的數 是十进製的,不是二进製.digit[0]是最高位. 注意可以直接在輪入 數組裡改, 這樣空間複雜度一般情況為O(1). 只有一種情況要用新數組來保存結果, 那就是輪入數組每個元素 都是 9, 此時結果比輸入的數多一位.
+
+==
+C++ code:
+(按Discussion略作改進)
+
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int n = digits.size();
+        if(n <= 0) return digits;
+
+        int carry = 1;
+
+        for(int i = n - 1; i >= 0; --i) {
+        	int sum = digits[i] + carry;
+        	digits[i] = sum % 10;
+        	carry = sum / 10;
+        }
+
+		// In the original input, all digits are 9:
+        if(digits[0] == 0) digits.insert(digits.begin(), 1);
+
+        return digits;
     }
 };
 
