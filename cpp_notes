@@ -1,4 +1,4 @@
-stopa: search for stopa in this file.
+stopa: search in this file
 
 ==
 findcbegin                   C begin
@@ -37,10 +37,15 @@ findcppbegin                 C++ begin
 findcompile                  Compile
 findcompileseparate          Separate Compilation
 findcomment                  Comments
+findgooglestyle              Google C++ Style Guide
 findcout                     cout
 findcin                      cin 
 findgetline                  getline
 findmath                     Math operators
+findpow                      power
+findalgorithm                The algorithm header
+findmax                      max
+findmin                      min
 findreadfromfile             Read from file and output to file
 findwritetofile              Read from file and output to file
 findio                       IO
@@ -804,6 +809,7 @@ A comment that begins with /* ends with the next */. As a result, one comment pa
 We often need to comment out a block of code during debugging. Because that code might contain nested comment pairs, the best way to comment a block of code is to insert single-line comments at the beginning of each line in the section we want to ignore.
 
 ==
+(findgooglestyle)
 Google C++ Style Guide:
 
 https://google.github.io/styleguide/cppguide.html
@@ -1511,6 +1517,8 @@ direct and copy initialization
 Sales_data item1(null_book); // direct initialization
 Sales_data item2 = null_book; // the copy form of initialization 
 
+Tao: for the direct initialization of primitive types: a(2), think about the initialization via constructor in the direct initialization example above: item1(null_book)
+
 Summary from below (it is a waste of time to suspect this summary):
 
 Direct initialization means to use (), eg: a(b)
@@ -2197,20 +2205,19 @@ The following function reads all contents in the input file, and write them into
 using namespace std;
 
 // g++ -std=c++0x -o convert convert.cc
-void process_one_file(string input_file_name, string output_file) { 
-    ifstream input_file(input_file_name);
+void process_one_file(string input_stream_name, string output_file) { 
+    ifstream input_stream(input_stream_name);
     ofstream output_file(output_file_name);
 
     string line;
 
-    while(getline(input_file, line)) {
+    while(getline(input_stream, line)) {
         output_file << line << endl;
     }
 
     output_file.close();
-    input_file.close();
+    input_stream.close();
 }
-
 
 --
 File Input and Output
@@ -2375,6 +2382,7 @@ for (const auto &entry : people) { // for each entry in people
 
 ==
 (findmath)
+(findpow)
 Math operators:
 
 power:
@@ -2400,6 +2408,30 @@ Therefor, be sure to have the first argument typed so it matches one of those th
 
 pow(2.0, N)
 Some lawyer crap from me again. I've often fallen in this pitfall myself, so i'm going to warn you about it.
+
+==
+(findalgorithm)
+(findmax)
+(findmin)
+The algorithm header:
+max, min
+
+include <iostream>     // std::cout
+#include <algorithm>    // std::max, std::min
+
+int main () {
+  std::cout << "max(1,2)==" << std::max(1,2) << '\n';
+  std::cout << "max(2,1)==" << std::max(2,1) << '\n';
+  std::cout << "max('a','z')==" << std::max('a','z') << '\n';
+  std::cout << "max(3.14,2.73)==" << std::max(3.14,2.73) << '\n';
+
+  std::cout << "min(1,2)==" << std::min(1,2) << '\n';
+  std::cout << "min(2,1)==" << std::min(2,1) << '\n';
+  std::cout << "min('a','z')==" << std::min('a','z') << '\n';
+  std::cout << "min(3.14,2.72)==" << std::min(3.14,2.72) << '\n';
+
+  return 0;
+}
 
 ==
 (findstaticallytyped)
@@ -3537,6 +3569,194 @@ There are a few rules of thumb that apply to selecting which container to use:
 – First, decide whether you actually need to add elements in the middle of a container. It is often easier to append to a vector and then call the library sort function to reorder the container when you’re done with input.
 – If you must insert into the middle, consider using a list for the input phase. Once the input is complete, copy the list into a vector.
 
+--
+Defining and intializing a container
+
+Every container type defines a default constructor. With the exception of array, the default constructor creates an empty container of the specified type. Again excepting array, the other constructors take arguments that specify the size of the container and initial values for the elements.
+
+Initializing a Container as a Copy of Another Container
+
+There are two ways to create a new container as a copy of another one: We can directly copy the container, or (excepting array) we can copy a range of elements denoted by a pair of iterators.
+
+To create a container as a copy of another container, the container and element types must match. When we pass iterators, there is no requirement that the container types be identical. Moreover, the element types in the new and original containers can differ as long as it is possible to convert the elements we’re copying to the element type of the container we are initializing:
+
+// each container has three elements, initialized from the given initializers
+list<string> authors = {"Milton", "Shakespeare", "Austen"};
+
+vector<const char*> articles = {"a", "an", "the"};
+
+list<string> list2(authors); // ok: types match
+
+deque<string> authList(authors); // error: container types don't match
+
+vector<string> words(articles); // error: element types must match
+
+// ok: converts const char* elements to string
+forward_list<string> words(articles.begin(), articles.end());
+
+The constructor that takes two iterators uses them to denote a range of elements that we want to copy. As usual, the iterators mark the first and one past the last element to be copied. The new container has the same size as the number of elements in the range. Each element in the new container is initialized by the value of the corresponding element in the range.
+
+Because the iterators denote a range, we can use this constructor to copy a subsequence of a container. For example, assuming it is an iterator denoting an element in authors, we can write
+
+// copies up to but not including the element denoted by it
+deque<string> authList(authors.begin(), it);
+
+List Initialization
+
+Under the new standard, we can list initialize a container:
+
+list<string> authors = {"Milton", "Shakespeare", "Austen"};
+vector<const char*> articles = {"a", "an", "the"};
+
+Sequential Container Size-Related Constructors
+
+we can also initialize the sequential containers (other than
+array) from a size and an (optional) element initializer. If we do not supply an element initializer, the library creates a value-initialized one for us
+
+vector<int> ivec(10, -1); // ten int elements, each initialized to
+-1
+
+list<string> svec(10, "hi!"); // ten strings; each element is "hi!"
+
+forward_list<int> ivec(10); // ten elements, each initialized to 0
+
+deque<string> svec(10); // ten elements, each an empty string
+
+We can use the constructor that takes a size argument if the element type is a builtin type or a class type that has a default constructor. If the element type does not have a default constructor, then we must specify an explicit element initializer along with the size.
+
+The constructors that take a size are valid only for sequential containers; they are not supported for the associative containers.
+
+Library arrays Have Fixed Size
+
+(Tao: library arrays are different from built-in arrays)
+
+Just as the size of a built-in array is part of its type, the size of a library array is part of its type. When we define an array, in addition to specifying the element type, we also specify the container size:
+
+array<int, 42> // type is: array that holds 42 ints
+
+To use an array type we must specify both the element type and the size:
+
+array<int, 10>::size_type i; // array type includes element type and size
+
+Because the size is part of the array’s type, array does not support the normal container constructors.
+
+Unlike the other containers, a default-constructed array is not
+empty: It has as many elements as its size. These elements are default initialized just as are elements in a built-in array.
+
+array<int, 10> ia1; // ten default-initialized ints
+
+array<int, 10> ia2 = {0,1,2,3,4,5,6,7,8,9}; // list initialization
+
+array<int, 10> ia3 = {42}; // ia3[0] is 42, remaining elements are 0
+
+It is worth noting that although we cannot copy or assign objects of built-in array types, there is no such restriction on array:
+
+int digs[10] = {0,1,2,3,4,5,6,7,8,9};
+
+int cpy[10] = digs; // error: no copy or assignment for built-in arrays
+
+array<int, 10> digits = {0,1,2,3,4,5,6,7,8,9};
+
+array<int, 10> copy = digits; // ok: so long as array types match
+
+--
+Assignment and swap
+
+The assignment operator replaces the entire range of elements in the lefthand container with copies of the elements from the right-hand operand:
+
+c1 = c2; // replace the contents of c1 with a copy of the elements in c2
+
+c1 = {a,b,c}; // after the assignment c1 has size 3
+
+Container Assignment Operations
+
+c1 = c2: Replace the elements in c1 with copies of the elements in c2. c1 and c2 must be the same type.
+
+c = {a, b, c...}: Replace the elements in c1 with copies of the elements in the intializer list. (Not valide for array)
+
+swap(c1, c2): Exchanges elements in c1 with those in c2. c1 and c2 must be the same type. swap is usually much faster than copying elements from c2 to c1.
+
+Assign operations not valide for associative containers or array:
+
+seq.asign(b, e): Replaces elements in seq with those in the range denoted by iterators b and e. The iterators b and e must not refer to elements in seq.
+
+seq.assign(il): Replaces the elements in seq with those in the intializer list il.
+
+seq.assign(n, t): Replaces the elements in seq with n elements with value t.
+
+Unlike built-in arrays, the library array type does allow assignment. The left-and right-hand operands must have the same type:
+
+array<int, 10> a1 = {0,1,2,3,4,5,6,7,8,9};
+
+array<int, 10> a2 = {0}; // elements all have value 0
+
+a1 = a2; // replaces elements in a1
+
+a2 = {0}; // error: cannot assign to an array from a braced list. Tao: ?
+
+Because the size of the right-hand operand might differ from the size of the left-hand operand, the array type does not support assign and it does not allow assignment from a braced list of values.
+
+Using assign (Sequential Containers Only)
+
+The assignment operator requires that the left-hand and right-hand operands have the same type. It copies all the elements from the right-hand operand into the left-hand operand. The sequential containers (except array) also define a member named assign that lets us assign from a different but compatible type, or assign from a subsequence of a container.
+
+list<string> names;
+
+vector<const char*> oldstyle;
+
+names = oldstyle; // error: container types don't match
+
+// ok: can convert from const char*to string
+names.assign(oldstyle.cbegin(), oldstyle.cend());
+
+Using swap
+
+The swap operation exchanges the contents of two containers of the same type.
+
+vector<string> svec1(10); // vector with ten elements
+
+vector<string> svec2(24); // vector with 24 elements
+
+swap(svec1, svec2);
+
+After the swap, svec1 contains 24 string elements and svec2 contains ten. With the exception of arrays, swapping two containers is guaranteed to be fast—the elements themselves are not swapped; internal data structures are swapped.
+
+The fact that elements are not moved means that, with the exception of string, iterators, references, and pointers into the containers are not invalidated. They refer to the same elements as they did before the swap. However, after the swap, those elements are in a different container. For example, had iter denoted the string at position svec1 [3] before the swap, it will denote the element at position svec2[3] after the swap. Differently from the containers, a call to swap on a string may invalidate iterators, references and pointers.
+
+Unlike how swap behaves for the other containers, swapping two arrays does exchange the elements. As a result, swapping two arrays requires time proportional to the number of elements in the array.
+
+After the swap, pointers, references, and iterators remain bound to the same element they denoted before the swap. Of course, the value of that element has been swapped with the corresponding element in the other array.
+
+In the new library, the containers offer both a member and nonmember version of swap. Earlier versions of the library defined only the member version of swap. The nonmember swap is of most importance in generic programs. As a matter of habit, it
+is best to use the nonmember version of swap.
+
+--
+Container Size Operations
+
+With one exception, the container types have three size-related operations. The size member returns the number of elements in the container; empty returns a bool that is true if size is zero and false otherwise; and max_size returns a number that is greater than or equal to the number of elements a container
+of that type can contain. For reasons we’ll explain in the next section, forward_list provides max_size and empty, but not size.
+
+--
+Relational Operators
+
+Every container type supports the equality operators (== and !=); all the containers except the unordered associative containers also support the relational operators (>, >=, <, <=). The right- and left-hand operands must be the same kind of container and must hold elements of the same type. That is, we can compare a vector<int> only with another vector<int>. We cannot compare a vector<int> with a list<int> or a vector<double>.
+
+Comparing two containers performs a pairwise comparison of the elements. These operators work similarly to the string relationals:
+
+• If both containers are the same size and all the elements are equal, then the two containers are equal; otherwise, they are unequal.
+
+• If the containers have different sizes but every element of the smaller one is equal to the corresponding element of the larger one, then the smaller one is less than the other.
+
+• If neither container is an initial subsequence of the other, then the comparison depends on comparing the first unequal elements.
+
+We can use a relational operator to compare two containers only if the appropriate comparison operator is defined for the element type.
+
+For example, the Sales_data type that we defined in Chapter 7
+does not define either the == or the < operation. Therefore, we cannot compare two containers that hold Sales_data elements:
+
+--
+stopa: p435, 9.3. Sequential Container Operations
+
 ==
 (findcontainerlibrary)
 (findcontainerfunctions)
@@ -3664,9 +3884,6 @@ vector<noDefault> v1(10, init); // ok: element initializer supplied
 vector<noDefault> v2(10); // error: must supply an element initializer
 
 ==
-stopa: p422, 9.2.1. Iterators
-
-==
 (findvector)
 vector
 
@@ -3688,7 +3905,7 @@ vector<vector<int>> v(10, vector<int>(10,1)); //From online. v is a 10*10 vector
 
 vector<int> v1 = {1, 2, 3};//C++11 standard.
 
-vector<int> v1{1,2,3};//Does not work
+vector<int> v1{1,2,3};//Define a vector with elements
 
 --
 Ways to initialize a vector:
@@ -3753,6 +3970,8 @@ v1 = {a, b, c...}: Replaces the elements in v1 with a copy of the elements in th
 v1 == v2, v1 != v2: v1 and v2 are equal if they have the same number of elements and each element in v1 is equal to the corresponding element in v2.
 
 <, <=, >, >=: Have their normal meanings using dictionary ordering.
+
+vector_name.insert(position, val): inserts new elements before the element at the specified position, effectively increasing the container size by the number of elements inserted.
 
 --
 vector<vector<double> > v1 //correct, note the space between > >
@@ -4552,8 +4771,8 @@ From geeksforgeeks:
 The functions associated with stack are:
 
 push(g) – Adds the element ‘g’ at the top of the stack – Time Complexity : O(1)
-top() – Returns a reference to the top most element of the stack – Time Complexity : O(1)
 pop() – Deletes the top most element of the stack – Time Complexity : O(1)
+top() – Returns a reference to the top most element of the stack – Time Complexity : O(1)
 
 empty() – Returns whether the stack is empty – Time Complexity : O(1)
 size() – Returns the size of the stack – Time Complexity : O(1)
@@ -4608,8 +4827,8 @@ From geeksforgeeks:
 The functions supported by queue are :
 
 push(g) – Adds the element ‘g’ at the end of the queue
-front() – Returns a reference to the first element of the queue
 pop() – Deletes the first element of the queue
+front() – Returns a reference to the first element of the queue
 
 back() – Returns a reference to the last element of the queue
 
@@ -4898,6 +5117,28 @@ auto it1 = v.begin(); // it1 has type vector<int>::iterator
 auto it2 = cv.begin(); // it2 has type vector<int>::const_iterator
 
 It is important to realize that loops that use iterators should not add elements to the container to which the iterators refer.
+
+If begin equals end, the range is empty.
+
+while (begin != end) {
+	*begin = val; // ok: range isn't empty so begin denotes an element
+	++begin; // advance the iterator to get the next element
+}
+
+--
+Reverse iterators:
+
+In addition to the iterator types we’ve already used, most containers provide reverse iterators. Briefly, a reverse iterator is an iterator that goes backward through a container and inverts the meaning of the iterator operations. For example, saying ++ on a reverse iterator yields the previous element.
+
+There are several versions of begin and end: The versions with an r return reverse iterators. Those that start with a c return the const version of the related iterator:
+
+list<string> a = {"Milton", "Shakespeare", "Austen"};
+auto it1 = a.begin(); // list<string>::iterator
+auto it2 = a.rbegin(); // list<string>::reverse_iterator
+auto it3 = a.cbegin(); // list<string>::const_iterator
+auto it4 = a.crbegin();// list<string>::const_reverse_iterator
+
+When write access is not needed, use cbegin and cend.
 
 ==
 (findarray)
