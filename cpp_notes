@@ -1,4 +1,4 @@
-stopa: search in this file
+stopa: p474, Chapter 10. Generic Algorithms
 
 ==
 findcbegin                   C begin
@@ -121,6 +121,7 @@ findunorderedset             unordered_set
 findset                      set
 findunorderedmap             unordered_map
 findmap                      map
+findcontaineradaptor         Container Adaptors (stack, queue, priority_queue)
 findstack                    stack
 findqueue                    queue
 findpriorityqueue            priority_queue
@@ -1083,15 +1084,15 @@ Convert data types
 string str1 = "45";
 int myint1 = stoi(str1); // myint1 = 45
 
+//int -> string
+int a = std::to_string(28); // a = "28"
+
 //string -> double
 string stest = "0.21";
 double dtest = stod(stest);
 
 //double -> string
 string pi = std::to_string(3.1415926); // pi = "3.1415926" 
-
-//int -> string
-int a = std::to_string(28); // a = "28"
 
 //int -> double
 int a = 2;
@@ -3187,10 +3188,180 @@ s1 = s2: Replaces characters in s1 with a copy of s2.
 s1 == s2, s1 != s2: s1 and s2 are equal if they contain the same characters. Equality is case-sensitive. 
 <, <=, <, <=: Comparisons are case-sensitive and use dictionary ordering.
 
-string s2 = s.erase (pos, len); //Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, from online)
+--
+Operations to moidfy strings (modify in-place)
 
-s2.append("helo"); // equivalent as below. The parameter of append() can only be string, it can not be char.
-s.insert(s.size(), "helo"); 
+s.insert(pos, args): Insert characters specified by args before pos. pos can be an index or an iterator. Versions taking an index returns a reference to s; those taking an iterator return an interator denoting the first inserted character.
+
+s.append(args): Append args to s. Returns a reference to s.
+
+s.erase(pos, len): Remove len characters starting at position pos. If len is omitted. Removes characters from pos to the end of the s. Returns a reference to s.
+
+s.replace(range, args): Remove range of characters form s and replace them with the characters formed by args. range is either an index and a length or a pair of iterators into s. Returns a reference to s.
+
+s.assign(args): Replace characters in s according to args. Returns a reference to s.
+
+args can be one of the following (append and assign can use all forms, str must be distinc from s and the iterators b and e may not refer to s):
+
+str: The string str.
+
+str, pos, len: Up to len characters from str starting at pos.
+
+cp, len: Up to len charactres from the character array pointed to by cp.
+
+cp: Null-terminated array pointed to by pointer cp.
+
+n, c: n copies of character c.
+
+b, e: Characters in the range formed by iterators b and e.
+
+intializer list: Comma-separated list of characters enclosed in braces.
+
+args for replace and insert depend on how range or pos is specified:
+
+replace          replace      insert      insert       args can be
+(pos,len,args)   (b,e,args)   (pos,args)  (iter,args)  
+yes              yes          yes         no           str
+yes              no           yes         no           str,pos,len
+yes              yes          yes         no           cp,len
+yes              yes          no          no           cp
+yes              yes          yes         yes          n,c
+no               yes          no          yes          b2,e2
+no               yes          no          yes          initializer list
+
+--
+append
+
+The append operation is a shorthand way of inserting at the end.
+The append changes the contents of a string (tao: in-place).
+The parameter of append() can only be string, it can not be char.
+
+s2.append("helo"); 
+
+--
+insert
+
+s.insert(s.size(), "helo"); //Inserts "helo" before position 0 in s.
+
+s.insert(s.size(), 5, '!'); //Inserts five exclamatin points at the end of s
+
+s.insert(0, s2, 0, s2.size()); //Inserts s2.size() characters from s2 starting at s2[0] before s[0].
+
+--
+replace:
+
+The replace operations are a shorthand way of calling erase and insert: 
+
+// equivalent way to replace "4th" by "5th"
+s.erase(11, 3); // s == "C++ Primer Ed."
+s.insert(11, "5th"); // s == "C++ Primer 5th Ed."
+
+// starting at position 11, erase three characters and then insert "5th"
+s2.replace(11, 3, "5th"); // equivalent: s == s2
+s.replace(11, 3, "Fifth"); // s == "C++ Primer Fifth Ed."
+
+--
+(findfind)
+string Search Operations
+
+The string class provides six different search functions, each of which has four overloaded versions. Table 9.14 describes the search members and their arguments.
+
+Each of these search operations returns a string::size_type value that is the index of where the match occurred. If there is no match, the function returns a static member named string::npos. The library defines npos as a const string::size_type initialized with the value -1. Because npos is an unsigned type, this initializer means npos is equal to the largest possible size any string could have
+
+string search operations:
+
+s.find(args): Find the first occurence of args in s.
+
+s.rfind(args): Find the las occurence of args in s.
+
+s.find_first_of(args): Find the first occurence of any character from args in s.
+
+s.find_last_of(args): Find the last occurence of any character from args in s.
+
+s.find_first_not_of(args): Find the first character in s that is not in args.
+
+s.find_last_not_of(args): Find the last character in s that is not in args.
+
+args must be one of:
+
+c, pos: Look for the character c starting at position pos in s. pos defaults to 0.
+
+s2, pos: Look for string s2 starting at position pos in s. pos default to 0.
+
+cp, pos: Look for the C-style null-terminated string pointed to the pointer cp. Start looking at position pos in s. pos defaults to 0.
+
+cp, pos, n: Look for the first n characters in the array pointed to by the pointer cp. Start looking at position pos in s. No default for pos or n.
+
+Searching (and other string operations) are case sensitive.
+
+The string search functions return string::size_type, which is an
+unsigned type. As a result, it is a bad idea to use an int, or other signed type, to hold the return from these functions
+
+string s = "helo"; //Tao's example
+s.find("lo")// Returns: 2
+
+while((pos = s.find(delimiter)) != string::npos) {...} //Tao's example of npos
+
+string name("AnnaBelle");
+auto pos1 = name.find("Anna"); // pos1 == 0
+
+string numbers("0123456789"), name("r2d2");
+auto pos = name.find_first_of(numbers); // returns 1, i.e., the index of the first digit (tao: 2) in name
+
+string dept("03714p3");
+auto pos = dept.find_first_not_of(numbers); // returns 5, which is the index to the character 'p'
+
+Searching Backward
+
+The find operations we’ve used so far execute left to right. The library provides analogous operations that search from right to left. The rfind member searches for the last—that is, right-most—occurrence of the indicated substring:
+
+string river("Mississippi");
+auto first_pos = river.find("is"); // returns 1
+auto last_pos = river.rfind("is"); // returns 4 (tao: 4 means the 4th character from left, not from right).
+
+--
+The compare Functions
+
+In addition to the relational operators, the string library provides a set of compare functions that are similar to the C library strcmp function. Like strcmp, s.compare returns zero or a positive or negative value depending on whether s is equal to, greater than, or less than the string formed from the given arguments.
+
+Possible Arguments to s.compare:
+
+s2: Compares to s2.
+
+pos1, n1, s2: Compares n1 characters starting at pos1 from s to s2.
+
+pos1, n1, s2, pos2, n2: Compares n2 characters starting at pos1 from s to the n2 characters starting at pos2 in s2.
+
+cp: Compares s to the null-terminated array pointed to by cp.
+
+pos1, n1, cp: Compares n1 characters starting at pos1 from s to cp.
+
+pos1, n1, cp, n2: Compares n1 characters starting at pos1 from s to n2 characters starting from the pointer cp.
+
+--
+stopa
+
+Numeric Conversions
+
+The new standard introduced several functions that convert between numeric data and library strings:
+
+int i = 42;
+string s = to_string(i); // converts the int i to its character representation
+double d = stod(s); // converts the string s to floating-point
+
+Conversions between strings and Numbers:
+
+to_string(val): Overloaded functions returning the string representation of val. val can be any arithmetic type. There are versions of to_string for each floating-point type and integral type that is int or larger. Small integral types are promoted.
+
+stoi(s, p, b), stol(s, p, b), stoul(s, p, b), stoll(s, p, b), stoull(s, p, b): Return the intial substring of s that has numeric content as an int, long, unsigned long, long long, unsigned long long, respectively. b indicates the numeric base to use for the conversion; b defaults to 10. p is a pointer to a size_t in which to put the index of the first nonnumeric character in s; p defaults to 0, in which case the function does not store the index.
+
+stof(s, p), stod(s, p), stold(s, p): Return the intial numeric substring in s as a float, double, or long double, respectively. p has the same behavior as described for the integer conversions.
+
+The first non-whitespace character in the string we convert to numeric value must be a character that can appear in a number.
+
+The first non-whitespace character in the string must be a sign (+ or -) or a digit. The string can begin with 0x or 0X to indicate hexadecimal. For the functions that convert to floating-point the string may also start with a decimal point (.) and may contain an e or E to designate the exponent. For the functions that convert to integral type, depending on the base, the string can contain alphabetic characters corresponding to numbers beyond the digit 9.
+
+If the string can’t be converted to a number, These functions throw an invalid_argument exception. If the conversion generates a value that can’t be represented, they throw out_of_range.
 
 --
 string::size_type:
@@ -3284,6 +3455,17 @@ string s8 = temp; // copy temp into s8
 Although the code used to initialize s8 is legal, it is less readable and offers no compensating advantage over the way we initialized s7.
 
 --
+Addtional ways to construct strings
+
+n, len2 and pos2 are all unsigned values
+
+string s(cp, n): s is a copy of the first n characters in the array to which cp points. That array must have at least n characters.
+
+string s(s2, pos2): s is a copy of the characters in the string s2 starting at the index pos2. Undefined if pos2 > s2.size().
+
+string s(s2, pos2, len2): s is a copy of len2 characters from s2 starting at the index pos2. Undefined if pos2 > s2.size(). Regardless of the value of len2, copies at most s2.size() - pos2 characters.
+
+--
 In some computers (like my Thinkpad), some functions (like ifstream) needs the input to string to be defined as type: const char*, for example:
 
 const char* filename = "helo";
@@ -3363,7 +3545,6 @@ string token = s.substr(0, s.find(delimiter)); // token is "scott"
 
 The substr(size_t pos = 0, size_t n = npos) function returns a substring of the object, starting at position pos and of length npos.
 
-(findfind)
 The find(const string& str, size_t pos = 0) function returns the position of the first occurrence of str in the string, or npos if the string is not found.
 Tao's example:
 string s = "helo";
@@ -3464,6 +3645,8 @@ erase
 
 std::string::erase in C++
 
+string s2 = s.erase (pos, len); //Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, from online)
+
 The function erases a part of the string content, shortening the length of the string. The characters affected depend on the member function version used:
 Return value : erase() returns *this.
 
@@ -3481,6 +3664,7 @@ Throw out_of_range if idx > size().
 Example: 
 string str("Hello World!");
 str.erase(1, 4); //str = "H World!", tao: yes it is in-place, confirmed.
+s.erase(s.size() - 5, 5); //Erase the last five characters from s.
 
 string& string ::erase (iterator pos)
 Erase the single character at iterator position pos.
@@ -3755,7 +3939,197 @@ For example, the Sales_data type that we defined in Chapter 7
 does not define either the == or the < operation. Therefore, we cannot compare two containers that hold Sales_data elements:
 
 --
-stopa: p435, 9.3. Sequential Container Operations
+Sequential Container Operations
+
+Adding Elements to a Sequential Container
+
+Each of these operations will be explained with more details below.
+
+c.push_back(t), c.emplace_back(args): Creates an element with value t or constructed from args at the end of c. Returns void.
+
+c.push_front(t), c.emplace_front(args): Creates an element with value t or constructed from args on the front of c. Returns void.
+
+c.insert(p, t), c.emplace(p, args): Creates an element with value t or constructed from args before the element denoted by iterator p. Returns an iterator referring to the element that was added.
+
+c.insert(p, n, t): Inserts n elements with value t before the element denoted by iterator p. Returns an iterator to the first element inserted; if n is zero, returns p.
+
+c.insert(p, b, e): Inserts the elements from the range denoted by iterators b and e before the element denoted by iterator p. b and e may not refer to elements in c. Returns an iterator to the first element inserted; if the range is empty, returns p.
+
+c.insert(p, il): il is a braced list of element values. Inserts the given values before the element denoted by the iterator p. Returns an iterator to the first inserted elements; if the list is empty returns p.
+
+Note that for container a, a[0] is front, a[size - 1] is back.
+
+When we use an object to initialize a container, or insert an object into a container, a copy of that object’s value is placed in the container, not the object itself.
+
+These operations change the size of the container, they are not supported by array. forward_list has special versions of insert and emplace. push_back and emplace_back not valid for foward_list. push_front and emplace_front not valid for vector or string.
+
+Adding elements to a vector, string, or deque potentially invalidates all existing iterators, references, and pointers into the container.
+
+--
+Using push_front
+
+In addition to push_back, the list, forward_list, and deque containers support an analogous operation named push_front. This operation inserts a new element at
+the front of the container.
+
+--
+Adding Elements at a Specified Point in the Container
+
+Each of the insert functions takes an iterator as its first argument. element(s) are inserted before the position denoted by the iterator.
+
+slist.insert(iter, "Hello!"); // insert "Hello!" just before iter
+
+Even though some containers do not have a push_front operation, there is no similar constraint on insert.
+
+It is legal to insert anywhere in a vector, deque, or string. However, doing so can be an expensive operation.
+
+--
+Inserting a Range of Elements
+
+svec.insert(svec.end(), 10, "Anna");
+
+This code inserts ten elements at the end of svec and initializes each of those elements to the string "Anna".
+
+The versions of insert that take a pair of iterators or an initializer list insert the elements from the given range before the given position:
+
+vector<string> v = {"quasi", "simba", "frollo", "scar"};
+
+// insert the last two elements of v at the beginning of slist
+slist.insert(slist.begin(), v.end() - 2, v.end());
+
+slist.insert(slist.end(), {"these", "words", "will",
+"go", "at", "the", "end"});
+
+// run-time error: iterators denoting the range to copy from
+// must not refer to the same container as the one we are changing
+slist.insert(slist.begin(), slist.begin(), slist.end());
+
+Under the new standard, the versions of insert that take a count or a range return an iterator to the first element that was inserted. 
+
+We can use the value returned by insert to repeatedly insert elements at a specified position in the container:
+
+list<string> 1st;
+auto iter = 1st.begin();
+while (cin >> word)
+iter = 1st.insert(iter, word); // same as calling push_front
+
+--
+Using the Emplace Operations
+
+The new standard introduced three new members—emplace_front, emplace, and emplace_back—that construct rather than copy elements. 
+
+When we call a push or insert member, we pass objects of the element type and those objects are copied into the container. When we call an emplace member, we pass arguments to a constructor for the element type. The emplace members use
+those arguments to construct an element directly in space managed by the container.
+
+c.emplace_back("978-0590353403", 25, 15.99);
+
+--
+9.3.2. Accessing Elements
+
+Operations to Access Elements in a Sequential Container
+
+c.back(): Returns a reference to the last element in c. Undefined if c is empty.
+
+c.front(): Returns a reference to the first element in c. Undefined if c is empty.
+
+c[n]: Returns a reference to the element indexed by the unsigned integratal value n. Undefined if n >= c.size().
+
+c.at[n]: Returns a reference to the element indexed by n. If the index is out of range, throws an out_of_range exception.
+
+// check that there are elements before dereferencing an iterator or calling front or back
+if (!c.empty()) {
+	// val and val2 are copies of the value of the first element in c
+	auto val = *c.begin(), val2 = c.front();
+	// val3 and val4 are copies of the of the last element in c
+	auto last = c.end();
+	auto val3 = *(--last); // can't decrement forward_list iterators
+	auto val4 = c.back(); // not supported by forward_list
+}
+
+Two things are noteworthy in this program: The end iterator refers to the (nonexistent) element one past the end of the container. To fetch the last element we must first decrement that iterator. The other important point is that before calling
+front or back (or dereferencing the iterators from begin or end), we check that c isn’t empty.
+
+The Access Members Return References
+
+if (!c.empty()) {
+	c.front() = 42; // assigns 42 to the first element in c
+	auto &v = c.back(); // get a reference to the last element
+	v = 1024; // changes the element in c
+	auto v2 = c.back(); // v2 is not a reference; it's a copy of c.back()
+	v2 = 0; // no change to the element in c
+}
+
+--
+Subscripting and Safe Random Access
+
+The subscript operator takes an index and returns a reference to the element at that position in the container. The subscript operator does not check whether the index is in range.
+
+If we want to ensure that our index is valid, we can use the at member instead. The at member acts like the subscript operator, but if the index is invalid, at throws an out_of_range exception.
+
+--
+Erasing Elements (remove elements)
+
+Erase operations on sequential containers
+
+c.pop_back(): Removes last element in c. Undefined if c is empty. Returns void.
+
+c.pop_front(): Removes first element in c. Undefined if c is empty. Returns void.
+
+c.erase(p): Removes the element denoted by the iterator p and returns an iterator to the element after the one deleted or the off-the-end iterator if p denotes the last element. Undefined if p is the off-the-end iterator.
+
+c.erase(b, e): Removes the range of elements denoted by the iterator b and e. Returns an iterator to the elements after the last one that was deleted, or an off-the-end iterator if e is itself and off-the-end iterator.
+
+c.clear(): Removes all the elements in c. Returns void.
+
+There operations change the size of the container and so are not supported by array. forward_list has a special version of erase pop_back not valid for foward_list; pop_front not valid for vector and string. Just as there is no push_front for vector and string, there is also no pop_front for those types. 
+
+Specialized forward_list Operations
+
+To add or remove an element, we need access to its predecessor in order to update that element’s links. However, forward_list is a singly linked list. In a singly linked list there is no easy way to get to an element’s predecessor. For this reason, the operations to add or remove elements in a forward_list operate by changing the element after the given element. forward_list does not define insert, emplace, or erase. Instead it defines members (listed in Table 9.8) named insert_after, emplace_after, and erase_after. 
+
+--
+Resizing a Container
+
+With the usual exception of arrays, we can use resize, to
+make a container larger or smaller. If the current size is greater than the requested size, elements are deleted from the back of the container; if the current size is less than the new size, elements are added to the back of the container:
+
+list<int> ilist(10, 42); // ten ints: each has value 42
+
+ilist.resize(15); // adds five elements of value 0 to the back of ilist
+
+ilist.resize(25, -1); // adds ten elements of value -1 to the back of ilist
+
+ilist.resize(5); // erases 20 elements from the back of ilist
+
+Sequential Container Size Operations
+
+c.resize(n): Resize c so that it has n elements. If n < c.size(), the excess elements are discarded. If new elements must be added, they are value initialized.
+
+c.resize(n, t): Resize c to have n elements. Any elements added have value t.
+
+--
+Container Operations May Invalidate Iterators
+
+Operations that add or remove elements from a container can invalidate pointers, references, or iterators to container elements. An invalidated pointer, reference, or iterator is one that no longer denotes an element. Using an invalidated pointer,
+reference, or iterator is a serious programming error that is likely to lead to the same kinds of problems as using an uninitialized pointer.
+
+When we add or remove elements in a vector or string, or add elements or remove any but the first element in a deque, the iterator returned by end is always invalidated. Don’t cache the iterator returned from end() in loops that insert or delete
+elements in a deque, string, or vector. Rather than storing the end() iterator, we must recompute it after each insertion.
+
+--
+How a vector Grows
+
+To support fast random access, vector elements are stored contiguously—each element is adjacent to the previous element. Library implementors use allocation strategies that reduce the
+number of times the container is reallocated. When they have to get new memory, vector and string implementations typically allocate capacity beyond what is immediately needed. The container holds this storage in reserve and uses it to allocate new elements as they are added. Thus, there is no need to reallocate the container for each new element.
+
+The vector and string types provide members that let us
+interact with the memory-allocation part of the implementation. The capacity operation tells us how many elements the container can hold before it must allocate more space. The reserve operation lets us tell the container how many elements it should be prepared to hold. reserve does not change the number of elements in the container; it affects only how much memory the vector preallocates. A call to reserve changes the capacity of the vector only if the requested space exceeds the current capacity. If the requested size is greater than the current
+capacity, reserve allocates at least as much as (and may allocate more than) the requested amount. If the requested size is less than or equal to the existing capacity, reserve does
+nothing. Similarly, the resize members change only the
+number of elements in the container, not its capacity
+
+capacity and size
+
+It is important to understand the difference between capacity and size. The size of a container is the number of elements it already holds; its capacity is how many elements it can hold before more space must be allocated.
 
 ==
 (findcontainerlibrary)
@@ -4763,174 +5137,94 @@ int main()
 } 
 
 ==
+(findcontaineradaptor)
+Container Adaptors (stack, queue, priority_queue)
+
+In addition to the sequential containers, the library defines three sequential container adaptors: stack, queue, and priority_queue. An adaptor is a general concept in the library. There are container, iterator, and function adaptors. Essentially, an adaptor is a mechanism for making one thing act like another. A container adaptor takes an existing container type and makes it act like a different type. For example, the stack adaptor takes a sequential container (other than array or
+forward_list) and makes it operate as if it were a stack. Table below lists the operations and types that are common to all the container adaptors.
+
+Operations and Types Common to the Container Adaptors:
+
+A a: Create a new empty adaptor named a. Tao: an example of A is stack<int>
+
+A a(c): Create a new adaptor named a with a copy of the container c.
+
+Relational operations: Each adaptor supports all the relational operators: ==, !=, <, <=, >, >=. These operators return the result of comparing the underlying containers.
+
+a.empty(): false if a has any elements, true otherwise.
+
+a.size(): Number of elements in a.
+
+swap(a, b), a.swap(b): Swaps the contents of a and b; a and b must have the same type, including the type of the container on which they are implemented.
+
+size_type: Type large enough to hold the size of the largest object of this type.
+
+value_type: Element type.
+
+container_type: Type of the underlying container on which the adaptor is implemented.
+
+By default both stack and queue are implemented in terms of deque, and a priority_queue is implemented on a vector. We can override the default container type by naming a sequential container as a second type argument when we create the adaptor:
+
+stack<string, vector<string>> str_stk; // empty stack implemented on top of vector
+
+stack<string, vector<string>> str_stk2(svec); // str_stk2 is implemented on top of vector and initially holds a copy of svec
+
+There are constraints on which containers can be used for a given adaptor. All of the adaptors require the ability to add and remove elements. As a result, they cannot be built on an array. Similarly, we cannot use forward_list, because all of the
+adaptors require operations that add, remove, or access the last element in the container. A stack requires only push_back, pop_back, and back operations, so we can use any of the remaining container types for a stack. The queue adaptor requires back, push_back, front, and push_front, so it can be built on a list or deque but not on a vector. A priority_queue requires random access in addition to the front, push_back, and pop_back operations; it can be built on a vector or a deque but not on a list.
+
+Each container adaptor defines its own operations in terms of operations provided by the underlying container type. We can use only the adaptor operations and cannot use the operations of the underlying container type.
+
+==
 (findstack)
 stack
 
-From geeksforgeeks:
+Stack Operations in Addition to the above Table "Operations and Types Common to the Container Adaptors":
 
-The functions associated with stack are:
+s.push(item), s.emplace(args): Creates a new top element on the stack by copying or moving item, or by constructing the element from args.
 
-push(g) – Adds the element ‘g’ at the top of the stack – Time Complexity : O(1)
-pop() – Deletes the top most element of the stack – Time Complexity : O(1)
-top() – Returns a reference to the top most element of the stack – Time Complexity : O(1)
+s.pop(): Removes, but does not return, the top element from the stack.
 
-empty() – Returns whether the stack is empty – Time Complexity : O(1)
-size() – Returns the size of the stack – Time Complexity : O(1)
+s.top(): Returns, but does not remove, the top element on the stack.
 
+The stack type is defined in the stack header. 
 
-Example:
+stack uses deque by default, can be implemented on a list or vector as well.
 
-// CPP program to demonstrate working of STL stack 
-#include <iostream> 
-#include <stack> 
-using namespace std; 
-  
-void showstack(stack <int> s) 
-{ 
-    while (!s.empty()) 
-    { 
-        cout << '\t' << s.top(); 
-        s.pop(); 
-    } 
-    cout << '\n'; 
-} 
-  
-int main () 
-{ 
-    stack <int> s; 
-    s.push(10); 
-    s.push(30); 
-    s.push(20); 
-    s.push(5); 
-    s.push(1); 
-  
-    cout << "The stack is : "; 
-    showstack(s); 
-  
-    cout << "\ns.size() : " << s.size(); 
-    cout << "\ns.top() : " << s.top(); 
-  
-  
-    cout << "\ns.pop() : "; 
-    s.pop(); 
-    showstack(s); 
-  
-    return 0; 
-} 
+The following program illustrates the use of stack:
 
-==
-(findqueue)
-queue
+stack<int> intStack; // empty stack
 
-From geeksforgeeks:
+// fill up the stack
+for (size_t ix = 0; ix != 10; ++ix)
+    intStack.push(ix); // intStackholds 0 ... 9 inclusive
 
-The functions supported by queue are :
-
-push(g) – Adds the element ‘g’ at the end of the queue
-pop() – Deletes the first element of the queue
-front() – Returns a reference to the first element of the queue
-
-back() – Returns a reference to the last element of the queue
-
-empty() – Returns whether the queue is empty
-size() – Returns the size of the queue
-
-Example:
-
-// CPP code to illustrate  
-// Queue in Standard Template Library (STL) 
-#include <iostream> 
-#include <queue> 
-  
-using namespace std; 
-  
-void showq(queue <int> gq) 
-{ 
-    queue <int> g = gq; 
-    while (!g.empty()) 
-    { 
-        cout << '\t' << g.front(); 
-        g.pop(); 
-    } 
-    cout << '\n'; 
-} 
-  
-int main() 
-{ 
-    queue <int> gquiz; 
-    gquiz.push(10); 
-    gquiz.push(20); 
-    gquiz.push(30); 
-  
-    cout << "The queue gquiz is : "; 
-    showq(gquiz); 
-  
-    cout << "\ngquiz.size() : " << gquiz.size(); 
-    cout << "\ngquiz.front() : " << gquiz.front(); 
-    cout << "\ngquiz.back() : " << gquiz.back(); 
-  
-    cout << "\ngquiz.pop() : "; 
-    gquiz.pop(); 
-    showq(gquiz); 
-  
-    return 0; 
+while (!intStack.empty()) { // while there are still values in intStack
+    int value = intStack.top(); // code that uses value
+    intStack.pop(); // pop the top element, and repeat
 }
 
 ==
+(findqueue)
 (findpriorityqueue)
-priority_queue
+queue, priority_queue
 
-From geeksforgeeks:
+queue, priority_queue Operations in Addition to the above Table "Operations and Types Common to the Container Adaptors":
 
-The functions associated with priority queue are:
+q.push(item), q.emplace(args): Create an element with value item or constructed from args at the end of the queue or in its appropriate position in priority_queue.
 
-push(g) – Adds the element ‘g’ at the end of the queue
-top() – Returns a reference to the top most element of the queue
-pop() – Deletes the first element of the queue
+q.pop(): Removes, but does not return, the front element or highest-priority element from the queu or priority_queue, respectively.
 
-empty() – Returns whether the queue is empty
-size() – Returns the size of the queue
+q.front(), q.back(): Returns, but does not remove, the front or back element of q. Valid only for queue.
 
-Example:
+q.top(): Returns, but does not remove, the highest-priority element. Valid only for priority_queue.
 
-#include <iostream> 
-#include <queue> 
-  
-using namespace std; 
-  
-void showpq(priority_queue <int> gq) 
-{ 
-    priority_queue <int> g = gq; 
-    while (!g.empty()) 
-    { 
-        cout << '\t' << g.top(); 
-        g.pop(); 
-    } 
-    cout << '\n'; 
-} 
-  
-int main () 
-{ 
-    priority_queue <int> gquiz; 
-    gquiz.push(10); 
-    gquiz.push(30); 
-    gquiz.push(20); 
-    gquiz.push(5); 
-    gquiz.push(1); 
-  
-    cout << "The priority queue gquiz is : "; 
-    showpq(gquiz); 
-  
-    cout << "\ngquiz.size() : " << gquiz.size(); 
-    cout << "\ngquiz.top() : " << gquiz.top(); 
-  
-  
-    cout << "\ngquiz.pop() : "; 
-    gquiz.pop(); 
-    showpq(gquiz); 
-  
-    return 0; 
-} 
+The queue and priority_queue adaptors are defined in the queue header.
+
+The library queue uses a first-in, first-out (FIFO) storage and retrieval policy. Objects entering the queue are placed in the back and objects leaving the queue are removed from the front. A restaurant that seats people in the order in which they arrive is an example of a FIFO queue.
+
+A priority_queue lets us establish a priority among the elements held in the queue. Newly added elements are placed ahead of all the elements with a lower priority. A restaurant that seats people according to their reservation time, regardless of when they arrive, is an example of a priority queue. By default, the library uses the < operator on the element type to determine relative priorities. We’ll learn how to override this default later.
+
+By default queue uses deque and priority_queue uses vector; queue can use a list or vector as well, priority_queue cna use a deque.
 
 ==
 (finddeque)
