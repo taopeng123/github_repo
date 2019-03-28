@@ -1,4 +1,4 @@
-stopa: p474, Chapter 10. Generic Algorithms
+stopa search in file
 
 ==
 findcbegin                   C begin
@@ -43,7 +43,6 @@ findcin                      cin
 findgetline                  getline
 findmath                     Math operators
 findpow                      power
-findalgorithm                The algorithm header
 findmax                      max
 findmin                      min
 findreadfromfile             Read from file and output to file
@@ -127,6 +126,8 @@ findqueue                    queue
 findpriorityqueue            priority_queue
 finddeque                    deque
 finddequeue                  deque
+findalgorithm                Generic algorithms
+findgenericalgorithm         Generic algorithms
 finditerator                 iterator
 findarray                    array
 findand                      AND operator
@@ -2411,7 +2412,6 @@ pow(2.0, N)
 Some lawyer crap from me again. I've often fallen in this pitfall myself, so i'm going to warn you about it.
 
 ==
-(findalgorithm)
 (findmax)
 (findmin)
 The algorithm header:
@@ -3339,8 +3339,6 @@ pos1, n1, cp: Compares n1 characters starting at pos1 from s to cp.
 pos1, n1, cp, n2: Compares n1 characters starting at pos1 from s to n2 characters starting from the pointer cp.
 
 --
-stopa
-
 Numeric Conversions
 
 The new standard introduced several functions that convert between numeric data and library strings:
@@ -5337,6 +5335,199 @@ operator= operator is used to assign new contents to the container by replacing 
 deque::at() and deque::swap() in C++ STL: at() function is used reference the element present at the position given as the parameter to the function. swap() function is used to swap the contents of one deque with another deque of same type and size.
 deque::begin() and deque::end in C++ STL: begin() function is used to return an iterator pointing to the first element of the deque container. end() function is used to return an iterator pointing to the last element of the deque container.
 deque::emplace_front() and deque::emplace_back() in C++ STL: emplace_front() function is used to insert a new element into the deque container, the new element is added to the beginning of the deque. emplace_back() function is used to insert a new element into the deque container, the new element is added to the end of the deque.
+
+==
+(findalgorithm)
+(findgenericalgorithm)
+Generic algorithms
+
+The library containers define a surprisingly small set of operations. Rather than adding lots of functionality to each container, the library provides a set of algorithms, most of
+which are independent of any particular container type. These algorithms are generic: They operate on different types of containers and on elements of various types.
+
+Most of the algorithms are defined in the algorithm header. The library also defines a set of generic numeric algorithms that are defined in the numeric header.
+
+In general, the algorithms do not work directly on a container. Instead, they operate by traversing a range of elements bounded by two iterators. Typically, as the algorithm traverses the range, it does something with each element. For example, suppose we have a vector of ints and we want to know if that vector holds a particular value. The easiest way to answer this question is to call the library find algorithm:
+
+int val = 42; // value we'll look for
+
+// result will denote the element we want if it's in vec, or vec.cend() if not. tao: vec.cend() is the one past the last element.
+auto result = find(vec.cbegin(), vec.cend(), val);
+
+// report the result
+cout << "The value " << val << (result == vec.cend() ? " is not present" : " is present") << endl;
+
+The first two arguments to find are iterators denoting a range of elements, and the third argument is a value. find compares each element in the given range to the given value. It returns an iterator to the first element that is equal to that value. If
+there is no match, find returns its second iterator to indicate failure. Thus, we can determine whether the element was found by comparing the return value with the second iterator argument. 
+
+Because find operates in terms of iterators, we can use the same find function to look for values in any type of container. For example, we can use find to look for a value in a list of strings.
+
+Similarly, because pointers act like iterators on built-in arrays, we can use find to look in an array:
+
+int ia[] = {27, 210, 12, 47, 109, 83};
+int val = 83;
+int* result = find(begin(ia), end(ia), val);
+
+Here we use the library begin and end functions to pass a pointer
+to the first and one past the last elements in ia.
+
+We can also look in a subrange of the sequence by passing iterators (or pointers) to the first and one past the last element of that subrange. For example, this call looks for a match in the elements ia[1], ia[2], and ia[3]:
+
+// search the elements starting from ia[1] up to but not including ia[4]
+auto result = find(ia + 1, ia + 4, val);
+
+So long as there is an iterator that can be used to access the elements, find doesn’t depend in any way on the container type (or even whether the elements are stored in a container).
+
+Iterators Make the Algorithms Container Independent. But Algorithms Do Depend on Element-Type Operations.
+
+Key Concept: Algorithms Never Execute Container Operations.
+
+The generic algorithms do not themselves execute container operations. They operate solely in terms of iterators and iterator operations. The fact that the algorithms operate in terms of iterators and not container operations has a perhaps surprising but essential implication: Algorithms never change the size of the underlying container. Algorithms may change the values of the elements stored in the container, and they may move elements around within the container. They do not, however, ever add or remove elements directly.
+
+With only a few exceptions, the algorithms operate over a range of elements. We’ll refer to this range as the “input range.” The algorithms that take an input range always use their first two parameters to denote that range. These parameters are iterators denoting the first and one past the last elements to process.
+
+Although most algorithms are similar in that they operate over an input range, they differ in how they use the elements in that range. The most basic way to understand the algorithms is to know whether they read elements, write elements, or rearrange
+the order of the elements.
+
+--
+Read-Only Algorithms
+
+(Tao: see the find function above)
+
+A number of the algorithms read, but never write to, the elements in their input range. The find function is one such algorithm, as is the count function we used in the exercises.
+
+Another read-only algorithm is accumulate, which is defined in the numeric header. The accumulate function takes three arguments. The first two specify a range of elements to sum. The third is an initial value for the sum. Assuming vec is a sequence of integers, the following sets sum equal to the sum of the elements in vec, using 0 as the starting point for the summation.
+
+// sum the elements in vec starting the summation with the value 0
+int sum = accumulate(vec.cbegin(), vec.cend(), 0);
+
+The type of the third argument to accumulate determines which addition operator is used and is the type that accumulate returns.
+
+The fact that accumulate uses its third argument as the starting point for the summation has an important implication: It must be possible to add the element type to the type of the sum. That is, the elements in the sequence must match or be convertible to the type of the third argument.
+
+As another example, because string has a + operator, we can concatenate the elements of a vector of strings by calling accumulate:
+
+string sum = accumulate(v.cbegin(), v.cend(), string(""));
+
+This call concatenates each element in v onto a string that starts out as the empty string. Note that we explicitly create a string as the third parameter. Passing the empty string as a string literal would be a compile-time error:
+
+// error: no + on const char*
+string sum = accumulate(v.cbegin(), v.cend(), "");
+
+Ordinarily it is best to use cbegin() and cend() with algorithms that read, but do not write, the elements. However, if you plan to use the iterator returned by the algorithm to change an element’s value, then you need to pass begin() and end().
+
+Algorithms That Operate on Two Sequences
+
+Another read-only algorithm is equal, which lets us determine whether two sequences hold the same values. It compares each element from the first sequence to the corresponding element in the second. It returns true if the corresponding elements are equal, false otherwise. The algorithm takes three iterators: The first two (as usual) denote the range of elements in the first sequence; the third denotes the first element in the second sequence:
+
+// roster2 should have at least as many elements as roster1
+equal(roster1.cbegin(), roster1.cend(), roster2.cbegin());
+
+Because equal operates in terms of iterators, we can call equal to compare elements in containers of different types.
+
+However, equal makes one critically important assumption: It assumes that the second sequence is at least as big as the first. This algorithm potentially looks at every element in the first sequence. It assumes that there is a corresponding element
+for each of those elements in the second sequence.
+
+Algorithms that take a single iterator denoting a second sequence assume that the second sequence is at least as large at the first.
+
+--
+Algorithms That Write Container Elements
+
+Some algorithms assign new values to the elements in a sequence. When we use an algorithm that assigns to elements, we must take care to ensure that the sequence into which the algorithm writes is at least as large as the number of elements we ask the algorithm to write. Remember, algorithms do not perform container operations, so they have no way themselves to change the size of a container.
+
+As one example, the fill algorithm takes a pair of iterators that denote a range and a third argument that is a value. fill assigns the given value to each element in the input sequence:
+
+fill(vec.begin(), vec.end(), 0); // reset each element to 0
+
+fill(vec.begin(), vec.begin() + vec.size()/2, 10); // set a subsequence of the container to 10
+
+Some algorithms take an iterator that denotes a separate destination. These algorithms assign new values to the elements of a sequence starting at the element denoted by the destination iterator. For example, the fill_n function takes a single iterator, a count, and a value. It assigns the given value to the specified number of elements starting at the element denoted to by the iterator. We might use fill_n to assign a new value to the elements in a vector:
+
+vector<int> vec; // empty vector
+
+// use vec giving it various values
+fill_n(vec.begin(), vec.size(), 0); // reset all the elements of vec to
+0
+
+It is a fairly common beginner mistake to call fill_n (or similar algorithms that write to elements) on a container that has no elements:
+
+vector<int> vec; // empty vector
+
+// disaster: attempts to write to ten (nonexistent) elements in vec
+fill_n(vec.begin(), 10, 0);
+
+Algorithms that write to a destination iterator assume the destination is large enough to hold the number of elements being written.
+
+Introducing back_inserter
+
+One way to ensure that an algorithm has enough elements to hold the output is to use an insert iterator. An insert iterator is an iterator that adds elements to a container. Ordinarily, when we assign to a container element through an iterator, we assign to the element that iterator denotes. When we assign through an insert iterator, a new element equal to the right-hand value is added to the container.
+
+We’ll have more to say about insert iterators later. However, in order to illustrate how to use algorithms that write to a container, we will use back_inserter, which is a function defined in the iterator header. 
+
+back_inserter takes a reference to a container and returns an insert iterator bound to that container. When we assign through that iterator, the assignment calls push_back to add an element with the given value to the container:
+
+vector<int> vec; // empty vector
+
+auto it = back_inserter(vec); // assigning through it adds elements to vec
+
+*it = 42; // vec now has one element with value 42
+
+Copy Algorithms
+
+The copy algorithm is another example of an algorithm that writes to the elements of an output sequence denoted by a destination iterator. This algorithm takes three iterators. The first two denote an input range; the third denotes the beginning of the destination sequence. This algorithm copies elements from its input range into elements in the destination. It is essential that the destination passed to copy be at least as large as the input range.
+
+As one example, we can use copy to copy one built-in array to another:
+
+int a1[] = {0,1,2,3,4,5,6,7,8,9};
+int a2[sizeof(a1)/sizeof(*a1)]; // a2 has the same size as a1
+// ret points just past the last element copied into a2
+auto ret = copy(begin(a1), end(a1), a2); // copy a1 into a2
+
+The value returned by copy is the (incremented) value of its destination iterator. That is, ret will point just past the last element copied into a2.
+
+Several algorithms provide so-called “copying” versions. These algorithms compute new element values, but instead of putting them back into their input sequence, the algorithms create a new sequence to contain the results.
+
+For example, the replace algorithm reads a sequence and replaces every instance of a given value with another value. This algorithm takes four parameters: two iterators denoting the input range, and two values. It replaces each element that is equal to the first value with the second:
+
+// replace any element with the value 0 with 42
+replace(ilst.begin(), ilst.end(), 0, 42);
+
+This call replaces all instances of 0 by 42. If we want to leave the original sequence unchanged, we can call replace_copy. That algorithm takes a third iterator argument denoting a destination in which to write the adjusted sequence:
+
+// use back_inserter to grow destination as needed
+replace_copy(ilst.cbegin(), ilst.cend(), back_inserter(ivec), 0, 42);
+
+After this call, ilst is unchanged, and ivec contains a copy of ilst with the exception that every element in ilst with the value 0 has the value 42 in ivec.
+
+--
+Algorithms That Reorder Container Elements
+
+Some algorithms rearrange the order of elements within a container. An obvious example of such an algorithm is sort. A call to sort arranges the elements in the input range into sorted order using the element type’s < operator.
+
+As an example, suppose we want to analyze the words used in a set of children’s stories. We’ll assume that we have a vector that holds the text of several stories. We’d like to reduce this vector so that each word appears only once, regardless of how many times that word appears in any of the given stories.
+
+To eliminate the duplicated words, we will first sort the vector so that duplicated words appear adjacent to each other. Once the vector is sorted, we can use another library algorithm, named unique, to reorder the vector so that the unique elements appear in the first part of the vector. Because algorithms cannot do container operations, we’ll use the erase member of vector to actually remove the elements:
+
+
+void elimDups(vector<string> &words)
+{
+    // sort words alphabetically so we can find the duplicates
+    sort(words.begin(), words.end());
+
+    // unique reorders the input range so that each word appears once in the ront portion of the range and returns an iterator one past the unique range
+    auto end_unique = unique(words.begin(), words.end());
+    
+    // erase uses a vector operation to remove the nonunique elements
+    words.erase(end_unique, words.end());
+}
+
+The unique algorithm rearranges the input range to “eliminate” adjacent duplicated entries, and returns an iterator that denotes the end of the range of the unique values. The size of words is unchanged; it still has ten elements. The order of those
+elements is changed—the adjacent duplicates have been “removed.” We put remove in quotes because unique doesn’t remove any elements. Instead, it overwrites adjacent duplicates so that the unique elements appear at the front of the sequence. The iterator returned by unique denotes one past the last unique element. The elements beyond that point still exist, but we don’t know what values they have. The library algorithms operate on iterators, not containers. Therefore, an algorithm cannot (directly) add or remove elements.
+
+To actually remove the unused elements, we must use a container operation, which we do in the call to erase. We erase the range of elements from the one to which end_unique refers through the end of words.
+
+--
+stopa: p487, 10.3. Customizing Operations
+
 
 ==
 (finditerator)
