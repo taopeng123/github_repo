@@ -128,6 +128,8 @@ finddeque                    deque
 finddequeue                  deque
 findalgorithm                Generic algorithms
 findgenericalgorithm         Generic algorithms
+findlambda                   Lambda Expressions
+findforeach                  for_each
 finditerator                 iterator
 findarray                    array
 findand                      AND operator
@@ -5526,8 +5528,404 @@ elements is changed—the adjacent duplicates have been “removed.” We put re
 To actually remove the unused elements, we must use a container operation, which we do in the call to erase. We erase the range of elements from the one to which end_unique refers through the end of words.
 
 --
-stopa: p487, 10.3. Customizing Operations
+Customizing Operations
 
+Many of the algorithms compare elements in the input sequence. By default, such algorithms use either the element type’s < or == operator. The library also defines versions of these algorithms that let us supply our own operation to use in place of the default operator.
+
+For example, the sort algorithm uses the element type’s < operator. However, we might want to sort a sequence into a different order from that defined by <, or our sequence might have elements of a type (such as Sales_data) that does not have a
+< operator. In both cases, we need to override the default behavior of sort.
+
+Passing a Function to an Algorithm
+
+As one example, assume that we want to print the vector after we call elimDups. However, we’ll also assume that we want to see the words ordered by their size, and then alphabetically within each size. To reorder the vector by length, we’ll use a second, overloaded version of sort. This version of sort takes a third
+argument that is a predicate.
+
+Predicates
+
+A predicate(謂語) is an expression that can be called and that returns a value that can be used as a condition. The predicates used by library algorithms are either unary predicates (meaning they have a single parameter) or binary predicates (meaning
+they have two parameters). The algorithms that take predicates call the given predicate on the elements in the input range. As a result, it must be possible to convert the element type to the parameter type of the predicate.
+
+The version of sort that takes a binary predicate uses the given predicate in place of < to compare elements. For now, what we need to know is that the operation must define a consistent order for all possible elements in the input sequence. Our isShorter function is an example of a function that meets these requirements, so we can pass isShorter to sort. Doing so will reorder the elements by size:
+
+// comparison function to be used to sort by word length
+bool isShorter(const string &s1, const string &s2)
+{
+    return s1.size() < s2.size();
+}
+
+// sort on word length, shortest to longest
+sort(words.begin(), words.end(), isShorter);
+
+Sorting Algorithms
+
+When we sort words by size, we also want to maintain alphabetic order among the elements that have the same length. To keep the words of the same length in alphabetical order we can use the stable_sort algorithm. A stable sort maintains the original order among equal elements.
+
+stable_sort(words.begin(), words.end(), isShorter);
+
+Assuming words was in alphabetical order before this call, after the call, words will be sorted by element size, and the words of each length remain in alphabetical order.
+
+--
+(findlambda)
+Lambda Expressions
+
+The predicates we pass to an algorithm must have exactly one or two parameters, depending on whether the algorithm takes a unary or binary predicate, respectively. However, sometimes we want to do processing that requires more arguments than the algorithm’s predicate allows.
+
+Our new problem is to find the first element in the vector that has the given size. Once we know that element, we can use its position to compute how many elements have that size or greater.
+
+We can use the library find_if algorithm to find an element that has a particular size. Like find, the find_if algorithm takes a pair of iterators denoting a range. Unlike find, the third argument to find_if is a predicate. The find_if algorithm calls the given predicate on each element in the input range. It returns the first element for which the predicate returns a nonzero value, or its end iterator if no such element is found.
+
+It would be easy to write a function that takes a string and a size and returns a bool indicating whether the size of a given string is greater than the given size. However, find_if takes a unary predicate—any function we pass to find_if must have exactly one parameter that can be called with an element from the input sequence. There is no way to pass a second argument representing the size. To solve this part of our problem we’ll need to use some additional language facilities.
+
+Introducing Lambdas
+
+We can pass any kind of callable object to an algorithm. An object or expression is callable if we can apply the call operator to it. That is, if e is a callable expression, we can write e(args) where args is a comma-separated list of zero or
+more arguments.
+
+The only callables we’ve used so far are functions and function pointers. There are two other kinds of callables: classes that overload the function-call operator, which we’ll cover later, and lambda expressions.
+
+A lambda expression represents a callable unit of code. It can be thought of as an unnamed, inline function. Like any function, a lambda has a return type, a parameter list, and a function body. Unlike a function, lambdas may be defined inside a function. A lamba expression has the form
+
+[capture list] (parameter list) -> return type { function body }
+
+where capture list is an (often empty) list of local variables defined in the enclosing function (tao: the function which encloses the lambda expression); return type, parameter list, and function body are the same as in any ordinary function.  owever, unlike ordinary functions, a lambda must use a trailing
+return to specify its return type.
+
+We can omit either or both of the parameter list and return type but must always include the capture list and function body:
+
+auto f = [] { return 42; }; //tao: note the semicolon at end
+
+Here, we’ve defined f as a callable object that takes no arguments and returns 42.
+
+We call a lambda the same way we call a function by using the call operator:
+
+cout << f() << endl; // prints 42
+
+Omitting the parentheses and the parameter list in a lambda is equivalent to specifying an empty parameter list. Hence, when we call f, the argument list is empty. If we omit the return type, the lambda has an inferred return type that depends on the code in the function body. If the function body is just a return
+statement, the return type is inferred from the type of the expression that is returned. Otherwise, the return type is void.
+
+Note: Lambdas with function bodies that contain anything other than a single return statement that do not specify a return type return void.
+
+An example of a lambda that takes arguments:
+
+[](const string &a, const string &b)
+    { return a.size() < b.size();}
+
+// sort words by size, but maintain alphabetical order for words of the same size
+stable_sort(words.begin(), words.end(),
+    [](const string &a, const string &b)
+        { return a.size() < b.size();});
+
+Using the Capture List
+
+Although a lambda may appear inside a function, it can use variables local to that function (tao: the function which encloses the lambda) only if it specifies which variables it intends to use. A lambda specifies the variables it will use by including those local variables in its capture list. The capture list directs the lambda to include information needed to access those variables within the lambda itself.
+
+In this case, our lambda will capture sz (tao: sz is a variable defined in the enclosing function) and will have a single string parameter. The body of our lambda will compare the given string’s size with the captured value of sz:
+
+[sz](const string &a)
+    { return a.size() >= sz; };
+
+Inside the [] that begins a lambda we can provide a comma-separated list of names defined in the surrounding function. Because this lambda captures sz, the body of the lambda may use sz.
+
+Note: A lambda may use a variable local to its surrounding function only if the lambda captures that variable in its capture list.
+
+--
+(findforeach)
+The for_each Algorithm
+
+The for_each algorithm. This algorithm takes a callable object and calls that object on each element in the input range:
+
+//tao: wc is an iterator
+for_each(wc, words.end(),
+    [](const string &s){cout << s << " ";});
+
+The capture list is empty, because we use the capture list only for (nonstatic) variables defined in the surrounding function. A lambda can use names that are defined outside the function in which the lambda appears. In this case, cout is not a name defined locally in biggies; that name is defined in the iostream header. So long as the iostream header is included in the scope in which biggies appears, our lambda can use cout.
+
+Note: The capture list is used for local nonstatic variables only; lambdas can use local statics and variables declared outside the function directly.
+
+--
+Lambda Captures and Returns
+
+When we define a lambda, the compiler generates a new (unnamed) class type that corresponds to that lambda. We’ll see how these classes are generated later. For now, what’s useful to understand is that when we pass a lambda to a function, we are defining both a new type and an object of that type: The argument is an unnamed object of this compiler-generated class type. Similarly, when we use auto to define a variable initialized by a lambda, we are defining an object of the type generated from that lambda.
+
+By default, the class generated from a lambda contains a data member corresponding to the variables captured by the lambda. Like the data members of any class, the data members of a lambda are initialized when a lambda object is created.
+
+Capture by Value
+
+Similar to parameter passing, we can capture variables by value or by reference. Table below covers the various ways we can form a capture list. So far, our lambdas have captured variables by value. As with a parameter passed by value, it must be possible to copy such variables. Unlike parameters, the value of a captured variable is copied when the lambda is created, not when it is called:
+
+void fcn1()
+{
+    size_t v1 = 42; // local variable
+
+    // copies v1 into the callable object named f
+    auto f = [v1] { return v1; };
+
+    v1 = 0;
+    auto j = f(); // j is 42; f stored a copy of v1 when we created it
+}
+
+Lambda Capture List:
+
+[]: Empty capture list. The lambda may not use variables from the enclosing function. A lambda may use local variables only if it captures them.
+
+[names]: names is a comma-separated list of names local to the enclosing function. By default, variables in the capture list are copied. A name preceded by & is captured by reference.
+
+[&]: Implicit by reference capture list. Entities from the enclosing function used in the lambda body are used by reference. Tao: will explain in detail later.
+
+[=]: Implict by value capture list. Entities from the enclosing function used in the lambda body are copied into the lambda body. Tao: will explain in detail later.
+
+[&, identifier_list]: identifier_list is a comma-separated list of zero or more variables from the enclosing function. These variables are captured by value; any implicity captured variables are captured by reference. The names in identifier_list must not be preceded by an &.
+
+[=, refernece_list]: variable included in the refernece_list are captured by reference; any implicity captured variables are captured by value. The names in reference_list may not include this and must be preceded by an &.
+
+Capture by Reference
+
+We can also define lambdas that capture variables by reference. For example:
+
+void fcn2()
+{
+    size_t v1 = 42; // local variable
+    // the object f2 contains a reference to v1
+    auto f2 = [&v1] { return v1; };
+    v1 = 0;
+    auto j = f2(); // j is 0; f2 refers to v1; it doesn't store it
+}
+
+Reference captures are sometimes necessary. For example, we might want our biggies function to take a reference to an ostream on which to write and a character to use as the separator:
+
+void biggies(vector<string> &words, vector<string>::size_type sz, ostream &os = cout, char c = ' ')
+{
+    // code to reorder words as before
+    // statement to print count revised to print to os
+    for_each(words.begin(), words.end(),
+    [&os, c](const string &s) { os << s << c; });
+}
+
+We cannot copy ostream objects; the only way to capture os is by reference (or through a pointer to os).
+
+We can also return a lambda from a function. The function might directly return a callable object or the function might return an object of a class that has a callable object as a data member. If the function returns a lambda, then—for the same reasons that a function must not return a reference to a local variable—that lambda must not contain reference captures.
+
+Advice: Keep Your Lambda Captures Simple
+
+A lambda capture stores information between the time the lambda is created (i.e., when the code that defines the lambda is executed) and the time (or times) the lambda itself is executed. It is the programmer’s responsibility to ensure that whatever information is captured has the intended meaning each time the lambda is executed.
+
+Capturing an ordinary variable—an int, a string, or other nonpointer type—by value is usually straightforward. In this case, we only need to care whether the variable has the value we need when we capture it.
+
+If we capture a pointer or iterator, or capture a variable by reference, we must ensure that the object bound to that iterator, pointer, or reference still exists, whenever the lambda executes. Moreover, we need to ensure that the object has the intended value. Code that executes between when the lambda
+is created and when it executes might change the value of the object to which the lambda capture points (or refers). The value of the object at the time the pointer (or reference) was captured might have been what we wanted. The value of that object when the lambda executes might be quite different.
+
+As a rule, we can avoid potential problems with captures by minimizing the data we capture. Moreover, if possible, avoid capturing pointers or references.
+
+Implicit Captures
+
+Rather than explicitly listing the variables we want to use from the enclosing function, we can let the compiler infer which variables we use from the code in the lambda’s body. To direct the compiler to infer the capture list, we use an & or = in the capture list. The & tells the compiler to capture by reference, and the = says the values are captured by value. For example, we can rewrite the lambda that we passed to find_if as
+
+// sz implicitly captured by value
+wc = find_if(words.begin(), words.end(), [=](const string &s)
+{ return s.size() >= sz; });
+
+If we want to capture some variables by value and others by reference, we can mix implicit and explicit captures:
+
+void biggies(vector<string> &words, vector<string>::size_type sz,
+ostream &os = cout, char c = ' ')
+{
+    // other processing as before
+    // os implicitly captured by reference; c explicitly captured by value
+    for_each(words.begin(), words.end(), [&, c](const string &s) { os << s << c; });
+    
+    // os explicitly captured by reference; c implicitly captured by value
+    for_each(words.begin(), words.end(), [=, &os](const string &s) { os << s << c; });
+}
+
+When we mix implicit and explicit captures, the first item in the capture list must be an & or =. That symbol sets the default capture mode as by reference or by value, respectively.
+
+When we mix implicit and explicit captures, the explicitly captured variables must use the alternate form. That is, if the implicit capture is by reference (using &), then the explicitly named variables must be captured by value; hence their names may not be preceded by an &. Alternatively, if the implicit capture is by value (using =), then the explicitly named variables must be preceded by an & to indicate that they are to be captured by reference.
+
+Mutable Lambdas
+
+By default, a lambda may not change the value of a variable that it copies by value. If we want to be able to change the value of a captured variable, we must follow the parameter list with the keyword mutable. Lambdas that are mutable may not omit the parameter list:
+
+void fcn3()
+{
+    size_t v1 = 42; // local variable
+    // f can change the value of the variables it captures
+    auto f = [v1] () mutable { return ++v1; };
+    v1 = 0;
+    auto j = f(); // j is 43
+}
+
+Whether a variable captured by reference can be changed (as usual) depends only on whether that reference refers to a const or nonconst type:
+
+void fcn4()
+{
+    size_t v1 = 42; // local variable
+    // v1 is a reference to a non const variable
+    // we can change that variable through the reference inside f2
+    auto f2 = [&v1] { return ++v1; };
+    v1 = 0;
+    auto j = f2(); // j is 1
+}
+
+Specifying the Lambda Return Type
+
+The lambdas we’ve written so far contain only a single return statement. As a result, we haven’t had to specify the return type. By default, if a lambda body contains any statements other than a return, that lambda is assumed to return void. Like other
+functions that return void, lambdas inferred to return void may not return a value.
+
+As a simple example, we might use the library transform algorithm and a lambda to replace each negative value in a sequence with its absolute value:
+
+transform(vi.begin(), vi.end(), vi.begin(), [](int i) { return i < 0 ? -i : i; });
+
+The transform function takes three iterators and a callable. The first two iterators denote an input sequence and the third is a destination. The algorithm calls the given callable on each element in the input sequence and writes the result to the destination. 
+
+We need not specify the return type, because that type can be inferred from the type of the conditional operator.
+
+However, if we write the seemingly equivalent program using an if statement, our code won’t compile:
+
+// error: cannot deduce the return type for the lambda
+transform(vi.begin(), vi.end(), vi.begin(), [](int i) 
+{ if (i < 0) return -i; else return i;});
+
+This version of our lambda infers the return type as void but we returned a value. When we need to define a return type for a lambda, we must use a trailing return type:
+
+transform(vi.begin(), vi.end(), vi.begin(), [](int i) -> int { if (i < 0) return -i; else return i; });
+
+In this case, the fourth argument to transform is a lambda with an empty capture list, which takes a single parameter of type int and returns a value of type int. Its function body is an if statement that returns the absolute value of its parameter.
+
+--
+Binding Arguments
+
+Lambda expressions are most useful for simple operations that we do not need to use in more than one or two places. If we need to do the same operation in many places, we should usually define a function rather than writing the same lambda expression multiple times. Similarly, if an operation requires many statements, it is ordinarily better to use a function.
+
+It is usually straightforward to use a function in place of a lambda that has an empty capture list.
+
+However, it is not so easy to write a function to replace a lambda that captures local variables. For example, the lambda that we used in the call to find_if compared a string with a given size. We can easily write a function to do the same work:
+
+// tao: remember check_size has two parameters, sz is no longer a variable in the enclosing function. It will be used later.
+bool check_size(const string &s, string::size_type sz)
+{
+    return s.size() >= sz;
+}
+
+However, we can’t use this function as an argument to find_if. As we’ve seen, find_if takes a unary predicate, so the callable passed to find_if must take a single argument. The lambda that biggies passed to find_if used its capture list to store sz. In order to use check_size in place of that lambda, we have to figure out how to pass an argument to the sz parameter.
+
+The Library bind Function
+
+We can solve the problem of passing a size argument to check_size by using a new library function named bind, which is defined in the functional header. The bind function can be thought of as a general-purpose function adaptor. It takes a callable object and generates a new callable that “adapts” the parameter list of the original object.
+
+The general form of a call to bind is:
+
+auto newCallable = bind(callable, arg_list);
+
+tao copied the example below here:
+auto g = bind(f, a, b, _2, c, _1);
+The calling g(X, Y)  is equivalent to
+call ing f(a, b, Y, c, X)
+
+where newCallable is itself a callable object and arg_list is a comma-separated list of arguments that correspond to the parameters of the given callable. That is, when we call newCallable, newCallable calls callable, passing the arguments in arg_list.
+
+The arguments in arg_list may include names of the form _n, where n is an integer. These arguments are “placeholders” representing the parameters of newCallable(tao: note it is newCallable). They stand “in place of” the arguments that will be passed to newCallable. The number n is the position of the parameter in the generated callable: _1 is the first parameter in newCallable(tao: note it is newCallable), _2 is the second, and so forth.
+
+Binding the sz Parameter of check_size
+
+As a simple example, we’ll use bind to generate an object that calls check_size with a fixed value for its size parameter as follows:
+
+// check6 is a callable object that takes one argument of type string
+// and calls check_size on its given string and the value 6
+// tao: example: check6("hello") calls check_size("hello", 6)
+auto check6 = bind(check_size, _1, 6);
+
+This call to bind has only one placeholder, which means that check6 takes a single argument. The placeholder appears first in arg_list, which means that the parameter in check6 corresponds to the first parameter of check_size. That parameter is a const string&, which means that the parameter in check6 is also a const
+string&. Thus, a call to check6 must pass an argument of type string, which check6 will pass as the first argument to check_size.
+
+The second argument in arg_list (i.e., the third argument to bind) is the value 6. That value is bound to the second parameter of check_size. Whenever we call check6, it will pass 6 as the second argument to check_size:
+
+string s = "hello";
+bool b1 = check6(s); // check6(s) calls check_size(s, 6)
+
+Using bind, we can replace our original lambda-based call to find_if
+
+auto wc = find_if(words.begin(), words.end(), [sz](const string &a)
+
+with a version that uses check_size:
+
+auto wc = find_if(words.begin(), words.end(), bind(check_size, _1, sz));
+
+This call to bind generates a callable object that binds the second argument of check_size to the value of sz. When find_if calls this object on the strings in words those calls will in turn call check_size passing the given string and sz. So, find_if (effectively) will call check_size on each string in the input range and compare the size of that string to sz.
+
+Using placeholders Names
+
+The _n names are defined in a namespace named placeholders. That namespace is itself defined inside the std namespace. To use these names, we must supply the names of both namespaces. As with our other examples, our calls to bind assume the existence of appropriate using declarations. For example, the using declaration for _1 is
+
+using std::placeholders::_1;
+
+This declaration says we’re using the name _1, which is defined in the namespace placeholders, which is itself defined in the namespace std.
+
+We must provide a separate using declaration for each placeholder name that we use. Writing such declarations can be tedious and error-prone. Rather than separately declaring each placeholder, we can use a different form of using that we will cover in more detail later. This form:
+
+using namespace namespace_name;
+
+says that we want to make all the names from namespace_name accessible to our program. For example:
+
+using namespace std::placeholders;
+
+makes all the names defined by placeholders usable. Like the bind function, the placeholders namespace is defined in the functional header.
+
+Arguments to bind
+
+As we’ve seen, we can use bind to fix the value of a parameter. More generally, we can use bind to bind or rearrange the parameters in the given callable. For example, assuming f is a callable object that has five parameters, the following call to bind:
+
+// g is a callable object that takes two arguments
+auto g = bind(f, a, b, _2, c, _1);
+
+generates a new callable that takes two arguments, represented by the placeholders _2 and _1. The new callable will pass its own arguments as the third and fifth arguments to f. The first, second, and fourth arguments to f are bound to the given values, a, b, and c, respectively.
+
+The arguments to g are bound positionally to the placeholders. That is, the first argument to g is bound to _1, and the second argument is bound to _2. Thus, when we call g, the first argument to g will be passed as the last argument to f; the second argument to g will be passed as g’s third argument. In effect, this call to bind maps
+g(_1, _2)
+to
+f(a, b, _2, c, _1)
+
+That is, calling g calls f using g’s arguments for the  placeholders along with the bound arguments, a, b, and c. For example, calling g(X, Y) calls
+f(a, b, Y, c, X)
+
+Using to bind to Reorder Parameters
+
+As a more concrete example of using bind to reorder arguments, we can use bind to invert the meaning of isShorter by writing
+
+// sort on word length, shortest to longest
+sort(words.begin(), words.end(), isShorter);
+// sort on word length, longest to shortest
+sort(words.begin(), words.end(), bind(isShorter, _2, _1));
+
+By default, the arguments to bind that are not placeholders are copied into the callable object that bind returns. However, as with lambdas, sometimes we have arguments that we want to bind but that we want to pass by reference or we might want to bind an argument that has a type that we cannot copy.
+
+For example, to replace the lambda that captured an ostream by reference:
+
+// os is a local variable referring to an output stream
+// c is a local variable of type char
+for_each(words.begin(), words.end(), [&os, c](const string &s) { os << s << c; });
+
+We can easily write a function to do the same job:
+
+ostream &print(ostream &os, const string &s, char c)
+{
+    return os << s << c;
+}
+
+However, we can’t use bind directly to replace the capture of os:
+
+// error: cannot copy os
+for_each(words.begin(), words.end(), bind(print, os, _1, ''));
+
+because bind copies its arguments and we cannot copy an ostream. If we want to pass an object to bind without copying it, we must use the library ref function:
+
+for_each(words.begin(), words.end(), bind(print, ref(os), _1, ' '));
+
+The ref function returns an object that contains the given reference and that is itself copyable. There is also a cref function that generates a class that holds a reference to const. Like bind, the ref and cref functions are defined in the functional header.
+
+Backward Compatibility: Binding Arguments
+
+Older versions of C++ provided a much more limited, yet more complicated, set of facilities to bind arguments to functions. The library defined two functions named bind1st and bind2nd. Like bind, these functions take a function and generate a new callable object that calls the given function with one of its parameters bound to a given value. However, these functions can
+bind only the first or second parameter, respectively. Because they are of much more limited utility, they have been deprecated in the new standard. A deprecated feature is one that may not be supported in future releases. Modern C++ programs should use bind.
 
 ==
 (finditerator)
@@ -5624,6 +6022,9 @@ auto it3 = a.cbegin(); // list<string>::const_iterator
 auto it4 = a.crbegin();// list<string>::const_reverse_iterator
 
 When write access is not needed, use cbegin and cend.
+
+--
+stopa: p506, 10.4. Revisiting Iterators
 
 ==
 (findarray)
