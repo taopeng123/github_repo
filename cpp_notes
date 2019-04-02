@@ -115,6 +115,7 @@ findcontainerfunctions       Container functions
 findcontainermethods         Container functions
 findvector                   vector
 findsortvector               Sort a vector
+findassociativecontainers    Associative Containers
 findunorderedcontainers      Unordered associative containers
 findunorderedset             unordered_set
 findset                      set
@@ -131,6 +132,7 @@ findgenericalgorithm         Generic algorithms
 findlambda                   Lambda Expressions
 findforeach                  for_each
 finditerator                 iterator
+findreverseiterator          Reverse Iterators
 findarray                    array
 findand                      AND operator
 findoperator                 operators
@@ -3706,6 +3708,8 @@ nfiles = 5
 (findsequentialcontainer)
 Sequential containers
 
+Associative and sequential containers differ from one another in a fundamental way: Elements in an associative container are stored and retrieved by a key. In contrast, elements in a sequential container are stored and accessed sequentially by their position in the container.
+
 A container holds a collection of objects of a specified type. The sequential containers let the programmer control the order in which the elements are stored and accessed. That order does not depend on the values of the elements. Instead, the order corresponds to the position at which elements are put into the container. By contrast, the ordered and unordered associative containers, store their elements based on the value of a key.
 
 The sequential containers, which are listed below, all provide fast sequential access to their elements. However, these containers offer different performance tradeoffs relative to
@@ -4802,6 +4806,51 @@ Vector 1: 3 4
 Vector 2: 1 2
 
 ==
+(findassociativecontainers)
+Associative Containers
+
+Tao: Associative Containers appears after all the above contents in the book.
+Tao: Associative Containers contains only map and set, no other things.
+
+Associative and sequential containers differ from one another in a fundamental way: Elements in an associative container are stored and retrieved by a key. In contrast, elements in a sequential container are stored and accessed sequentially by their position in the container.
+
+Although the associative containers share much of the behavior of the sequential containers, they differ from the sequential containers in ways that reflect the use of keys.
+
+Associative containers support efficient lookup and retrieval by a key. The two primary associative-container types are map and set. The elements in a map are key–value pairs: The key serves as an index into the map, and the value represents the data associated with that index. A set element contains only a key; a set supports efficient queries as to whether a given key is present. We might use a set to hold words that we want to ignore during some kind of text processing. A dictionary would be a good use for a map: The word would be the key, and its definition would be the value.
+
+The library provides eight associative containers, listed in Table below. These eight differ along three dimensions: Each container is (1) a set or a map, (2) requires unique keys or allows multiple keys, and (3) stores the elements in order or not. The containers that allow multiple keys include the word multi; those that do not keep their keys ordered start with the word unordered. Hence an unordered_multi_set is a set that allows multiple keys whose elements are not stored in order, whereas a set has unique keys that are stored in order. The
+unordered containers use a hash function to organize their elements. We’ll have more to say about the hash function in later.
+
+The map and multimap types are defined in the map header; the set and multiset types are in the set header; and the unordered containers are in the unordered_map and unordered_set headers.
+
+Associative Container Types:
+
+** Elements Ordered by Key **
+
+map: Associative array; holds key-value pairs
+
+set: Container in which the key is the value
+
+multimap: map in which a key can appear multiple times
+
+multiset: set in which a key can appear multiple times
+
+** Unordered Collections **
+
+unordered_map: map organized by a hash function
+
+unordered_set: set organized by a hash function
+
+unordered_multimap: Hashed map; keys can appear multiple times
+
+unordered_multiset: Hashed set; keys can appear mutliple times 
+
+--
+Overview of the Associative Containers
+
+stopa: p531, Overview of the Associative Containers
+
+==
 (findunorderedcontainers)
 Unordered associative containers
 
@@ -5565,6 +5614,134 @@ stable_sort(words.begin(), words.end(), isShorter);
 Assuming words was in alphabetical order before this call, after the call, words will be sorted by element size, and the words of each length remain in alphabetical order.
 
 --
+Structure of Generic Algorithms
+
+The most fundamental property of any algorithm is the list of operations it requires from its iterator(s). Some algorithms, such as find, require only the ability to access an element through the iterator, to increment the iterator, and to compare two iterators for equality. Others, such as sort, require the ability to read, write, and randomly access elements. The iterator operations required by the algorithms are grouped into five iterator categories listed in Table below. Each algorithm specifies what kind of iterator must be supplied for each of its iterator parameters.
+
+Iterator Categories:
+
+Input iterator: Read, but not write; single-pass, increment only.
+
+Output iterator: Write, but not read; single-pass, increment only.
+
+Forward iterator: Read and write; multi-pass, increment only.
+
+Bidirectional iterator: Read and write; multi-pass, increment and decrement.
+
+Random-access iterator: Read and write; multi=pass, full iterator arithmetic.
+
+A second way is to classify the algorithms (as we did in the beginning of this chapter) is by whether they read, write, or reorder the elements in the sequence. Appendix A covers all the algorithms according to this classification.
+
+The find and accumulate algorithms require input iterators; istream_iterators are input iterators.
+
+Iterators used as a destination are typically output iterators. For example, the third parameter to copy is an output iterator. The ostream_iterator type is an output iterator.
+
+The replace algorithm requires a forward iterator; iterators on
+forward_list are forward iterators.
+
+The reverse algorithm requires bidirectional iterators, and aside from forward_list, the library containers supply iterators that meet the requirements for a bidirectional iterator.
+
+The sort algorithms require random-access iterators. Iterators for array, deque, string, and vector are random-access iterators, as are pointers when used to access elements of a built-in array.
+
+--
+Algorithm Parameter Patterns
+
+Superimposed on any other classification of the algorithms is a set of parameter conventions. Understanding these parameter conventions can aid in learning new algorithms—by knowing what the parameters mean, you can concentrate on understanding the operation the algorithm performs. Most of the algorithms have one
+of the following four forms:
+
+alg(beg, end, other args);
+alg(beg, end, dest, other args);
+alg(beg, end, beg2, other args);
+alg(beg, end, beg2, end2, other args);
+
+where alg is the name of the algorithm, and beg and end denote the input range on which the algorithm operates.
+
+Algorithms with a Single Destination Iterator
+
+A dest parameter is an iterator that denotes a destination in which the algorithm can write its output. Algorithms assume that it is safe to write as many elements as needed.
+
+Algorithms with a Second Input Sequence
+
+Algorithms that take either beg2 alone or beg2 and end2 use those iterators to denote a second input range. These algorithms typically use the elements from the second range in combination with the input range to perform a computation.
+
+When an algorithm takes both beg2 and end2, these iterators denote a second range. Such algorithms take two completely specified ranges: the input range denoted by [beg, end), and a second input range denoted by [beg2, end2).
+
+Algorithms that take only beg2 (and not end2) treat beg2 as the first element in a second input range. The end of this range is not specified. Instead, these algorithms assume that the range starting at beg2 is at least as large as the one denoted by beg, end.
+
+--
+Algorithm Naming Conventions
+
+Some Algorithms Use Overloading to Pass a Predicate
+
+Algorithms that take a predicate to use in place of the < or == operator, and that do not take other arguments, typically are overloaded. One version of the function uses the element type’s operator to compare elements; the second takes an extra parameter that is a predicate to use in place of < or ==:
+
+unique(beg, end); // uses the == operator to compare the elements
+unique(beg, end, comp); // uses comp to compare the elements
+
+Algorithms with _if Versions
+
+Algorithms that take an element value typically have a second named (not overloaded) version that takes a predicate in place of the value. The algorithms that take a predicate have the suffix _if appended:
+
+find(beg, end, val); // find the first instance of val in the input range
+find_if(beg, end, pred); // find the first instance for which pred is true
+
+Distinguishing Versions That Copy from Those That Do Not
+
+By default, algorithms that rearrange elements write the rearranged elements back into the given input range. These algorithms provide a second version that writes to a specified output destination. As we’ve seen, algorithms that write to a destination append _copy to their names:
+
+reverse(beg, end); // reverse the elements in the input range
+reverse_copy(beg, end, dest);// copy elements in reverse order into dest
+
+Some algorithms provide both _copy and _if versions. These versions take a destination iterator and a predicate:
+
+// removes the odd elements from v1
+remove_if(v1.begin(), v1.end(), [](int i) { return i % 2; });
+
+// copies only the even elements from v1 into v2; v1 is unchanged
+remove_copy_if(v1.begin(), v1.end(), back_inserter(v2), [](int i) { return i % 2; });
+
+--
+Container-Specific Algorithms
+
+Unlike the other containers, list and forward_list define several algorithms as members. In particular, the list types define their own versions of sort, merge, remove, reverse, and unique. The generic version of sort requires randomaccess iterators. As a result, sort cannot be used with list and forward_list because these types offer bidirectional and forward iterators, respectively.
+
+The generic versions of the other algorithms that the list types define can be used with lists, but at a cost in performance. These algorithms swap elements in the input sequence. A list can “swap” its elements by changing the links among its elements rather than swapping the values of those elements. As a result, the list-specific versions of these algorithms can achieve much better performance than the corresponding generic versions.
+
+These list-specific operations are described in Table below. Generic algorithms not listed in the table that take appropriate iterators execute equally efficiently on lists and forward_listss as on other containers.
+
+Best Practices: The list member versions should be used in preference to the generic algorithms for lists and forward_lists.
+
+Algorithms That are Members of list and forward_list:
+
+lst.merge(lst2), lst.merge(lst2, comp): Merges elements from list2 onto lst. Both lst and lst2 must be sorted. Elements are removed from lst2. After the merge, lst2 is empty. The first version uses the < operator; the second version uses the given comparison operation.
+
+lst.remove(val), lst.remove_if(pred): Calls erase to remove each element that is == to the given value or for which the given unary predicate succeds.
+
+lst.reverse(): Reverses the order of the elements in lst.
+
+lst.sort(), lst.sort(comp): Sorts the elements of lst using < or the given comparison operation.
+
+lst.unique(), lst.unique(pred): Calls erase to remove consecutive copies of the same value. The first version uses ==, the second uses the given binary preidcate.
+
+The splice (粘接) Members
+
+The list types also define a splice algorithm, which is described in Table below. This algorithm is particular to list data structures. Hence a generic version of this algorithm is not needed.
+
+Arguments to the list and forward_list splice Members:
+
+lst.splice(args) or flst.splice_after(args)
+
+(p, lst2): p is an iterator to an element in lst or an iterator just before an element in flst. MOves all the elmement(s) from lst2 into lst just before p or into flst just after p. Removes the element(s) from lst2. lst2 must have the same type as lst or flst and many not be the same list.
+
+(p, lst2, p2): p2 is a valid iterator into lst2. Moves the element denoted by p2 into lst or moves the element just after p2 into flst. lst2 can be the same list as lst or flst.
+
+(p, lst2, b, e): b and e must denote a valid range in lst2. Moves the elements in the given range from lst2. lst2 and lst (or flst) can be the same list but p must not denote an element in the gien range.
+
+The List-Specific Operations Do Change the Containers
+
+Most of the list-specific algorithms are similar—but not identical—to their generic counterparts. However, a crucially important difference between the list-specific and the generic versions is that the list versions change the underlying container. For example, the list version of remove removes the indicated elements. The list version of unique removes the second and subsequent duplicate elements. Similarly, merge and splice are destructive on their arguments.
+
+--
 (findlambda)
 Lambda Expressions
 
@@ -5941,6 +6118,12 @@ Types that have iterators have members that return iterators. In particular, the
 
 auto b = v.begin(), e = v.end(); //Note that auto is C++11
 
+   v.begin()                        v.end()
+      |                                |
+    |---|---|---|---|---|---|---|---|
+  |                               |
+v.rend()                    v.rbegin()
+
 The iterator returned by end is an iterator positioned “one past the end” of the associated container (or string). This iterator denotes a nonexistent element “off the end” of the container. It is used as a marker indicating when we have processed all the elements. The iterator returned by end is often referred to as the off-the-end iterator or abbreviated as “the end iterator.” If the container is empty, begin returns the same iterator as the one returned by end.
 
 Iterators support only a few operations, which are listed below (tao: these operations are very similar to pointers):
@@ -6024,7 +6207,214 @@ auto it4 = a.crbegin();// list<string>::const_reverse_iterator
 When write access is not needed, use cbegin and cend.
 
 --
-stopa: p506, 10.4. Revisiting Iterators
+Revisiting Iterators
+
+In addition to the iterators that are defined for each of the containers, the library defines several additional kinds of iterators in the iterator header. These iterators include
+
+• Insert iterators: These iterators are bound to a container and can be used to insert elements into the container.
+
+• Stream iterators: These iterators are bound to input or output streams and can be used to iterate through the associated IO stream.
+
+• Reverse iterators: These iterators move backward, rather than forward. The library containers, other than forward_list, have reverse iterators.
+
+• Move iterators: These special-purpose iterators move rather than copy their elements. We’ll cover move iterators later.
+
+Insert Iterators
+
+An inserter is an iterator adaptor that takes a container and yields an iterator that adds elements to the specified container. When we assign a value through an insert iterator, the iterator calls a container operation to add an element at
+a specified position in the given container. The operations these iterators support are listed in Table below:
+
+Insert Iterator Operations
+
+it = t: Inserts the value t at the current position denoted by it. Depending on the kind of insert iterator, and assuming c is the container to which it is bound, calls c.push_back(t), c.push_front(t), or c.insert(t, p), where p is the iterator position given to inserter.
+
+*it, ++it, it++: These operations exist but do nothing to it. Each operator returns it.
+
+There are three kinds of inserters. Each differs from the others as to where elements are inserted:
+
+• back_inserter creates an iterator that uses push_back.
+• front_inserter creates an iterator that uses push_front.
+• inserter creates an iterator that uses insert. This function takes a second argument, which must be an iterator into the given container. Elements are inserted ahead of the element denoted by the given iterator.
+
+Note: We can use front_inserter only if the container has push_front. Similarly, we can use back_inserter only if it has push_back.
+
+It is important to understand that when we call inserter(c, iter), we get an iterator that, when used successively (tao: not successfully), inserts elements ahead of the element originally denoted by iter. (Tao: c is container). That is, if it is an iterator generated by inserter, then an assignment such as
+
+* it = va1;
+
+behaves as
+
+it = c.insert(it, val); // (tao: it is not inserter). it points to the newly added element
+++it; // increment it so that it denotes the same element as before
+
+The iterator generated by front_inserter behaves quite differently from the one created by inserter. When we use front_inserter, elements are always inserted ahead of the then first element in the container. Even if the position we pass to inserter initially denotes the first element, as soon as we insert an element in front of that element, that element is no longer the one at the beginning of the container:
+
+list<int> 1st = {1,2,3,4};
+list<int> lst2, lst3; // empty lists
+
+// after copy completes, 1st2 contains 4 3 2 1
+copy(1st.cbegin(), 1st.cend(), front_inserter(lst2));
+
+// after copy completes, 1st3 contains 1 2 3 4
+copy(1st.cbegin(), 1st.cend(), inserter(lst3, lst3.begin()));
+
+When we call front_inserter(c), we get an insert iterator that successively calls push_front. As each element is inserted, it becomes the new first element in c. Therefore, front_inserter yields an iterator that reverses the order of the sequence that it inserts; inserter and back_inserter don’t.
+
+--
+iostream Iterators
+
+Even though the iostream types are not containers, there are iterators that can be used with objects of the IO types. An istream_iterator reads an input stream, and an ostream_iterator
+writes an output stream. These iterators treat their corresponding stream as a sequence of elements of a specified type. Using a stream iterator, we can use the generic algorithms to read data from or write data to stream objects.
+
+istream_iterator Operations:
+
+istream_iterator<T> in(is): in reads values of type T from input stram is.
+
+istream_iterator<T> end: Off-the-end iterator for an istream_iterator that reads values of type T.
+
+in1 == in2, in1 != in2: in1 and in2 must read the same type. They are equal if they are both the end value or are bound to the same input stream.
+
+*in: Returns the value read from the stream.
+
+in->mem: Synoym for (*in).mem
+
+++in, in++: Reads the next value from the input stream using the >> operator for the element type. As usual, the prefix version returns a reference to the incremented iterator. The postfix version returns the old value.
+
+ostream Iterator Operations:
+
+ostream_iterator<T> out(os): out writes values of type T to output stream os.
+
+ostream_iterator<T> out(os, d): out writes values of type T followed by d to output stream os. d points to a null-terminated character array.
+
+out = val: Wrties val to the ostream to which out is bound using the << operator. val must have a type that is compatibel with the type that out can write.
+
+*out, ++out, out++: These operations exist but do nothing to out. Each operator returns out.
+
+Operations on istream_iterators
+
+When we create a stream iterator, we must specify the type of objects that the iterator will read or write. An istream_iterator uses >> to read a stream.
+
+Therefore, the type that an istream_iterator reads must have an input operator defined. When we create an istream_iterator, we can bind it to a stream.
+
+Alternatively, we can default initialize the iterator, which creates an iterator that we can use as the off-the-end value.
+
+istream_iterator<int> int_it(cin); // reads ints from cin
+istream_iterator<int> int_eof; // end iterator value. It was defined as the empty istream_iterator, which is used as the end iterator.
+ifstream in("afile");
+istream_iterator<string> str_it(in); // reads strings from "afile"
+
+As an example, we can use an istream_iterator to read the standard input into a vector:
+
+istream_iterator<int> in_iter(cin); // read ints from cin
+istream_iterator<int> eof;
+
+while (in_iter != eof) // while there's valid input to read
+    // postfix increment reads the stream and returns the old value of the iterator
+    // we dereference that iterator to get the previous value read from the stream
+    vec.push_back(*in_iter++);
+
+This loop reads ints from cin, storing what was read in vec. On each iteration, the loop checks whether in_iter is the same as eof. That iterator was defined as the empty istream_iterator, which is used as the end iterator. An iterator bound to a stream is equal to the end iterator once its associated stream hits end-of-file or encounters an IO error.
+
+Using Stream Iterators with the Algorithms
+
+Because algorithms operate in terms of iterator operations, and the stream iterators support at least some iterator operations, we can use stream iterators with at least some of the algorithms.
+We’ll see later how to tell which algorithms can be used with the stream iterators. As one example, we can call accumulate with
+a pair of istream_iterators:
+
+istream_iterator<int> in(cin), eof;
+cout << accumulate(in, eof, 0) << endl;
+
+This call will generate the sum of values read from the standard input.
+
+Operations on ostream_iterators
+
+An ostream_iterator can be defined for any type that has an output operator (the << operator). When we create an ostream_iterator, we may (optionally) provide a second argument that specifies a character string to print following each element. That string must be a C-style character string (i.e., a string literal or a pointer to a null-terminated array). We must bind an ostream_iterator to a specific stream. There is no empty or off-the-end ostream_iterator.
+
+We can use an ostream_iterator to write a sequence of values:
+
+ostream_iterator<int> out_iter(cout, " ");
+for (auto e : vec)
+    *out_iter++ = e; // the assignment writes this element to cout
+cout << endl;
+
+This program writes each element from vec onto cout following each element with a space. Each time we assign a value to out_iter, the write is committed.
+
+It is worth noting that we can omit the dereference and the increment when we assign to out_iter. That is, we can write this loop equivalently as
+
+for (auto e : vec)
+    out_iter = e; // the assignment writes this element to cout
+cout << endl;
+
+The * and ++ operators do nothing on an ostream_iterator, so omitting them has no effect on our program. However, we prefer to write the loop as first presented. That loop uses the iterator consistently with how we use other iterator types. We can easily change this loop to execute on another iterator type. Moreover, the behavior of this loop will be clearer to readers of our code.
+
+Rather than writing the loop ourselves, we can more easily print the elements in vec by calling copy:
+
+copy(vec.begin(), vec.end(), out_iter);
+cout << endl;
+
+Using Stream Iterators with Class Types
+
+We can create an istream_iterator for any type that has an input operator (>>). Similarly, we can define an ostream_iterator so long as the type has an output operator (<<). 
+
+--
+(findreverseiterator)
+Reverse Iterators
+
+A reverse iterator is an iterator that traverses a container backward, from the last element toward the first. A reverse iterator inverts the meaning of increment (and decrement). Incrementing (++it) a reverse iterator moves the iterator to the previous element; derementing (--it) moves the iterator to the next element.
+
+The containers, aside from forward_list, all have reverse iterators. We obtain a reverse iterator by calling the rbegin, rend, crbegin, and crend members. These members return reverse iterators to the last element in the container and one “past”
+(i.e., one before) the beginning of the container. As with ordinary iterators, there are both const and nonconst reverse iterators.
+
+Figure below illustrates the relationship between these four iterators on a hypothetical vector named vec.
+
+  v.cbegin()                        v.cend()
+      |                                |
+    |---|---|---|---|---|---|---|---|
+  |                               |
+v.crend()                    v.crbegin()
+
+As an example, the following loop prints the elements of vec in reverse order:
+
+vector<int> vec = {0,1,2,3,4,5,6,7,8,9};
+
+// reverse iterator of vector from back to front
+for (auto r_iter = vec.crbegin(); r_iter != vec.crend(); ++r_iter) 
+    cout << *r_iter << endl; // prints 9, 8, 7,... 0
+
+Although it may seem confusing to have the meaning of the increment and decrement operators reversed, doing so lets us use the algorithms transparently to process a container forward or backward. For example, we can sort our vector in descending order by passing sort a pair of reverse iterators:
+
+sort(vec.begin(), vec.end()); // sorts vec in ''normal'' order
+// sorts in reverse: puts the smallest element at the end of vec
+sort(vec.rbegin(), vec.rend());
+
+Reverse Iterators Require Decrement Operators
+
+(Tao: the following explains why we need reverse iterators)
+Not surprisingly, we can define a reverse iterator only from an iterator that supports -- as well as ++. After all, the purpose of a reverse iterator is to move the iterator backward through the sequence. Aside from forward_list, the iterators on the standard containers all support decrement as well as increment. However, the stream iterators do not, because it is not possible to move backward through a stream. Therefore, it is not possible to create a reverse iterator from a forward_list or a stream iterator.
+
+Relationship between Reverse Iterators and Other Iterators
+
+Suppose we have a string named line that contains a comma-separated list of words, and we want to print the first word in line. Using find, this task is easy:
+
+// find the first element in a comma-separated list
+auto comma = find(line.cbegin(), line.cend(), ',');
+cout << string(line.cbegin(), comma) << endl;
+
+If we wanted the last word, we can use reverse iterators instead:
+
+// find the last element in a comma-separated list
+auto rcomma = find(line.crbegin(), line.crend(), ',');
+
+The interesting part comes when we try to print the word we found. The seemingly obvious way
+
+// WRONG: will generate the word in reverse order
+cout << string(line.crbegin(), rcomma) << endl;
+
+generates bogus output. For example, had our input been
+
+FIRST,MIDDLE,LAST 
+
+then this statement would print TSAL!
 
 ==
 (findarray)
