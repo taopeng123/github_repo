@@ -1,5 +1,11 @@
 stopa search in file
 
+Left:
+Chapter 13 Copy Control, 616-679, 63 pages
+Chapter 14 Overloaded Operations and Conversions, 683-729, 46 pages
+Chapter 15 Object-Oriented Programming (tao: actually talking about inheritance), 731-799, 68 pages
+Chapter 16 Templates and Generic Programming, 802-878, 76 pages
+
 ==
 findcbegin                   C begin
 findcscanf                   scanf in C
@@ -93,7 +99,10 @@ findpointertoarray           Pointer to array & array of pointers
 findreferencetoarray         Reference to array & array of references
 findpointertofunction        Pointer to function
 finddynamicmemory            Dynamic memory
+findsharedptr                Smart pointer
+findsmartpointer             Smart pointer
 findnew                      new operator
+finddynamicarray             Dynamic Arrays
 findconst                    Constant
 findconstparameter           const in function parameter
 findconstantexpression       Constant expression
@@ -162,7 +171,6 @@ findinlinefunctions          Inline Functions
 findconstexprfunctions       constexpr Functions
 findassert                   assert
 findndebug                   NDEBUG
-finddynamicmemory            Dynamic memory
 findstruct                   struct
 findclass                    class
 findpublic                   public
@@ -2797,22 +2805,184 @@ The only tricky part in declaring getFcn is to remember that when we apply declt
 (finddynamicmemory)            
 Dynamic memory
 
+Tao: dynmaic memory is allocated by "new" operator, and freed by "delete" operator.
+
+The programs we’ve written so far have used objects that have well-defined lifetimes. Global objects are allocated at program start-up and destroyed when the program ends. Local, automatic objects are created and destroyed when the block in which they are defined is entered and exited. Local static objects are allocated before their first use and are destroyed when the program ends.
+
+In addition to supporting automatic and static objects, C++ lets us allocate objects dynamically. Dynamically allocated objects have a lifetime that is independent of where they are created; they exist until they are explicitly freed (tao: note explicitly freed).
+
+Properly freeing dynamic objects turns out to be a surprisingly rich source of bugs. To make using dynamic objects safer, the library defines two smart pointer types that manage dynamically allocated objects. Smart pointers ensure that the objects to which they point are automatically freed when it is appropriate to do so.
+
+Warning: Although necessary at times, dynamic memory is notoriously tricky to manage correctly.
+
+In C++, dynamic memory is managed through a pair of operators: new, which allocates, and optionally initializes, an object in dynamic memory and returns a pointer to that object; and delete, which takes a pointer to a dynamic object, destroys that
+object, and frees the associated memory. Dynamic memory is problematic because it is surprisingly hard to ensure that we
+free memory at the right time. Either we forget to free the memory—in which case we have a memory leak—or we free the memory when there are still pointers referring to that memory—in which case we have a pointer that refers to memory that is no longer valid.
+
+To make using dynamic memory easier (and safer), the new library provides two smart pointer types that manage dynamic objects. A smart pointer acts like a regular pointer with the important exception that it automatically deletes the object to
+which it points. The new library defines two kinds of smart pointers that differ in how they manage their underlying pointers: shared_ptr, which allows multiple pointers to
+refer to the same object, and unique_ptr, which “owns” the object to which it points. The library also defines a companion class named weak_ptr that is a weak reference to an object managed by a shared_ptr. All three are defined in the memory header.
+
+--
+(findsharedptr)
+(findsmartpointer)
+
+The shared_ptr Class
+
+A counter keeps track of how many shared_ptrs point to the same
+object and automatically frees that object when appropriate.
+
+Like vectors, smart pointers are templates. Therefore, when we create a smart pointer, we must supply additional information—in this case, the type to which the pointer can point. As with vector, we supply that type inside angle brackets that follow the name of the kind of smart pointer we are defining:
+
+shared_ptr<string> p1; // shared_ptr that can point at a string
+shared_ptr<list<int>> p2; // shared_ptr that can point at a list of ints
+
+A default initialized smart pointer holds a null pointer. Later we’ll cover additional ways to initialize a smart pointer. We use a smart pointer in ways that are similar to using a pointer. Dereferencing a smart pointer returns the object to which the pointer points. When we use a smart pointer in a condition, the effect is to test whether the pointer is null.
+
+Those that are particular to shared_ptr are listed in Table below.
+
+--
+Operations Common to shared_ptr and unique_ptr:
+
+shared_ptr<T> sp, unique_ptr<T> up: Null smart pointer that can point to objects of type T.
+
+p: Use p as a condition; true if p points to an object.
+
+*p: Dereference to get the object to which p points.
+
+p->mem: Synonym for (*p).mem
+
+p.get(): Returns the pointer in p. Used with caution; the object to which the returned pointer points will disappear when the smart pointer deletes it.
+
+swap(p, q), p.swap(q): Swaps the pointers in p and q.
+
+--
+Operations Specific to shared_ptr:
+
+make_shared<T> (args): Returns a shared_ptr pointing to a dynamically allocated object of type T. Uses args to initialize that object.
+
+shared_ptr<T> p(q): p is a copy of the shared_ptr q; increments the count in q. The pointer in q must be convertible to T*.
+
+p = q: p and q are shared_ptrs holding pointers that can be converted to one another. Decrements p's reference count and increments q's count; deletes p's existing memory if p's count goes to 0.
+
+p.use_count(): Returns the number of objects sharing with p; may be a slow operation, intended primarily for debugging purposes.
+
+p.unique(): Returns true if p.use_count() is one; false otherwise.
+
+--
+The make_shared Function
+
+The safest way to allocate and use dynamic memory is to call a library function named make_shared. This function allocates and initializes an object in dynamic memory and returns a shared_ptr that points to that object. Like the smart pointers,
+make_shared is defined in the memory header.
+
+When we call make_shared, we must specify the type of object we want to create. We do so in the same way as we use a template class, by following the function name with a type enclosed in angle brackets:
+
+// shared_ptr that points to an int with value 42
+shared_ptr<int> p3 = make_shared<int>(42);
+
+// p4 points to a string with value 9999999999
+shared_ptr<string> p4 = make_shared<string>(10, '9');
+
+// p5 points to an int that is value initialized to 0
+shared_ptr<int> p5 = make_shared<int>();
+
+Of course, ordinarily we use auto to make it easier to define an
+object to hold the result of make_shared:
+
+// p6 points to a dynamically allocated, empty vector<string>
+auto p6 = make_shared<vector<string>>();
+
+--
+Copying and Assigning shared_ptrs
+
+When we copy or assign a shared_ptr, each shared_ptr keeps track of how many other shared_ptrs point to the same object:
+
+auto p = make_shared<int>(42); // object to which p points has one user
+
+auto q(p); // p and q point to the same object // object to which p and q point has two users
+
+We can think of a shared_ptr as if it has an associated counter, usually referred to as a reference count. Whenever we copy a shared_ptr, the count is incremented.
+
+For example, the counter associated with a shared_ptr is incremented when we use it to initialize another shared_ptr, when we use it as the right-hand operand of an assignment, or when we pass it to or return it from a function by value. The counter is decremented when we assign a new value to the shared_ptr and when the shared_ptr itself is destroyed, such as when a local shared_ptr goes out of scope. Once a shared_ptr’s counter goes to zero, the shared_ptr automatically frees
+the object that it manages:
+
+auto r = make_shared<int>(42); // int to which r points has one user
+r = q; // assign to r, making it point to a different address, increase the use count for the object to which q points, reduce the use count of the object to which r had pointed, the object r had pointed to has no users; that object is automatically freed
+
+--
+shared_ptrs Automatically Destroy Their Objects ...
+
+When the last shared_ptr pointing to an object is destroyed, the shared_ptr class automatically destroys the object to which that shared_ptr points. It does so through another special member function known as a destructor. Analogous to its constructors, each class has a destructor. Just as a constructor controls initialization, the destructor controls what happens when objects of that class type are destroyed.
+
+Destructors generally free the resources that an object has allocated. For example, the string constructors (and other string members) allocate memory to hold the characters that compose the string. The string destructor frees that memory.
+Similarly, several vector operations allocate memory to hold the elements in the vector. The destructor for vector destroys those elements and frees the memory used for the elements.
+
+The destructor for shared_ptr decrements the reference count of the object to which that shared_ptr points. If the count goes to zero, the shared_ptr destructor destroys the object to which the shared_ptr points and frees the memory used by that object.
+
+...and Automatically Free the Associated Memory
+
+The fact that the shared_ptr class automatically frees dynamic objects when they are no longer needed makes it fairly easy to use dynamic memory. For example, we might have a function that returns a shared_ptr to a dynamically allocated object of a type named Foo that can be initialized by an argument of type T:
+
+// factory returns a shared_ptr pointing to a dynamically allocated object
+shared_ptr<Foo> factory(T arg)
+{
+    // process arg as appropriate
+    // shared_ptr will take care of deleting this memory
+    return make_shared<Foo>(arg);
+}
+
+Because factory returns a shared_ptr, we can be sure that the object allocated by factory will be freed when appropriate. For example, the following function stores the shared_ptr returned by factory in a local variable:
+
+void use_factory(T arg)
+{
+    shared_ptr<Foo> p = factory(arg);
+    // use p
+} // p goes out of scope; the memory to which p points is automatically freed
+
+Because p is local to use_factory, it is destroyed when use_factory ends. When p is destroyed, its reference count is decremented and checked. In this case, p is the only object referring to the memory returned by factory. Because p is about to go away, the object to which p points will be destroyed and the memory in which that object resides will be freed.
+
+The memory will not be freed if there is any other shared_ptr pointing to it:
+
+shared_ptr<Foo> use_factory(T arg)
+{
+    shared_ptr<Foo> p = factory(arg);
+    // use p
+    return p; // reference count is incremented when we return p
+} // p goes out of scope; the memory to which p points is not freed
+
+In this version, the return statement in use_factory returns a copy of p to its caller. Copying a shared_ptr adds to the reference count of that object. Now when p is destroyed, there will be another user for the memory to which p points. The shared_ptr class ensures that so long as there are any shared_ptrs attached to that memory, the memory itself will not be freed.
+
+Note: If you put shared_ptrs in a container, and you subsequently need to use some, but not all, of the elements, remember to erase the elements you no longer need.
+
+Classes with Resources That Have Dynamic Lifetime
+
+Programs tend to use dynamic memory for one of three purposes:
+    1. They don’t know how many objects they’ll need
+    2. They don’t know the precise type of the objects they need
+    3. They want to share data between several objects
+
+The container classes are an example of classes that use dynamic memory for the first purpose and we’ll see examples of the second later. In this section, we’ll define a class that uses dynamic memory in order to let several objects share the
+same underlying data.
+
+--
 (findnew)                      
 new operator
 
-Tao: the followings are selected from the book:
-
-Dynamically allocated objects have a lifetime that is independent of where they are created; they exist until they are explicitly freed.
-
-In C++, dynamic memory is managed through a pair of operators: "new", which allocates, and optionally initializes, an object in dynamic memory and returns a pointer to that object; and "delete", which takes a pointer to a dynamic object, destroys that object, and frees the associated memory.
-
-The followings covers all of the section "12.1.2. Managing Memory Directly":
+Managing Memory Directly
 
 The language itself defines two operators that allocate and free dynamic memory. The new operator allocates memory, and delete frees memory allocated by new.
 
-Objects allocated on the free store are unnamed, so new offers no way to name the objects that it allocates. Instead, new returns a pointer to the object it allocates:
+For reasons that will become clear as we describe how these operators work, using these operators to manage memory is considerably more error-prone than using a smart pointer. Moreover, classes that do manage their own memory—unlike those that use smart pointers—cannot rely on the default definitions for the members that copy, assign, and destroy class objects. As a result, programs that use smart pointers are likely to be easier to write and debug.
+
+Warning: Until you have read Chapter 13 (Chapter 13: Copy Control, in Part III Tools for Class Authors, read by tao and copied in this note), your classes should allocate dynamic memory only if they use smart pointers to manage that memory.
+
+--
+Using new to Dynamically Allocate and Initialize Objects
+
+Objects allocated on the free store are unnamed, so "new" offers no way to name the objects that it allocates. Instead, "new" returns a pointer to the object it allocates:
 
 //pi points to a dynamically allocated, unnamed, uninitialized int:
+//Tao: remember to delete pi, see later.
 int *pi = new int; 
 
 This new expression constructs an object of type int on the free store and returns a pointer to that object. 
@@ -2837,12 +3007,15 @@ string *ps = new string(); // value initialized to the empty string
 int *pi1 = new int; // default initialized; *pi1 is undefined
 int *pi2 = new int(); // value initialized to 0; *pi2 is 0
 
-For the same reasons as we usually initialize variables, it is also a good idea to initialize dynamically allocated objects.
+Best Practices: For the same reasons as we usually initialize variables, it is also a good idea to initialize dynamically allocated objects.
 
 When we provide an initializer inside parentheses, we can use auto to deduce the type of the object we want to allocate from that initializer. However, because the compiler uses the initializer’s type to deduce the type to allocate, we can use auto only with a single initializer inside parentheses:
 
 auto p1 = new auto(obj); // p points to an object of the type of obj that object is initialized from obj
 auto p2 = new auto{a,b,c}; // error: must use parentheses for the initializer
+
+--
+Dynamically Allocated const Objects
 
 It is legal to use new to allocate const objects:
 
@@ -2854,30 +3027,32 @@ const string *pcs = new const string;
 
 Like any other const, a dynamically allocated const object must be initialized. A const dynamic object of a class type that defines a default constructor may be initialized implicitly. Objects of other types must be explicitly initialized. Because the allocated object is const, the pointer returned by new is a pointer to const.
 
+--
 Memory Exhaustion
 
-Although modern machines tend to have huge memory capacity, it is always possible
-that the free store will be exhausted. Once a program has used all of its available memory, new expressions will fail. By default, if new is unable to allocate the requested storage, it throws an exception of type bad_alloc. We can prevent new from throwing an exception by using a different form of new:
+Although modern machines tend to have huge memory capacity, it is always possible that the free store will be exhausted. Once a program has used all of its available memory, new expressions will fail. By default, if new is unable to allocate the requested storage, it throws an exception of type bad_alloc. We can prevent new from throwing an exception by using a different form of new:
 
 // if allocation fails, new returns a null pointer
 int *p1 = new int; // if allocation fails, new throws std::bad_alloc
 int *p2 = new (nothrow) int; // if allocation fails, new returns a null pointer
 
-This form of new is referred to as placement new. A placement new expression lets us pass additional arguments to new. In this case, we pass an object named nothrow that is defined by the library.
+This form of new is referred to as placement new. A placement new expression lets us pass additional arguments to new. In this case, we pass an object named nothrow that is defined by the  library (tao: the "new" library). When we pass nothrow to new, we tell new that it must not throw an exception. If this form of new is unable to allocate the requested storage, it will return a null pointer. Both bad_alloc and nothrow are defined in the new header.
 
-When we pass nothrow to new, we tell new that it must not throw an exception. If this form of new is unable to allocate the requested storage, it will return a null pointer. Both bad_alloc and nothrow are defined in the new header.
-
+--
 Freeing Dynamic Memory
 
 In order to prevent memory exhaustion, we must return dynamically allocated memory to the system once we are finished using it. We return memory through a delete expression. A delete expression takes a pointer to the object we want to free:
 
 delete p; // p must point to a dynamically allocated object or be null
 
-Like new, a delete expression performs two actions: It destroys the object to which
-its given pointer points, and it frees the corresponding memory.
+--
+Pointer Values and delete
+
+Like new, a delete expression performs two actions: It destroys the object to which its given pointer points, and it frees the corresponding memory.
 
 Although the value of a const object cannot be modified, the object itself can be destroyed.
 
+--
 Dynamically Allocated Objects Exist until They Are Freed
 
 As we saw earlier, memory that is managed through a shared_ptr is automatically deleted when the last shared_ptr is destroyed. The same is not true for memory we manage using built-in pointers. A dynamic object managed through a built-in pointer exists until it is explicitly deleted.
@@ -2901,8 +3076,7 @@ Here, our use_factory function calls factory, which allocates a new object of ty
 
 Unlike class types, nothing happens when objects of built-in type are destroyed. In particular, when a pointer goes out of scope, nothing happens to the object to which the pointer points. If that pointer points to dynamic memory, that memory is not automatically freed.
 
-Warning: Dynamic memory managed through built-in pointers (rather than smart
-pointers) exists until it is explicitly freed.
+Warning: Dynamic memory managed through built-in pointers (rather than smart pointers) exists until it is explicitly freed.
 
 In this example, p was the only pointer to the memory allocated by factory. Once use_factory returns, the program has no way to free that memory. Depending on the logic of our overall program, we should fix this bug by remembering to free the memory inside use_factory:
 
@@ -2912,8 +3086,7 @@ void use_factory(T arg) {
     delete p; // remember to free the memory now that we no longer need it
 }
 
-or, if other code in our system needs to use the object allocated by use_factory,
-we should change that function to return a pointer to the memory it allocated:
+or, if other code in our system needs to use the object allocated by use_factory, we should change that function to return a pointer to the memory it allocated:
 
 Foo* use_factory(T arg) {
     Foo *p = factory(arg);
@@ -2921,6 +3094,22 @@ Foo* use_factory(T arg) {
     return p; // caller must delete the memory
 }
 
+Caution: Managing Dynamic Memory Is Error-Prone
+
+There are three common problems with using new and delete to manage dynamic memory:
+
+1. Forgetting to delete memory. Neglecting to delete dynamic memory is known as a “memory leak,” because the memory is never returned to the free store. Testing for memory leaks is difficult because they usually cannot be detected until the application is run for a long enough time to actually
+exhaust memory.
+
+2. Using an object after it has been deleted. This error can sometimes be detected by making the pointer null after the delete.
+
+3. Deleting the same memory twice. This error can happen when two
+pointers address the same dynamically allocated object. If delete is applied to one of the pointers, then the object’s memory is returned to the free store. If we subsequently delete the second pointer, then the free store may be corrupted.
+These kinds of errors are considerably easier to make than they are to find and fix.
+
+Best Practices: You can avoid all of these problems by using smart pointers exclusively. The smart pointer will take care of deleting the memory only when there are no remaining smart pointers pointing to that memory.
+
+--
 Resetting the Value of a Pointer after a delete ...
 
 When we delete a pointer, that pointer becomes invalid. Although the pointer is invalid, on many machines the pointer continues to hold the address of the (freed) dynamic memory. After the delete, the pointer becomes what is referred to as a
@@ -2930,8 +3119,7 @@ Dangling pointers have all the problems of uninitialized pointers (tao: like try
 
 ...Provides Only Limited Protection
 
-A fundamental problem with dynamic memory is that there can be several pointers that point to the same memory. Resetting the pointer we use to delete that memory lets us check that particular pointer but has no effect on any of the other pointers that
-still point at the (freed) memory. For example:
+A fundamental problem with dynamic memory is that there can be several pointers that point to the same memory. Resetting the pointer we use to delete that memory lets us check that particular pointer but has no effect on any of the other pointers that still point at the (freed) memory. For example:
 
 int *p(new int(42)); // p points to dynamic memory
 auto q = p; // p and q point to the same memory
@@ -2939,6 +3127,521 @@ delete p; // invalidates both p and q
 p = nullptr; // indicates that p is no longer bound to an object
 
 Here both p and q point at the same dynamically allocated object. We delete that memory and set p to nullptr, indicating that the pointer no longer points to an object. However, resetting p has no effect on q, which became invalid when we deleted the memory to which p (and q!) pointed. In real systems, finding all the pointers that point to the same memory is surprisingly difficult.
+
+--
+Using shared_ptrs with new
+
+As we’ve seen, if we do not initialize a smart pointer, it is initialized as a null pointer. As described in Table below, we can also initialize a smart pointer from a pointer returned by new:
+
+shared_ptr<int> p2(new int(42)); // p2 points to an int with value 42
+
+Other Ways to Define and Change shared_ptrs:
+
+shared_ptr<T> p(q): p manages the object to which the buil-in pointer q points; q must point to memory allocated by new and must be convertible to T*
+
+shared_ptr<T> p(u): p assumes ownership from the unique_ptr u; makes u null.
+
+shared_ptr<T> p(q, d): p assumes ownership for the object to which the built-in pointer q points. q must be convertible to T*. p will use the callable object d in place of delete to free q.
+
+shared_ptr<T> p(p2, d): p is a copy of the shared_ptr p2 except that p uses the callable object d in place of delete.
+
+p.reset(), p.reset(q), p.reset(q, d): If p is the only shared_ptr pointing at its object, reset frees p's existing object. If the optional built-in pointer q is passed, makes point to q, otherwise makes p null. If d is supplied, will call d to free q otherwise uses delete to free q.
+
+The smart pointer constructors that take pointers are explicit. Hence, we cannot implicitly convert a built-in pointer to a smart pointer; we must use the direct form of initialization to initialize a smart pointer:
+
+shared_ptr<int> p1 = new int(1024); // error: must use direct
+initialization
+shared_ptr<int> p2(new int(1024)); // ok: uses direct initialization
+
+For the same reason, a function that returns a shared_ptr cannot implicitly convert a plain pointer in its return statement:
+
+shared_ptr<int> clone(int p) {
+    return new int(p); // error: implicit conversion to shared_ptr<int>
+}
+
+We must explicitly bind a shared_ptr to the pointer we want to return:
+
+shared_ptr<int> clone(int p) {
+    // ok: explicitly create a shared_ptr<int> from int*
+    return shared_ptr<int>(new int(p));
+}
+
+--
+Don’t Mix Ordinary Pointers and Smart Pointers ...
+
+A shared_ptr can coordinate destruction only with other shared_ptrs that are copies of itself. Indeed, this fact is one of the reasons we recommend using make_shared rather than new. That way, we bind a shared_ptr to the object at the same time that we allocate it. There is no way to inadvertently(漫不經心的) bind the same memory to more than one independently created shared_ptr.
+
+--
+...and Don’t Use get to Initialize or Assign Another Smart Pointer
+
+The smart pointer types define a function named "get" that returns a built-in pointer to the object that the smart pointer is managing. This function is intended for cases when we need to pass a built-in pointer to code that can’t use a smart pointer. The code that uses the return from get must not delete that pointer.
+
+Although the compiler will not complain, it is an error to bind another smart pointer to the pointer returned by get:
+
+shared_ptr<int> p(new int(42)); // reference count is 1
+
+int *q = p.get(); // ok: but don't use q in any way that might delete its pointer
+
+{ // new block
+    // undefined: two independent shared_ptrs point to the same memory
+    shared_ptr<int>(q);
+} // block ends, q is destroyed, and the memory to which q points is freed
+
+int foo = *p; // undefined; the memory to which p points was freed
+
+In this case, both p and q point to the same memory. Because they were created independently from each other, each has a reference count of 1. When the block in which q was defined ends, q is destroyed. Destroying q frees the memory to which q
+points. That makes p into a dangling pointer, meaning that what happens when we attempt to use p is undefined. Moreover, when p is destroyed, the pointer to that memory will be deleted a second time.
+
+Warning: Use "get" only to pass access to the pointer to code that you know will not delete the pointer. In particular, never use get to initialize or assign to another smart pointer.
+
+--
+Other shared_ptr Operations
+
+The shared_ptr class gives us a few other operations, which are listed in Tables above. We can use reset to assign a new pointer to a shared_ptr:
+
+p = new int(1024); // error: cannot assign a pointer to a shared_ptr
+p.reset(new int(1024)); // ok: p points to a new object
+
+Like assignment, reset updates the reference counts and, if appropriate, deletes the object to which p points. The reset member is often used together with unique to control changes to the object shared among several shared_ptrs. Before changing
+the underlying object, we check whether we’re the only user. If not, we make a new copy before making the change:
+
+if (!p.unique())
+    p.reset(new string(*p)); // we aren't alone; allocate a new copy
+*p += newVal; // now that we know we're the only pointer, okay to change this object
+
+--
+Smart Pointers and Exceptions
+
+Earlier we noted that programs that use exception handling to continue processing after an exception occurs need to ensure that resources are properly freed if an exception occurs. One easy way to make sure resources are freed is to use smart pointers.
+
+When we use a smart pointer, the smart pointer class ensures that memory is freed when it is no longer needed even if the block is exited prematurely:
+
+void f()
+{
+    shared_ptr<int> sp(new int(42)); // allocate a new object
+    // code that throws an exception that is not caught inside f
+} // shared_ptr freed automatically when the function ends
+
+When a function is exited, whether through normal processing or due to an exception, all the local objects are destroyed. In this case, sp is a shared_ptr, so destroying sp checks its reference count. Here, sp is the only pointer to the memory it manages; that memory will be freed as part of destroying sp.
+
+In contrast, memory that we manage directly is not automatically freed when an exception occurs. If we use built-in pointers to manage memory and an exception occurs after a new but before the corresponding delete, then that memory won’t be freed:
+
+//Tao: this is one big problem of using built-in pointers
+
+void f()
+{
+    int *ip = new int(42); // dynamically allocate a new object
+    // code that throws an exception that is not caught inside f
+    delete ip; // free the memory before exiting
+}
+
+If an exception happens between the new and the delete, and is not caught inside f, then this memory can never be freed. There is no pointer to this memory outside the function f. Thus, there is no way to free this memory.
+
+--
+Smart Pointers and Dumb Classes
+
+Many C++ classes, including all the library classes, define destructors that take care of cleaning up the resources used by that object. However, not all classes are so well behaved. In particular, classes that are designed to be used by both (tao: note both) C and C++ generally require the user to specifically free any  resources that are used.
+
+Classes that allocate resources—and that do not define destructors to free those resources—can be subject to the same kind of errors that arise when we use dynamic memory. It is easy to forget to release the resource. Similarly, if an exception happens between when the resource is allocated and when it is freed, the program will leak that resource.
+
+We can often use the same kinds of techniques we use to manage dynamic memory to manage classes that do not have well-behaved destructors. 
+
+--
+Caution: Smart Pointer Pitfalls
+
+Smart pointers can provide safety and convenience for handling dynamically allocated memory only when they are used properly. To use smart pointers correctly, we must adhere to a set of conventions:
+
+• Don’t use the same built-in pointer value to initialize (or reset) more than one smart pointer.
+
+• Don’t delete the pointer returned from get().
+
+• Don’t use get() to initialize or reset another smart pointer.
+
+• If you use a pointer returned by get(), remember that the pointer will become invalid when the last corresponding smart pointer goes away.
+
+• If you use a smart pointer to manage a resource other than memory allocated by new, remember to pass a deleter.
+
+--
+unique_ptr
+
+A unique_ptr “owns” the object to which it points. Unlike shared_ptr, only one unique_ptr at a time can point to a given object. The object to which a unique_ptr points is destroyed when the unique_ptr is destroyed. Table below lists the operations specific to unique_ptrs. The operations common to both were covered in a Table before.
+
+unique_ptr Operations:
+
+unique_ptr<T> u1, unique_ptr<T, D> u2: Null unique_ptrs that can point to objects of type T. u1 will use delete to free its pointer; u2 will use a callable object of type D to free its pointer.
+
+unique_ptr<T, D> u(d): Null unique_ptr that points to object of type T that uses d, which must be an object of type D in place of delete.
+
+u = nullptr: Deletes the object to which u points; makes u null.
+
+u.release(): Relinquishes(放棄) control of the pointer u had held; returns the pointer u had held and makes u null.
+
+u.reset(), u.reset(q), u.reset(nullptr): Deletes the object to which u points. If the built-in pointer q is supplied, makes u point to that object. Otherwise makes u null.
+
+Unlike shared_ptr, there is no library function comparable to make_shared that returns a unique_ptr. Instead, when we define a unique_ptr, we bind it to a pointer returned by new. As with shared_ptrs, we must use the direct form of initialization:
+
+unique_ptr<double> p1; // unique_ptr that can point at a double
+unique_ptr<int> p2(new int(42)); // p2 points to int with value 42
+
+Because a unique_ptr owns the object to which it points, unique_ptr does not support ordinary copy or assignment:
+
+unique_ptr<string> p1(new string("Stegosaurus"));
+unique_ptr<string> p2(p1); // error: no copy for unique_ptr
+unique_ptr<string> p3;
+p3 = p2; // error: no assign for unique_ptr
+
+Although we can’t copy or assign a unique_ptr, we can transfer ownership from one (nonconst) unique_ptr to another by calling release or reset:
+
+// Tao: using release:
+// transfers ownership from p1 (which points to the string Stegosaurus) to p2
+unique_ptr<string> p2(p1.release()); // release makes p1 null
+
+// Tao: using reset:
+unique_ptr<string> p3(new string("Trex"));
+// transfers ownership from p3 to p2
+p2.reset(p3.release()); // reset deletes the memory to which p2 had pointed
+
+The release member returns the pointer currently stored in the unique_ptr and makes that unique_ptr null. Thus, p2 is initialized from the pointer value that had been stored in p1 and p1 becomes null.
+
+The reset member takes an optional pointer and repositions the unique_ptr to point to the given pointer. If the unique_ptr is not null, then the object to which the unique_ptr had pointed is deleted. The call to reset on p2, therefore, frees the memory used by the string initialized from "Stegosaurus", transfers p3’s
+pointer to p2, and makes p3 null.
+
+--
+Passing and Returning unique_ptrs
+
+There is one exception to the rule that we cannot copy a unique_ptr: We can copy or assign a unique_ptr that is about to be destroyed. The most common example is when we return a unique_ptr from a function:
+
+unique_ptr<int> clone(int p) {
+    // ok: explicitly create a unique_ptr<int> from int*
+    return unique_ptr<int>(new int(p));
+}
+
+Alternatively, we can also return a copy of a local object:
+
+unique_ptr<int> clone(int p) {
+    unique_ptr<int> ret(new int (p));
+    // . . .
+    return ret;
+}
+
+In both cases, the compiler knows that the object being returned is about to be destroyed. In such cases, the compiler does a special kind of “copy” which we’ll discuss later.
+
+Backward Compatibility: auto_ptr
+
+Earlier versions of the library included a class named auto_ptr that had some, but not all, of the properties of unique_ptr. In particular, it was not possible to store an auto_ptr in a container, nor could we return one from a function.
+
+Although auto_ptr is still part of the standard library, programs should use unique_ptr instead.
+
+--
+Passing a Deleter to unique_ptr
+
+Like shared_ptr, by default, unique_ptr uses delete to free the object to which a unique_ptr points. As with shared_ptr, we can override the default deleter in a unique_ptr. However, for reasons we’ll describe later, the way unique_ptr manages its deleter is differs from the way shared_ptr does.
+
+Overridding the deleter in a unique_ptr affects the unique_ptr type as well as how we construct (or reset) objects of that type. Similar to overriding the comparison operation of an associative container, we must supply the deleter type inside the angle brackets along with the type to which the unique_ptr can point. We supply a callable object of the specified type when we create or reset an object of this type:
+
+// p points to an object of type objT and uses an object of type delT to free that object. It will call an object named fcn of type delT
+unique_ptr<objT, delT> p (new objT, fcn);
+
+--
+weak_ptr
+
+A weak_ptr is a smart pointer that does not control the lifetime of the object to which it points. Instead, a weak_ptr points to an object that is managed by a shared_ptr. Binding a weak_ptr to a shared_ptr does not change the reference count of that shared_ptr. Once the last shared_ptr pointing to the object goes away, the object itself will be deleted. That object will be deleted even if there are weak_ptrs pointing to it—hence the name weak_ptr, which captures the idea that a weak_ptr shares its object “weakly.”
+
+weak_ptrs:
+
+weak_ptr<T> w: Null weak_ptr that can point at object of type T.
+
+weak_ptr<T> w(sp): weak_ptr that points to the same object as the shared_ptr sp. T must be convertible to the type to which sp points.
+
+w = p: p can be shared_ptr or a weak_ptr. After the assignment w shared ownership with p.
+
+w = use_count(): The number of shared_ptrs that share ownership with w.
+
+w.expired(): Returns true if w. use_count() is zero, false otherwise.
+
+w.lock(): If expired is true, returns a null shared_ptr; otherwise returns a shared_ptr to the object to which w points.
+
+When we create a weak_ptr, we initialize it from a shared_ptr:
+
+auto p = make_shared<int>(42);
+weak_ptr<int> wp(p); // wp weakly shares with p; use count in p is unchanged
+
+Here both wp and p point to the same object. Because the sharing is weak, creating wp doesn’t change the reference count of p; it is possible that the object to which wp points might be deleted.
+
+Because the object might no longer exist, we cannot use a weak_ptr to access its object directly. To access that object, we must call lock. The lock function checks whether the object to which the weak_ptr points still exists. If so, lock returns a
+shared_ptr to the shared object. As with any other shared_ptr, we are guaranteed that the underlying object to which that shared_ptr points continues to exist at least as long as that shared_ptr exists. For example:
+
+if (shared_ptr<int> np = wp.lock()) { // true if np is not null
+    // inside the if, np shares its object with p
+}
+
+Here we enter the body of the if only if the call to lock succeeds. Inside the if, it is safe to use np to access that object.
+
+--
+(finddynamicarray)
+Dynamic Arrays
+
+The new and delete operators allocate objects one at a time. Some applications, need the ability to allocate storage for many objects at once. For example, vectors and strings store their elements in contiguous memory and must allocate several elements at once whenever the container has to be reallocated.
+
+To support such usage, the language and library provide two ways to allocate an array of objects at once. The language defines a second kind of new expression that allocates and initializes an array of objects. The library includes a template class named allocator that lets us separate allocation from initialization. For reasons we’ll explain later, using an allocator generally provides better performance and more flexible memory management.
+
+Many, perhaps even most, applications have no direct need for dynamic arrays. When an application needs a varying number of objects, it is almost always easier, faster, and safer to do as we did with StrBlob: use a vector (or other library container). For reasons we’ll explain later, the advantages of using a library container are even more pronounced under the new standard. Libraries that support the new standard tend to be dramatically faster than previous releases. Tao: remember in my PhD C++, I used a lot of allocate, and at that time I did not know vectors.
+
+Best Practices: Most applications should use a library container rather than dynamically allocated arrays. Using a container is easier, less likely to contain memory-management bugs, and is likely to give better performance.
+
+As we’ve seen, classes that use the containers can use the default versions of the operations for copy, assignment, and destruction. Classes that allocate dynamic arrays must define their own versions of these operations to manage the associated memory when objects are copied, assigned, and destroyed.
+
+Warning: Do not allocate dynamic arrays in code inside classes until you have read Chapter 13 (Chapter 13: Copy Control, in Part III Tools for Class Authors, read by tao and copied in this note).
+
+--
+new and Arrays
+
+We ask "new" to allocate an array of objects by specifying the number of objects to allocate in a pair of square brackets after a type name. In this case, "new" allocates the requested number of objects and (assuming the allocation succeeds) returns a pointer to the first one:
+
+// call get_size to determine how many ints to allocate
+int *pia = new int[get_size()]; // pia points to the first of these ints
+
+The size inside the brackets must have integral type but need not be a constant. We can also allocate an array by using a type alias to represent an array type. In this case, we omit the brackets:
+
+typedef int arrT[42]; // arrT names the type array of 42 ints
+int *p = new arrT; // allocates an array of 42 ints; p points to the first one
+
+Here, new allocates an array of ints and returns a pointer to the first one. Even though there are no brackets in our code, the compiler executes this expression using new[]. That is, the compiler executes this expression as if we had written
+
+int *p = new int[42];
+
+--
+Allocating an Array Yields a Pointer to the Element Type
+
+Although it is common to refer to memory allocated by new T[] as a “dynamic array,” this usage is somewhat misleading. When we use new to allocate an array, we do not get an object with an array type. Instead, we get a pointer to the element type of the array. Even if we use a type alias to define an array type, new does not allocate an object of array type. In this case, the fact that we’re allocating an array is not even visible; there is no [num]. Even so, new returns a pointer to the element type.
+
+Because the allocated memory does not have an array type, we cannot call begin or end on a dynamic array. These functions use the array dimension (which is part of an array’s type) to return pointers to the first and one past the last elements, respectively. For the same reasons, we also cannot use a range for to process the elements in a (so-called) dynamic array.
+
+Warning: It is important to remember that what we call a dynamic array does not have an array type.
+
+--
+Initializing an Array of Dynamically Allocated Objects
+
+By default, objects allocated by new—whether allocated as a single object or in an array—are default initialized. We can value initialize the elements in an array by following the size with an empty pair of parentheses.
+
+int *pia = new int[10]; // block of ten uninitialized ints
+int *pia2 = new int[10](); // block of ten ints value initialized to 0
+string *psa = new string[10]; // block of ten empty strings
+string *psa2 = new string[10](); // block of ten empty strings
+
+Under the new standard, we can also provide a braced list of element initializers:
+
+// block of ten ints each initialized from the corresponding initializer
+int *pia3 = new int[10]{0,1,2,3,4,5,6,7,8,9};
+
+// block of ten strings; the first four are initialized from the given initializers, remaining elements are value initialized
+string *psa3 = new string[10]{"a", "an", "the", string(3,'x')};
+
+As when we list initialize an object of built-in array type, the
+initializers are used to initialize the first elements in the array. If there are fewer initializers than elements, the remaining elements are value initialized. If there are more initializers than the given size, then the new expression fails and no storage is allocated. In this case, new throws an exception of type bad_array_new_length. Like bad_alloc, this type is defined in the new header.
+
+Although we can use empty parentheses to value initialize the elements of an array, we cannot supply an element initializer inside the parentheses. The fact that we cannot supply an initial value inside the parentheses means that we cannot use auto to allocate an array.
+
+--
+It Is Legal to Dynamically Allocate an Empty Array
+
+We can use an arbitrary expression to determine the number of objects to allocate:
+
+size_t n = get_size(); // get_size returns the number of elements needed
+int* p = new int[n]; // allocate an array to hold the elements
+for (int* q = p; q != p + n; ++q)
+    /* process the array */ ;
+
+An interesting question arises: What happens if get_size returns 0? The answer is that our code works fine. Calling new[n] with n equal to 0 is legal even though we cannot create an array variable of size 0:
+
+char arr[0]; // error: cannot define a zero-length array
+char *cp = new char[0]; // ok: but cp can't be dereferenced
+
+When we use new to allocate an array of size zero, new returns a valid, nonzero pointer. That pointer is guaranteed to be distinct from any other pointer returned by new. This pointer acts as the off-the-end pointer for a zero-element array. We can use this pointer in ways that we use an off-the-end iterator. The pointer can be compared as in the loop above. We can add zero to (or subtract zero from) such a pointer and can subtract the pointer from itself, yielding zero. The pointer cannot be dereferenced—after all, it points to no element.
+
+--
+Freeing Dynamic Arrays
+
+To free a dynamic array, we use a special form of delete that includes an empty pair of square brackets:
+
+delete p; // p must point to a dynamically allocated object or be null
+delete [] pa; // pa must point to a dynamically allocated array or be null
+
+The second statement destroys the elements in the array to which pa points and frees the corresponding memory. Elements in an array are destroyed in reverse order. That is, the last element is destroyed first, then the second to last, and so on.
+
+When we delete a pointer to an array, the empty bracket pair is essential: It indicates to the compiler that the pointer addresses the first element of an array of objects. If we omit the brackets when we delete a pointer to an array (or provide them when we delete a pointer to an object), the behavior is undefined.
+
+Recall that when we use a type alias that defines an array type, we can allocate an array without using [] with new. Even so, we must use brackets when we delete a pointer to that array:
+
+typedef int arrT[42]; // arrT names the type array of 42 ints
+int *p = new arrT; // allocates an array of 42 ints; p points to the first
+one
+delete [] p; // brackets are necessary because we allocated an array
+
+Despite appearances, p points to the first element of an array of objects, not to a single object of type arrT. Thus, we must use [] when we delete p.
+
+Warning: The compiler is unlikely to warn us if we forget the brackets when we delete a pointer to an array or if we use them when we delete a pointer to an object. Instead, our program is apt to misbehave without warning during execution.
+
+--
+Smart Pointers and Dynamic Arrays:
+
+The library provides a version of unique_ptr that can manage arrays allocated by new. To use a unique_ptr to manage a dynamic array, we must include a pair of empty brackets after the object type:
+
+// up points to an array of ten uninitialized ints
+unique_ptr<int[]> up(new int[10]);
+up.release(); // automatically uses delete[] to destroy its pointer
+
+The brackets in the type specifier (<int[]>) say that up points not to an int but to an array of ints. Because up points to an array, when up destroys the pointer it manages, it will automatically use delete[].
+
+unqiue_ptrs that point to arrays provide slightly different operations than those we used earlier. These operations are described in Table below. When a unique_ptr points to an array, we cannot use the dot and arrow member access operators. After all, the unqiue_ptr points to an array, not an object so these operators would be meaningless. On the other hand, when a unqiue_ptr points to an array, we can use the subscript operator to access the elements in the array:
+
+for (size_t i = 0; i != 10; ++i)
+    up[i] = i; // assign a new value to each of the elements
+
+unique_ptrs to Arrays:
+
+Member access operators (doe and arrow) are not supported for unique_ptrs to arays. Other unique_ptr operations unchanged.
+
+unique_ptr<T[]> u: u can point to a dynamically allocated array of type T.
+
+unique_ptr<T[]> u(p): u points to the dynamically allocated array to which the built-in pointer p oints. p must be convertible to T*.
+
+u[i]: Returns the object at position i in the array that u owns. u must point to an array.
+
+Unlike unique_ptr, shared_ptrs provide no direct support for managing a dynamic array. If we want to use a shared_ptr to manage a dynamic array, we must provide our own deleter:
+
+// to use a shared_ptr we must supply a deleter
+shared_ptr<int> sp(new int[10], [](int *p) { delete[] p; });
+sp.reset(); // uses the lambda we supplied that uses delete[] to free the array
+
+Here we pass a lambda that uses delete[] as the deleter. Had we neglected to supply a deleter, this code would be undefined. By default, shared_ptr uses delete to destroy the object to which it points. If that object is a dynamic array, using delete has the same kinds of problems that arise if we forget to use [] when we delete a pointer to a dynamic array.
+
+The fact that shared_ptr does not directly support managing arrays affects how we access the elements in the array:
+
+// shared_ptrs don't have subscript operator and don't support pointer arithmetic
+for (size_t i = 0; i != 10; ++i)
+    *(sp.get() + i) = i; // use get to get a built-in pointer
+
+There is no subscript operator for shared_ptrs, and the smart pointer types do not support pointer arithmetic. As a result, to access the elements in the array, we must use get to obtain a built-in pointer, which we can then use in normal ways.
+
+--
+The allocator Class
+
+An aspect of new that limits its flexibility is that new combines allocating memory with constructing object(s) in that memory. Similarly, delete combines destruction with deallocation. Combining initialization with allocation is usually what we want when we allocate a single object. In that case, we almost certainly know the value the object should have.
+
+When we allocate a block of memory, we often plan to construct objects in that memory as needed. In this case, we’d like to decouple memory allocation from object construction. Decoupling construction from allocation means that we can allocate memory in large chunks and pay the overhead of constructing the objects only when we actually need to create them.
+
+In general, coupling allocation and construction can be wasteful. For example:
+
+string *const p = new string[n]; // construct n empty strings
+string s;
+string *q = p; // q points to the first string
+
+while (cin >> s && q != p + n)
+    *q++ = s; // assign a new value to *q
+
+const size_t size = q - p; // remember how many strings we read
+
+// use the array
+delete[] p; // p points to an array; must remember to use delete[]
+
+This new expression allocates and initializes n strings. However, we might not need n strings; a smaller number might suffice. As a result, we may have created objects that are never used. Moreover, for those objects we do use, we immediately assign new values over the previously initialized strings. The elements that are used are written twice: first when the elements are default initialized, and subsequently when we assign to them.
+
+More importantly, classes that do not have default constructors cannot be dynamically allocated as an array.
+
+--
+The allocator Class
+
+The library allocator class, which is defined in the memory header, lets us separate allocation from construction. It provides type-aware allocation of raw, unconstructed, memory. Table below outlines the operations that allocator supports. In this section, we’ll describe the allocator operations. Later we’ll see an example of how this class is typically used.
+
+Standard allocator Class and Customized Algorithms:
+
+allocator<T> a: Defines an allocator object named a that can allocate memory for obejcts of type T.
+
+a.allocate(n): Allocates raw, unconstructed memory to hold n objects of type T.
+
+a.deallocate(p, n): Deallocates memeory that held n objects of type T starting at the address in the T* pointer p; p must be a pointer previously returned by allcoate, and n must be the size requested when p was created. The user must run destroy on any obejcts that were constructed in this memory before calling deallocate.
+
+a.construct(p, args): p must be a pointer to type T that points to raw memory; args are passed to a constructor for type T, which is used to construct an object in the memory pointed to by p.
+
+a.destroy(p): Runs the destructor on the object pointed to by the T* pointer p.
+
+Like vector, allocator is a template. To define an allocator we
+must specify the type of objects that a particular allocator can allocate. When an allocator object allocates memory, it allocates memory that is appropriately sized and aligned to hold objects of the given type:
+
+allocator<string> alloc; // object that can allocate strings
+auto const p = alloc.allocate(n); // allocate n unconstructed strings
+
+This call to allocate allocates memory for n strings.
+
+--
+allocators Allocate Unconstructed Memory
+
+The memory an allocator allocates is unconstructed. We use this memory by constructing objects in that memory. In the new library the construct member takes a pointer and zero or more additional arguments; it constructs an element at the given location. The additional arguments are used to initialize the object being constructed.
+
+Like the arguments to make_shared, these additional arguments
+must be valid initializers for an object of the type being constructed. In particular, if the, object is a class type, these arguments must match a constructor for that class:
+
+auto q = p; // q will point to one past the last constructed element
+alloc.construct(q++); // *q is the empty string
+alloc.construct(q++, 10, 'c'); // *q is cccccccccc
+alloc.construct(q++, "hi"); // *q is hi!
+
+In earlier versions of the library, construct took only two arguments: the pointer at which to construct an object and a value of the element type. As a result, we could only copy an element into unconstructed space, we could not use any other constructor for the element type.
+
+It is an error to use raw memory in which an object has not been constructed:
+
+cout << *p << endl; // ok: uses the string output operator
+cout << *q << endl; // disaster: q points to unconstructed memory!
+
+Warning: We must construct objects in order to use memory returned by allocate. Using unconstructed memory in other ways is undefined.
+
+When we’re finished using the objects, we must destroy the elements we constructed, which we do by calling destroy on each constructed element. The destroy function takes a pointer and runs the destructor on the pointed-to object:
+
+while (q != p)
+    alloc.destroy(--q); // free the strings we actually allocated
+
+At the beginning of our loop, q points one past the last constructed element. We decrement q before calling destroy. Thus, on the first call to destroy, q points to the last constructed element. We destroy the first element in the last iteration, after which q will equal p and the loop ends.
+
+Warning: We may destroy only elements that are actually constructed.
+
+Once the elements have been destroyed, we can either reuse the memory to hold other strings or return the memory to the system. We free the memory by calling deallocate:
+
+alloc.deallocate(p, n);
+
+The pointer we pass to deallocate cannot be null; it must point to memory allocated by allocate. Moreover, the size argument passed to deallocate must be the same size as used in the call to allocate that obtained the memory to which the pointer points.
+
+--
+Algorithms to Copy and Fill Uninitialized Memory
+
+As a companion to the allocator class, the library also defines two algorithms that can construct objects in uninitialized memory. These functions, described in Table below, are defined in the memory header.
+
+allocator Algorithms:
+
+These functions constructed elements in the destination, rather than assigning to them.
+
+uninitialized_copy(b, e, b2): Copies elements from the input range denoted by iterators b and e into unconstructed, raw memory denoted by the iterator b2. The memory denoted by b2 must be large enough to hold a copy of the elements in the input range.
+
+uninitialized_copy_n(b, n, b2): Copies n elements starting from the one denoted by the iterator b into raw memory starting at b2.
+
+uninitialized_fill(b, e, t): Constructs objects in the range of raw memory denoted by iterators b and e as a copy of it.
+
+uninitialized_fill_n(b, n, t): Construtcts an unsigned number n objects starting at b. b must denote unconstructed, raw memory large enough to hold the given number of objects.
+
+As an example, assume we have a vector of ints that we want to copy into dynamic memory. We’ll allocate memory for twice as many ints as are in the vector. We’ll construct the first half of the newly allocated memory by copying elements from the original vector. We’ll construct elements in the second half by filling them with a given value:
+
+// allocate twice as many elements as vi holds
+auto p = alloc.allocate(vi.size() * 2);
+
+// construct elements starting at p as copies of elements in vi
+auto q = uninitialized_copy(vi.begin(), vi.end(), p);
+
+// initialize the remaining elements to 42
+uninitialized_fill_n(q, vi.size(), 42);
+
+Like the copy algorithm, uninitialized_copy takes three iterators. The first two denote an input sequence and the third denotes the destination into which those elements will be copied. The destination iterator passed to uninitialized_copy must denote unconstructed memory. Unlike copy, uninitialized_copy constructs elements in its destination.
+
+Like copy, uninitialized_copy returns its (incremented) destination iterator. Thus, a call to uninitialized_copy returns a pointer positioned one element past the last constructed element. In this example, we store that pointer in q, which we pass to uninitialized_fill_n. This function, like fill_n, takes a pointer to a destination, a count, and a value. It will construct the given number of objects from the given value at locations starting at the given destination.
 
 ==
 (findconst)
@@ -8437,12 +9140,6 @@ Compiled on Jul 11 2012 at 20:50:03
 Word read was "foo": Length too short
 
 ==
-(finddynamicmemory)            
-Dynamic Memory
-
-stopa: p562: Chapter 12. Dynamic Memory
-
-==
 (findstruct)
 Struct
 
@@ -8964,6 +9661,12 @@ The default constructor is used automatically whenever an object is default or v
 Classes must have a default constructor in order to be used in these contexts.
 
 In practice, it is almost always right to provide a default constructor if other constructors are being defined.
+
+--
+(findcopycontrol)
+Copy control
+
+stopa 615, Chapter 13. Copy Control
 
 --
 (findfriend)                   
