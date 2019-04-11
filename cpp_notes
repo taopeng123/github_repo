@@ -78,8 +78,10 @@ findinitialization           Intialization
 findlistinitialization       List Initialization
 finddefaultinitialization    Default Initialization
 findvalueinitialization      Value Initialization
-finddirectinitialization     Direct Initialization
-findcopyinitialization       Copy Initialization
+finddirectinitialization1    Direct Initialization 1
+findcopyinitialization1      Copy Initialization 1
+finddirectinitialization2    Direct Initialization 2
+findcopyinitialization2      Copy Initialization 2
 finddeclaration              declaration 
 finddefinition               definition
 findmax                      max
@@ -101,7 +103,9 @@ findpointertofunction        Pointer to function
 finddynamicmemory            Dynamic memory
 findsharedptr                Smart pointer
 findsmartpointer             Smart pointer
-findnew                      new operator
+findnew                      The new operator
+finddelete                   The delete operator
+findfreememory               Free dynamic memory
 finddynamicarray             Dynamic Arrays
 findconst                    Constant
 findconstparameter           const in function parameter
@@ -160,8 +164,10 @@ findcontinue                 continue
 findgoto                     goto
 findexception                Exception
 findfunction                 function
-findparameter                Examples of function input parameters from Leetcode
-findreturn                   return
+findparameter1               Examples of function input parameters from Leetcode
+findreturn1                  return
+findparameter2               Pass parameter uses copy constructor
+findreturn2                  Return value uses copy constructor
 findreturnvector             Return a vector from function
 findreturnpointer            Return pointer from a function
 findreturnreference          Return reference from a function
@@ -178,9 +184,15 @@ findprivate                  private
 findmemberfunction           member function
 findconstmemberfunction      const member functions
 findconstructor              constructor
+finddefaultconstructor       Default Constructor
+findsynthesizeddefaultconstructor Synthesized Default Constructor
+findcopycontrol              Copy control
+findcopyconstructor          Copy constructor
+finddestructor               Destructor
+finddestroy                  Destroy
 findfriend                   friend
 findstaticmember             static Class Members
-finddestructor               destructor
+
 
 =============
 (findcbegin)
@@ -1525,9 +1537,9 @@ If a local static has no explicit initializer, it is value initialized, meaning 
 The default constructor is used automatically whenever an object is default or value initialized.
 
 --
-(finddirectinitialization)
-(findcopyinitialization)
-direct and copy initialization
+(finddirectinitialization1)
+(findcopyinitialization1)
+Direct and copy initialization 1
 
 Sales_data item1(null_book); // direct initialization
 Sales_data item2 = null_book; // the copy form of initialization 
@@ -3039,6 +3051,8 @@ int *p2 = new (nothrow) int; // if allocation fails, new returns a null pointer
 This form of new is referred to as placement new. A placement new expression lets us pass additional arguments to new. In this case, we pass an object named nothrow that is defined by the  library (tao: the "new" library). When we pass nothrow to new, we tell new that it must not throw an exception. If this form of new is unable to allocate the requested storage, it will return a null pointer. Both bad_alloc and nothrow are defined in the new header.
 
 --
+(finddelete)
+(findfreememory)
 Freeing Dynamic Memory
 
 In order to prevent memory exhaustion, we must return dynamically allocated memory to the system once we are finished using it. We return memory through a delete expression. A delete expression takes a pointer to the object we want to free:
@@ -8229,7 +8243,7 @@ The return type can be void, which means that the function does not return a val
 The return type may not be an array type or a function type. However, a function may return a pointer to an array or a function. 
 
 --
-(findparameter)
+(findparameter1)
 
 Examples of function input parameters from Leetcode:
 
@@ -8565,11 +8579,9 @@ An ellipsis parameter may appear only as the last element in a parameter list an
 void foo(parm_list, ...);
 void foo(...);
 
---
-(findreturn)
-return
-
-todo: search for return string, return object
+==
+(findreturn1)
+Return:
 
 --
 (findreturnvector)
@@ -9462,28 +9474,31 @@ Constructors have the same name as the class. Unlike other functions, constructo
 
 Unlike other member functions, constructors may not be declared as const. When we create a const object of a class type, the object does not assume its “constness” until after the constructor completes the object’s initialization. Thus, constructors can write to const objects during their construction.
 
+--
+(findsynthesizeddefaultconstructor)
 The Synthesized Default Constructor
 
 Our Sales_data class does not define any constructors, yet the programs we’ve written that use Sales_data objects compile and run correctly:
 
 Sales_data total;
 
+(finddefaultconstructor)
 We did not supply an initializer for these objects, so we know that they are default initialized. Classes control default initialization by defining a special constructor, known as the default constructor. The default constructor is one that takes no arguments (tao: remember).
 
-As we’ll, see the default constructor is special in various ways, one of which is that if our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us
+As we’ll see, the default constructor is special in various ways, one of which is that if our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us
 
 The compiler-generated constructor is known as the synthesized default constructor. For most classes, this synthesized constructor initializes each data member of the class as follows:
 
 • If there is an in-class initializer, use it to initialize the member.
 • Otherwise, default-initialize the member.
 
-Some Classes Cannot Rely on the Synthesized Default Constructor Only fairly simple classes—such as the current definition of Sales_data—can rely on the synthesized default constructor. The most common reason that a class must define its own default constructor is that the compiler generates the default for us only if we do not define any other constructors for the class. If we define any constructors, the
-class will not have a default constructor unless we define that constructor ourselves. The basis for this rule is that if a class requires control to initialize an object in one case, then the class is likely to require control in all cases.
+Some Classes Cannot Rely on the Synthesized Default Constructor 
+
+Only fairly simple classes—such as the current definition of Sales_data—can rely on the synthesized default constructor. The most common reason that a class must define its own default constructor is that the compiler generates the default for us only if we do not define any other constructors for the class. If we define any constructors, the class will not have a default constructor unless we define that constructor ourselves. The basis for this rule is that if a class requires control to initialize an object in one case, then the class is likely to require control in all cases.
 
 Note: The compiler generates a default constructor automatically only if a class declares no constructors.
 
-A second reason to define the default constructor is that for some classes, the synthesized default constructor does the wrong thing. Remember that objects of builtin or compound type (such as arrays and pointers) that are defined inside a block have undefined value when they are default initialized. The same rule applies to members of built-in type that are default initialized. Therefore, classes that
-have members of built-in or compound type should ordinarily either initialize those members inside the class or define their own version of the default constructor. Otherwise, users could create objects with members that have undefined value.
+A second reason to define the default constructor is that for some classes, the synthesized default constructor does the wrong thing. Remember that objects of builtin or compound type (such as arrays and pointers) that are defined inside a block have undefined value when they are default initialized. The same rule applies to members of built-in type that are default initialized. Therefore, classes that have members of built-in or compound type should ordinarily either initialize those members inside the class or define their own version of the default constructor. Otherwise, users could create objects with members that have undefined value.
 
 A third reason that some classes must define their own default constructor is that sometimes the compiler is unable to synthesize one. For example, if a class has a member that has a class type, and that class doesn’t have a default constructor, then the compiler can’t initialize that member. For such classes, we must define our own version of the default constructor.
 
@@ -9592,8 +9607,7 @@ Copy, Assignment, and Destruction
 
 In addition to defining how objects of the class type are initialized, classes also control what happens when we copy, assign, or destroy objects of the class type. 
 
-Objects are copied in several contexts, such as when we initialize a variable (tao: can be either =, or int a(b), confirmed) or when we pass or return an object by value. Objects are assigned when we use the assignment operator (tao: =, confirmed). Objects are destroyed when they cease to exist, such as when a local object is destroyed on exit from the block in which it was created. Objects stored in a vector (or an array) are
-destroyed when that vector (or array) is destroyed.
+Objects are copied in several contexts, such as when we initialize a variable (tao: can be either =, or int a(b), confirmed) or when we pass or return an object by value. Objects are assigned when we use the assignment operator (tao: =, confirmed). Objects are destroyed when they cease to exist, such as when a local object is destroyed on exit from the block in which it was created. Objects stored in a vector (or an array) are destroyed when that vector (or array) is destroyed.
 
 If we do not define these operations, the compiler will synthesize them for us. Ordinarily, the versions that the compiler generates for us execute by copying, assigning, or destroying each member of the object. For example, in our bookstore program, when the compiler executes this assignment
 
@@ -9662,13 +9676,281 @@ Classes must have a default constructor in order to be used in these contexts.
 
 In practice, it is almost always right to provide a default constructor if other constructors are being defined.
 
---
+==
 (findcopycontrol)
 Copy control
 
-stopa 615, Chapter 13. Copy Control
+Readers, therefore, should understand that Part III covers fairly advanced topics.
+
+In this chapter we’ll learn how classes can control what happens when objects of the class type are copied, assigned, moved, or destroyed. Classes control these actions through special member functions: the copy constructor, move constructor, copy-assignment operator, move-assignment operator, and destructor.
+
+Tao's summary (from later):
+
+Old standard has:
+copy constructor 
+copy-assignment operator
+destructor
+
+New standard added:
+move constructor
+move-assignment operator
+
+The copy and move constructors define what happens when an object is initialized from another object of the same type. The copy-assignment and move-assignment operators define what happens when we assign an object of a class type to another
+object of that same class type. The destructor defines what happens when an object of the type ceases to exist. Collectively, we’ll refer to these operations as copy
+control.
+
+If a class does not define all of the copy-control members, the compiler automatically defines the missing operations. As a result, many classes can ignore copy control. However, for some classes, relying on the default definitions leads to disaster. Frequently, the hardest part of implementing copy-control operations is recognizing when we need to define them in the first place.
+
+Warning: Copy control is an essential part of defining any C++ class. Programmers new to C++ are often confused by having to define what happens when objects are copied, moved, assigned, or destroyed. This confusion is compounded because if we do not explicitly define these operations, the compiler defines them for us—although the compiler-defined versions might not behave as we intend.
+
+==
+Copy, Assign, and Destroy
+
+(findcopyconstructor)
+Copy constructor
+
+A constructor is the copy constructor if its first parameter is a reference to the class type and any additional parameters have default values:
+
+class Foo {
+public:
+    Foo(); // default constructor
+    Foo(const Foo&); // copy constructor
+    // ...
+};
+
+For reasons we’ll explain shortly, the first parameter must be a reference type. That parameter is almost always a reference to const, although we can define the copy constructor to take a reference to nonconst. The copy constructor is used implicitly in several circumstances. Hence, the copy constructor usually should not be explicit.
 
 --
+The Synthesized Copy Constructor
+
+When we do not define a copy constructor for a class, the compiler synthesizes one for us. Unlike the synthesized default constructor, a copy constructor is synthesized even if we define other constructors.
+
+As we’ll see later, the synthesized copy constructor for some
+classes prevents us from copying objects of that class type. Otherwise, the synthesized copy constructor memberwise copies the members of its argument into the object being created. The compiler copies each nonstatic member in turn from the given object into the one being created.
+
+The type of each member determines how that member is copied: Members of class type are copied by the copy constructor for that class; members of built-in type are copied directly. Although we cannot directly copy an array, the synthesized copy constructor copies members of array type by copying each element. Elements of class type are copied by using the elements’ copy constructor.
+
+As an example, the synthesized copy constructor for our Sales_data class is equivalent to:
+
+class Sales_data {
+public:
+    // other members and constructors as before
+    // declaration equivalent to the synthesized copy constructor
+    Sales_data(const Sales_data&);
+
+private:
+    std::string bookNo;
+    int units_sold = 0;
+    double revenue = 0.0;
+};
+
+// equivalent to the copy constructor that would be synthesized for Sales_data
+Sales_data::Sales_data(const Sales_data &orig):
+    bookNo(orig.bookNo), // uses the string copy constructor
+    units_sold(orig.units_sold), // copies orig.units_sold
+    revenue(orig.revenue) // copies orig.revenue
+    { } // empty body
+
+--
+(finddirectinitialization2)
+(findcopyinitialization2)
+Direct and copy Initialization 2
+
+Copy Initialization
+
+We are now in a position to fully understand the differences between direct initialization and copy initialization:
+
+string dots(10, '.'); // direct initialization
+string s(dots); // direct initialization
+string s2 = dots; // copy initialization
+string null_book = "9-999-99999-9"; // copy initialization
+string nines = string(100, '9'); // copy initialization
+
+When we use direct initialization, we are asking the compiler to use ordinary function matching to select the constructor that best matches the arguments we provide. When we use copy initialization, we are asking the compiler to copy the right-hand operand into the object being created, converting that operand if necessary.
+
+Copy initialization ordinarily uses the copy constructor. However, as we’ll see later, if a class has a move constructor, then copy initialization sometimes uses the move constructor instead of the copy constructor. For now, what’s useful to know is when copy initialization happens and that copy initialization requires either the copy constructor or the move constructor.
+
+Copy initialization happens not only when we define variables using an =, but also when we
+
+(findparameter2)
+(findreturn2)
+(Tao: the following cases use the copy constructor)
+
+• Pass an object as an argument to a parameter of nonreference type (tao: note nonreference)
+
+• Return an object from a function that has a nonreference return type (tao: note nonreference)
+
+• Brace initialize the elements in an array or the members of an aggregate class
+
+Some class types also use copy initialization for the objects they allocate. For example, the library containers copy initialize their elements when we initialize the container, or
+when we call an insert or push member. By contrast, elements
+created by an emplace member are direct initialized.
+
+The fact that the copy constructor is used to initialize nonreference parameters of class type explains why the copy constructor’s own parameter must be a reference.
+
+The Compiler Can Bypass the Copy Constructor
+
+During copy initialization, the compiler is permitted (but not obligated) to skip the copy/move constructor and create the object directly. That is, the compiler is permitted to rewrite
+
+string null_book = "9-999-99999-9"; // copy initialization
+into
+string null_book("9-999-99999-9"); // compiler omits the copy
+constructor
+
+However, even if the compiler omits the call to the copy/move constructor, the copy/move constructor must exist and must be accessible (e.g., not private) at that point in the program.
+
+--
+The Copy-Assignment Operator
+
+Just as a class controls how objects of that class are initialized, it also controls how objects of its class are assigned:
+
+Sales_data trans, accum;
+trans = accum; // uses the Sales_data copy-assignment operator
+
+As with the copy constructor, the compiler synthesizes a copy-assignment operator if the class does not define its own.
+
+Introducing Overloaded Assignment
+
+Before we look at the synthesized assignment operator, we need to know a bit about overloaded operators, which we cover in detail later. 
+
+Overloaded operators are functions that have the name operator followed by the symbol for the operator being defined. Hence, the assignment operator is a function named operator=. Like any other function, an operator function has a return type
+and a parameter list.
+
+The parameters in an overloaded operator represent the operands of the operator. Some operators, assignment among them, must be defined as member functions. When an operator is a member function, the left-hand operand is bound to the
+implicit this parameter. The right-hand operand in a binary
+operator, such as assignment, is passed as an explicit parameter.
+
+The copy-assignment operator takes an argument of the same type as the class:
+
+class Foo {
+public:
+    Foo& operator=(const Foo&); // assignment operator
+    // ...
+};
+
+To be consistent with assignment for the built-in types, assignment operators usually return a reference to their left-hand operand. It is also worth noting that the library generally requires that types stored in a container have assignment operators that return a reference to the left-hand operand.
+
+Best Practices: Assignment operators ordinarily should return a reference to their left-hand operand.
+
+The Synthesized Copy-Assignment Operator
+
+Just as it does for the copy constructor, the compiler generates a synthesized copy-assignment operator for a class if the class does not define its own. Analogously to the copy constructor, for some classes the synthesized copy-assignment operator disallows assignment. Otherwise, it assigns each nonstatic member of the right-hand object to the corresponding member of the left-hand object using the copy-assignment operator for the type of that member. Array members are assigned by assigning each element of the array. The synthesized copy-assignment operator returns a reference to its left-hand object.
+
+As an example, the following is equivalent to the synthesized Sales_data copy-assignment operator:
+
+// equivalent to the synthesized copy-assignment operator
+Sales_data&
+Sales_data::operator=(const Sales_data &rhs)
+{
+    bookNo = rhs.bookNo; // calls the string::operator=
+    units_sold = rhs.units_sold; // uses the built-in int assignment
+    revenue = rhs.revenue; // uses the built-in double
+    assignment
+    return *this; // return a reference to this object
+}
+
+==
+(finddestructor)
+The Destructor
+
+Destructors do whatever work is needed to free the resources used by an object and destroy the data members of the object.
+
+The destructor is a member function with the name of the class prefixed by a tilde (~). It has no return value and takes no parameters. Because it takes no parameters, it cannot be overloaded. There is always only one destructor for a given class.
+
+class Sales_data {
+public:
+    ~Sales_data() { } // destructor
+    ...
+};
+
+What a Destructor Does
+
+Just as a constructor has an initialization part and a function body, a destructor has a function body and a destruction part. In a constructor, members are initialized before the function body is executed, and members are initialized in the same order as they appear in the class. In a destructor, the function body is executed first and then the members are destroyed. Members are destroyed in reverse order from the order in which they were initialized.
+
+The function body of a destructor does whatever operations the class designer wishes to have executed subsequent to the last use of an object. Typically, the destructor frees resources an object allocated during its lifetime.
+
+In a destructor, there is nothing akin to the constructor initializer list to control how members are destroyed; the destruction part is implicit. What happens when a member is destroyed depends on the type of the member. 
+
+(finddestroy)
+Members of class type are destroyed by running the member’s own destructor. The built-in types do not have destructors, so nothing is done to destroy members of built-in type. 
+
+Note: The implicit destruction of a member of built-in pointer type does not delete the object to which that pointer points.
+
+Unlike ordinary pointers, the smart pointers are class types and have destructors. As a result, unlike ordinary pointers, members that are smart pointers are automatically destroyed during the destruction phase.
+
+When a Destructor Is Called
+
+The destructor is used automatically whenever an object of its type is destroyed:
+
+• Variables are destroyed when they go out of scope.
+
+• Members of an object are destroyed when the object of which they are a part is destroyed.
+
+• Elements in a container—whether a library container or an array—are destroyed when the container is destroyed.
+
+• Dynamically allocated objects are destroyed when the delete operator is applied to a pointer to the object.
+
+• Temporary objects are destroyed at the end of the full expression in which the temporary was created.
+
+Because destructors are run automatically, our programs can allocate resources and (usually) not worry about when those resources are released.
+
+For example, the following fragment defines four Sales_data objects:
+
+{ // new scope
+    // p and p2 point to dynamically allocated objects
+    Sales_data *p = new Sales_data; // p is a built-in pointer
+    auto p2 = make_shared<Sales_data>(); // p2 is a shared_ptr
+    Sales_data item(*p); // copy constructor copies *p into item
+    vector<Sales_data> vec; // local object
+    vec.push_back(*p2); // copies the object to which p2 points
+    delete p; // destructor called on the object pointed to
+    by p
+} // exit local scope; destructor called on item, p2, and vec
+// destroying p2 decrements its use count; if the count goes to 0, the object is freed
+// destroying vec destroys the elements in vec
+
+The destructor is not run when a reference or a pointer to an object goes out of scope.
+
+The Synthesized Destructor
+
+The compiler defines a synthesized destructor for any class that does not define its own destructor. As with the copy constructor and the copy-assignment operator, for some classes, the synthesized destructor is defined to disallow objects of the type from being destroyed. Otherwise, the synthesized destructor has an empty function body.
+
+For example, the synthesized Sales_data destructor is equivalent to:
+
+class Sales_data {
+public:
+    // no work to do other than destroying the members, which happens automatically
+    ~Sales_data() { }
+    // other members as before
+};
+
+The members are automatically destroyed after the (empty) destructor body is run.
+
+It is important to realize that the destructor body does not directly destroy the members themselves. Members are destroyed as part of the implicit destruction phase that follows the destructor body. A destructor body executes in addition to the
+memberwise destruction that takes place as part of destroying an object.
+
+--
+The Rule of Three/Five
+
+As we’ve seen, there are three basic operations to control copies of class objects: the copy constructor, copy-assignment operator, and destructor. Moreover, as we’ll see later, under the new standard, a class can also define a move constructor
+and move-assignment operator.
+
+There is no requirement that we define all of these operations: We can define one or two of them without having to define all of them. However, ordinarily these operations should be thought of as a unit. In general, it is unusual to need one without needing to define them all.
+
+Classes That Need Destructors Need Copy and Assignment
+
+One rule of thumb to use when you decide whether a class needs to define its own versions of the copy-control members is to decide first whether the class needs a destructor. Often, the need for a destructor is more obvious than the need for the
+copy constructor or assignment operator. If the class needs a destructor, it almost surely needs a copy constructor and copy-assignment operator as well.
+
+Classes That Need Copy Need Assignment, and Vice Versa
+
+Although many classes need to define all of (or none of) the copy-control members, some classes have work that needs to be done to copy or assign objects but has no need for the destructor.
+
+--
+stopa: 629, Using = default
+Add: "finddefault"
+
+==
 (findfriend)                   
 friend
 
@@ -10144,79 +10426,6 @@ private:
  
 A nonstatic data member may not be used as a default argument because its value is part of the object of which it is a member. Using a nonstatic data member as a default argument provides no object from which to obtain the member’s value and so is an error.
 
---
-(finddestructor)               
-destructor
-
-This destructor notes records the file c_primer_5th_edition.pdf.pdf everything in section "13.1.3. The Destructor".
-
-Destructors do whatever work is needed to free the resources used by an object and destroy the data members of the object.
-
-The destructor is a member function with the name of the class prefixed by a tilde (~). It has no return value and takes no parameters. Because it takes no parameters, it cannot be overloaded. There is always only one destructor for a given class.
-
-class Sales_data {
-public:
-    ~Sales_data() { } // destructor
-    ...
-};
-
-What a Destructor Does
-
-Just as a constructor has an initialization part and a function body, a destructor has a function body and a destruction part. In a constructor, members are initialized before the function body is executed, and members are initialized in the same order as they appear in the class. In a destructor, the function body is executed first and then the members are destroyed. Members are destroyed in reverse order from the order in which they were initialized.
-
-The function body of a destructor does whatever operations the class designer wishes to have executed subsequent to the last use of an object. Typically, the destructor frees resources an object allocated during its lifetime.
-
-In a destructor, there is nothing akin to the constructor initializer list to control how members are destroyed; the destruction part is implicit. What happens when a member is destroyed depends on the type of the member. Members of class type are destroyed by running the member’s own destructor. The built-in types do not have destructors, so nothing is done to destroy members of built-in type. 
-
-The implicit destruction of a member of built-in pointer type does not delete the object to which that pointer points.
-
-When a Destructor Is Called
-
-The destructor is used automatically whenever an object of its type is destroyed:
-
-• Variables are destroyed when they go out of scope.
-• Members of an object are destroyed when the object of which they are a part is destroyed.
-• Elements in a container—whether a library container or an array—are destroyed when the container is destroyed.
-• Dynamically allocated objects are destroyed when the delete operator is applied to a pointer to the object.
-• Temporary objects are destroyed at the end of the full expression in which the temporary was created.
-
-Because destructors are run automatically, our programs can allocate resources and (usually) not worry about when those resources are released.
-
-For example, the following fragment defines four Sales_data objects:
-
-{ // new scope
-    // p and p2 point to dynamically allocated objects
-    Sales_data *p = new Sales_data; // p is a built-in pointer
-    auto p2 = make_shared<Sales_data>(); // p2 is a shared_ptr
-    Sales_data item(*p); // copy constructor copies *p into item
-    vector<Sales_data> vec; // local object
-    vec.push_back(*p2); // copies the object to which p2 points
-    delete p; // destructor called on the object pointed to
-    by p
-} // exit local scope; destructor called on item, p2, and vec
-// destroying p2 decrements its use count; if the count goes to 0, the object is freed
-// destroying vec destroys the elements in vec
-
-The destructor is not run when a reference or a pointer to an object goes out of scope.
-
-The Synthesized Destructor
-
-The compiler defines a synthesized destructor for any class that does not define its own destructor. As with the copy constructor and the copy-assignment operator, for some classes, the synthesized destructor is defined to disallow objects of the type
-from being destroyed. Otherwise, the synthesized destructor has an empty function body.
-
-For example, the synthesized Sales_data destructor is equivalent to:
-
-class Sales_data {
-public:
-    // no work to do other than destroying the members, which happens automatically
-    ~Sales_data() { }
-    // other members as before
-};
-
-The members are automatically destroyed after the (empty) destructor body is run.
-
-It is important to realize that the destructor body does not directly destroy the members themselves. Members are destroyed as part of the implicit destruction phase that follows the destructor body. A destructor body executes in addition to the
-memberwise destruction that takes place as part of destroying an object.
 
 
 
