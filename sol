@@ -1,14 +1,17 @@
 Note:
-- If not specified, all the code are written by Tao.
+- For Key, use English. Because Chinese may have weired change of line.
+- In LeetCode OJ, for Python, just select "Python", not "Python3". Note that "Python" still uses Python 3 syntax, but with more familiar format.
 - C++ code uses C++ 2011, Python code uses Python 3.
   So C++ code needs to be compiled using: std=c++11,
   and Python code needs to be run using: python3 filename.py
+- If not specified, all the code in this note were written by Tao.
 - When recording my code here, do not paste the include statements. Only pasete when I included some uncommon things, like <climits>.
-- Only use prxxx in categories and in the solution. Elsewhere should use pr xxx. This way helps searching for prxxx.
-- Tao's summary about DP: pr 139. Word Break, Medium
+- Only use "prxxx" in categories and in the solution. Elsewhere should use "pr xxx". This way helps searching for "prxxx".
 
 ************************************************
 Summary:
+
+- Tao's summary about DP: pr 139. Word Break, Medium
 
 - For questions like List, Tree, array, after completed the code, the easiest way to avoid being lazy and escaping checking is to walk through some simplest case (like a three node List, a three node Tree, and a three element array).
 
@@ -33,6 +36,9 @@ Key:
 
 ==
 C++ code:
+
+==
+Python code:
 
 ************************************************
 Categories:
@@ -135,8 +141,8 @@ catstring
 
 0111 | pr8. String to Integer (atoi), Easy 
 0111 | pr14. Longest Common Prefix, Easy 
-111 | pr38. Count and Say, Easy 
-011 | pr28. Implement strStr(), Easy. "aa", "" -> 0. "", "aa" -> -1. needle可能比haystack長.
+1111 | pr38. Count and Say, Easy 
+0111 | pr28. Implement strStr(), Easy. 
 111 | pr242. Valid Anagram, Easy. Anagram：单词里的字母的种类和数目没有改变，只是改变了字母的排列顺序。
 011 | pr49. Group Anagrams, Medium 
 011 | pr68. Text Justification, Hard. [""], 0 -> [""]. [""], 2 -> ["  "]
@@ -348,7 +354,7 @@ catarithmetics
 catsystem
 
 0101 | pr146. LRU Cache, Hard. 
-011 | pr232. Implement Queue using Stacks, Easy. 
+0111 | pr232. Implement Queue using Stacks, Easy. 
 111 | pr225. Implement Stack using Queues, Easy. 
 001 | pr155. Min Stack, Easy. Convention: 若Min Stack為空, 則top()返回0, pop()直接return, getMin()返回0.
 
@@ -1477,12 +1483,12 @@ Tao: an example of a larger symmmetric tree:
 ==
 Key:
 
-遞歸法：寫一個函數bool isTwoTreesSymmetric(TreeNode* root1, TreeNode* root2)來判斷兩個樹是否對稱。isTwoTreesSymmetric中遞歸調用它自己。
+Recursive: write a function bool isTwoTreesSymmetric(TreeNode* root1, TreeNode* root2) to determine whether the tree is symmetric. isTwoTreesSymmetric calls itself recursively.
 
-迭代法：BFS. 用兩個queue。 q1用來放root->left這個樹中的node, 每層按從左到右放。q2用來放root->right這個樹中的node, 每層按從右到左放。Key point是null node 也要放入queue中。每次從q1和q2中取兩個node出來比較。不需要判斷每層是否結束，所以不需要cur_num和next_num兩個變量。
+Iterative: BFS. Use two queues. q1 stores nodes in subtree of root->left, each layer is stored from left to right. q2 stores nodes in subtree of root->right, each layer is stored from right to left. The key point is that the null node also needs to put in queue. Each time gets two nodes from q1 and q2 and compare them. No need to know whether the end of each layer, so no need to use cur_num and next_num.
 
 ==
-C++ code (遞歸法):
+C++ code (recursive):
 
 class Solution {
 private: 
@@ -1501,8 +1507,8 @@ public:
     }
 };
 
-C++ code (迭代法):
-(按我之前的Java代碼改進過，比Java代碼更簡潔)
+C++ code (iterative):
+(Modified according to my Java code, but simpler than my Java code)
 
 class Solution {
 public:
@@ -1664,7 +1670,7 @@ Follow up:
 A solution using O(n) space is pretty straight forward.
 Could you devise a constant space solution?
 
-Tao: 本題遞歸法也可以.
+Tao: can also use recursive way.
 
 Tao: constant space?
 
@@ -2330,10 +2336,10 @@ Note:
 All given inputs are in lowercase letters a-z.
 
 ==
-Key: 簡單，brute force. 先寫一個函數int getPrefixSize(string& s1, string& s2)，返回s1和s2的prefix長度。在主函數裡，對strs中的每兩個相鄰的string都調用getPrefixSize，最後求出最小的prefix長度。
+Key: Easy. Just use brute force. Write a function int getPrefixSize(string& s1, string& s2), which returns the length of prefix of s1 and s2. In the main function, call getPrefixSize on each of the adjacent two strings in strs. Finally get the shortest length of prefix.
 
 ==
-C++ code (按我的Java代碼簡化過):
+C++ code (simplied according to my Java code):
 
 class Solution {
 private:
@@ -2368,6 +2374,165 @@ public:
         return strs[0].substr(0, minPrefix);
     }
 };
+
+************************
+pr38. Count and Say, Easy 
+
+Question:
+
+The count-and-say sequence is the sequence of integers with the first five terms as following:
+
+1.     1
+2.     11
+3.     21
+4.     1211
+5.     111221
+
+1 is read off as "one 1" or 11.
+11 is read off as "two 1s" or 21.
+21 is read off as "one 2, then one 1" or 1211.
+
+Given an integer n where 1 ≤ n ≤ 30, generate the nth term of the count-and-say sequence.
+
+Note: Each term of the sequence of integers will be represented as a string.
+
+Example 1:
+
+Input: 1
+Output: "1"
+
+Example 2:
+
+Input: 4
+Output: "1211"
+
+==
+Key: Brute force. Write a function string getNext(string s), which returns the next string. Eg: getNext(21) returns 1211. Then call getNext for n times.
+
+==
+C++ code:
+
+class Solution {
+public:
+	string getNext(string s) {
+		int n = s.size();
+		string res = "";
+
+		for(int i = 0; i < n; ++i) {
+			if(i == 0 || s[i] != s[i - 1]) {
+				int count = 1;
+				while(i + 1 < n && s[i] == s[i + 1]) {++i; ++count;}
+				res += (to_string(count) + s[i]);
+			}
+		}
+
+		return res;
+	}
+
+    string countAndSay(int n) {
+    	string res = "1";
+    	for(int i = 1; i < n; ++i) res = getNext(res);
+    	return res; 
+    }
+};
+
+************************
+pr28. Implement strStr(), Easy
+
+Question:
+
+Implement strStr().
+
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+Example 1:
+
+Input: haystack = "hello", needle = "ll"
+Output: 2
+
+Example 2:
+
+Input: haystack = "aaaaa", needle = "bba"
+Output: -1
+
+Clarification:
+
+What should we return when needle is an empty string? This is a great question to ask during an interview.
+
+For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
+
+Tao: needle可能比haystack長, ("", "aa") -> -1.
+
+==
+Key: Brute forece. First compare each character of haystack with needle[0]. If they are equal, then compare all characters in them.
+
+==
+C++ code:
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n = needle.size(), m = haystack.size();
+
+    	if(n == 0) return 0;
+    	if(n > m) return -1;
+
+    	int start_equal = 0; // start_equal is the index of haystack
+        
+        while(start_equal < m){
+            // Find the matching start in haystack
+            while(start_equal < m - n && haystack[start_equal] != needle[0]) {++start_equal;}
+
+            if(start_equal > m - n) return -1;
+
+            // Check the entire string needle
+            int i = start_equal, j = 0;
+            while(i < m && j < n && haystack[i] == needle[j]) {++i; ++j;}
+
+            if(j == n) return start_equal;  
+            else ++start_equal; 
+        }
+
+		return -1;  
+    }
+};
+
+==
+Python code:
+
+class Solution(object):
+    def strStr(self, haystack, needle):
+    	n = len(needle)
+    	m = len(haystack)
+
+    	if n == 0:
+    		return 0
+
+    	if n > m:
+    		return -1
+
+    	start_equal = 0
+
+    	while start_equal < m:
+    		while start_equal < m - n and haystack[start_equal] != needle[0]: 
+    			start_equal += 1
+
+    		if start_equal > m - n:
+    			return -1
+
+    		i = start_equal
+    		j = 0
+
+    		while i < m and j < n and haystack[i] == needle[j]:
+    			i += 1
+    			j += 1
+
+    		if j == n:
+    			return start_equal
+    		else: 
+    			start_equal += 1
+
+    	return -1
 
 ************************
 pr139. Word Break, Medium
@@ -3412,6 +3577,83 @@ public:
     }
 };
 
+************************
+pr232. Implement Queue using Stacks, Easy. 
+
+Question:
+
+Implement the following operations of a queue using stacks.
+
+push(x) -- Push element x to the back of queue.
+pop() -- Removes the element from in front of queue.
+peek() -- Get the front element.
+empty() -- Return whether the queue is empty.
+
+Example:
+
+MyQueue queue = new MyQueue();
+
+queue.push(1);
+queue.push(2);  
+queue.peek();  // returns 1
+queue.pop();   // returns 1
+queue.empty(); // returns false
+Notes:
+
+You must use only standard operations of a stack -- which means only push to top, peek/pop from top, size, and is empty operations are valid.
+Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended queue), as long as you use only standard operations of a stack.
+You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
+
+注意：
+1. 本題已經假定 用户每次調用pop()前，都會先調用empty(). 即只有在MyQueue不為空的時候，才會执行pop().
+2. 當整個MyQueue都為空時，peek()返回的值不能為一個 空stack的top()的返回值，而應當返回-1, 否則不會通過.
+
+==
+Key: 用兩個stack, 放東西(push)時放入stack1, 拿東西時(peek/pop)從stack2中拿. 若 stack2為空, 則將stack1中所有的元素都弄到stack2中去. 先寫peek, 再寫其它的.
+
+==
+C++ code:
+
+class MyQueue {
+private: 
+	stack<int> stack1, stack2;
+
+public:
+    /** Initialize your data structure here. */
+    MyQueue() {
+    	    
+    }
+    
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        stack1.push(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {        
+        int res = peek();
+        stack2.pop();
+        return res;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+    	if(stack2.empty()) {
+    		while(!stack1.empty()) {
+    			stack2.push(stack1.top());
+    			stack1.pop();
+    		}
+    	} 
+
+        if(stack2.empty()) return -1; //本句話是必需的，否則通不過
+    	return stack2.top();
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return stack1.empty() && stack2.empty();
+    }
+};
 =================================================
 catbit
 
