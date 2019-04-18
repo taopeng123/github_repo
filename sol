@@ -27,7 +27,7 @@ Template:
 catxxx
 
 ************************
-prxx
+pr61. Rotate List, Medium. k可以大於list長度
 
 Question:
 
@@ -55,7 +55,7 @@ catlist
 1111 | pr92. Reverse Linked List II, Medium 
 0111 | pr25. Reverse Nodes in k-Group, Hard. 
 0111 | pr234. Palindrome Linked List, Easy 
-111 | pr61. Rotate List, Medium. k可以大於list長度
+111 | pr61. Rotate List, Medium. 
 111 | pr143. Reorder List, Medium.  
 111 | pr141. Linked List Cycle, Medium
 011 | pr142. Linked List Cycle II, Medium 
@@ -893,6 +893,110 @@ public:
     }
 };
 
+************************
+pr61. Rotate List, Medium. 
+
+Question:
+
+Given a linked list, rotate the list to the right by k places, where k is non-negative.
+
+Example 1:
+Input: 1->2->3->4->5->NULL, k = 2
+Output: 4->5->1->2->3->NULL
+
+Explanation:
+rotate 1 steps to the right: 5->1->2->3->4->NULL
+rotate 2 steps to the right: 4->5->1->2->3->NULL
+
+Example 2:
+Input: 0->1->2->NULL, k = 4
+Output: 2->0->1->NULL
+
+Explanation:
+rotate 1 steps to the right: 2->0->1->NULL
+rotate 2 steps to the right: 1->2->0->NULL
+rotate 3 steps to the right: 0->1->2->NULL
+rotate 4 steps to the right: 2->0->1->NULL
+
+==
+Key: First find the position to cut, then cut at that position. Remember to take mod when k is bigger than the length of list.
+
+==
+C++ code:
+
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+    	if(!head || !head->next || k <= 0) return head; 
+
+    	//Find length of list
+
+    	int length = 1;
+    	ListNode* tail = head;
+
+    	while(tail->next) {
+    		tail = tail->next;
+    		++length;
+    	}
+
+    	k = k % length;
+    	if(k == 0) return head;
+        
+    	//Find the position to cut
+    	
+    	int i = 1;
+    	ListNode* node_cut = head;
+
+    	while(i < length - k) {
+    		node_cut = node_cut->next;
+    		++i;
+    	}   
+
+    	ListNode* new_head = node_cut->next;
+    	node_cut->next = NULL;
+    	tail->next = head;
+    
+    	return new_head;        
+    }
+};
+
+==
+Python code:
+
+class Solution(object):
+    def rotateRight(self, head, k):
+    	if head == None or head.next == None or k <= 0: 
+    		return head;
+
+    	# Find length of list
+
+    	length = 1
+    	tail = head
+
+    	while tail.next != None:
+    		tail = tail.next
+    		length += 1
+
+    	k = k % length
+
+    	if k == 0:
+    		return head
+
+    	# Find the position to cut
+
+    	i = 1
+    	node_cut = head
+
+    	while i < length - k:
+    		node_cut = node_cut.next
+    		i += 1
+
+    	new_head = node_cut.next
+    	node_cut.next = None
+    	tail.next = head
+
+    	return new_head
+    	
 =================================================
 cattree
 
