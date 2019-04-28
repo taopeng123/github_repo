@@ -27,7 +27,7 @@ Template:
 catxxx
 
 ************************
-pr61. Rotate List, Medium. k可以大於list長度
+pr143. Reorder List, Medium
 
 Question:
 
@@ -55,7 +55,7 @@ catlist
 1111 | pr92. Reverse Linked List II, Medium 
 0111 | pr25. Reverse Nodes in k-Group, Hard. 
 0111 | pr234. Palindrome Linked List, Easy 
-111 | pr61. Rotate List, Medium. 
+1111 | pr61. Rotate List, Medium. 
 111 | pr143. Reorder List, Medium.  
 111 | pr141. Linked List Cycle, Medium
 011 | pr142. Linked List Cycle II, Medium 
@@ -996,7 +996,126 @@ class Solution(object):
     	tail.next = head
 
     	return new_head
-    	
+
+************************
+pr143. Reorder List, Medium
+
+Question:
+
+Given a singly linked list L: L0 → L1 → … → Ln-1 → Ln,
+reorder it to: L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+Example 1:
+Given 1->2->3->4, reorder it to 1->4->2->3.
+
+Example 2:
+Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+
+==
+Key: First find the middle of the list, then reverse the second list, finally merge these two lists.
+
+==
+C++ code:
+
+class Solution {
+private:
+	// Copied from pr 206. Reverse Linked List
+    ListNode* reverseList(ListNode* head) {
+        ...
+    }
+
+public:
+    void reorderList(ListNode* head) {
+    	if(!head || !head->next) return;
+
+    	// Find the middle point
+
+    	ListNode* walker = head;
+    	ListNode* runner = head;
+
+    	while(runner && runner->next && runner->next->next) {
+    		walker = walker->next;
+    		runner = runner->next->next;
+    	}
+
+    	// Split at the middle point
+
+    	ListNode* head_new = walker->next;
+    	walker->next = NULL;
+                
+    	// Reverse the second list
+
+        ListNode* head2 = reverseList(head_new);
+        
+        // Merge two lists
+
+        ListNode* p1 = head;
+        ListNode* p2 = head2;
+        ListNode* p1_next = p1->next;
+        ListNode* p2_next = p2->next;
+
+        while(p1 && p2) {
+        	p1->next = p2;
+        	p2->next = p1_next;
+        	p1 = p1_next;
+        	p2 = p2_next;
+            
+            if(p1) p1_next = p1->next;            
+            if(p2) p2_next = p2->next;
+        }
+    }
+};
+
+==
+Python code:
+
+class Solution(object):
+	# Copied from pr 206. Reverse Linked List
+    def reverseList(self, head):
+		...
+
+    def reorderList(self, head):
+    	if not head or not head.next: 
+    		return
+
+    	# Find the middle point
+
+    	walker = head
+    	runner = head
+
+    	while runner and runner.next and runner.next.next:
+    		walker = walker.next
+    		runner = runner.next.next
+
+    	# Split at the middle point
+
+    	head_new = walker.next
+    	walker.next = None
+
+    	# Reverse the second list
+
+    	head2 = self.reverseList(head_new) 
+
+    	# Merge two lists
+
+    	p1 = head
+    	p2 = head2
+    	p1_next = p1.next
+    	p2_next = p2.next
+
+    	while p1 and p2:
+    		p1.next = p2
+    		p2.next = p1_next 
+    		p1 = p1_next
+    		p2 = p2_next
+
+    		if p1: 
+    			p1_next = p1.next
+    		if p2:
+    			p2_next = p2.next
+
 =================================================
 cattree
 
