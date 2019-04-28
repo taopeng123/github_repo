@@ -27,7 +27,7 @@ Template:
 catxxx
 
 ************************
-pr143. Reorder List, Medium
+pr142. Linked List Cycle II, Medium
 
 Question:
 
@@ -55,10 +55,10 @@ catlist
 1111 | pr92. Reverse Linked List II, Medium 
 0111 | pr25. Reverse Nodes in k-Group, Hard. 
 0111 | pr234. Palindrome Linked List, Easy 
+1111 | pr143. Reorder List, Medium. 
 1111 | pr61. Rotate List, Medium. 
-111 | pr143. Reorder List, Medium.  
-111 | pr141. Linked List Cycle, Medium
-011 | pr142. Linked List Cycle II, Medium 
+1111 | pr141. Linked List Cycle, Medium
+0111 | pr142. Linked List Cycle II, Medium 
 011 | pr138. Copy List with Random Pointer, Hard. 
 111 | pr83. Remove Duplicates from Sorted List, Easy 
 011 | pr82. Remove Duplicates from Sorted List II, Medium 
@@ -894,110 +894,6 @@ public:
 };
 
 ************************
-pr61. Rotate List, Medium. 
-
-Question:
-
-Given a linked list, rotate the list to the right by k places, where k is non-negative.
-
-Example 1:
-Input: 1->2->3->4->5->NULL, k = 2
-Output: 4->5->1->2->3->NULL
-
-Explanation:
-rotate 1 steps to the right: 5->1->2->3->4->NULL
-rotate 2 steps to the right: 4->5->1->2->3->NULL
-
-Example 2:
-Input: 0->1->2->NULL, k = 4
-Output: 2->0->1->NULL
-
-Explanation:
-rotate 1 steps to the right: 2->0->1->NULL
-rotate 2 steps to the right: 1->2->0->NULL
-rotate 3 steps to the right: 0->1->2->NULL
-rotate 4 steps to the right: 2->0->1->NULL
-
-==
-Key: First find the position to cut, then cut at that position. Remember to take mod when k is bigger than the length of list.
-
-==
-C++ code:
-
-class Solution {
-public:
-    ListNode* rotateRight(ListNode* head, int k) {
-    	if(!head || !head->next || k <= 0) return head; 
-
-    	//Find length of list
-
-    	int length = 1;
-    	ListNode* tail = head;
-
-    	while(tail->next) {
-    		tail = tail->next;
-    		++length;
-    	}
-
-    	k = k % length;
-    	if(k == 0) return head;
-        
-    	//Find the position to cut
-    	
-    	int i = 1;
-    	ListNode* node_cut = head;
-
-    	while(i < length - k) {
-    		node_cut = node_cut->next;
-    		++i;
-    	}   
-
-    	ListNode* new_head = node_cut->next;
-    	node_cut->next = NULL;
-    	tail->next = head;
-    
-    	return new_head;        
-    }
-};
-
-==
-Python code:
-
-class Solution(object):
-    def rotateRight(self, head, k):
-    	if head == None or head.next == None or k <= 0: 
-    		return head;
-
-    	# Find length of list
-
-    	length = 1
-    	tail = head
-
-    	while tail.next != None:
-    		tail = tail.next
-    		length += 1
-
-    	k = k % length
-
-    	if k == 0:
-    		return head
-
-    	# Find the position to cut
-
-    	i = 1
-    	node_cut = head
-
-    	while i < length - k:
-    		node_cut = node_cut.next
-    		i += 1
-
-    	new_head = node_cut.next
-    	node_cut.next = None
-    	tail.next = head
-
-    	return new_head
-
-************************
 pr143. Reorder List, Medium
 
 Question:
@@ -1014,7 +910,8 @@ Example 2:
 Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
 
 ==
-Key: First find the middle of the list, then reverse the second list, finally merge these two lists.
+Key: First find the middle of the list, then reverse the second list, finally merge these two lists. To reverse list, can call the function of "pr 206. Reverse Linked List". 
+
 
 ==
 C++ code:
@@ -1116,6 +1013,310 @@ class Solution(object):
     		if p2:
     			p2_next = p2.next
 
+************************
+pr61. Rotate List, Medium. 
+
+Question:
+
+Given a linked list, rotate the list to the right by k places, where k is non-negative.
+
+Example 1:
+Input: 1->2->3->4->5->NULL, k = 2
+Output: 4->5->1->2->3->NULL
+
+Explanation:
+rotate 1 steps to the right: 5->1->2->3->4->NULL
+rotate 2 steps to the right: 4->5->1->2->3->NULL
+
+Example 2:
+Input: 0->1->2->NULL, k = 4
+Output: 2->0->1->NULL
+
+Explanation:
+rotate 1 steps to the right: 2->0->1->NULL
+rotate 2 steps to the right: 1->2->0->NULL
+rotate 3 steps to the right: 0->1->2->NULL
+rotate 4 steps to the right: 2->0->1->NULL
+
+==
+Key: First find the position to cut, then cut at that position. Remember to take mod when k is bigger than the length of list.
+
+==
+C++ code:
+
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+    	if(!head || !head->next || k <= 0) return head; 
+
+    	//Find length of list
+
+    	int length = 1;
+    	ListNode* tail = head;
+
+    	while(tail->next) {
+    		tail = tail->next;
+    		++length;
+    	}
+
+    	k = k % length;
+    	if(k == 0) return head;
+        
+    	//Find the position to cut
+    	
+    	int i = 1;
+    	ListNode* node_cut = head;
+
+    	while(i < length - k) {
+    		node_cut = node_cut->next;
+    		++i;
+    	}   
+
+    	ListNode* new_head = node_cut->next;
+    	node_cut->next = NULL;
+    	tail->next = head;
+    
+    	return new_head;        
+    }
+};
+
+==
+Python code:
+
+class Solution(object):
+    def rotateRight(self, head, k):
+    	if not head or not head.next or k <= 0: 
+    		return head;
+
+    	# Find length of list
+
+    	length = 1
+    	tail = head
+
+    	while tail.next != None:
+    		tail = tail.next
+    		length += 1
+
+    	k = k % length
+
+    	if k == 0:
+    		return head
+
+    	# Find the position to cut
+
+    	i = 1
+    	node_cut = head
+
+    	while i < length - k:
+    		node_cut = node_cut.next
+    		i += 1
+
+    	new_head = node_cut.next
+    	node_cut.next = None
+    	tail.next = head
+
+    	return new_head
+
+************************
+pr141. Linked List Cycle, Medium
+
+Question:
+
+Given a linked list, determine if it has a cycle in it.
+
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+
+Tao: in the code, the input is only the head of the list, it will not tell you the value of pos. The above representation is only used by LeetCode OJ internal to represent cycles, it is not related to the code.
+
+Example 1:
+
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+3 --> 2 --> 0 --> -4 --
+      |               |
+       ---------------
+
+Example 2:
+
+Input: head = [1,2], pos = 0
+Output: true
+
+Explanation: There is a cycle in the linked list, where tail connects to the first node.
+
+1 --> 2 --
+|         |
+ ---------
+
+Example 3:
+
+Input: head = [1], pos = -1
+Output: false
+
+Explanation: There is no cycle in the linked list.
+
+1
+ 
+Follow up:
+
+Can you solve it using O(1) (i.e. constant) memory? <- Tao: therefore, can not use set.
+
+==
+Key: Use walker and runner pointers. Runner moves at twice the speed of walker. Both of them starts from head. If they can meet, then there is cycle, otherwise no cycle.
+
+Tao's proof: If there is no cycle, obviously the walker will never be able to catch up with the runner. If ther is cycle, both the walker and runner will eventually enter the cycle. Once they are in the cycle, they will always be in the cycle. Now consider two people moving in the same cycle but with different speeds, the faster one will definately catch the slower one (think of the cycle as an infinately long straight line, the fater person will eventually catch the slower person).
+
+==
+C++ code:
+
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+    	if(!head || !head->next) return false;
+    	
+    	ListNode *walker = head, *runner = head;
+
+    	while(runner && runner->next) {
+    		walker = walker->next;
+    		runner = runner->next->next;
+            if(walker == runner) return true;
+    	}
+
+    	return false;
+    }
+};
+
+==
+Python code:
+
+class Solution(object):
+    def hasCycle(self, head):
+    	if not head or not head.next:
+    		return False
+
+    	walker = head
+    	runner = head
+
+    	while runner and runner.next:
+    		walker = walker.next
+    		runner = runner.next.next
+    		if walker == runner:
+    			return True
+
+    	return False
+
+************************
+pr142. Linked List Cycle II, Medium
+
+Question:
+
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+
+Note: Do not modify the linked list.
+
+Example 1:
+
+Input: head = [3,2,0,-4], pos = 1
+Output: tail connects to node index 1
+
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+3 --> 2 --> 0 --> -4 --
+      |               |
+       ---------------
+
+Example 2:
+
+Input: head = [1,2], pos = 0
+Output: tail connects to node index 0
+
+Explanation: There is a cycle in the linked list, where tail connects to the first node.
+
+1 --> 2 --
+|         |
+ ---------
+
+
+Example 3:
+
+Input: head = [1], pos = -1
+Output: no cycle
+
+Explanation: There is no cycle in the linked list.
+
+1
+
+Follow up: Can you solve it without using extra space?
+
+==
+Key: First use the walker and runner method, runner moves at twice the speed of walker. When they meet (call it point A), move walker back to the head of the list, the runner stays at point A. Now walker and runner both walk at the SAME speed, when they meet again, it is where the cycle begins
+
+Tao's proof: when walker and runner first meet at point A, runner must have moved twice the distance as walker, as shown below. The "----" means the region outside the cycle. The "====" means inside the cycle. "****" means n complete cycles (only in this way runner can meet walker). Because the distance moved by runner is twice of walker, so the length of "****" equals the length of walker distance "-----===". Now if the walker starts again at head, let's suppose he moves the distance of "-------". The distance of "-------" compared to "*****", the difference is "====", which means that "------" equals n complete cycles minus "====". So if runner starts at the end of "****" and moves distance of "----", it would move a distance of n cycles minus "====", which essentially where the cycle begins (the point where "----" and "====" meets).
+
+Walker: -------------======
+Runner: -------------======********************
+
+==
+C++ code:
+
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+    	if(!head || !head->next) return NULL;
+
+    	ListNode *walker = head, *runner = head;
+
+    	while(runner && runner->next) {
+    		walker = walker->next;
+    		runner = runner->next->next;
+            if(walker == runner) break;
+    	}
+
+    	if(!runner || !runner->next) return NULL;
+
+    	walker = head;
+
+    	while(walker != runner) {
+    		walker = walker->next;
+    		runner = runner->next;
+    	}
+
+    	return walker;    
+    }
+};
+
+==
+Python code:
+
+class Solution(object):
+    def detectCycle(self, head):
+    	if not head or not head.next:
+    		return None
+
+    	walker = head
+    	runner = head
+
+    	while runner and runner.next:
+    		walker = walker.next
+    		runner = runner.next.next
+    		if walker == runner:
+    			break
+
+    	if not runner or not runner.next:
+    		return None
+
+    	walker = head
+
+    	while walker != runner:
+    		walker = walker.next
+    		runner = runner.next
+
+    	return walker
+    	
 =================================================
 cattree
 

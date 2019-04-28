@@ -1,4 +1,4 @@
-stopa: pdf page 78, Chapter 3
+stopa: pdf page 101, I. Computing...
 
 findbeginsas                SAS begin
 findstartsas                Steps to start and end SAS
@@ -30,6 +30,11 @@ findprobplot                Probability plot
 findbarchart                Bar chart
 findbargraph                Bar chart
 findplot                    Plot data
+findlabel                   Variable labels
+findvaluelabel              Value labels (formats)
+findformat                  Value labels (formats)
+findchisquare               Chi-square
+
 
 ==
 (findbeginsas)
@@ -252,6 +257,8 @@ This form of an INPUT statement (no numbers) is called list input. To use this f
 
 10 M . 84 A
 
+SAS missing character values are represented as ''
+
 ==
 (findsquare)
 Sqare of B: B**2
@@ -421,6 +428,29 @@ PROC FREQ DATA=EXAPLE ORDER=FREQ;
 RUN;
 
 In the above, ORDER=FREQ is procedure option, NOCUM is statement option.
+
+
+Include all the variables from GENDER to CITIES in the order they exist in the SAS dataset:
+TABLES GENDER -- CITTIES
+
+Besides computing frequencies on individual variables, we may have occasion to count occurrences of one variable at each level of another variable:
+
+TABLES CANDIDATE*GENDER;
+
+Tao: 
+TABLES CANDIDATE*GENDER is like GROUP BY CANDIDATE, GENDER in SQL.
+TABLES CANDIDATE GENDER is like first do GROUP BY CANDIDATE and then do GROUP BY GENDER and print them seperately.
+
+Compute chi-square:
+TABLES CANDIDATE*GENDER / CHISQ;
+
+TABLES (PRESIDENT ARMS CITIES)*AGEGROUP;
+is a short way of writing
+TABLES PRESIDENT*AGEGROUP ARMS*AGEGROUP CITIES*AGEGROUP;
+
+TABLES (PRESIDENT ARMS) * (AGEGROUP GENDER);
+can aslo be understood by expanding it.
+
 
 ==
 (findunivariate)
@@ -640,18 +670,92 @@ PLOT WEIGHT*HEIGHT='*';
 In GPLOT:
 PLOT WEIGHT*HEIGHT=2;
 
+==
+(findlabel)
+Variable labels
 
+We can add explanations to variables using LABEL. These labels will be printed along with the variable name in certain procedures such as PROC FREQ and PROC MEANS.
 
+The labels can either be in double or single quotation marks.
 
+DATA TEST;
+	INPUT SUBJECT 1-2 GENDER $ 4 EXAM1 6-8 EXAM2 10-12;
+    LABEL EXAM1 = "Exam 1 grade"
+          EXAM1 = "Exam 2 grade";
+DATALINES;
+...
+;
+PROC MEANS DATA=TEST;
+RUN;
 
+==
+(findvaluelabel)
+(findformat)
+Value labels (formats)
 
+We would like the output to show the number of males and females, not the number of 1s and 2s for the variable GENDER:
 
+PROC FORMAT;
+	VALUE $SEXFMT '1' = 'Male'
+	              '2' = 'Female';
+	VALUE $RACE   '1' = 'White'
+	              '2' = 'African'
+	            OTHER = 'Others';
+RUN;	              
 
+Once we have defined a set of formats, we need to associate the formats to the appropriate variables. Format statments can be placed within a DATA step or as a statement in a PROC step. Notice we place a period after each format name in our format statement:
 
+DATA QUEST;
+	INPUT ....
+	LABEL ...
+	FORMAT GENDER $SEXFMT.
+	       RACE   $RACE.;
+	DEATLINES;
+	....
 
+There is another way of recording our AGE variable without creating new variable:
 
+PROC FORMAT;
+	VALUE AGEGROUP LOW-20   = '0-20'
+		            21-40   = '21-40'
+		            41-60   = '41-60'
+		            61, 62-70 = '61-70'
+		            71-HIGH = 'Greater than 70'
+		            OTHER   = 'Out of Range'
+		            .       = 'Missing value';
 
+Frequencies will be computed for the formatted values instead of the original AGE values:
+	            
+PROC FREQ DATA=QUEST;
+	TABLES AGE;
+	FORMAT AGE AGEGROUP;
+RUN;
 
+Tao: Yes, there is no $ in front of AGEGROUP
+
+==
+(findchisquare)               
+Chi-square
+
+From https://www.mathsisfun.com/data/chi-square-test.html
+
+Example: "Which holiday do you prefer?"
+
+ 	  Beach	Cruise
+Men	  209	280
+Women 225	248
+
+Does Gender affect Preferred Holiday?
+
+If Gender (Man or Woman) does affect Preferred Holiday we say they are dependent.
+
+By doing some special calculations (explained later), we come up with a "p" value:
+
+p value is 0.132
+
+Now, p < 0.05 is the usual test for dependence. In this case p is greater than 0.05, so we believe the variables are independent (ie not linked together).
+
+In other words Men and Women probably do not have a different preference for Beach Holidays or Cruises.
 
 
 

@@ -2584,6 +2584,7 @@ errors bedevil even experienced programmers.
 
 We define a pointer type by writing a declarator of the form *d, where d is the name being defined. The * must be repeated for each pointer variable:
 
+ListNode *walker, *runner //tao's example from LC, both walker and runner are pointers to ListNode. From this we can see why some people like to write ListNode *p instead of ListNode* p. Note that ListNode *p is the default style in LC problems.
 int *ip1, *ip2; // both ip1 and ip2 are pointers to int
 double dp, *dp2; // dp2 is a pointer to double; dp is a double
 int* p1, p2; //Tao: practice shows this is wrong, should define different pointers in different lines.
@@ -2599,14 +2600,6 @@ With two exceptions, which we cover later, the types of the pointer and the obje
 
 double *pd = &dval; // ok: initializer is the address of a double
 double *pd2 = pd; // ok: initializer is a pointer to double
-
---
-In Leetcode, the standard position of * is
-ListNode* head
-not
-ListNode *head
-
-So I will following the Leetcode style.
 
 --
 Pointer Value
