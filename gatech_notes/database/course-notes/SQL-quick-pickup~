@@ -1,0 +1,734 @@
+- 本文件是 6400課的"10. SQL.pdf"這個note中的所有SQL代碼 和 textbook中重要的東西. 本文件基本上可以應付所有data science中的database面試.
+- 本文件中對SQL代碼有解釋, 所以看本文件時不需要看"10. SQL.pdf"和textbook. 但若看一些比如SQL的歷史甚麼的以及更深入的東西, 還是要看"10. SQL.pdf"和textbook, 尤其是textbook.
+
+========================
+以下是"10. SQL.pdf"中的內容:
+
+========================
+RegularUser schema (Email is key, 但是實例中不同行可以有相同的Email):
+Email BirthYear Sex HomeTown
+
+UserInterest schema (Email is key):
+Email Interest SinceAge
+
+========================
+
+INSERT INTO UserInterests(Email, Interest, SinceAge)
+  VALUES('user12@gt.edu', 'Reading', 5);
+
+DELETE FROM UserInterests
+  WHERE Interest = 'Swimming';
+
+UPDATE UserInterests
+SET Interest = 'Rock Music'
+WHERE Email = 'user3@gt.edu'
+  AND Interest = 'Music';
+
+========================
+SELECT:
+
+SELECT Email, BirthYear, Sex, CurrentCity, HomeTown
+FROM RegularUser;
+
+以上也可寫為:
+
+SELECT *
+FROM RegularUser;
+
+----
+SELECT *
+FROM RegularUser
+WHERE HomeTown = 'Atlanta';
+
+SELECT *
+FROM RegularUser
+WHERE CurrentCity = HomeTown OR
+  HomeTown = 'Atlanta';
+
+SELECT Email, BirthYear, Sex
+FROM RegularUser
+WHERE HomeTown = 'Atlanta';
+
+----
+Keep duplicates:
+
+SELECT Sex
+FROM RegularUser
+WHERE HomeTown = 'Atlanta';
+
+以上結果:
+Sex
+M
+M
+F
+
+No duplicates:
+
+SELECT DISTINCT(Sex)
+FROM RegularUSer
+WHERE HomeTown = 'Atlanta';
+
+以上結果:
+Sex
+M
+F
+
+========================
+Join:
+
+RegularUser schema:
+Email BirthYear Sex
+
+YearSalary schema:
+BirthYear Salary
+
+以下用RegularUser.BirthYear, 
+是因為RegularUser和YearSalary這兩個表都有BirthYear列
+
+SELECT Email, RegularUser.BirthYear, Salary 
+FROM RegularUser, YearSalary
+WHERE RegularUser.BirthYear = YearSalary.BirthYear;
+
+以上等價於以下的Natural inner join: 
+即A表和B表中BirthYear相同的行 合併為一行作為結果. 
+若A表中一些行的BirthYear值在B表中不存在, 則結果中不包括這些行.
+
+SELECT Email, RegularUser.BirthYear, Salary
+FROM RegularUser NATUARL JOIN YearSalary;
+
+----
+Natural Inner Join - aliases:
+
+SELECT Email, R.BirthYear, Salary
+FROM RegularUser AS R, YearSalary AS Y
+WHERE R.BrithYear = Y.BirthYear;
+
+----
+Left outer join: 
+跟Natural inner join相似, 
+即A表和B表中BirthYear相同的行 合併為一行作為結果. 
+若A表中一些行的BirthYear值在B表中不存在, 則結果中包括這些行, 
+B中多出來的列的值為null.
+
+SELECT Email, RegularUser.BirthYear, Salary
+FROM RegularUSer LEFT OUTER JOIN YearSalary;
+
+----
+Textbook:
+
+INNER JOIN: only pairs of tuples that match the join condition are retrieved, same as JOIN.
+LEFT OUTER JOIN: every tuple in the left table must appear in the result; if it does not have a matching tuple, it is padded with NULL values for the attributes of the right table.
+RIGHT OUTER JOIN: every tuple in the right table must appear in the result; if it does not have a matching tuple, it is padded with NULL values for the attributes of the left table. 
+FULL OUTER JOIN: 沒解釋. 
+
+In the latter three options, the keyword OUTER may be omitted. 
+
+If the join attributes have the same name, one can also specify the natural join variation of outer joins by using the keyword NATURAL before the operation (for example, NATURAL LEFT OUTER JOIN ). 
+
+The keyword CROSS JOIN is used to specify the CARTESIAN PRODUCT operation, although this should be used only with the utmost care because it generates all possible tuple combinations.
+
+========================
+Set operations 
+
+----
+Union (併集):
+
+No duplicates:
+
+SELECT CurrentCity
+FROM RegularUser
+UNION
+SELECT HomeTown
+FROM RegularUser;
+
+Keep duplicates:
+
+SELECT CurrentCity
+FROM RegularUser
+UNION ALL
+SELECT HomeTown
+FROM RegularUser;
+
+----
+Intersect (交集):
+
+No duplicates
+
+SELECT CurrentCity
+FROM RegularUser
+INTERSECT
+SELECT HomeTown
+FROM RegularUser;
+
+Keep duplicates
+
+SELECT CurrentCity
+FROM RegularUser
+INTERSECT ALL
+SELECT HomeTown
+FROM RegularUser;
+
+----
+Except
+求EXCEPT前, 對EXCEPT兩邊的先去重復. 
+求EXCEPT ALL時, 將EXCEPT ALL兩邊的SanDiego都看成不同的,
+即兩個不同的城市偶然都叫SanDiego而已.
+
+No duplicates:
+
+SELECT CurrentCity
+FROM RegularUser
+EXCEPT
+SELECT HomeTown
+FROM RegularUser;
+
+Keep duplicates:
+
+SELECT CurrentCity
+FROM RegularUser
+EXCEPT ALL
+SELECT HomeTown
+FROM RegularUser;
+
+========================
+String matching:
+
+% matches any string, including the empty string
+_ matches any single character
+
+SELECT Email, Sex, CurrentCity
+FROM RegularUser
+WHERE CurrentCity LIKE 'San%';
+
+SELECT Email, Sex, HomeTown
+FROM RegularUser
+WHERE HomeTown LIKE 'A_____';
+
+========================
+Sorting
+
+ASC: acending
+DESC: decending
+
+SELECT Email, Sex, CurrentCity
+FROM RegularUser
+WHERE Sex = 'M'
+ORDER BY CurrentCity ASC;
+
+========================
+Built-in Functions:
+count, sum, avg, min, max
+
+----
+Count the number of rows, 結果只有一列一行, 值為7:
+
+SELECT count(*)
+FROM RegularUser;
+
+----
+Find Email and BirthYear for the yongest female:
+
+SELECT Email, max(BirthYear)
+FROM RegularUser
+WHERE Sex = 'F';
+
+----
+Group by
+
+UserInterest schema:
+Email Interest SinceAge
+
+Result schema:
+Email NumInt AvgAge
+
+The following code is to group UserInterest on Email. 
+
+For each group, return the Email, the number of Interests,
+and the average SinceAge for each group.
+
+Sort the result by ascending number of interests.
+
+SELECT Email, count(*) AS NumInt, avg(SinceAge) AvgAge
+FROM UserInterests
+GROUP BY Email
+ORDER BY NumInt ASC;
+
+----
+Having - condition on the group
+
+Same thing, but return only the groups with more than 1 interest.
+
+SELECT Email, count(*) AS NumInt, avg(SinceAge) AvgAge
+FROM UserInterests
+GROUP BY Email
+HAVING NumInt > 1
+ORDER BY NumInt ASC;
+
+========================
+Nested queries
+
+先看inner qurey, 再看outer query
+
+----
+Nested queries: IN / NOT IN
+
+RegularUser schema:
+Email BirthYear Sex HomeTown
+
+UserInterest schema:
+Email Interest SinceAge
+
+Find Email and Interests for RegularUser's in Atlanta:
+
+SELECT Email, Interest
+FROM UserInterests
+WHERE Email IN
+    (SELECT Email
+     FROM RegularUser
+     WHERE HomeTown = 'Atlanta');
+
+以上跟以下等價:
+SELECT U.Email, Interest
+FROM UserInterests I, RegularUser U
+WHERE I.Email = U.Email AND
+HomeTown = 'Atlanta';
+
+----
+Nested queries: =, ≠, ≤, ≥, <, >, SOME/ALL
+
+RegularUser schema:
+Email BirthYear Sex CurrentCity HomeTown
+
+YearSalary schema:
+BirthYear Salary
+
+Find CurrentCity's with at least one RegularUser
+with a salary that's higher than all Salary's of 
+RegularUser's with HomeTown Austin:
+
+SELECT CurrentCity
+FROM RegularUser R, YearSalary Y
+WHERE R.BirthYear = Y.BirthYear AND Salary > All
+(SELECT Salary
+FROM RegularUser R, YearSalary Y
+WHERE R.BirthYear = Y.BirthYear AND HomeTown = 'Austin');
+
+以上還可以寫為:
+
+SELECT CurrentCity
+FROM RegularUser R, YearSalary Y
+WHERE R.BirthYear = Y.BirthYear AND Salary >
+(SELECT max(Salary)
+FROM RegularUser R, YearSalary Y
+WHERE R.BirthYear = Y.BirthYear AND HomeTown = 'Austin');
+
+----
+Nested Queries - correlated
+
+Find Email and BirthYear of RegularUsers who have no Interests:
+
+RegularUser schema:
+Email BirthYear Sex
+
+UserInterest schema:
+Email Interest SinceAge
+
+SELECT R.Email, BirthYear
+FROM RegularUser R
+WHERE NOT EXIST
+    (SELECT *
+     FROM UserInterests U
+     WHERE U.Email = R.Email);
+
+textbook:
+The EXISTS function in SQL is used to check whether the result of a correlated
+nested query is empty (contains no tuples) or not. The result of EXISTS is a Boolean
+value TRUE if the nested query result contains at least one tuple, or FALSE if the
+nested query result contains no tuples.
+
+===========================================================================
+===========================================================================
+以下的來自textbook第6版ch4和ch5(所有的SQL章節). 只選的重要的.
+
+The SQL language provides a higher-level declarative language interface, so the user only specifies what the result is to be, leaving the actual optimization and decisions on how to execute the query to the DBMS.
+
+CREATE SCHEMA COMPANY AUTHORIZATION 'Jsmith';
+
+CREATE TABLE DEPT_LOCATIONS
+    (Dnumber    INT          NOT NULL,
+     Dlocation  VARCHAR(15)  NOT NULL,
+     PRIMARY KEY(Dnumber, Dlocation)
+     FOREIGN KEY(Dnumber) REFERENCES DEPARTMENT(Dnumber));
+
+Numerica data types: INT, SMALLINT, FLOAT, REAL, DOUBLE PRECISION
+
+Character-string data types: 
+CHAR(n), where n is the number of characters (fixed length). A CHAR(10) 'Smith' is atually 'Smith_____', where _ is a space.
+VARCHAR(n), where n is the maximum number of characters (varying length).
+
+Boolean data type, can be TRUE, FALSE, UNKNOWN.
+DATE data type: YYYY-MM-DD.
+TIME data type: HH:MM:SS.
+
+SQL allows a table (relation) to have two or more tuples that are identical in all their attribute values.
+
+========================
+
+SELECT <attribute list>
+FROM   <table list>
+WHERE  <condition>
+
+SELECT Fname, Lname, Address
+FROM EMPLOYEE, DEPARTMENT
+WHERE Dname='Research' AND Dnumber=Dno;
+
+以上的: The condition Dnumber=Dno is called a join condition, because it combines two tuples.
+
+SELECT-FROM-WHERE:
+For each combination of tuples—one from each of the relations specified in
+the FROM clause—evaluate the WHERE clause; if it evaluates to TRUE , place the val-
+ues of the attributes specified in the SELECT clause from this tuple combination in
+the result of the query.
+
+========================
+
+The ambiguity of attribute names also arises in the case of queries that refer to the same relation twice.
+
+以下的: For each employee, retrieve the employee's first and last name and the first and last name of his or her immediate supervisor.
+
+SELECT E.Fname, E.Lname, S.Fname, S.Lname
+FROM EMPLOYEE AS E, EMPLOYEE AS S
+WHERE E.Super_ssn = S.Ssn;
+
+以上的AS也可以不要, 即寫為FROM EMPLOYEE E, EMPLOYEE S
+
+The AS construct can be used to alias both attribute and relation names, and it can be used in both the SELECT and FROM clauses.
+========================
+
+If more than one relation is specified in the FROM clause and there is no WHERE clause, then the CROSS PRODUCT —all possible tuple combinations—of these relations is selected.
+
+Select all combinations of an EMPLOYEE Ssn and a DEPARTMENT Dname:
+
+SELECT Ssn, Dname
+FROM EMPLOYEE, DEPARTMENT;
+
+========================
+To retrieve all the attribute values of the selected tuples, we do not have to list the attribute names explicitly in SQL; we just specify an asterisk (*), which stands for all the attributes.
+
+SELECT *
+FROM EMPLOYEE
+WHERE Dno=5;
+
+========================
+
+These set operations (UNION, EXCEPT, INTERSECT) apply only to union-compatible relations, so we must make sure that the two relations on which we apply the operation have the same attributes and that the attributes appear in the same order in both relations.
+
+========================
+If an underscore or % is needed as a literal character in the string, the character should be preceded by an escape character, which is specified after the string using the keyword ESCAPE . For example, ‘AB\_CD\%EF’ ESCAPE ‘\’ represents the literal string ‘AB_CD%EF’ because \ is specified as the escape character. Any character not used in the string can be chosen as the escape character. Also, we need a rule to specify apostrophes or single quotation marks (‘ ’) if they are to be included in a string because they are used to begin and end strings. If an apostrophe (’) is needed, it is represented as two consecutive apostrophes (”) so that it will not be interpreted as ending the string.
+
+========================
+可用+-*/作運算:
+SELECT E.Fname, E.Lname, 1.1 * E.Salary AS Increased_sal
+...
+
+========================
+SELECT *
+FROM EMPLOYEE
+WHERE (Salary BETWEEN 30000 AND 40000) AND Dno = 5;
+
+The condition ( Salary BETWEEN 30000 AND 40000) is equivalent to the condition (( Salary >= 30000) AND ( Salary <= 40000)).
+
+========================
+Ordered by department and, within each department, ordered alphabetically by
+last name, then first name:
+
+SELECT D.Dname, E.Lname, E.Fname, P.Pname
+FROM ...
+WHERE ...
+ORDER BY D.Dname, E.Lname, E.Fname;
+
+The default order is in ascending order of values.
+
+...
+ORDER BY D.Dname DESC, E.Lname ASC, E.Fname ASC;
+
+========================
+將SELECT出來的數据插入到WORKS_ON_INFO中:
+
+INSERT INTO WORKS_ON_INFO(Emp_name, Proj_name, Hours_per_week)
+SELECT E.Lname, P.Pname, W.Hours
+FROM PROJECT P, WORKS_ON W, EMPLOYEE E
+WHERE P.Pnumber=W.Pno AND W.Essn=E.Ssn;
+
+========================
+UPDATE中也可以做運算:
+
+UPDATE EMPLOYEE
+SET Salary = Salary * 1.1
+WHERE Dno = 5;
+
+========================
+AND, OR, NOT
+
+========================
+SQL considers each NULL value as being distinct from every other NULL value.
+對: Ssn IS NULL, Ssn IS NOT NULL
+錯: Ssn = NULL, Ssn <> NULL
+
+========================
+IN: evaluates to TRUE if v is one of the elements in V.
+
+If a nested query returns a single attribute and a single tuple, the query result will be a single (scalar) value. In such cases, it is permissible to use = instead of IN for the comparison operator. In general, the nested query will return a table (relation), which is a set or multiset of tuples.
+
+========================
+
+SELECT DISTINCT Essn
+FROM   WORKS_ON
+WHERE  (Pno, Hours) IN (SELECT  Pno, Hours
+		        FROM    WORKS_ON
+		        WHERE   Essn='123456789');
+
+This query will select the Essn s of all employees who work the same (project, hours) combination on some project that employee (whose Ssn = ‘123456789’) works on.
+
+========================
+A reference to an unqualified attribute (即沒加點的, 即是attr, 而不是PROJ.attr) refers to the relation declared in the innermost nested query.
+
+========================
+重要: SELECT-FROM-WHERE就像一個for循環, 不停地取E.Fname和E.Lname的值, 並拿到WHERE中去測試, 若為true, 則選出這個E.Fname和E.Lname. 以下英文講得更清楚:
+
+Whenever a condition in the WHERE clause of a nested query references some attribute of a relation declared in the outer query, the two queries are said to be correlated. We can understand a correlated query better by considering that the nested query is evaluated once for each tuple (or combination of tuples) in the outer query. For example, we can think of Q16 as follows: For **each** EMPLOYEE tuple, evaluate the nested query, which retrieves the Essn values for **all** DEPENDENT tuples with the same sex and name as that EMPLOYEE tuple; if the Ssn value of the EMPLOYEE tuple is in the result of the nested query, then select that EMPLOYEE tuple.
+
+Q16:
+SELECT E.Fname, E.Lname
+FROM   EMPLOYEE AS E
+WHERE  E.Ssn IN (SELECT ESsn
+		 FROM   DEPENDENT AS D
+		 WHERE  E.Fname=D.Dependent_name
+			AND E.Sex=D.Sex);
+
+
+In general, a query written with nested select-from-where blocks and using the = or IN comparison operators can always be expressed as a single block query. For example, Q16 may be written as in Q16A:
+
+Q16A:
+SELECT E.Fname, E.Lname
+FROM   EMPLOYEE AS E, DEPENDENT AS D
+WHERE  E.Ssn=D.Essn AND E.Sex=D.Sex
+       AND E.Fname=D.Dependent_name
+
+========================
+UNIQUE (Q): returns TRUE if there are no duplicate tuples in the result of query Q ; otherwise, it returns FALSE.
+
+========================
+Retrieve the Social Security numbers of all employees who work on project numbers 1, 2, or 3.
+
+SELECT DISTINCT Essn
+FROM   WORKS_ON
+WHERE  Pno IN (1, 2, 3);
+
+========================
+textbook中關於Aggregate和Grouping的所有代碼都在以下
+
+Aggregate functions 
+COUNT, SUM, MAX, MIN, AVG
+
+The functions MAX and MIN can also be used with attributes that have nonnumeric domains if the domain values have a total ordering among one another. Total order means that for any two values in the domain, it can be determined that one appears before the other in the defined order; for example, DATE, TIME, and TIMESTAMP domains have total orderings on their values, as do alphabetic strings.
+
+----
+Find the sum of the salaries of all employees, the maximum salary, the minimum salary, and the average salary.
+
+SELECT SUM(Salary), MAX(Salary), MIN(Salary), AVG(Salary)
+FROM EMPLOYEE;
+
+----
+
+SELECT SUM(Salary), MAX(Salary), MIN(Salary), AVG(Salary)
+FROM (EMPLOYEE JOIN DEPARTMENT ON Dno=Dnumber)
+WHERE Dname='Research';
+
+SELECT COUNT(*)
+FROM EMPLOYEE;
+
+SELECT COUNT(*)
+FROM EMPLOYEE, DEPARTMENT
+WHERE DNO=DNUMBER AND DNAME='Research';
+
+SELECT COUNT(DISTINCT Salary)
+FROM EMPLOYEE;
+
+----
+Retrieve the names of all employees who have two or more dependents:
+
+SELECT Lname, Fname
+FROM   EMPLOYEE
+WHERE  (SELECT COUNT(*)
+        FROM DEPENDENT
+        WHERE Ssn=Essn)>=2;
+
+========================
+Grouping
+
+In many cases we want to apply the aggregate functions to subgroups of tuples in a relation, where the subgroups are based on some attribute values. Each group (partition) will consist of the tuples that have the same value of some attribute(s), called the grouping attribute(s). The GROUP BY clause specifies the grouping attributes, which should also appear in the SELECT clause, so that the value resulting from applying each aggregate function to a group of tuples appears along with the value of the grouping attribute(s).
+
+----
+For each department, retrieve the department number, the number of employees in the department, and their average salary.
+
+SELECT    Dno, COUNT(*), AVG(Salary)
+FROM      EMPLOYEE
+GROUP BY  Dno;
+
+----
+For each project, retrieve the project number, the project name, and
+the number of employees who work on that project. The following shows how we can use a join condition in conjunction with GROUP BY . In this
+case, the grouping and functions are applied after the joining of the two relations.
+
+SELECT    Pnumber, Pname, COUNT(*)
+FROM      PROJECT, WORKS_ON
+WHERE     Pnumber=Pno
+GROUP BY  Pnumber, Pname;
+
+----
+We want to modify the above query so
+that only projects with more than two employees appear in the result. SQL provides
+a HAVING clause, which can appear in conjunction with a GROUP BY clause, for this
+purpose.
+
+SELECT    Pnumber, Pname, COUNT(*)
+FROM      PROJECT, WORKS_ON
+WHERE     Pnumber=Pno
+GROUP BY  Pnumber, Pname;
+HAVING    COUNT(*) > 2;
+
+----
+For each project, retrieve the project number, the project name, and
+the number of employees from department 5 who work on the project.
+
+SELECT    Pnumber, Pname, COUNT(*)
+FROM      PROJECT, WORKS_ON, EMPLOYEE
+WHERE     Pnumber=Pno AND Ssn=Essn AND Dno=5
+GROUP BY  Pnumber, Pname;
+
+----
+以下是說: 同時有WHERE和HAVING時, WHERE先执行, HAVING再执行.
+
+Notice that we must be extra careful when two different conditions apply (one to the aggregate function in the SELECT clause and another to the function in the HAVING clause). For example, suppose that we want to count the total number of employees whose salaries exceed $40,000 in each department, but only for departments where more than five employees work. Here, the condition ( SALARY > 40000) applies only to the COUNT function in the SELECT clause. Suppose that we write the following incorrect query:
+
+SELECT    Dname, COUNT(*)
+FROM	  DEPARTMENT, EMPLOYEE
+WHERE	  Dnumber=Dno AND Salary>4000
+GROUP BY  Dname
+HAVING    COUNT(*) > 5;
+
+This is incorrect because it will select only departments that have more than five employees who each earn more than $40,000. The rule is that the WHERE clause is executed first, to select individual tuples or joined tuples; the HAVING clause is applied later, to select individual groups of tuples. Hence, the tuples are already restricted to employees who earn more than $40,000 before the function in the HAVING clause is applied. One way to write this query correctly is to use a nested query, as shown below.
+
+For each department that has more than five employees, retrieve the department number and the number of its employees who are making more than $40,000.
+
+SELECT    Dnumber, COUNT(*)  <-Checked, it is Dnumber, not Dname as above.
+FROM	  DEPARTMENT, EMPLOYEE
+WHERE	  Dnumber=Dno AND Salary>4000 AND
+	  (SELECT    Dno
+           FROM      EMPLOYEE
+           GROUP BY  Dno
+           HAVING    COUNT(*)>5);
+
+========================
+Specifying Constraints as Assertions
+
+Each assertion is given a constraint name and is specified via a condition similar to the WHERE clause of an SQL query. For example, to specify the constraint that the salary of an employee must not be greater than the salary of the manager of the department that the employee works for in SQL, we can write the following assertion:
+
+CREATE ASSERTION SALARY_CONSTRAINT
+CHECK (NOT EXISTS (SELECT *
+		   FROM   EMPLOYEE E, EMPLOYEE M,
+                          DEPARTMENT D
+                   WHERE  E.Salary>M.Salary
+                          AND E.Dno=D.Dnumber
+                          AND D.Mgr_ssn=M.Ssn);
+
+The basic technique for writing such assertions is to specify a query that selects any tuples that violate the desired condition. By including this query inside a NOT EXISTS class...
+
+沒講assertion怎麼用
+
+========================
+Specifying Actions as Triggers
+
+In many cases it is convenient to specify the type of action to be taken when certain events occur and when certain conditions are satisfied. Suppose we want to check whenever an employee’s salary is greater than the salary of his or her direct supervisor in the COMPANY database. Suppose that the action to take would be to call an external stored procedure INFORM_SUPERVISOR. 
+
+CREATE TRIGGER SALARY_VIOLATION
+BEFORE INSERT OR UPDATE OF SALARY , SUPERVISOR_SSN
+	ON EMPLOYEE
+FOR EACH ROW
+	WHEN ( NEW.SALARY > ( SELECT SALARY FROM EMPLOYEE
+	WHERE SSN = NEW.SUPERVISOR_SSN ) )
+	INFORM_SUPERVISOR ( NEW.Supervisor_ssn ,
+	NEW.Ssn );
+
+========================
+Views (Virtual Tables):
+
+A view in SQL terminology is a single table that is derived from other tables. 6 These other tables can be base tables or previously defined views. A view does not necessarily exist in physical form; it is considered to be a virtual table, in contrast to base tables, whose tuples are always physically stored in the database. This limits the possible update operations that can be applied to views, but it does not provide any limitations on querying a view. We can think of a view as a way of specifying a table that we need to reference frequently, even though it may not exist physically. or example, referring to the COMPANY database in Figure 3.5 we may frequently issue queries that retrieve the
+employee name and the project names that the employee works on. Rather than having to specify the join of the three tables EMPLOYEE , WORKS_ON , and PROJECT every time we issue this query, we can define a view that is specified as the result of these joins.
+
+CREATE VIEW  WORKS_ON1
+AS SELECT    Fname, Lname, Pname, Hours
+FROM         EMPLOYEE, PROJECT, WORKS_ON
+WHERE        Ssn = Essn AND Pno = Pnumber;
+
+CREATE VIEW  DEPT_INFO (Dept_name, No_of_emps, Total_sal)
+AS SELECT    Dname, COUNT (*), SUM (Salary)
+FROM	     DEPARTMENT, EMPLOYEE
+WHERE        Dnumber = Dno
+GROUP BY     Dname;
+
+We can now specify SQL queries on a view—or virtual table—in the same way we
+specify queries involving base tables.
+
+SELECT  Fname , Lname
+FROM    WORKS_ON1
+WHERE   Pname =‘ProductX’;
+
+A view is supposed to be always up-to-date; if we modify the tuples in the base tables on which the view is defined, the view must automatically reflect these changes. Hence, the view is not realized or materialized at the time of view definition but rather at the time when we specify a query on the view.
+
+If we do not need a view any more, we can use the DROP VIEW command to dispose of it:
+
+DROP VIEW  WORKS_ON1 ;
+
+Updating of views is complicated and can be ambiguous (例如: UPDATE WORKS_ON1, SET... WHERE...). Some view updates may not make much sense. 
+
+In SQL, the clause WITH CHECK OPTION must be added at the end of the view definition if a view is to be updated. This allows the system to check for view updatability and to plan an execution strategy for view updates.
+
+It is also possible to define a view table in the FROM clause of an SQL query. This is known as an in-line view. In this case, the view is defined within the query itself. 沒有例子.
+
+========================
+DROP:
+
+The DROP command can be used to drop named schema elements, such as tables, domains, or constraints. One can also drop a schema. For example, if a whole schema is no longer needed, the DROP SCHEMA command can be used. There are two drop behavior options: CASCADE and RESTRICT . For example, to remove the COMPANY database schema and all its tables, domains, and other elements, the CASCADE option is used as follows:
+
+DROP SCHEMA COMPANY CASCADE ;
+
+If the RESTRICT option is chosen in place of CASCADE , the schema is dropped only if it has no elements in it; otherwise, the DROP command will not be executed. To use the RESTRICT option, the user must first individually drop each element in the schema, then drop the schema itself.
+
+If a base relation within a schema is no longer needed, the relation and its definition can be deleted by using the DROP TABLE command.
+
+DROP TABLE DEPENDENT CASCADE ;
+
+========================
+ALTER:
+
+The definition of a base table or of other named schema elements can be changed by using the ALTER command. For base tables, the possible alter table actions include adding or dropping a column (attribute), changing a column definition, and adding or dropping table constraints. For example, to add an attribute for keeping track of jobs of employees to the EMPLOYEE base relation in the COMPANY schema, we can use the command
+
+ALTER TABLE COMPANY.EMPLOYEE ADD COLUMN Job VARCHAR ( 12 );
+
+We must still enter a value for the new attribute Job for each individual EMPLOYEE tuple. This can be done either by specifying a default clause or by using the UPDATE command individually on each tuple.
+
+To drop a column, we must choose either CASCADE or RESTRICT for drop behavior:
+
+ALTER TABLE COMPANY.EMPLOYEE DROP COLUMN Address CASCADE ;
+
+It is also possible to alter a column definition by dropping an existing default clause or by defining a new default clause. The following examples illustrate this clause:
+
+ALTER TABLE COMPANY.DEPARTMENT ALTER COLUMN Mgr_ssn
+DROP DEFAULT;
+
+ALTER TABLE COMPANY.DEPARTMENT ALTER COLUMN Mgr_ssn
+SET DEFAULT ‘333445555’;
+
+======================== END ========================
