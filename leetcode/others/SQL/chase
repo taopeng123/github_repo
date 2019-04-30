@@ -1,0 +1,16 @@
+Chase那人發給我的Data Science Resources中說: 
+
+SQL
+- Basic queries
+- Aggregations
+- Joins
+- I suggest installing MySQL on your computer and playing with that; it's pretty easy to install and use
+
+References:
+There are many good tutorials on the web, e.g. http://swcarpentry.github.io/sql-
+novice-survey/
+
+-----------------------------------
+
+Yicun面試Chase時被問到的SQL: 
+SQL, given schema, segragation? normalization?
