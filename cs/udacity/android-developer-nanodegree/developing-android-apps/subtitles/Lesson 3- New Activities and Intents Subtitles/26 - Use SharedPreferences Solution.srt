@@ -1,0 +1,11 @@
+0:00:00.650,0:00:04.600
+Within the forecast fragment class, when the refresh menu item is selected,
+
+0:00:04.600,0:00:09.312
+we read from SharedPreferences. Since they are key-value pairs, we get their
+
+0:00:09.312,0:00:14.000
+value stored for the location key. If there's no value stored then we fall back
+
+0:00:14.000,0:00:18.930
+to the default location. Then we pass the location into the fetch weather task.

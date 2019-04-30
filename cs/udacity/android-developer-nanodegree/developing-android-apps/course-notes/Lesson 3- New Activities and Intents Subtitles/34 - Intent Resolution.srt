@@ -1,0 +1,47 @@
+0:00:00.330,0:00:02.330
+So, how did the system know that the Maps
+
+0:00:02.330,0:00:05.564
+app could handle this Intent? The activity within the
+
+0:00:05.564,0:00:09.720
+Maps app included an intent filter like this one
+
+0:00:09.720,0:00:13.140
+within its manifest entry. It indicates that the Maps
+
+0:00:13.140,0:00:17.100
+app is capable of performing this view action on
+
+0:00:17.100,0:00:19.980
+all data which has a geo scheme. You can
+
+0:00:19.980,0:00:22.250
+use intent filters for your activities to define the
+
+0:00:22.250,0:00:25.470
+actions they're capable of performing, and optionally, the kind
+
+0:00:25.470,0:00:27.700
+of data that they can perform it on. So,
+
+0:00:27.700,0:00:30.194
+when you use an implicit intent to address or
+
+0:00:30.194,0:00:32.630
+request to start an activity, much like you did
+
+0:00:32.630,0:00:37.600
+with Catherine and the openweathermap.org link, Android resolves this request
+
+0:00:37.600,0:00:40.850
+by checking the intent filters of every activity that's
+
+0:00:40.850,0:00:44.150
+installed on the device until it finds the best possible
+
+0:00:44.150,0:00:47.880
+match. If multiple activities match, as in the case
+
+0:00:47.880,0:00:50.570
+with the web url, the user is given a choice.

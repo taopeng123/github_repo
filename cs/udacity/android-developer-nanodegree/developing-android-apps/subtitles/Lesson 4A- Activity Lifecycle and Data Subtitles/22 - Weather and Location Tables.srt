@@ -1,0 +1,65 @@
+0:00:00.310,0:00:03.050
+We're not storing a key piece[br]of data in our weather table,
+
+0:00:03.050,0:00:05.850
+the location at which[br]the weather is going to occur.
+
+0:00:05.850,0:00:10.140
+This is because we are going to use[br]a separate table for weather locations.
+
+0:00:10.140,0:00:13.070
+Using a separate table[br]has several advantages.
+
+0:00:13.070,0:00:16.875
+In addition to being more efficient[br]because we do not duplicate our location
+
+0:00:16.875,0:00:20.503
+data with each record, it also allows[br]us to update information about our
+
+0:00:20.503,0:00:23.906
+location without having to update[br]every weather forecast record.
+
+0:00:23.906,0:00:27.975
+To implement this, we're going to create[br]a relation between our weather and
+
+0:00:27.975,0:00:31.856
+location tables by adding a column to[br]the weather table that refers to an ID
+
+0:00:31.856,0:00:33.750
+in the location table.
+
+0:00:33.750,0:00:37.820
+This column is created with a constraint[br]that identifies it as a foreign key,
+
+0:00:37.820,0:00:40.290
+which is a unique ID from another table.
+
+0:00:40.290,0:00:42.120
+What does this look like?
+
+0:00:42.120,0:00:45.400
+Our list of columns in the weather[br]table has a location ID,
+
+0:00:45.400,0:00:48.410
+which points to IDs in[br]the location table.
+
+0:00:48.410,0:00:53.315
+We can use this location ID to perform[br]an operation known as an inner join.
+
+0:00:53.315,0:00:57.190
+Inner joins combine the data queried[br]from two rows in different tables into
+
+0:00:57.190,0:00:58.720
+one row in the results.
+
+0:00:58.720,0:01:02.070
+When we create our tables in this[br]way we can get any combination of
+
+0:01:02.070,0:01:03.150
+columns from both tables.
+
+0:01:04.150,0:01:08.090
+In this case we're getting the location[br]query from the location table, and
+
+0:01:08.090,0:01:11.700
+the date, description, and min and[br]max temperature from the weather table

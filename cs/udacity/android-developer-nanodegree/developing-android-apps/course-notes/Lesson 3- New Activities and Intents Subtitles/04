@@ -1,0 +1,1 @@
+From the mocks, we can see when a list item is clicked we should perform an action to open up the details page for the forecast. How do we implement the click listener behavior? Take a look at the ListView documentation. What method is used to wire up behavior on a list item when it is clicked?

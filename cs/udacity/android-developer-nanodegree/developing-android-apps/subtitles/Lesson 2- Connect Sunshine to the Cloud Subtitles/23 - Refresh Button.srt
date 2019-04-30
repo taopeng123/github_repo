@@ -1,0 +1,47 @@
+0:00:00.220,0:00:02.890
+Since the fetch weather task is in the fragment, the
+
+0:00:02.890,0:00:05.930
+menu option to trigger that task should be inside the fragment
+
+0:00:05.930,0:00:08.320
+too. That means we should create a new menu layout
+
+0:00:08.320,0:00:12.390
+for the fragment and we'll call it forecastfragment.xml. The file will
+
+0:00:12.390,0:00:15.770
+live within the menu folder under the Resources directory. Inside
+
+0:00:15.770,0:00:19.200
+that file, we'll declare the new menu option for refresh and
+
+0:00:19.200,0:00:22.140
+give it this menu item ID. We'll also need to define
+
+0:00:22.140,0:00:25.290
+a string label for this word, Refresh. We're taking this one
+
+0:00:25.290,0:00:27.440
+step at a time, so just make the menu xml
+
+0:00:27.440,0:00:30.250
+file change in this exercise. If you compile and run
+
+0:00:30.250,0:00:33.060
+the app, there'll be no visible change. It won't show
+
+0:00:33.060,0:00:35.500
+up on the device yet because we haven't inflated the menu
+
+0:00:35.500,0:00:38.270
+item. Inflating it will be in the coding test after
+
+0:00:38.270,0:00:41.550
+this. See how the menu main.xml is implemented as an
+
+0:00:41.550,0:00:44.860
+example. For an additional hint, see the menu training guide
+
+0:00:44.860,0:00:47.150
+below. When you're done, you can click on this box here.

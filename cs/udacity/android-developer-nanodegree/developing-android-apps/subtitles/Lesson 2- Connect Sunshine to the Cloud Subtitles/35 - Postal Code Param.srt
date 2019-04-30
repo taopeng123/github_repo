@@ -1,0 +1,71 @@
+0:00:00.380,0:00:02.715
+In the Forecast Fragment, we want to modify the
+
+0:00:02.715,0:00:05.070
+FetchWeatherTask, so that we can pass in the
+
+0:00:05.070,0:00:08.730
+postal code parameter when we execute that task.
+
+0:00:08.730,0:00:11.370
+You can click on this class, to jump
+
+0:00:11.370,0:00:16.780
+to where it's defined or you can use this shortcut. And here you see that we
+
+0:00:16.780,0:00:19.640
+modified the generic input type, to be a
+
+0:00:19.640,0:00:25.080
+string so that the doInBackground method receives string params.
+
+0:00:25.080,0:00:27.783
+Now, we only passed in one string param,
+
+0:00:27.783,0:00:30.923
+94043. So when you see down here later, we
+
+0:00:30.923,0:00:33.816
+can read out the zeroth position in the params
+
+0:00:33.816,0:00:37.520
+array, to get that postal code. Notice that we're
+
+0:00:37.520,0:00:40.590
+using the UI builder here, and we're appending query
+
+0:00:40.590,0:00:43.830
+parameters, one by one. We define constants for these
+
+0:00:43.830,0:00:47.100
+query params, as seen here. And for the values,
+
+0:00:47.100,0:00:50.300
+we also define them up here. You can imagine
+
+0:00:50.300,0:00:52.590
+that in the future these might be configured outside
+
+0:00:52.590,0:00:54.580
+of this class, but for now we're just going
+
+0:00:54.580,0:00:57.820
+to define them here. To verify that this URI
+
+0:00:57.820,0:01:01.010
+was defined properly, we add a verbose log command
+
+0:01:01.010,0:01:04.629
+to print out the built URI. Let's verify that
+
+0:01:04.629,0:01:07.460
+the log we added actually shows up. In overflow
+
+0:01:07.460,0:01:10.350
+menu we tap Refresh. Then we see the log
+
+0:01:10.350,0:01:15.300
+tag FetchWeatherTask with our UI printed out. It says
+
+0:01:15.300,0:01:19.610
+94043, jSON format metric units, seven days. So this looks correct.

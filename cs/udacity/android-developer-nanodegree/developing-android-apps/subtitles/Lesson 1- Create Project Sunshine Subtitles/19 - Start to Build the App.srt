@@ -1,0 +1,11 @@
+0:00:00.760,0:00:05.600
+Let's build up the UI for the weather app. We've created our Android project.
+
+0:00:05.600,0:00:09.800
+And understand more about basic tools. So let's go to the user interface for
+
+0:00:09.800,0:00:13.760
+Sunshine. Specifically, we're building the initial screen.
+
+0:00:13.760,0:00:16.320
+A list of forecasts for the next several days.

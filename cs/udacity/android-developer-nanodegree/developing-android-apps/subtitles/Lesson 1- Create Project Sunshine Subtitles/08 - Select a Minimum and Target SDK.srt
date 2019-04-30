@@ -1,0 +1,92 @@
+0:00:00.310,0:00:04.858
+Android 1.0 launched in 2008. And in just the six year since then,
+
+0:00:04.858,0:00:09.880
+there has been 11 new major platform releases. On the Android developer side,
+
+0:00:09.880,0:00:13.460
+we show the relative number of active Android devices running a given platform
+
+0:00:13.460,0:00:18.314
+version in this pie chart, because pie charts are awesome. For our purposes
+
+0:00:18.314,0:00:22.700
+though, you're really better off looking at this as a histogram. If you squint,
+
+0:00:22.700,0:00:27.715
+you can almost see a vaguely bell-shaped curve, with the oldest releases here at
+
+0:00:27.715,0:00:31.858
+the left, their popularity dropping off as devices are upgraded or
+
+0:00:31.858,0:00:36.100
+replaced. The largest proportion of devices are here in the middle,
+
+0:00:36.100,0:00:40.020
+representing devices about two years old. And the newest platforms,
+
+0:00:40.020,0:00:43.470
+gaining popularity as new phones are released or upgrades go out,
+
+0:00:43.470,0:00:47.523
+are here on the right. So with that in mind, the Min SDK acts as your low-pass
+
+0:00:47.523,0:00:51.980
+filter. Google Play won't show your app on devices running a platform version
+
+0:00:51.980,0:00:56.660
+lower than its minimum SDK version. So why not just set the Min SDK to one and
+
+0:00:56.660,0:01:01.400
+support everyone? Generally, you'll want to target as many users as you can, but
+
+0:01:01.400,0:01:05.040
+there's a cost associated with supporting some of these older versions.
+
+0:01:05.040,0:01:07.830
+Things like creating different execution paths around deprecated or
+
+0:01:07.830,0:01:12.730
+update APIs or presenting a different UX to devices with different features. So
+
+0:01:12.730,0:01:16.360
+you need to balance the opportunity of expanding your audience with the cost of
+
+0:01:16.360,0:01:21.480
+supporting those new users. Also, remember that each release introduced with it
+
+0:01:21.480,0:01:24.900
+new APIs and hardware support. So it may not make sense to
+
+0:01:24.900,0:01:28.190
+make your app available to devices that don't support your minimum feature set.
+
+0:01:29.220,0:01:33.430
+By comparison, the Target SDK is not a high-pass filter.
+
+0:01:33.430,0:01:36.460
+It's used only to declare which platform version you've tested on.
+
+0:01:37.628,0:01:41.060
+An app targeted to a certain API will continue to be forward compatible on
+
+0:01:41.060,0:01:45.650
+future releases. The platform uses the Target SDK values in case a future
+
+0:01:45.650,0:01:50.040
+platform makes a significant change to expected behavior. This ensures your app
+
+0:01:50.040,0:01:54.620
+doesn't break when a user's phone gets upgraded. If you're developing a new app,
+
+0:01:54.620,0:01:58.630
+there's really no reason to target anything but the latest Android version. And
+
+0:01:58.630,0:02:02.340
+once your app has been released, make it a point to update your Target SDK and
+
+0:02:02.340,0:02:06.610
+test as soon as possible when new platform releases roll out so you can take
+
+0:02:06.610,0:02:10.570
+advantage of every new platform optimization and improvement it has to offer.

@@ -1,0 +1,71 @@
+0:00:00.330,0:00:02.190
+We will begin building our database for
+
+0:00:02.190,0:00:05.020
+Sunshine by defining[br]our weather contract.
+
+0:00:05.020,0:00:07.750
+You might ask, what is a contract?
+
+0:00:07.750,0:00:11.340
+A contract is an agreement between[br]the data model, storage, and
+
+0:00:11.340,0:00:15.730
+views, presentation,[br]describing how information is accessed.
+
+0:00:15.730,0:00:19.560
+The agreement in a contract is[br]implemented in a contract class that
+
+0:00:19.560,0:00:24.270
+contains a list of constants, typically[br]database table column names, that
+
+0:00:24.270,0:00:28.500
+are used to associate data from the data[br]source within the UI of an application.
+
+0:00:29.540,0:00:33.630
+So, if this represents the user[br]interface, then the bottom table
+
+0:00:33.630,0:00:38.030
+represents the data source that is[br]being used to feed data to the UI.
+
+0:00:38.030,0:00:41.190
+Each column in the data source[br]represents a UI element.
+
+0:00:42.370,0:00:45.450
+If we search developer.android.com for[br]the word,
+
+0:00:45.450,0:00:48.470
+contract, we see that there[br]are many such contracts to find.
+
+0:00:49.606,0:00:52.410
+In the Contacts Contract, for example,
+
+0:00:52.410,0:00:55.800
+we can see that part of the contract[br]contains a list of column names.
+
+0:00:55.800,0:00:59.680
+And we can have some sense of what[br]the contact database looks like.
+
+0:00:59.680,0:01:04.319
+It has a column for the display name,[br]flags for the contact, columns for
+
+0:01:04.319,0:01:08.400
+ID's that are used to link[br]the contact to data in other tables.
+
+0:01:08.400,0:01:12.650
+And columns for URI's that point to[br]images associated with the contact.
+
+0:01:12.650,0:01:16.880
+In Sunshine,[br]our contract is used to both create and
+
+0:01:16.880,0:01:18.950
+interact with our database tables.
+
+0:01:18.950,0:01:22.670
+Which is why we need to define it at[br]the start of building our database.
+
+0:01:22.670,0:01:24.910
+Of course, to create our contract,
+
+0:01:24.910,0:01:27.780
+we first need to know what we[br]need to store in the database.

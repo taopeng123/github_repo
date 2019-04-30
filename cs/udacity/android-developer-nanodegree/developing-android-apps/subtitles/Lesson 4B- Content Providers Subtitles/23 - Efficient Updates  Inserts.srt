@@ -1,0 +1,50 @@
+0:00:00.270,0:00:02.719
+Let's take the look at the[br]implementation, of an optional method,
+
+0:00:02.719,0:00:04.939
+we've got in the content provider.
+
+0:00:04.939,0:00:07.220
+Anyone out there who has[br]done work with SQLite,
+
+0:00:07.220,0:00:10.430
+knows that putting a bunch of[br]inserts into a single transaction is
+
+0:00:10.430,0:00:13.040
+much faster than inserting[br]them individually.
+
+0:00:13.040,0:00:15.100
+BulkInsert allows us to do that.
+
+0:00:15.100,0:00:18.900
+The default implementation,[br]just calls insert a bunch of times.
+
+0:00:18.900,0:00:22.520
+But, we can wrap it in a transaction,[br]if we implement it ourselves.
+
+0:00:22.520,0:00:26.270
+Note that we've only added support for[br]weather forecast transactions here,
+
+0:00:26.270,0:00:28.930
+since they are the only[br]ones we insert in bulk.
+
+0:00:28.930,0:00:32.320
+We start by calling db.beginTransaction.
+
+0:00:32.320,0:00:36.860
+For each of the content values[br]passed in, we insert and
+
+0:00:36.860,0:00:39.190
+update the number of records inserted.
+
+0:00:39.190,0:00:42.770
+When we're done,[br]we set the transaction to be successful.
+
+0:00:42.770,0:00:46.092
+And then rely on the finally[br]statement endTransaction.
+
+0:00:46.092,0:00:49.140
+Note, that if we do not set[br]the transaction to be successful,
+
+0:00:49.140,0:00:52.460
+the records will not be committed[br]when we call endTransaction.

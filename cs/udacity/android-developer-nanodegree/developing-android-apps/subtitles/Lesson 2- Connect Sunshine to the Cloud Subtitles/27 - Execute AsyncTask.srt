@@ -1,0 +1,11 @@
+0:00:00.280,0:00:02.870
+Now modify the code so that when the Refresh menu item
+
+0:00:02.870,0:00:08.290
+is selected, it executes the FetchWeatherTask. But hang on. When you
+
+0:00:08.290,0:00:12.630
+tap on the Refresh button, it actually crashes. Why don't you
+
+0:00:12.630,0:00:15.210
+go check the logs to see what error is causing this.

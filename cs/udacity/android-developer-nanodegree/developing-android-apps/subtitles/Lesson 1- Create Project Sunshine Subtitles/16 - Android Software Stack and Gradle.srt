@@ -1,0 +1,101 @@
+0:00:00.680,0:00:04.090
+The simplicity of hitting run and having your app appear on an emulator,
+
+0:00:04.090,0:00:08.335
+hides a lot of complexity. Remember that Android is a full software stack.
+
+0:00:08.335,0:00:12.190
+Adspace is a Linux Kernel,
+
+0:00:12.190,0:00:16.329
+which handles low level tasks like hardware fibers and panel management.
+
+0:00:16.329,0:00:20.757
+On top of that, are some core C and C plus plus libraries like Libsc and
+
+0:00:20.757,0:00:25.920
+SQLite and the Android Runtime. That includes cool Android libraries and
+
+0:00:25.920,0:00:31.240
+the Android virtual machines, Dalvik or more recently ART. Your apps run
+
+0:00:31.240,0:00:36.000
+within its own instance of the VM using the classes and services provided here
+
+0:00:36.000,0:00:40.570
+in the application framework. On top of that, sits the application layer,
+
+0:00:40.570,0:00:44.970
+which includes your app and every other app that's installed on the device. So,
+
+0:00:44.970,0:00:48.800
+when you hit Run in Android Studio, the first thing that happens is your code
+
+0:00:48.800,0:00:53.320
+gets compiled into byte code that can be run in the Android Virtual Machine.
+
+0:00:53.320,0:00:58.030
+That then gets installed onto the device. In Android Studio,
+
+0:00:58.030,0:01:02.020
+this is done using gradle, a build tool kit that manages dependencies and
+
+0:01:02.020,0:01:03.830
+allows you to define custom build logic.
+
+0:01:03.830,0:01:09.660
+You can manually start a gradle build in the IDE by selecting make project.
+
+0:01:09.660,0:01:13.060
+You can also do this by going to the build menu and selecting make project from
+
+0:01:13.060,0:01:16.980
+there, or you can use the gradle console to observe any logs or
+
+0:01:16.980,0:01:22.070
+build errors, or open the gradle tasks window to see any available tasks.
+
+0:01:22.070,0:01:24.930
+Double clicking on any of them will execute it. This will work from
+
+0:01:24.930,0:01:29.270
+the command line too. Once you've navigated to the root of your project folder,
+
+0:01:29.270,0:01:34.810
+you can run gradlew tasks to see all the tasks that you can run. You can learn
+
+0:01:34.810,0:01:39.350
+more about gradle by checking out the links in the instructor notes. For now,
+
+0:01:39.350,0:01:43.310
+note that we start with the project, which gradle then builds and
+
+0:01:43.310,0:01:47.820
+then packages the byte code along with the external resources such as images,
+
+0:01:47.820,0:01:52.530
+strings, and uixml into an application package. This is called an APK, and
+
+0:01:52.530,0:01:57.270
+it's a specially formatted zip file. Once you've got your APK ready to go,
+
+0:01:57.270,0:02:02.210
+it's signed and then pushed to the device using the Android Debug Bridge or
+
+0:02:02.210,0:02:07.020
+ADB. If we return to the terminal, you can see that ADB lets you interact and
+
+0:02:07.020,0:02:10.810
+debug apps on any device, physical or virtual. Things like pushing and
+
+0:02:10.810,0:02:13.730
+pulling files, viewing logcat output, or
+
+0:02:13.730,0:02:19.280
+even running a remote shell. So once Android's GDO has ADB installed the APK,
+
+0:02:19.280,0:02:23.410
+it uses ADB again to launch the app by sending a stock command via the remote
+
+0:02:23.410,0:02:27.430
+shell, by identifying the package and class name of your main activity.

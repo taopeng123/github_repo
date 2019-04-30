@@ -1,0 +1,107 @@
+0:00:00.400,0:00:03.910
+All right. And here's the solution. To start off, let's
+
+0:00:03.910,0:00:07.010
+look at our forecast fragment query. Since it's a join
+
+0:00:07.010,0:00:09.830
+between two tables, it's really easy for us to add
+
+0:00:09.830,0:00:12.920
+additional parameters to our query. Now we make sure we keep
+
+0:00:12.920,0:00:16.390
+the column indices consistent. Now we've grabbed the latitude and
+
+0:00:16.390,0:00:19.270
+longitude at the same time we're grabbing our weather entries.
+
+0:00:19.270,0:00:21.270
+The next thing to do is to move the function
+
+0:00:21.270,0:00:25.400
+open preferred location in map over to forecast fragment. Instead of
+
+0:00:25.400,0:00:28.170
+using shared preferences to get these values, we can actually
+
+0:00:28.170,0:00:30.870
+get the cursor from the forecast adapter. We can get
+
+0:00:30.870,0:00:34.480
+our cursor moved to a reasonable position, and then build
+
+0:00:34.480,0:00:39.160
+our new string which is just latitude colon longitude. We'll
+
+0:00:39.160,0:00:42.320
+leave our comment where it was. Finally, we just have
+
+0:00:42.320,0:00:44.900
+to fix up a few things in the code and
+
+0:00:44.900,0:00:47.630
+that's it. Well, at least for the code. We still
+
+0:00:47.630,0:00:51.600
+need to do some work in XML. Let's move this R.ID.action
+
+0:00:51.600,0:00:55.300
+map now over to forecast fragment inside of it on
+
+0:00:55.300,0:00:57.850
+options item selected. And now we've got to do some
+
+0:00:57.850,0:01:01.480
+XML work. Let's look at our main menu. We'll just
+
+0:01:01.480,0:01:04.620
+pull this action map item out, and we'll place it right
+
+0:01:04.620,0:01:08.160
+into forecast fragment. All right. One more thing to do
+
+0:01:08.160,0:01:10.960
+while we're here. One of the things Raito talked about was
+
+0:01:10.960,0:01:13.780
+wanting to get rid of the refresh menu item. So,
+
+0:01:13.780,0:01:17.000
+let's just comment it out. When we remove that action refresh
+
+0:01:17.000,0:01:19.710
+item, we should probably comment it out from our source
+
+0:01:19.710,0:01:22.710
+code too. After all, you never know when you'll want to
+
+0:01:22.710,0:01:25.800
+use that for debugging. So, there we have it. Our
+
+0:01:25.800,0:01:29.200
+final app. No longer having a refresh button. With a
+
+0:01:29.200,0:01:32.510
+new exciting setting to turn off and on weather notifications.
+
+0:01:32.510,0:01:35.520
+Details are taken care of. I hope you've enjoyed building
+
+0:01:35.520,0:01:38.390
+Sunshine. There's still lots of things left to do in
+
+0:01:38.390,0:01:42.250
+Sunshine. For example, we could also add a lot more intelligent
+
+0:01:42.250,0:01:44.710
+things to its user interface. And of course, we
+
+0:01:44.710,0:01:47.300
+could make it a lot smarter about synching data.
+
+0:01:47.300,0:01:49.730
+And I hope the practices you've learned building Sunshine
+
+0:01:49.730,0:01:51.573
+will help you in all of your future applications

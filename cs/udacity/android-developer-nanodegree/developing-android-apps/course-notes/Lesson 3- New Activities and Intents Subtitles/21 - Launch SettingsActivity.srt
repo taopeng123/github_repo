@@ -1,0 +1,65 @@
+0:00:00.340,0:00:04.220
+Now it's time to launch a settings[br]activity from the menu item.
+
+0:00:04.220,0:00:07.555
+We need to launch it from two places,[br]the Main Activity and
+
+0:00:07.555,0:00:08.860
+the Detail Activity.
+
+0:00:08.860,0:00:12.280
+Afterwards, compile and[br]run the app to make sure that it works.
+
+0:00:12.280,0:00:14.180
+This is what it should[br]look like from the.
+
+0:00:14.180,0:00:16.898
+Main Activity,[br]if you tap on Settings menu,
+
+0:00:16.898,0:00:19.840
+it should be bring you to[br]the Settings Activity.
+
+0:00:19.840,0:00:23.920
+It is expected for it to be blank,[br]because we haven't populated it yet.
+
+0:00:23.920,0:00:26.100
+Now let's try the Detail Activity.
+
+0:00:26.100,0:00:29.842
+If you tap on a Forecast,[br]you can go into the Detail Activity and
+
+0:00:29.842,0:00:32.460
+then you can go into[br]the Settings Activity.
+
+0:00:32.460,0:00:36.460
+Complete the task and then verify[br]that your app behavior is like this.
+
+0:00:36.460,0:00:38.791
+In the directions that[br]I just provided and
+
+0:00:38.791,0:00:42.922
+in the following videos of this course,[br]you'll notice that the settings
+
+0:00:42.922,0:00:45.800
+activity had an action bar[br]at the top of the screen.
+
+0:00:45.800,0:00:49.207
+When building your app with the latest[br]version of the Support library,
+
+0:00:49.207,0:00:52.519
+the action bar doesn't show up by[br]default in the Settings Activity.
+
+0:00:52.519,0:00:54.463
+As a result, it's expected and
+
+0:00:54.463,0:00:58.140
+correct that your device looks[br]like this with no action bar.
+
+0:00:58.140,0:01:01.785
+Don't worry, we'll add the action[br]bar back when we change the theme of
+
+0:01:01.785,0:01:03.800
+the Settings Activity in lesson five.
+
+0:01:03.800,0:01:05.840
+For more info,[br]check the instructor notes.

@@ -1,0 +1,92 @@
+0:00:00.400,0:00:03.730
+Given some sample data how do we populate a ListView?
+
+0:00:03.730,0:00:07.370
+Let's look at an example of some contact data and how it can be displayed in
+
+0:00:07.370,0:00:12.140
+the list. We start with our raw data of contacts which is three contacts,
+
+0:00:12.140,0:00:16.720
+as well as our profile images. Then we pass this data into the adapter so
+
+0:00:16.720,0:00:21.730
+it has a reference to it. The adapter also knows how to build a list item layout
+
+0:00:21.730,0:00:26.500
+for each of these data items. So, it could go ahead and create the layouts for
+
+0:00:26.500,0:00:31.160
+them. But we don't need to create the views yet until the ListView requests that
+
+0:00:31.160,0:00:35.290
+it needs them. For example, if you had hundreds of contacts here,
+
+0:00:35.290,0:00:40.740
+you wouldn't want hundreds of layouts sitting around that aren't being used.
+
+0:00:40.740,0:00:42.850
+Then when you bind the adapter to the ListView,
+
+0:00:42.850,0:00:46.710
+the ListView will ask how many items are actually in the data set.
+
+0:00:46.710,0:00:50.520
+And the adapter will check in the data set there's three items, so
+
+0:00:50.520,0:00:53.960
+we will return that to the ListView. Now the ListView knows that it will have to
+
+0:00:53.960,0:00:59.395
+populate itself with three list items. Now the ListView starts at position
+
+0:00:59.395,0:01:04.170
+zero and asks for the list item layout located at that position. It goes back to
+
+0:01:04.170,0:01:09.520
+the adapter and the adapter checks that at position zero, we have the contact,
+
+0:01:09.520,0:01:15.140
+Anna. The adapter knows how to create a list item layout from the contact, Anna.
+
+0:01:15.140,0:01:20.360
+So, it goes ahead and does that. And then we return it to the ListView. And now
+
+0:01:20.360,0:01:24.027
+we see that the Anna list item is located at the zeroth position in the list.
+
+0:01:24.027,0:01:29.270
+Next the ListView wants to get the item at position one, so
+
+0:01:29.270,0:01:34.340
+ask for the layout from the adapter. The adapter checks that at position one,
+
+0:01:34.340,0:01:39.110
+we have the contact Bob. The adapter knows how to create a list item layout for
+
+0:01:39.110,0:01:43.990
+Bob so it goes ahead and does that and then it returns it to the ListView. And
+
+0:01:43.990,0:01:47.660
+now we see that the list item for Bob has been successfully added
+
+0:01:47.660,0:01:51.010
+to the ListView at position one. Now, the ListView fetches its
+
+0:01:51.010,0:01:55.740
+last item because it knows that there was three list items to expect.
+
+0:01:55.740,0:02:01.280
+It fetches the last list item layout at position two by asking the adapter.
+
+0:02:01.280,0:02:06.890
+The adapter checks that at position two, we have Charlie, as well as that image.
+
+0:02:06.890,0:02:10.810
+And we know how to make a list item layout for Charlie, so we can go ahead and
+
+0:02:10.810,0:02:15.010
+do that, and return it to the ListView. And now we have the list item for
+
+0:02:15.010,0:02:19.180
+Charlie and position two in the list. And we have our complete list

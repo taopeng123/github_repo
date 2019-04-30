@@ -1,0 +1,8 @@
+0:00:00.240,0:00:01.940
+This one is pretty short.
+
+0:00:01.940,0:00:05.768
+We just need to append the path segment[br]for the location to the weather URI,
+
+0:00:05.768,0:00:09.410
+using the buildUpon[br]function from the URI class

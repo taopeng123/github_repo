@@ -1,0 +1,35 @@
+0:00:00.180,0:00:02.390
+To fetch the data from open weather map within an
+
+0:00:02.390,0:00:05.750
+app, first we need to make an HTTP request to the
+
+0:00:05.750,0:00:09.150
+API at the URL that we decided on earlier. Then we
+
+0:00:09.150,0:00:11.520
+need to read the response from the input stream to get
+
+0:00:11.520,0:00:14.480
+a JSON string. It hasn't been parsed yet, but we'll worry
+
+0:00:14.480,0:00:18.080
+about that later. Then we clean up by disconnecting the connection
+
+0:00:18.080,0:00:21.300
+and closing any input streams. We also log any errors that
+
+0:00:21.300,0:00:25.300
+we catch. Since it's a lot of networking boiler plate code,
+
+0:00:25.300,0:00:27.500
+we've provided you with a code snippet
+
+0:00:27.500,0:00:29.890
+that handles these steps. See the link for
+
+0:00:29.890,0:00:31.990
+the GitHub gist below. After you've taken a
+
+0:00:31.990,0:00:34.120
+look at it, check this box to continue.

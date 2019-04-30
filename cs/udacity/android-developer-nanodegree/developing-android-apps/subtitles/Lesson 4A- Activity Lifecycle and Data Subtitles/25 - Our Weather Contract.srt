@@ -1,0 +1,95 @@
+0:00:00.000,0:00:04.311
+Remember, that a contract is[br]an agreement between our data model and
+
+0:00:04.311,0:00:07.445
+our views describing how[br]information is stored.
+
+0:00:07.445,0:00:11.434
+It contains constant strings to[br]represent all the fields that our user
+
+0:00:11.434,0:00:14.543
+interface will display, and[br]in the case of Sunshine,
+
+0:00:14.543,0:00:16.312
+that our database will store.
+
+0:00:16.312,0:00:19.234
+We've just covered all[br]the columns that we'll need to
+
+0:00:19.234,0:00:23.650
+use in our 2SQLI databases that[br]will store weather and information.
+
+0:00:23.650,0:00:27.293
+Now let's learn how these column names[br]constraints are declared in our weather
+
+0:00:27.293,0:00:27.844
+contract.
+
+0:00:27.844,0:00:31.461
+Let's take a quick look at the weather[br]contract class file that we've
+
+0:00:31.461,0:00:32.081
+given you.
+
+0:00:32.081,0:00:38.083
+The contract class has two inner[br]classes, WeatherEntry and LocationEntry.
+
+0:00:38.083,0:00:42.622
+Each of these inner classes contains[br]constant strings that define tables.
+
+0:00:42.622,0:00:45.977
+Right now, we only have column[br]constants for WeatherEntry,
+
+0:00:45.977,0:00:49.082
+the table that contains[br]weather forecast information.
+
+0:00:49.082,0:00:52.466
+The first constant is the TABLE_NAME[br]which, for the WeatherEntry,
+
+0:00:52.466,0:00:54.081
+is simply the word "weather".
+
+0:00:54.081,0:00:57.553
+The constant values as defined in[br]the WeatherEntry class match the values
+
+0:00:57.553,0:00:59.352
+we're storing in the weather table.
+
+0:00:59.352,0:01:01.924
+For example,[br]we've got minimum temperature,
+
+0:01:01.924,0:01:04.379
+which is defined here[br]as COLUMN_MIN_TEMP.
+
+0:01:04.379,0:01:06.846
+Pressure column is defined[br]as COLUMN_PRESSURE.
+
+0:01:06.846,0:01:10.502
+But we're missing a column[br]to define the unique ID.
+
+0:01:10.502,0:01:14.486
+This is because we're implementing[br]the class, BaseColumns,
+
+0:01:14.486,0:01:17.004
+which contains a constant called _id.
+
+0:01:17.004,0:01:22.444
+By adding an _id column to our table as[br]a primary key, we can utilize various
+
+0:01:22.444,0:01:27.301
+Android helper classes that rely[br]on the _id column being created.
+
+0:01:27.301,0:01:30.847
+The LOC_KEY column is the foreign[br]key we talked about earlier,
+
+0:01:30.847,0:01:33.419
+that points to records[br]in the location table.
+
+0:01:33.419,0:01:36.365
+Since the column names don't[br]actually contain data types,
+
+0:01:36.365,0:01:39.540
+it's usual to annotate these types[br]in the variable names, and or
+
+0:01:39.540,0:01:41.690
+comments to make our[br]contract more explicit

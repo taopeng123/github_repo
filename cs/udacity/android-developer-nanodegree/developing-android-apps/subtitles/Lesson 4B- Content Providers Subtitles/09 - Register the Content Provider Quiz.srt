@@ -1,0 +1,62 @@
+0:00:00.173,0:00:05.478
+The URIMatcher we just coded is central[br]to coding our Content Provider.
+
+0:00:05.478,0:00:09.652
+And will be used in the implementation[br]of our core Content Provider methods.
+
+0:00:09.652,0:00:13.936
+We've given you Tests to help you along[br]the way as you code Weather Provider.
+
+0:00:13.936,0:00:17.169
+Since several of these tests[br]have been re-purposed from
+
+0:00:17.169,0:00:19.264
+the database test you helped write.
+
+0:00:19.264,0:00:23.411
+You may want to look at how the content[br]provider calls replace the SQL
+
+0:00:23.411,0:00:28.088
+database calls in tasks such as test[br]location table and test weather table.
+
+0:00:28.088,0:00:31.888
+But before we can start implementing[br]step four in testing our content
+
+0:00:31.888,0:00:35.295
+provider, we need to register[br]it to the AndroidManifest, so
+
+0:00:35.295,0:00:36.945
+that Android knows about it.
+
+0:00:36.945,0:00:41.191
+Once the weather provider has been[br]registered with the package manager, we
+
+0:00:41.191,0:00:45.450
+can use an Android utility class called[br]the ContentResolver to refer to it.
+
+0:00:45.450,0:00:50.455
+The ContentResolver locates our class[br]using the Content Authority and
+
+0:00:50.455,0:00:54.555
+makes direct calls to the weather[br]provider on our behalf.
+
+0:00:54.555,0:00:58.897
+Add a provider tag into[br]the androidmanifest.xml file to register
+
+0:00:58.897,0:01:03.317
+the WeatherProvider class with[br]the Content Authority as defined in
+
+0:01:03.317,0:01:04.881
+the WeatherContract.
+
+0:01:04.881,0:01:09.500
+Note that the two fields you need[br]to populate in the provider tag
+
+0:01:09.500,0:01:12.915
+are android:name and android:authority.
+
+0:01:12.915,0:01:16.552
+On comment, the test provider[br]registry test within test provider,
+
+0:01:16.552,0:01:19.005
+to test to see if you've[br]done this correctly.

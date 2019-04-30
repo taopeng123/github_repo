@@ -1,0 +1,50 @@
+0:00:00.500,0:00:04.510
+A platform which terminates apps on its own is a pretty radical departure for
+
+0:00:04.510,0:00:07.920
+anyone like me who cut their teeth on desktop Winforms development.
+
+0:00:07.920,0:00:10.910
+If you come from a similar background you probably have
+
+0:00:10.910,0:00:14.912
+a pretty good idea of what to expect in terms of lifecycle event handles.
+
+0:00:20.300,0:00:24.380
+You start with the onCreate call back where you build and wire up your UI.
+
+0:00:24.380,0:00:28.910
+Once that's done, your activity has been created. It likely won't be a surprise
+
+0:00:28.910,0:00:32.650
+to you that there are also event handlers for when the activity becomes visible.
+
+0:00:32.650,0:00:36.970
+Which is onStart and another for when it gets focus and becomes the active
+
+0:00:36.970,0:00:42.255
+foreground app, which is onResume. That same sequence, then happens in reverse.
+
+0:00:42.255,0:00:48.542
+[SOUND] onPause indicates that the activity has lost focus, followed by
+
+0:00:48.542,0:00:54.283
+onStop when the app is no longer visible. Finally, there's an onDestroy method,
+
+0:00:54.283,0:00:58.540
+indicating the end of the app lifecycle. When your app is first launched, you'll
+
+0:00:58.540,0:01:03.265
+quickly move through these states. Create, Start, Resume, one after the other
+
+0:01:03.265,0:01:06.803
+[BLANK_AUDIO]
+
+0:01:06.803,0:01:10.985
+But within the full application lifetime, from when onCreate is first called and
+
+0:01:10.985,0:01:16.480
+till the app is finally terminated. It will move through the active lifetime and
+
+0:01:16.480,0:01:22.640
+the physical lifetime, many times. Let's look at those in a little more detail.

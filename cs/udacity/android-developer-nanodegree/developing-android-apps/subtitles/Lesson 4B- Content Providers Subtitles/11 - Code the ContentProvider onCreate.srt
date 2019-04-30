@@ -1,0 +1,77 @@
+0:00:00.560,0:00:04.330
+Now that we've registered our weather[br]provider in the Android manifest,
+
+0:00:04.330,0:00:06.820
+it's time to begin coding[br]our weather provider.
+
+0:00:08.020,0:00:12.890
+This is the final and most involved step[br]in implementing our content provider.
+
+0:00:12.890,0:00:17.018
+We'll be filling out these core[br]content provider functions.
+
+0:00:17.018,0:00:20.040
+Except for onCreate,[br]which we've already done for
+
+0:00:20.040,0:00:24.220
+you, we've added an instance[br]variable for our data base helper.
+
+0:00:24.220,0:00:26.460
+We initialize this in[br]our onCreate function.
+
+0:00:26.460,0:00:31.050
+We will use this database helper in[br]most of the content provider methods.
+
+0:00:31.050,0:00:34.980
+The first of the content provider[br]methods that we will look at is getType.
+
+0:00:34.980,0:00:38.960
+Implementing the functional version of[br]getType isn't strictly necessary for
+
+0:00:38.960,0:00:40.490
+our application.
+
+0:00:40.490,0:00:44.200
+But it's a nice way to review what[br]uris we're planning to handle.
+
+0:00:44.200,0:00:47.540
+We partially filled out[br]the getType function for you.
+
+0:00:47.540,0:00:51.820
+We use the urimatcher we built[br]earlier to match the given uri
+
+0:00:51.820,0:00:54.690
+against the expressions[br]we've compiled in.
+
+0:00:54.690,0:00:58.580
+For each match, we return the types that[br]we've defined in the weather contract.
+
+0:00:58.580,0:01:02.560
+Remember that the key information that[br]this conveys, is weather the content uri
+
+0:01:02.560,0:01:07.560
+will be returning a database cursor[br]containing a single record type item, or
+
+0:01:07.560,0:01:10.200
+multiple records type directory.
+
+0:01:10.200,0:01:13.420
+Content providers can also be used[br]to return other kinds of data
+
+0:01:13.420,0:01:15.410
+than just database cursors.
+
+0:01:15.410,0:01:19.590
+For example, if we wanted the content[br]provider to return JPEG images for
+
+0:01:19.590,0:01:24.114
+a content uri, we would have this[br]function return the standard mime type,
+
+0:01:24.114,0:01:26.430
+image/jpeg.
+
+0:01:26.430,0:01:31.220
+Let's un comment the testGetType[br]test from within TestProvider.
+
+0:01:31.220,0:01:33.660
+This will get us ready for[br]the next coding exercise.

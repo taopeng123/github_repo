@@ -1,0 +1,23 @@
+0:00:00.290,0:00:02.880
+Sunshine is now using real data thanks to
+
+0:00:02.880,0:00:05.580
+the OpenWeatherMap API. And it's time for us to
+
+0:00:05.580,0:00:08.070
+build out more of the UI. In this lesson
+
+0:00:08.070,0:00:10.620
+you'll learn how to create activities, create the structure
+
+0:00:10.620,0:00:12.390
+of your app, and learn how to navigate
+
+0:00:12.390,0:00:17.600
+between screens. And that means learning more about activities,
+
+0:00:17.600,0:00:20.040
+the intent framework and even learning how to use
+
+0:00:20.040,0:00:22.580
+activities that come from other apps within your own.

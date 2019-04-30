@@ -1,0 +1,284 @@
+0:00:00.130,0:00:01.100
+In Sunshine,
+
+0:00:01.100,0:00:05.330
+we'll using content providers to help us[br]efficiently sync data from the Internet.
+
+0:00:05.330,0:00:07.890
+Combined with utilities[br]in the Android framework.
+
+0:00:07.890,0:00:12.410
+It also simplifies getting database[br]content to and from our user interface.
+
+0:00:12.410,0:00:16.740
+We implement a content provider,[br]by extending the content provider class.
+
+0:00:16.740,0:00:19.890
+In Sunshine,[br]we'll call this class WeatherProvider.
+
+0:00:19.890,0:00:23.790
+We'll use the weatherprovider to read[br]and write the database we just created.
+
+0:00:23.790,0:00:27.540
+You're probably excited to get started[br]on building our weather provider, but
+
+0:00:27.540,0:00:30.470
+if you're still unsure about[br]what content providers are and
+
+0:00:30.470,0:00:34.550
+how they work, we've built a great[br]exercise that demonstrates how to take
+
+0:00:34.550,0:00:37.220
+advantage of all this[br]gnarlishious goodness.
+
+0:00:37.220,0:00:38.370
+Why gnarlishious?
+
+0:00:38.370,0:00:42.530
+Because, this exercise leverages[br]the user dictionary provider.
+
+0:00:42.530,0:00:46.730
+So, if you ever wanted to make your[br]radicaloutius vocabulariousness
+
+0:00:46.730,0:00:50.410
+understood by your mobile friendpanion[br]while learning more about content
+
+0:00:50.410,0:00:55.260
+providers, check the instructor notes[br]below, for a link to the bonus lesson.
+
+0:00:55.260,0:00:58.100
+Building a content provider,[br]involves several steps.
+
+0:00:58.100,0:01:01.440
+Determining the URIs your[br]application will need to support.
+
+0:01:01.440,0:01:04.543
+Updating the contract[br]to include these URIs,
+
+0:01:04.543,0:01:08.599
+filling out a URIMatcher that[br]supports each of these URIs and
+
+0:01:08.599,0:01:12.907
+implementing the six required[br]content-provider functions.
+
+0:01:12.907,0:01:18.980
+Okay, the task is determining URIs,[br]but, what's a URI anyhow?
+
+0:01:18.980,0:01:22.260
+A content provider allows us to think[br]of the data associated with our
+
+0:01:22.260,0:01:26.390
+views in terms of universal[br]resource identifiers or URIs.
+
+0:01:26.390,0:01:29.180
+URIs do exactly what their name implies.
+
+0:01:29.180,0:01:33.140
+They identify a resource, in our[br]case a row, or rows, in a database.
+
+0:01:34.330,0:01:37.710
+You're almost certainly familiar[br]with the concept of a URI.
+
+0:01:37.710,0:01:42.450
+Since the URL used for every web[br]address, is actually a type of URI.
+
+0:01:42.450,0:01:46.530
+In the case of the web,[br]it's a URI used to identify web content,
+
+0:01:46.530,0:01:49.880
+with an HTTP or HTTPS scheme.
+
+0:01:49.880,0:01:56.540
+In this example, sunshine is using a URI[br]to query the weather for 94043 location.
+
+0:01:56.540,0:01:59.090
+Our content provider returns a cursor,
+
+0:01:59.090,0:02:02.730
+containing the database rows[br]that correspond to the URI.
+
+0:02:02.730,0:02:05.460
+By changing the query value of the URI,
+
+0:02:05.460,0:02:09.000
+we can have Sunshine display weather[br]from different parts of the country.
+
+0:02:09.000,0:02:12.280
+Each URI can contain the content scheme.
+
+0:02:12.280,0:02:15.940
+A scheme is the first part of a URI,[br]that proceeds the colon, and
+
+0:02:15.940,0:02:19.170
+it identifies the protocol[br]that the URI will be using.
+
+0:02:19.170,0:02:23.600
+You are used to seeing schemes[br]such as HTTP and FTP in URIs.
+
+0:02:23.600,0:02:27.270
+Content colon implies that the URI[br]refers to a content provider.
+
+0:02:28.860,0:02:32.920
+A content authority, which is a unique[br]string used to locate your content
+
+0:02:32.920,0:02:37.590
+provider and it should almost always[br]be the package name of the application.
+
+0:02:37.590,0:02:42.720
+A location, which typically points to[br]a database table within the application.
+
+0:02:42.720,0:02:47.760
+And optional query, this query can[br]either be part of the URI path or
+
+0:02:47.760,0:02:51.850
+it can take the form of a traditional[br]URI query following a question mark.
+
+0:02:51.850,0:02:55.230
+As it turns out,[br]a URI is the primary piece of data,
+
+0:02:55.230,0:02:59.580
+that is passed in these intents that[br]Ray To so gloriously described.
+
+0:02:59.580,0:03:03.080
+In Sunshine, we'll leverage[br]this to start the detail view,
+
+0:03:03.080,0:03:07.075
+with a URI that points to the weather,[br]on a specific day.
+
+0:03:07.075,0:03:10.515
+The detail view, uses this URI[br]to query weather provider and
+
+0:03:10.515,0:03:12.185
+get the right weather data to display.
+
+0:03:12.185,0:03:15.495
+Another thing that these content[br]provider URIs, is used for
+
+0:03:15.495,0:03:18.822
+in android is to notify the user[br]interface that a piece of the data it is
+
+0:03:18.822,0:03:19.852
+displaying has changed.
+
+0:03:19.852,0:03:24.132
+The code registers an Android[br]construct called a content observer,
+
+0:03:24.132,0:03:28.052
+during our initial query,[br]against the URI that is being displayed.
+
+0:03:28.052,0:03:31.642
+When running a database update routine,[br]likely on another thread.
+
+0:03:31.642,0:03:34.772
+That routine will tell Android that[br]the data associated with the URI
+
+0:03:34.772,0:03:36.032
+has changed.
+
+0:03:36.032,0:03:39.282
+And ultimately, that the URI[br]should requery the database, and
+
+0:03:39.282,0:03:40.742
+refresh the display.
+
+0:03:40.742,0:03:44.100
+This will cause the display to refresh,[br]and show the latest data.
+
+0:03:44.100,0:03:47.480
+Even though as you can see here,[br]the URI hasn't changed.
+
+0:03:47.480,0:03:49.990
+Content providers,[br]can return all sorts of data.
+
+0:03:49.990,0:03:53.920
+But the abstract functions return either[br]a cursor containing a list of items or
+
+0:03:53.920,0:03:55.380
+a single item.
+
+0:03:55.380,0:03:58.430
+How these URIs are structured[br]is up to each application.
+
+0:03:58.430,0:04:02.290
+But Android provides support, for[br]appending an ID to the URI path,
+
+0:04:02.290,0:04:05.560
+to indicate that the application is[br]interested in a specific record,
+
+0:04:05.560,0:04:07.320
+rather than a range of records.
+
+0:04:07.320,0:04:10.000
+In Sunshine, the value for[br]a specific date and time,
+
+0:04:10.000,0:04:13.550
+is appended to the query for[br]weather at a specific location.
+
+0:04:13.550,0:04:16.470
+And that causes a single[br]weather record to be returned.
+
+0:04:16.470,0:04:18.870
+So, defining URIs.
+
+0:04:18.870,0:04:19.740
+To make it easy for
+
+0:04:19.740,0:04:23.360
+us, I've defined these data[br]URIs that we'll be supporting.
+
+0:04:23.360,0:04:24.530
+Some of these URIs,
+
+0:04:24.530,0:04:29.060
+exist because the UI has a view that[br]needs to expose that particular data.
+
+0:04:29.060,0:04:30.980
+Such as weather with location,
+
+0:04:30.980,0:04:34.380
+which will be used to display[br]the main list of forecasts.
+
+0:04:34.380,0:04:37.410
+And of course,[br]weather with location and date.
+
+0:04:37.410,0:04:40.730
+Which would be used to display[br]the detailed forecast information.
+
+0:04:40.730,0:04:45.030
+Others, are used primarily for writing[br]the database, inserts, updates and
+
+0:04:45.030,0:04:46.190
+deletes.
+
+0:04:46.190,0:04:49.880
+Having these base URIs,[br]is also useful for testing.
+
+0:04:49.880,0:04:53.170
+Now it's time to go back[br]to our weather contract.
+
+0:04:53.170,0:04:56.160
+When we first described[br]what a weather contract is,
+
+0:04:56.160,0:05:00.540
+we said that it is an agreement between[br]the data models, storage and views.
+
+0:05:00.540,0:05:03.620
+Presentation describing how[br]information is accessed.
+
+0:05:03.620,0:05:06.940
+It turns out,[br]that in addition to the column names for
+
+0:05:06.940,0:05:11.270
+our database, the contract is also[br]a great place to define the URIs,
+
+0:05:11.270,0:05:14.100
+that our application will be[br]using to access its data.
+
+0:05:14.100,0:05:17.050
+Next, we'll explain what you need[br]to add to your weather contract.
+
+0:05:17.050,0:05:19.890
+When you've completed adding[br]this code to your project,
+
+0:05:19.890,0:05:21.580
+I'll explain a bit[br]about what you've done

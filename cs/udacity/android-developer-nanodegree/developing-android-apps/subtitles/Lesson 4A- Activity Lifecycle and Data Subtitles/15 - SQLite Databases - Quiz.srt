@@ -1,0 +1,161 @@
+0:00:00.603,0:00:05.130
+As you might expect, Android stores[br]your persistent data in the file system.
+
+0:00:05.130,0:00:09.172
+To simplify what app developers[br]need to write, Android provides
+
+0:00:09.172,0:00:13.077
+several structured storage options[br]on top of the file system.
+
+0:00:13.077,0:00:19.253
+For Sunshine, we'll leverage both Shared[br]Preferences and an SQLite Database.
+
+0:00:19.253,0:00:21.690
+Let's look at both of these options.
+
+0:00:21.690,0:00:26.864
+The Shared Preferences class, which we[br]are already using to store our user
+
+0:00:26.864,0:00:32.036
+zip code in units, provides a general[br]framework that allows you to save and
+
+0:00:32.036,0:00:36.390
+retrieve persistent key value[br]pairs of primitive data types,
+
+0:00:36.390,0:00:40.192
+such as Booleans, floats,[br]ins, longs and strings.
+
+0:00:40.192,0:00:44.416
+There are times when a simple key value[br]pair framework like Shared Preferences
+
+0:00:44.416,0:00:46.601
+doesn’t provide enough flexibility.
+
+0:00:46.601,0:00:50.210
+Fortunately, Android also has SQLite.
+
+0:00:50.210,0:00:54.181
+SQLite implements a light[br]weight relational database.
+
+0:00:54.181,0:00:57.804
+We interact with SQLite[br]databases by writing queries and
+
+0:00:57.804,0:01:02.644
+statements and SQLite's variant of[br]the structured query language or SQL.
+
+0:01:02.644,0:01:05.867
+Storing something in a a database[br]is more complicated than using
+
+0:01:05.867,0:01:07.008
+Shared Preferences.
+
+0:01:07.008,0:01:09.366
+So why would we ever choose this option?
+
+0:01:09.366,0:01:12.956
+After all,[br]Android supports both raw files and
+
+0:01:12.956,0:01:15.926
+shared preferences as alternatives.
+
+0:01:15.926,0:01:20.100
+Well, for the same reason that it's[br]inefficient to find things if you
+
+0:01:20.100,0:01:22.588
+throw your clothes in[br]a pile on the floor.
+
+0:01:22.588,0:01:27.996
+Storing things in an SQLite Database[br]helps you organize and find data easily.
+
+0:01:27.996,0:01:30.064
+Thanks to the power of indexing and[br]tables.
+
+0:01:30.064,0:01:32.583
+Let's see what this looks like.
+
+0:01:32.583,0:01:36.484
+Here is an SQLite Database table[br]from our weather database.
+
+0:01:36.484,0:01:38.689
+Note not all fields are represented.
+
+0:01:38.689,0:01:41.788
+All of the data for[br]the first day is in the first row.
+
+0:01:41.788,0:01:45.666
+The data for the second day is[br]in the second row and so on.
+
+0:01:45.666,0:01:46.989
+With key valued pairs,
+
+0:01:46.989,0:01:50.171
+it would be difficult to[br]associate a row of data this way.
+
+0:01:50.171,0:01:54.583
+As you continue through this section[br]on database storage and Android.
+
+0:01:54.583,0:01:58.656
+We're going to expect some basic[br]understanding of SQLite and
+
+0:01:58.656,0:02:02.649
+relational databases,[br]including what a create, select,
+
+0:02:02.649,0:02:05.484
+update, delete and insert operation is.
+
+0:02:05.484,0:02:07.725
+We'll help you write these operations.
+
+0:02:07.725,0:02:10.606
+But if you are new to SQLite or[br]need a refresher,
+
+0:02:10.606,0:02:14.505
+head over to the tutorial linked[br]in the instructor notes below.
+
+0:02:14.505,0:02:17.662
+Once we have a database up and[br]running on our device for our app.
+
+0:02:17.662,0:02:20.982
+Getting the information we[br]need using SQL is easy.
+
+0:02:20.982,0:02:24.734
+We can perform queries against this[br]database, such as this SELECT statement
+
+0:02:24.734,0:02:27.519
+here, which returns the weather[br]on the specified date.
+
+0:02:27.519,0:02:30.363
+Similar to what we would want to do for[br]the detail view.
+
+0:02:30.363,0:02:34.611
+We can use this slightly more complex[br]query to return a range of dates,
+
+0:02:34.611,0:02:38.506
+which is similar to what we'd do[br]on the main forecast list view.
+
+0:02:38.506,0:02:42.566
+Once again, if any of this was[br]unfamiliar, please consider working
+
+0:02:42.566,0:02:46.076
+through the SQLite tutorial[br]link in the instructor notes.
+
+0:02:46.076,0:02:49.897
+And even if isn't unfamiliar,[br]you might just learn something.
+
+0:02:49.897,0:02:50.684
+Okay.
+
+0:02:50.684,0:02:53.704
+Here's a slightly more[br]complicated SQL query.
+
+0:02:53.704,0:02:55.192
+See the instructor notes for
+
+0:02:55.192,0:02:58.545
+some resources that you can use[br]to help parse the SQL statement.
+
+0:02:58.545,0:03:03.362
+One note, max is the name of the column[br]that stores the high temperature for
+
+0:03:03.362,0:03:03.980
+the day.

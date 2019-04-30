@@ -1,0 +1,149 @@
+0:00:00.640,0:00:05.360
+I was 12 years old when I got my first modem, a 1200 baud ACE compatible. I
+
+0:00:05.360,0:00:09.335
+started getting online, not the internet online, local
+
+0:00:09.335,0:00:12.712
+BBSs. At around the same time, yuppie was supporting
+
+0:00:12.712,0:00:15.070
+the first brick-sized mobile phones as the first
+
+0:00:15.070,0:00:18.305
+GSM network started rolling out. Fast forward less than
+
+0:00:18.305,0:00:22.470
+17 years to 2007, and the iPhone launches, followed
+
+0:00:22.470,0:00:26.140
+less than a year by Android. And almost overnight,
+
+0:00:26.140,0:00:28.190
+we've come to expect the world's information in the
+
+0:00:28.190,0:00:31.740
+palm of our hands. Just six years after the first
+
+0:00:31.740,0:00:34.680
+Android phone launched, it's powering everything from phones to
+
+0:00:34.680,0:00:37.740
+tablets, watches, TVs and cars. So where do we go
+
+0:00:37.740,0:00:41.245
+next? The most obvious answer is enabling the same
+
+0:00:41.245,0:00:44.884
+handheld cloud connecting computing platform to the next 5 billion
+
+0:00:44.884,0:00:48.680
+people. As hardware becomes cheaper and more powerful, more of
+
+0:00:48.680,0:00:52.950
+the world's population will be able to get internet-connected computers.
+
+0:00:52.950,0:00:55.100
+And the smartphone is going to be what makes
+
+0:00:55.100,0:00:58.850
+it possible. To facilitate this, we're seeing new approaches
+
+0:00:58.850,0:01:02.010
+to getting online, mesh networks, white spaces, or even
+
+0:01:02.010,0:01:06.610
+Google's Project Loon. We'll hopefully soon see ubiquitous world-wide internet
+
+0:01:06.610,0:01:10.160
+connectivity become a reality. At the same time, smartphones
+
+0:01:10.160,0:01:12.490
+will start to disappear. In the same way that
+
+0:01:12.490,0:01:14.810
+we don't think of computers as computers once they
+
+0:01:14.810,0:01:18.040
+become part of our dishwashers, cars, or TVs, we'll stop
+
+0:01:18.040,0:01:20.410
+thinking of mobiles as such when they disappear into our
+
+0:01:20.410,0:01:23.980
+watches and [UNKNOWN]. We'll come to expect that anything that
+
+0:01:23.980,0:01:26.800
+can be improved through the incorporation of a wireless internet
+
+0:01:26.800,0:01:30.820
+connection will simply have one. For that to happen, we need
+
+0:01:30.820,0:01:33.350
+to find more creative ways to interact with computers than
+
+0:01:33.350,0:01:36.570
+using mouse, keyboards and touch screens. I can all ready pick
+
+0:01:36.570,0:01:39.860
+up my phone or lift my wrist, address Google, and
+
+0:01:39.860,0:01:43.660
+perform searches, send texts or email, set alarms, or take notes
+
+0:01:43.660,0:01:46.470
+without having to touch a screen or keyboard. Screen
+
+0:01:46.470,0:01:49.970
+themselves have become so sharp that pixel densities aren't
+
+0:01:49.970,0:01:52.570
+perceptible to the human eye. And the team at
+
+0:01:52.570,0:01:55.630
+Google X are building contact lenses capable of measuring blood
+
+0:01:55.630,0:01:59.420
+sugar levels. Speaking of senses, not only can I
+
+0:01:59.420,0:02:01.590
+control my phone by putting it either face up or
+
+0:02:01.590,0:02:04.170
+face down, it has a battery of sensors similar
+
+0:02:04.170,0:02:08.530
+to an [UNKNOWN] class warship. Light meters, temperature changes, barometers,
+
+0:02:08.530,0:02:10.900
+gyroscopes, all of which can be used to
+
+0:02:10.900,0:02:15.410
+replace text entry or automate processes. Wearables, cars,
+
+0:02:15.410,0:02:18.780
+and thermostats introduce even more possibilities of sensors.
+
+0:02:18.780,0:02:20.850
+Connect all of that to the cloud, and the
+
+0:02:20.850,0:02:24.460
+possibilities are endless. Future of Android isn't a
+
+0:02:24.460,0:02:27.420
+more powerful phone operating system. It is the
+
+0:02:27.420,0:02:31.410
+brains behind invisible, ubiquitous, cloud connected computing. So
+
+0:02:31.410,0:02:33.620
+the skills we learn today to build cool apps
+
+0:02:33.620,0:02:35.810
+are the same skills we'll use tomorrow
+
+0:02:35.810,0:02:38.620
+to control everything around us. We've taken
+
+0:02:38.620,0:02:42.300
+the first step into that future. I can't wait to see what you do next.

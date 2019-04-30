@@ -1,0 +1,68 @@
+0:00:00.230,0:00:03.780
+In our code, we're going to initialize the adapter within the placeholder
+
+0:00:03.780,0:00:07.530
+fragment on create view method. Because that's where we want the list view to
+
+0:00:07.530,0:00:11.790
+be populated with data. We're using a array adapter, and we can initialize it
+
+0:00:11.790,0:00:16.295
+with four parameters. A context, the ID of a list item layout,
+
+0:00:16.295,0:00:21.870
+the ID of a text view within that list item layout, as well as a list of data.
+
+0:00:21.870,0:00:25.560
+We'll go through each of these parameters one by one now. First, for
+
+0:00:25.560,0:00:29.800
+context. It contained global information about the App environment.
+
+0:00:29.800,0:00:34.520
+It allows us to access system services and resources, as well as the application
+
+0:00:34.520,0:00:39.600
+specific resources that we've defined. We use the fragments containing activity
+
+0:00:39.600,0:00:44.520
+as the context. So, we're going to call getActivity for our parameter here.
+
+0:00:44.520,0:00:48.120
+Since the adapter needs to know the layout for each list item, and
+
+0:00:48.120,0:00:52.990
+needs some reference to the XML layouts that we've defined. The r.java class is
+
+0:00:52.990,0:00:58.210
+a generated file that creates human readable identifiers for our resources. For
+
+0:00:58.210,0:01:03.490
+the list item layout, we refer to it in code as r.layout.list_item forecast.
+
+0:01:03.490,0:01:07.546
+This was the name of the XML file that we created earlier. Next,
+
+0:01:07.546,0:01:11.630
+the array adapter needs to know how to take the weather forecast string and
+
+0:01:11.630,0:01:16.110
+set that to be displayed in a text view. So you pass in the ID of the text view
+
+0:01:16.110,0:01:20.820
+that we defined earlier, in the list item layout. Even though these two resource
+
+0:01:20.820,0:01:25.938
+IDs look similar, one starts with R.layout while the other starts with R.id.
+
+0:01:25.938,0:01:30.663
+R.layout refers to a layout file, while an ID refers to a specific [UNKNOWN]
+
+0:01:30.663,0:01:35.694
+element with the matching ID attribute. And lastly, we pass in a week forecast,
+
+0:01:35.694,0:01:40.400
+which is the array list of forecast data that we defined earlier.
+
+0:01:40.400,0:01:44.030
+Now go ahead and initialize your adapter. Check this box when you're done.

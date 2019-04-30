@@ -1,0 +1,35 @@
+0:00:01.310,0:00:05.210
+We're still not actually inserting[br]weather data into the ContentProvider.
+
+0:00:05.210,0:00:08.270
+So, this is a good time to[br]talk about BulkInserts.
+
+0:00:08.270,0:00:11.380
+Remember, that BulkInsert allows[br]us to insert multiple rows
+
+0:00:11.380,0:00:14.840
+far more efficiently by using[br]a database transaction.
+
+0:00:14.840,0:00:18.130
+We can apply this when we need to[br]insert 14 days worth of weather data
+
+0:00:18.130,0:00:19.720
+into the table.
+
+0:00:19.720,0:00:24.650
+Use the ContentProvider to BulkInsert[br]the vector of content values into
+
+0:00:24.650,0:00:26.250
+the database.
+
+0:00:26.250,0:00:30.995
+Note, there are a few lines underneath[br]the area where you add your BulkInsert
+
+0:00:30.995,0:00:35.280
+code that you can use to test displaying[br]the values you just inserted.
+
+0:00:35.280,0:00:39.300
+It will read those values out of[br]the data base, create content values for
+
+0:00:39.300,0:00:42.520
+them, and pass them into the same[br]display function we already have.

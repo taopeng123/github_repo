@@ -1,0 +1,95 @@
+0:00:00.220,0:00:02.860
+Currently, all the list[br]items have the same layout.
+
+0:00:02.860,0:00:05.880
+However, we want the today[br]item to use a different layout
+
+0:00:05.880,0:00:10.320
+which we defined earlier in the list[br]item forecast today XML file.
+
+0:00:10.320,0:00:13.460
+This is where adapter item[br]view types will save the day.
+
+0:00:13.460,0:00:17.530
+This is a general concept for[br]all adapters, not just cursor adapter.
+
+0:00:17.530,0:00:21.180
+Instead of just knowing about one item[br]view type which yields the same layout
+
+0:00:21.180,0:00:25.570
+for all list items, the adapter can[br]declare multiple item view types, so
+
+0:00:25.570,0:00:28.020
+it will have different[br]list item layouts.
+
+0:00:28.020,0:00:31.330
+For a given row in the cursor,[br]the forecast adapter needs to decide
+
+0:00:31.330,0:00:34.610
+if it should be a regular list item or[br]a today list item.
+
+0:00:34.610,0:00:37.830
+Then it will inflate, and[br]bind data for the appropriate layout.
+
+0:00:37.830,0:00:40.810
+We'll jump into the forecast[br]adapter code now to learn how to
+
+0:00:40.810,0:00:42.760
+handle a second item view type.
+
+0:00:42.760,0:00:46.400
+Normally, in a sub class[br]getViewTypeCount returns one, but
+
+0:00:46.400,0:00:50.230
+we're going to override it so it returns[br]two for the two different layouts.
+
+0:00:50.230,0:00:52.870
+But how does it know when to[br]use one layout, or the other?
+
+0:00:52.870,0:00:56.830
+Well we override getItemViewType, so[br]that when the position in the list is
+
+0:00:56.830,0:00:59.760
+zero then we say that[br]it's the today view type.
+
+0:00:59.760,0:01:02.800
+Otherwise, it's[br]the FUTURE_DAY view type.
+
+0:01:02.800,0:01:05.280
+These two view types[br]are declared up above.
+
+0:01:05.280,0:01:08.760
+These are just integer[br]representations of the view type.
+
+0:01:08.760,0:01:12.500
+The numbering has to start at 0, because[br]these values cannot be greater than or
+
+0:01:12.500,0:01:14.830
+equal to getViewTypeCount.
+
+0:01:14.830,0:01:19.320
+So the possible values for us are 0 and[br]1, so that we know that 0 always maps
+
+0:01:19.320,0:01:23.610
+to the view_type_today, and that one[br]always maps to view_type_future_day.
+
+0:01:23.610,0:01:26.440
+We're going to use this information[br]in the new view method.
+
+0:01:26.440,0:01:30.330
+Remember that previously,[br]we inflated the list item forecast xml.
+
+0:01:30.330,0:01:34.370
+Now we're going to use item view type[br]to determine whether we should use one
+
+0:01:34.370,0:01:35.600
+layout or the other.
+
+0:01:35.600,0:01:37.710
+Fill in the TODO to[br]address this behavior.
+
+0:01:37.710,0:01:40.270
+LayoutID refers to resourceID
+
+0:01:40.270,0:01:42.890
+which is in the form of r[br]dot layout dot something.

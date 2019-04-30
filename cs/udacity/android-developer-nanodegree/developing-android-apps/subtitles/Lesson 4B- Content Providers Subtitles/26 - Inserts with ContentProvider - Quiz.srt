@@ -1,0 +1,35 @@
+0:00:00.130,0:00:02.790
+The refactoring you just[br]completed gets our code
+
+0:00:02.790,0:00:05.170
+ready to use the weather provider.
+
+0:00:05.170,0:00:09.100
+For this quiz, you're going to[br]code the addLocation method.
+
+0:00:09.100,0:00:13.710
+As you can see, this method takes[br]a locationSetting, cityName,
+
+0:00:13.710,0:00:16.070
+latitude and longitude for[br]the new location.
+
+0:00:17.320,0:00:22.960
+If the location already exists, we[br]return the ID of the existing location.
+
+0:00:22.960,0:00:27.690
+If we add a location,[br]we return the ID of the added location.
+
+0:00:27.690,0:00:30.670
+We can do this by first[br]querying the content provider,
+
+0:00:30.670,0:00:34.020
+to see if the location[br]query already exists, and
+
+0:00:34.020,0:00:37.220
+only performing the insert[br]if it doesn't yet exist.
+
+0:00:37.220,0:00:41.120
+Uncomment test add location[br]within test fetch weather task,
+
+0:00:41.120,0:00:42.290
+to validate your solution.

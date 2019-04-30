@@ -1,0 +1,68 @@
+0:00:00.540,0:00:02.160
+All right.[br]You're done.
+
+0:00:02.160,0:00:03.100
+Let's look at my solution.
+
+0:00:04.170,0:00:07.400
+First, I hope you grabbed[br]the projection from the notes.
+
+0:00:07.400,0:00:12.370
+Since we're populating a list view,[br]we need a weather entry ID, but
+
+0:00:12.370,0:00:15.780
+since we have a join,[br]we have to specify this ID precisely
+
+0:00:15.780,0:00:20.790
+with a table name followed by the dot[br]followed by the column name syntax.
+
+0:00:20.790,0:00:23.580
+We're not using all of these columns.
+
+0:00:23.580,0:00:26.320
+But, having these constant defined[br]will help us keep the code
+
+0:00:26.320,0:00:29.640
+compatible with the updates we[br]are doing in the next lessons.
+
+0:00:29.640,0:00:33.310
+Of course, these indices[br]are tied to our projection.
+
+0:00:33.310,0:00:37.541
+If the forecast columns changes,[br]we have to modify these accordingly.
+
+0:00:37.541,0:00:41.640
+In onCreateLoader we then pass[br]FORECAST_COLUMNS as the projection
+
+0:00:41.640,0:00:44.360
+into our CursorLoader constructor.
+
+0:00:44.360,0:00:48.390
+Finally, we can fix[br]a convertCursorRowToUSFormat within our
+
+0:00:48.390,0:00:52.870
+forecast adapter to take advantage[br]of these declared indices.
+
+0:00:52.870,0:00:54.790
+And that's it, we're done.
+
+0:00:54.790,0:00:56.340
+Lets run it.
+
+0:00:56.340,0:00:58.550
+And it looks exactly like[br]the last time we run it.
+
+0:00:59.680,0:01:01.070
+[LAUGH] Is pretty typical for[br]this section.
+
+0:01:01.070,0:01:04.090
+But the good news is that[br]it's still working correctly.
+
+0:01:04.090,0:01:05.890
+And, it's a little more efficient.
+
+0:01:05.890,0:01:08.600
+We're going to take more[br]advantage of this in lesson five
+
+0:01:08.600,0:01:10.950
+as we make more sophisticated[br]user interfaces.

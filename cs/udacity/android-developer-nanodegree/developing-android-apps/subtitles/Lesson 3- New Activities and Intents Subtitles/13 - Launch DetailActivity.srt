@@ -1,0 +1,35 @@
+0:00:00.300,0:00:03.360
+The solution is to lauch an explicit intent to
+
+0:00:03.360,0:00:07.750
+the Detail Activity Class. We'll go to On Create View,
+
+0:00:07.750,0:00:10.610
+where our On Item click listener is defined. To
+
+0:00:10.610,0:00:13.460
+pass in the Weather Forecast information, we can use an
+
+0:00:13.460,0:00:16.000
+intent extra, which is a key value pair in
+
+0:00:16.000,0:00:20.090
+the Intent. We use the key name, Intent.extratext, but we
+
+0:00:20.090,0:00:22.800
+can use any string for the key. As long as
+
+0:00:22.800,0:00:26.110
+we use the same key when reading the information out.
+
+0:00:26.110,0:00:29.150
+Just as in the toast, we obtain the forecast
+
+0:00:29.150,0:00:31.850
+data from the current list item, by calling get
+
+0:00:31.850,0:00:34.600
+item on the adapter at the given position. Once
+
+0:00:34.600,0:00:37.320
+we've added the intent, we just start the activity.

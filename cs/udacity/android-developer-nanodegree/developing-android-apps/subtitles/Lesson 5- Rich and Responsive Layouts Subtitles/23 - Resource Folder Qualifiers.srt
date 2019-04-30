@@ -1,0 +1,149 @@
+0:00:00.310,0:00:01.870
+So, we know we need to create layouts
+
+0:00:01.870,0:00:04.770
+and assets optimized for different screen pixel densities
+
+0:00:04.770,0:00:07.320
+and sizes. So, now's a great time to
+
+0:00:07.320,0:00:12.130
+introduce you to the Android resource framework. All externalized
+
+0:00:12.130,0:00:15.660
+Android resources, everything from strings to layouts to
+
+0:00:15.660,0:00:19.200
+drawables and animations are all stored within your project's
+
+0:00:19.200,0:00:22.490
+res folder. You've already been putting your strings
+
+0:00:22.490,0:00:25.500
+in the strings.xml file stored in the values folder.
+
+0:00:25.500,0:00:27.550
+And you've been putting your layouts into the layout
+
+0:00:27.550,0:00:31.320
+folder. And you know to reference your resources using
+
+0:00:31.320,0:00:34.450
+at notation within both your xml or within the
+
+0:00:34.450,0:00:36.617
+code. And then at runtime, Android will insert the
+
+0:00:36.617,0:00:40.520
+appropriate resource for you. So far, so good. And
+
+0:00:40.520,0:00:43.475
+here's where things get a little more interesting. Android
+
+0:00:43.475,0:00:46.740
+allows you to create alternative versions of every resource
+
+0:00:46.740,0:00:51.040
+by placing them into folders with different qualifiers. We separate
+
+0:00:51.040,0:00:54.130
+each of those using a hyphen. And we can
+
+0:00:54.130,0:00:57.320
+add those qualifiers based on anything from language and
+
+0:00:57.320,0:01:00.640
+or dialect to whether the device is docked, the
+
+0:01:00.640,0:01:02.930
+type of touch screen, the pixel density of the
+
+0:01:02.930,0:01:06.820
+display, the orientation of the screen, and most importantly
+
+0:01:06.820,0:01:09.830
+for a responsive design in particular, the smallest available
+
+0:01:09.830,0:01:12.055
+screen width which you can support with that layout.
+
+0:01:12.055,0:01:16.270
+At runtime, Android will check the count device configuration,
+
+0:01:16.270,0:01:20.030
+it's language, it's screen size, pixel density, everything,
+
+0:01:20.030,0:01:22.790
+and then load the right layout strings and drawables
+
+0:01:22.790,0:01:26.410
+accordingly. You can even chain these qualifiers together. For
+
+0:01:26.410,0:01:29.460
+example, to create a different layout for German language
+
+0:01:29.460,0:01:31.660
+users to account for all of those really long
+
+0:01:31.660,0:01:34.960
+German words, or more typically for a combination of
+
+0:01:34.960,0:01:38.660
+screen size and device configuration. Now, keep in mind
+
+0:01:38.660,0:01:41.610
+that many of these values can change at runtime.
+
+0:01:41.610,0:01:44.630
+The most common change being that of orientation. And
+
+0:01:44.630,0:01:47.190
+it's for this reason that Android activities are destroyed
+
+0:01:47.190,0:01:51.360
+and recreated whenever the device configuration changes. And that's
+
+0:01:51.360,0:01:53.940
+because the layout and all of the resources within it
+
+0:01:53.940,0:01:56.880
+could be completely different based on something as simple
+
+0:01:56.880,0:02:00.640
+as screen orientation change. Now it's good practice, as
+
+0:02:00.640,0:02:03.660
+well, to localize your apps and provide translated strings
+
+0:02:03.660,0:02:06.720
+for all of your users using this mechanism. And that's
+
+0:02:06.720,0:02:08.530
+a task made a lot easier. Thanks to Google
+
+0:02:08.530,0:02:12.270
+Play Publisher site that can offer you this service. It's
+
+0:02:12.270,0:02:15.230
+also a really good idea to provide different drawables
+
+0:02:15.230,0:02:17.800
+at the appropriate pixel density, so you can get a
+
+0:02:17.800,0:02:21.440
+nice crisp image on every device. And when it
+
+0:02:21.440,0:02:24.480
+comes to providing alternative layouts, Android has gone through a
+
+0:02:24.480,0:02:28.130
+few alternative models. Starting in the early days, with this
+
+0:02:28.130,0:02:32.110
+screen buckets idea of small, normal large, and extra large.
+
+0:02:32.110,0:02:36.130
+But, since Android 3.2, the new smallest width qualifier has
+
+0:02:36.130,0:02:39.830
+given us much more fine grain control over our layouts.

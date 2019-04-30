@@ -1,0 +1,170 @@
+0:00:00.190,0:00:01.609
+Earlier we learned about styles and
+
+0:00:01.609,0:00:04.470
+how you can apply them[br]to an individual view.
+
+0:00:04.470,0:00:07.580
+If you want to apply it to all the views[br]in an activity or application,
+
+0:00:07.580,0:00:11.330
+you can do it by specifying a theme[br]attribute on the activity or
+
+0:00:11.330,0:00:14.600
+application tag in the Android manifest.
+
+0:00:14.600,0:00:17.990
+Now we style the action bar to look[br]like these visual mocks for the main and
+
+0:00:17.990,0:00:19.020
+detail activity.
+
+0:00:19.020,0:00:22.750
+The settings activity is a special case[br]because it extends from the preference
+
+0:00:22.750,0:00:26.100
+activity class,[br]instead of the action bar activity.
+
+0:00:26.100,0:00:28.180
+So that's going to be[br]done in the next section.
+
+0:00:28.180,0:00:31.040
+For both cases here we want[br]the background color to be this
+
+0:00:31.040,0:00:32.330
+blue hex color.
+
+0:00:32.330,0:00:36.250
+We notice that the detail activity[br]only shows the title, no app icon.
+
+0:00:36.250,0:00:39.220
+And this button is to go[br]up to the parent activity.
+
+0:00:39.220,0:00:41.950
+If you see visual marks[br]that have the app icon or
+
+0:00:41.950,0:00:44.260
+a different up button,[br]they are outdated.
+
+0:00:44.260,0:00:46.570
+The material design,[br]this is our new look.
+
+0:00:46.570,0:00:49.380
+On the other hand,[br]the main activity shows the logo.
+
+0:00:49.380,0:00:51.200
+It's a different attribute[br]than the app icon.
+
+0:00:51.200,0:00:54.980
+And this was provided in an acid[br]drop earlier in the lesson, and
+
+0:00:54.980,0:00:57.350
+it's called ic_logo.
+
+0:00:57.350,0:01:00.630
+Because of these differences,[br]we need two separate themes.
+
+0:01:00.630,0:01:05.450
+We use AppTheme for the detail activity[br]and ForecastTheme for the main activity.
+
+0:01:06.580,0:01:09.660
+In material design you can[br]choose several app colors and
+
+0:01:09.660,0:01:13.700
+specify them in your theme to[br]colorize certain UI components
+
+0:01:13.700,0:01:15.380
+that are controlled by the framework.
+
+0:01:15.380,0:01:19.940
+For example the framework will use[br]colorPrimary as a background of your
+
+0:01:19.940,0:01:21.700
+action bar or your tool bar.
+
+0:01:21.700,0:01:24.160
+The framework will also[br]use colorPrimaryDark
+
+0:01:24.160,0:01:26.200
+as the status bar color.
+
+0:01:26.200,0:01:30.578
+To customize our app theme, go to[br]the Styles file in the values folder.
+
+0:01:30.578,0:01:34.480
+Our AppTheme inherits[br]from the system Theme for
+
+0:01:34.480,0:01:39.380
+a Light app because we have a Light[br]content area with a DarkActionBar.
+
+0:01:39.380,0:01:42.650
+We specify colorPrimary to[br]be this sunshine_blue color.
+
+0:01:42.650,0:01:46.050
+And this will be displayed in[br]the action bar, also known as at bar.
+
+0:01:46.050,0:01:50.770
+And then we set the colorPrimaryDark[br]to be this darker color.
+
+0:01:50.770,0:01:52.280
+This is going to be[br]shown in the status bar,
+
+0:01:52.280,0:01:57.340
+and typically the status bar is[br]a darker color than the at bar.
+
+0:01:57.340,0:02:03.315
+Both of these colors are defined in[br]the colors.xml file as seen here.
+
+0:02:03.315,0:02:07.290
+Then for the main activity,[br]we create a ForecastTheme.
+
+0:02:07.290,0:02:11.230
+We inherit from AppTheme in case[br]there's more attributes that we want to
+
+0:02:11.230,0:02:13.880
+add here, and[br]then we'll inherit them for free.
+
+0:02:13.880,0:02:16.460
+However, we do override[br]the actionBarStyle.
+
+0:02:16.460,0:02:21.510
+This is so that we can set the logo[br]to point to this drawable file and
+
+0:02:21.510,0:02:25.190
+also change the displayOptions so[br]that the logo does appear.
+
+0:02:25.190,0:02:27.410
+For more information on[br]the action bar displayOptions,
+
+0:02:27.410,0:02:28.940
+you can see the list here.
+
+0:02:28.940,0:02:30.100
+If you run the app now,
+
+0:02:30.100,0:02:33.320
+there's a shadow below the action[br]bar that is default behavior.
+
+0:02:33.320,0:02:36.990
+However, according to our visual[br]designs, we want the action bar and
+
+0:02:36.990,0:02:41.050
+the today item with the blue[br]background to be on the same plane,
+
+0:02:41.050,0:02:44.430
+meaning we don't want one to[br]cast a shadow over the other.
+
+0:02:44.430,0:02:47.450
+As a result we set the action[br]bar elevation to be zero
+
+0:02:47.450,0:02:49.140
+if it is in one pane mode.
+
+0:02:49.140,0:02:54.700
+If it's in two pane mode, then the today[br]item does not have a special background,
+
+0:02:54.700,0:02:57.380
+and it's fine if the action[br]bar casts a shadow.
+
+0:02:57.380,0:03:00.250
+Go ahead and make these changes[br]now using the gists provided.

@@ -1,0 +1,101 @@
+0:00:00.440,0:00:02.790
+Thanks Raido, with that in mind let's add
+
+0:00:02.790,0:00:05.450
+a Refresh Menu button to our app. For temporary
+
+0:00:05.450,0:00:07.920
+purposes only though, otherwise Raido would be mad at
+
+0:00:07.920,0:00:11.882
+us. On Android, menu options are defined in XML
+
+0:00:11.882,0:00:14.440
+and they can be declared for fragments or
+
+0:00:14.440,0:00:18.390
+activities. When the fragment or activity is created, it
+
+0:00:18.390,0:00:21.790
+inflates this XML into the actual menu items in
+
+0:00:21.790,0:00:25.440
+the app. You'll see that there are Action buttons
+
+0:00:25.440,0:00:28.230
+which are menu items that appear in the Action bar,
+
+0:00:28.230,0:00:31.670
+such as this Search Menu item. This space is reserved
+
+0:00:31.670,0:00:34.550
+for the most prominent actions in your app. Then anything
+
+0:00:34.550,0:00:37.990
+else that's less important falls into the overflow menu by
+
+0:00:37.990,0:00:40.790
+tapping on this button with the three dots. These menu
+
+0:00:40.790,0:00:44.560
+items are ordered from most frequently used to least frequently
+
+0:00:44.560,0:00:47.550
+used. And on larger devices that have more screen real
+
+0:00:47.550,0:00:50.710
+estate, you can specify that some of these menu items can
+
+0:00:50.710,0:00:54.120
+actually go into the Action bar if there's room. If
+
+0:00:54.120,0:00:57.160
+you go back to our project in the Resources folder
+
+0:00:57.160,0:00:59.660
+which is called res, there is a Menu folder and
+
+0:00:59.660,0:01:03.990
+inside that there's a main.xml file. If you open that up
+
+0:01:03.990,0:01:06.360
+you see the menu layout XML, and that there's a
+
+0:01:06.360,0:01:10.130
+single menu option defined for Settings. It will never show up
+
+0:01:10.130,0:01:12.350
+as an action in the Action bar, meaning that it
+
+0:01:12.350,0:01:15.780
+will be in the Overflow menu. You can verify this by
+
+0:01:15.780,0:01:18.880
+checking the app on your phone. To define the ordering
+
+0:01:18.880,0:01:22.200
+of menu items, you can just add multiple items to this
+
+0:01:22.200,0:01:24.580
+XML file, and then they will show up in that order
+
+0:01:24.580,0:01:27.680
+in the app. If you don't like the order though, and
+
+0:01:27.680,0:01:30.460
+you want to explicitly set it, then you can specify
+
+0:01:30.460,0:01:34.030
+this order in Category, value. Right now it's set as 100,
+
+0:01:34.030,0:01:37.460
+so that the Settings menu will be at the bottom of
+
+0:01:37.460,0:01:40.040
+all the other menu options that we define in our app.
+
+0:01:41.080,0:01:44.250
+The only Menu option that should show up below the Settings
+
+0:01:44.250,0:01:47.450
+menu is the Help menu. Check out the link for more details.

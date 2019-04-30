@@ -1,0 +1,23 @@
+0:00:00.270,0:00:03.114
+Using the screen support page, and whatever technical
+
+0:00:03.114,0:00:06.078
+specification details you can find on the internet, what
+
+0:00:06.078,0:00:08.619
+are the sizes and densities of these two devices,
+
+0:00:08.619,0:00:11.190
+the Nexus One and the Nexus 5? For these
+
+0:00:11.190,0:00:13.080
+purposes, the screen size should be one of
+
+0:00:13.080,0:00:17.580
+the available buckets, small, normal, large, or extra large.
+
+0:00:17.580,0:00:19.580
+And, the pixel density should always refer to one
+
+0:00:19.580,0:00:25.540
+of our buckets, LDPI, MDPI, HDPI, XHDPI, or XXHDPI.

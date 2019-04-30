@@ -1,0 +1,23 @@
+0:00:00.410,0:00:02.440
+In this lesson we added new activities to our
+
+0:00:02.440,0:00:05.950
+apps and explored ways to structure and navigate between them.
+
+0:00:05.950,0:00:08.370
+And that meant learning all about intents and how
+
+0:00:08.370,0:00:12.150
+they're used in Android. Next up in Lesson 4, we're
+
+0:00:12.150,0:00:14.740
+going to learn about the activity life cycle and make
+
+0:00:14.740,0:00:18.150
+our apps that much more useful by saving data. We'll
+
+0:00:18.150,0:00:20.620
+begin to databases and learn about content providers, but
+
+0:00:20.620,0:00:24.230
+first let's take another journey into the history of Android.

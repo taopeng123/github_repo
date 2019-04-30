@@ -1,0 +1,35 @@
+0:00:00.230,0:00:02.100
+In the sample code provided you'll notice
+
+0:00:02.100,0:00:06.000
+that we create a Http Url connection. To
+
+0:00:06.000,0:00:08.430
+use Http to send and receive data over
+
+0:00:08.430,0:00:10.960
+the network, we have two clients on Android.
+
+0:00:10.960,0:00:13.740
+The Http Url connection class, as well as
+
+0:00:13.740,0:00:17.700
+the patchy Http Client class. Both options support
+
+0:00:17.700,0:00:22.010
+Https, streaming uploads and downloads, configurable time outs,
+
+0:00:22.010,0:00:25.460
+IPB 6 and connection pooling. We recommend the
+
+0:00:25.460,0:00:28.850
+Http Url Connection class because it's general purpose and light
+
+0:00:28.850,0:00:31.730
+weight, and it's been optimized to suit the needs of
+
+0:00:31.730,0:00:34.460
+most Android apps. To learn more about connecting to the
+
+0:00:34.460,0:00:37.130
+network, see the training guide and blog post link below.

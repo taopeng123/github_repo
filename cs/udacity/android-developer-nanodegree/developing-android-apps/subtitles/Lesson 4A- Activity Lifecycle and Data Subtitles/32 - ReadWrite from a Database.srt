@@ -1,0 +1,203 @@
+0:00:00.420,0:00:03.420
+We tested that the database[br]was created successfully.
+
+0:00:03.420,0:00:05.290
+But now we should test[br]that reading from and
+
+0:00:05.290,0:00:08.800
+writing to the sunshine[br]database works as expected.
+
+0:00:08.800,0:00:11.890
+I'll show you how we insert a row[br]of data into the database, and
+
+0:00:11.890,0:00:14.740
+then query the database[br]to read it back out.
+
+0:00:14.740,0:00:18.810
+First, we get a reference to[br]the database from our SQLI Open Helper.
+
+0:00:18.810,0:00:21.960
+Which is an instance of[br]an SQLI database object.
+
+0:00:21.960,0:00:24.740
+We use this in test create DB.
+
+0:00:24.740,0:00:26.270
+Since we're writing to the database,
+
+0:00:26.270,0:00:30.170
+as well as reading,[br]we're going to get a writable database.
+
+0:00:30.170,0:00:33.390
+If we were only reading,[br]then we should use a readable database.
+
+0:00:33.390,0:00:36.600
+To represent the row of data,[br]we want to insert into the database,
+
+0:00:36.600,0:00:38.870
+we use a content values object.
+
+0:00:38.870,0:00:40.160
+We create one of these,
+
+0:00:40.160,0:00:43.650
+in the create North pole[br]location values utility function.
+
+0:00:44.830,0:00:48.550
+Content values,[br]contain a set of key value pairs.
+
+0:00:48.550,0:00:53.059
+You put a key string associated with[br]the value, into the content value set.
+
+0:00:53.059,0:00:56.763
+The key string is contain the names[br]of columns in your database.
+
+0:00:56.763,0:01:00.490
+The value can contain many[br]different data types.
+
+0:01:00.490,0:01:04.140
+Content values,[br]are used to write databases in Android.
+
+0:01:04.140,0:01:06.021
+Once we've created our content values.
+
+0:01:06.021,0:01:08.465
+We call database.insert,
+
+0:01:08.465,0:01:12.775
+with the table name and content values[br]to actually create the new row of data.
+
+0:01:12.775,0:01:15.475
+The return value,[br]from our insertion is a long,
+
+0:01:15.475,0:01:19.435
+that contains the new row[br]ID from the _ID column.
+
+0:01:19.435,0:01:23.450
+If there's an error inserting,[br]the return value is negative 1.
+
+0:01:23.450,0:01:28.050
+Now that we have a row ID,[br]we can query the database for that row.
+
+0:01:28.050,0:01:32.080
+There are several query methods that[br]take in different numbers of parameters.
+
+0:01:32.080,0:01:34.780
+A query method,[br]is just a helper function to make it
+
+0:01:34.780,0:01:37.770
+easier to construct and[br]execute a select statement.
+
+0:01:37.770,0:01:40.800
+Let's show how the query[br]function constructs a statement.
+
+0:01:40.800,0:01:44.920
+Here's what the base, SQLiteDatabase[br]query function looks like.
+
+0:01:44.920,0:01:48.107
+The most basic query we can make[br]with this only has a table name.
+
+0:01:48.107,0:01:50.970
+And it returns all columns and[br]all records.
+
+0:01:50.970,0:01:52.040
+The rest of the parameters,
+
+0:01:52.040,0:01:54.750
+would modifying filter[br]the output of this query.
+
+0:01:54.750,0:01:57.881
+Adding a projection,[br]in array of columns, we wish to return,
+
+0:01:57.881,0:02:00.786
+changes what we are selecting[br]in select statement below.
+
+0:02:00.786,0:02:03.510
+The selection parameter[br]filters the results.
+
+0:02:04.560,0:02:08.120
+One can optionally also use[br]the selection arguments to replace any
+
+0:02:08.120,0:02:10.020
+question marks in the query.
+
+0:02:10.020,0:02:12.380
+Android creates these[br]as bound parameters,
+
+0:02:12.380,0:02:16.260
+in a low level interface to SQLite,[br]which means, we don't have to worry
+
+0:02:16.260,0:02:19.530
+about things like escaping[br]the strings to keep the query valid.
+
+0:02:19.530,0:02:21.660
+We can also change[br]the selection arguments,
+
+0:02:21.660,0:02:24.040
+after our query has been made this way.
+
+0:02:24.040,0:02:28.770
+The last parameter, as you would expect,[br]affects the order by cause of our query,
+
+0:02:28.770,0:02:32.260
+causing it to sort our result[br]in descending order by date.
+
+0:02:32.260,0:02:35.720
+The query functions all[br]return a database cursor.
+
+0:02:35.720,0:02:40.190
+A cursor object, is a control structure,[br]that enables traversal over the rows and
+
+0:02:40.190,0:02:42.420
+columns of our query results set.
+
+0:02:42.420,0:02:46.590
+Typically, we'll start traversing[br]results set by calling cursor.move
+
+0:02:46.590,0:02:50.440
+to first, which will return false if[br]there were no rows in the result,
+
+0:02:50.440,0:02:52.670
+which means nothing matched[br]the query parameters.
+
+0:02:52.670,0:02:56.245
+We can then call move to next,[br]iterate through each row.
+
+0:02:56.245,0:02:59.745
+Once the cursor points to a valid row,[br]one can call get
+
+0:02:59.745,0:03:04.215
+column index to return the index of each[br]database column within the results set.
+
+0:03:04.215,0:03:07.952
+You can save these values and[br]use them for every row in the result.
+
+0:03:07.952,0:03:09.492
+And then you can call get or methods,
+
+0:03:09.492,0:03:13.822
+that retrieve the values from[br]that row based upon column index.
+
+0:03:13.822,0:03:16.232
+Everything we've covered so[br]far, is how we read and
+
+0:03:16.232,0:03:18.392
+write from the database in our app.
+
+0:03:18.392,0:03:19.832
+In tests and in our app code.
+
+0:03:21.010,0:03:22.170
+For our unit test, though,
+
+0:03:22.170,0:03:25.530
+we add a step to validate the values[br]from the cursor with the ones we
+
+0:03:25.530,0:03:30.470
+originally created the contentValues[br]object with, by using assert statements.
+
+0:03:30.470,0:03:32.770
+And, when we're finished we[br]should close our cursor and
+
+0:03:32.770,0:03:35.770
+database to release the system[br]resources as soon as possible

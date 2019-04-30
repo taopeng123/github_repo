@@ -1,0 +1,41 @@
+0:00:00.310,0:00:04.220
+When the list item is clicked, use Android's Toast mechanism to display
+
+0:00:04.220,0:00:08.777
+the weather forecast string. A Toast is a pop-up that displays a message for
+
+0:00:08.777,0:00:13.230
+a few seconds before fading out. It's particularly useful for debugging, where
+
+0:00:13.230,0:00:17.430
+it can be used as a way to indicate status visually without altering the app UI.
+
+0:00:17.430,0:00:23.600
+We're going to put our list view, set item click listener into forecast fragment
+
+0:00:23.600,0:00:28.425
+inside of the on create view method. We'll just start typing
+
+0:00:28.425,0:00:35.120
+listView.setOnItemClickListener and
+
+0:00:35.120,0:00:38.750
+let the auto complete fill in the rest. Inside of this function,
+
+0:00:38.750,0:00:44.900
+we're going to add click listener, which we can instantiate in place. So
+
+0:00:44.900,0:00:49.100
+here's where we can call the code in Android to display the Toast. So, now that
+
+0:00:49.100,0:00:53.980
+you know where to place the Toast code, take a look at the Toast documentation.
+
+0:00:53.980,0:00:57.770
+Add a Toast when the list item is clicked that contains the weather information.
+
+0:00:58.840,0:01:03.350
+Hint. You can get the forecast by getting an item from the forecast adapter,
+
+0:01:03.350,0:01:05.930
+at the position given by the on item click listener.

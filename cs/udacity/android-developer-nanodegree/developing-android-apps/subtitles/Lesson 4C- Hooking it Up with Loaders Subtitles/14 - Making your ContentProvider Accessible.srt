@@ -1,0 +1,47 @@
+0:00:00.310,0:00:03.480
+Its actually quite straightforward[br]to make your apps content provider
+
+0:00:03.480,0:00:05.840
+available to third party apps.
+
+0:00:05.840,0:00:11.445
+The key is to modify the export flag[br]in the manifest entry here to true.
+
+0:00:11.445,0:00:14.931
+As simple as that, any app that knows[br]the content URI can use the content
+
+0:00:14.931,0:00:17.850
+resolver to access it,[br]the same way that you do.
+
+0:00:17.850,0:00:21.480
+Now depending on the sensitivity of[br]your data, you may want to protect it
+
+0:00:21.480,0:00:25.020
+by requiring specific permissions[br]to read or write to the database.
+
+0:00:25.020,0:00:25.770
+So if you want to,
+
+0:00:25.770,0:00:29.340
+you can effectively limit access only[br]to other apps you've created, or
+
+0:00:29.340,0:00:33.530
+to third party apps which know other[br]permissions and users agree to.
+
+0:00:33.530,0:00:35.350
+Then you just need to[br]publish this contract to
+
+0:00:35.350,0:00:37.330
+interact with the content provider.
+
+0:00:37.330,0:00:39.870
+Specifically the URI and column names.
+
+0:00:39.870,0:00:44.020
+And as simple as that, you've created[br]a new API just for your data.
+
+0:00:44.020,0:00:47.810
+This is exactly the same approach used[br]by many of the native content providers,
+
+0:00:47.810,0:00:51.390
+including the context database,[br]media store, calendar and call log.

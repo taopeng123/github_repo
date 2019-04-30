@@ -1,0 +1,8 @@
+0:00:00.300,0:00:03.910
+At this point, we should have created some fake data to display in our list.
+
+0:00:03.910,0:00:08.350
+We created an array of stings to represent each weather forecast item and
+
+0:00:08.350,0:00:09.880
+then returned it into an array list.

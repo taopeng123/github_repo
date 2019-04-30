@@ -1,0 +1,272 @@
+0:00:00.070,0:00:03.340
+By taking the knowledge that we[br]learned about overriding resources
+
+0:00:03.340,0:00:04.330
+in other folders,
+
+0:00:04.330,0:00:08.020
+we'll walk through the code together on[br]how to build up the two-pane tablet UI.
+
+0:00:08.020,0:00:12.400
+First remove the values W820dp folder[br]because we don't need to provide
+
+0:00:12.400,0:00:16.270
+specific logic when for when the current[br]orientation is greater than 820dp.
+
+0:00:16.270,0:00:19.000
+Then go ahead and[br]make the layout XML changes.
+
+0:00:19.000,0:00:22.220
+Then create a new[br]layout SW 600dp folder.
+
+0:00:22.220,0:00:25.610
+And then add a new file[br]called activity_main.
+
+0:00:25.610,0:00:30.610
+We use the same file name as in[br]the base layout folder activity_main so
+
+0:00:30.610,0:00:34.780
+that this one overrides the behavior[br]specifically on tablets.
+
+0:00:34.780,0:00:37.590
+To see the code for this file you[br]can check out the gist below.
+
+0:00:38.990,0:00:42.590
+Essentially it's a horizontal linear[br]layout that can hold a forecast fragment
+
+0:00:42.590,0:00:46.340
+on the left and[br]a detail fragment on the right.
+
+0:00:46.340,0:00:49.510
+Now's a good time to talk about[br]static verses dynamic fragments.
+
+0:00:49.510,0:00:52.710
+In our implementation the forecast[br]fragment is the static fragment because
+
+0:00:52.710,0:00:56.520
+we're defining it in the XML layout no[br]matter what orientation or device size
+
+0:00:56.520,0:00:59.490
+we know that we're going to need a[br]forecast fragment in the main activity.
+
+0:00:59.490,0:01:03.430
+On the other hand, we only declare[br]a container for the detail fragment, but
+
+0:01:03.430,0:01:05.235
+not the actual fragment.
+
+0:01:05.235,0:01:08.250
+It's initialized with different[br]arguments each time as a dynamic
+
+0:01:08.250,0:01:11.080
+fragment, so it's better to[br]dynamically create and add that
+
+0:01:11.080,0:01:14.850
+fragment in a fragment transaction[br]in the main activity Java code.
+
+0:01:14.850,0:01:19.190
+That way the fragment manager can keep[br]track of those initialization arguments
+
+0:01:19.190,0:01:22.580
+and pass those back to us on,[br]after device rotation.
+
+0:01:22.580,0:01:25.590
+Then we need to update[br]the one pane UI layouts so
+
+0:01:25.590,0:01:28.150
+that they're consistent[br]with the two pane case.
+
+0:01:28.150,0:01:31.780
+So in the activity main file for[br]the base layout folder this used to be
+
+0:01:31.780,0:01:35.030
+a frame layout we're going to[br]declare it as a forecast fragment.
+
+0:01:35.030,0:01:37.030
+That way it will match the two pane UI,
+
+0:01:37.030,0:01:39.800
+where this also is declared[br]as a fragment in the XML.
+
+0:01:39.800,0:01:43.130
+That way the main activity never has[br]to worry about dynamically adding
+
+0:01:43.130,0:01:44.750
+the forecast fragment.
+
+0:01:44.750,0:01:47.260
+In the main activity[br]on create view method.
+
+0:01:47.260,0:01:50.990
+Since the fragment is already inside[br]this layout we can just remove this so
+
+0:01:50.990,0:01:52.930
+we don't dynamically add it again.
+
+0:01:52.930,0:01:57.780
+Similarly we modify the activity detail[br]layout in the base layout folder
+
+0:01:57.780,0:02:01.010
+we change the frame layout ID[br]to be weather detail container.
+
+0:02:01.010,0:02:05.620
+So that it matches the container[br]view id in the two pane UI case.
+
+0:02:05.620,0:02:08.240
+The pattern here is that[br]the detail fragment will always be
+
+0:02:08.240,0:02:11.230
+added to a container called[br]weather_detail_container,
+
+0:02:11.230,0:02:13.830
+both in the two pane, and one pane case.
+
+0:02:13.830,0:02:15.500
+Since we changed the name[br]of the container,
+
+0:02:15.500,0:02:17.920
+we should also update[br]the detail activity.
+
+0:02:17.920,0:02:20.020
+This is only used in one pane mode.
+
+0:02:20.020,0:02:21.630
+Here's where we change[br]the container name.
+
+0:02:22.790,0:02:26.330
+In the one pane mode the detailed[br]activity will add the detail fragment
+
+0:02:26.330,0:02:28.250
+dynamically to this container.
+
+0:02:28.250,0:02:31.770
+After we modify the layout we[br]should update the main activity so
+
+0:02:31.770,0:02:34.200
+we dynamically add the detail fragment.
+
+0:02:34.200,0:02:38.320
+In the main activity on create method we[br]check for the presence of the weather
+
+0:02:38.320,0:02:42.820
+detail container in the layout to know[br]whether this is a two pane UI or not.
+
+0:02:42.820,0:02:46.300
+We keep track of this information[br]in a Boolean called mTwoPane.
+
+0:02:46.300,0:02:49.730
+Remember that we start with the letter[br]m, because it's a member variable.
+
+0:02:49.730,0:02:51.770
+In this case,[br]the Boolean should be true.
+
+0:02:51.770,0:02:54.490
+So we go ahead and[br]create a new detail fragment, and
+
+0:02:54.490,0:02:56.580
+add it to the weather_detail_container.
+
+0:02:56.580,0:02:59.540
+We commit the change by using[br]a fragment transaction,
+
+0:02:59.540,0:03:01.176
+which Rado introduced earlier.
+
+0:03:01.176,0:03:04.590
+Otherwise If the detail container[br]is not present in the layout, then
+
+0:03:04.590,0:03:09.220
+the boolean should be false, meaning[br]that this is a one-pane UI for phones.
+
+0:03:09.220,0:03:13.010
+In this case, the detail activity will[br]handle showing the detail fragment.
+
+0:03:13.010,0:03:16.750
+Notice for the two-pane case that[br]we check if the saved instant state
+
+0:03:16.750,0:03:17.990
+bundle is null.
+
+0:03:17.990,0:03:20.120
+If the save instant save[br]bundle is not null,
+
+0:03:20.120,0:03:23.086
+then we don't create a new one,[br]and here is the reason why.
+
+0:03:23.086,0:03:25.010
+Say you want to rotate the device.
+
+0:03:25.010,0:03:26.120
+Before the activity and
+
+0:03:26.120,0:03:30.500
+fragments get torn down, we store[br]information in save state bundles.
+
+0:03:30.500,0:03:34.290
+Then after the orientation change,[br]the system restores the activity and
+
+0:03:34.290,0:03:37.140
+the fragments,[br]by passing back the same bundle, so
+
+0:03:37.140,0:03:39.940
+that it can be recreated[br]with the same state.
+
+0:03:39.940,0:03:42.900
+That means if the bundle exists,[br]then we should let the system
+
+0:03:42.900,0:03:46.570
+handle restoring the detail fragment,[br]and we can skip this code.
+
+0:03:46.570,0:03:49.120
+Once a detail fragment[br]is added dynamically.
+
+0:03:49.120,0:03:52.680
+Make it show some placeholder[br]data just for testing purposes.
+
+0:03:52.680,0:03:55.840
+Later we'll plumb through the right[br]logic, so that it can display the right
+
+0:03:55.840,0:03:58.170
+information for[br]the selected date on the left.
+
+0:03:58.170,0:03:59.970
+Modify the detail fragment so
+
+0:03:59.970,0:04:03.660
+that it doesn't expect the incoming[br]intent to have a data URI.
+
+0:04:03.660,0:04:06.580
+In this case,[br]the detail fragment will just fall back
+
+0:04:06.580,0:04:09.310
+to some placeholder data[br]that we have in our XML.
+
+0:04:09.310,0:04:12.750
+The reason the intent could be blank[br]is because the detail fragment
+
+0:04:12.750,0:04:14.990
+can now exist within the main activity.
+
+0:04:14.990,0:04:17.815
+And the main activity isn't[br]launched with a URI for
+
+0:04:17.815,0:04:22.070
+only one date like the detail[br]activity is normally launched with.
+
+0:04:22.070,0:04:22.990
+Once you make the changes for
+
+0:04:22.990,0:04:25.410
+the wire frames this is what[br]the app should look like.
+
+0:04:25.410,0:04:28.300
+The reason it doesn't show[br]an icon here is because
+
+0:04:28.300,0:04:31.430
+we removed the icon from being[br]hard-coded in the layout.
+
+0:04:31.430,0:04:34.460
+But once this data is populated[br]dynamically in a later section,
+
+0:04:34.460,0:04:35.290
+it should show up again.

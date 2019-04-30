@@ -1,0 +1,125 @@
+0:00:00.280,0:00:03.030
+Now that we've covered querying[br]with our content provider,
+
+0:00:03.030,0:00:05.120
+it's time to start inserting data.
+
+0:00:05.120,0:00:08.080
+Let's take a look at the incomplete[br]content provider insert function
+
+0:00:08.080,0:00:10.110
+we provided in the source code.
+
+0:00:10.110,0:00:14.290
+As you can see, this function takes[br]advantage of the URI matcher code.
+
+0:00:14.290,0:00:16.830
+But it only requires the base URIs.
+
+0:00:16.830,0:00:19.620
+That's because inserts[br]are fundamentally simpler.
+
+0:00:19.620,0:00:23.000
+We simply want to make sure that the[br]right record ends up in the right table.
+
+0:00:23.000,0:00:26.060
+The data that is contained in[br]the other URI, such as location and
+
+0:00:26.060,0:00:29.610
+date, will actually be in the content[br]values used in the insert.
+
+0:00:29.610,0:00:33.480
+Note that if we wanted to,[br]we could support all of the URIs here.
+
+0:00:33.480,0:00:37.590
+But it makes the implementation of the[br]insert function far more complicated.
+
+0:00:37.590,0:00:39.450
+When we insert into the database.
+
+0:00:39.450,0:00:42.170
+We wanted to notify every[br]content observer that might have
+
+0:00:42.170,0:00:44.240
+data modified by our insert.
+
+0:00:44.240,0:00:49.050
+It turns out that cursors register[br]themselves as notify for descendents.
+
+0:00:49.050,0:00:53.438
+Which means that notifying the route[br]URI will also notify all descendents
+
+0:00:53.438,0:00:57.760
+of the URI, ones that contain[br]additional path information.
+
+0:00:57.760,0:01:00.750
+Just like with calling[br]our content providers.
+
+0:01:00.750,0:01:05.140
+We can use a content resolver[br]to notify our content observer.
+
+0:01:05.140,0:01:09.100
+As you can see, the root URI for[br]each table in sunshine
+
+0:01:09.100,0:01:13.380
+just contains the context scope,[br]the authority, and the table name.
+
+0:01:13.380,0:01:18.680
+In the case presented,[br]the content URI that contains a date.
+
+0:01:18.680,0:01:21.270
+Is a descendant of the plain[br]weather content URI.
+
+0:01:22.330,0:01:25.080
+If we notify based on anything[br]other than the root URI.
+
+0:01:26.080,0:01:29.350
+Then a cursor listening on the root[br]URI will not get notified of a change
+
+0:01:29.350,0:01:31.300
+that would certainly impact it.
+
+0:01:31.300,0:01:34.250
+So we have to be very[br]careful when doing that.
+
+0:01:34.250,0:01:36.320
+Let's go back to the source code.
+
+0:01:36.320,0:01:39.220
+For weather,[br]we just passed the perimeters that came
+
+0:01:39.220,0:01:42.500
+into the content provider into[br]the data base insert call.
+
+0:01:43.620,0:01:46.770
+We should throw an exception[br]if the insert fails.
+
+0:01:46.770,0:01:50.200
+The only trick here is to make[br]sure we return the correct value.
+
+0:01:50.200,0:01:51.950
+Which is a URI.
+
+0:01:51.950,0:01:55.450
+Fortunately we made a function[br]to build these URIs
+
+0:01:55.450,0:01:58.110
+which contained the weather[br]path followed by an ID.
+
+0:01:59.200,0:02:03.220
+If we were being complete in our content[br]provider implementation, we should also
+
+0:02:03.220,0:02:07.710
+implement these URI types in the[br]contract URI matcher and query function.
+
+0:02:07.710,0:02:10.820
+But the beautiful thing about[br]implementing a content provider,
+
+0:02:10.820,0:02:14.120
+especially if it's only being[br]used by your application,
+
+0:02:14.120,0:02:16.480
+is it you only need to[br]implement the features you use.
+
+0:02:17.580,0:02:21.380
+So we just set the return URI by[br]using the build weather URI function.

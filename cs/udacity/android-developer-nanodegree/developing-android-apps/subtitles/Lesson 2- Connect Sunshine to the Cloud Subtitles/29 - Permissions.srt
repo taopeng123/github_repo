@@ -1,0 +1,101 @@
+0:00:00.410,0:00:04.200
+Let's talk about permissions, when each app APK is installed,
+
+0:00:04.200,0:00:07.290
+it's given it's own unique Linux user ID. And each
+
+0:00:07.290,0:00:10.175
+app runs within its instance in the Android Virtual machine.
+
+0:00:10.175,0:00:16.946
+[SOUND] As a result each app is completely sand boxed.
+
+0:00:16.946,0:00:19.831
+[BLANK_AUDIO]
+
+0:00:19.831,0:00:23.051
+Its files processes and other resources are inaccessible
+
+0:00:23.051,0:00:26.110
+to other apps. This sandboxing approach is used to
+
+0:00:26.110,0:00:29.210
+ensure that by default no app can access sensitive
+
+0:00:29.210,0:00:32.250
+data or perform actions that could adversely impact other
+
+0:00:32.250,0:00:36.210
+apps, the OS, or users. Things like accessing the
+
+0:00:36.210,0:00:39.320
+internet, getting the user's location, or reading or modifying
+
+0:00:39.320,0:00:42.660
+the contacts database. Rather than asking the user each
+
+0:00:42.660,0:00:45.660
+time an app tries to access something sensitive you
+
+0:00:45.660,0:00:48.720
+declared permissions that your app requires in it's manifest.
+
+0:00:48.720,0:00:52.130
+You can get a list of all of the permission
+
+0:00:52.130,0:00:56.090
+your app may require here at the Android developer site.
+
+0:00:56.090,0:00:58.390
+So, why not just ask for all the permissions and
+
+0:00:58.390,0:01:01.320
+never worry about it again? Well, when users install
+
+0:01:01.320,0:01:04.200
+your app their greeted with this dialogue which lists all
+
+0:01:04.200,0:01:06.645
+of the permissions that you've requested along with the more
+
+0:01:06.645,0:01:10.770
+user-friendly descriptions. Nothing says this app was built by hackers
+
+0:01:10.770,0:01:13.380
+who want to steal my data, rob my house, clear out my
+
+0:01:13.380,0:01:16.560
+bank account, and take and share nude pictures of me like
+
+0:01:16.560,0:01:19.250
+a weather app that wants access to every permission on the
+
+0:01:19.250,0:01:24.100
+device. Best practice is to request the absolute minimum of permissions.
+
+0:01:24.100,0:01:26.340
+Every time you need to request a new permission, take it
+
+0:01:26.340,0:01:29.390
+as a flag to stop and consider if there are other
+
+0:01:29.390,0:01:32.970
+alternatives that might achieve the same goal. For example, using an
+
+0:01:32.970,0:01:37.140
+intent to launch the camera app, rather than accessing the camera, directly.
+
+0:01:37.140,0:01:39.550
+Later, we'll look at ways to share your data with
+
+0:01:39.550,0:01:43.370
+other apps, using intents and content providers to create bridges
+
+0:01:43.370,0:01:46.630
+between these apps sandboxs. You can declare and use those
+
+0:01:46.630,0:01:48.040
+permissions in these instances to
+
+0:01:48.040,0:01:51.080
+similarly restrict access to sensitive information.

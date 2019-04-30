@@ -1,0 +1,44 @@
+0:00:00.292,0:00:04.470
+Using SQLite makes it easy to delete,[br]update, and
+
+0:00:04.470,0:00:08.090
+insert rows,[br]using highly expressive queries.
+
+0:00:08.090,0:00:11.230
+One can even add new columns[br]as you revision your database,
+
+0:00:11.230,0:00:13.500
+while retaining existing user data.
+
+0:00:13.500,0:00:16.210
+It's not a surprise that[br]just about every popular app
+
+0:00:16.210,0:00:19.190
+makes some use of SQLite in Android.
+
+0:00:19.190,0:00:23.000
+It's a very powerful and important[br]component of the Android solution.
+
+0:00:23.000,0:00:26.610
+Android also provides a huge set of[br]helper functions to make working with
+
+0:00:26.610,0:00:30.870
+databases easy, including functions[br]to automate query building,
+
+0:00:30.870,0:00:35.430
+display list views, and[br]even utilize pre-compiled statements.
+
+0:00:35.430,0:00:40.180
+For more information about databases[br]in Android, see the instructor notes.
+
+0:00:40.180,0:00:43.740
+Well that's what you need to know to get[br]started with data storage on Android.
+
+0:00:43.740,0:00:45.570
+All of this is documented[br]if you search for
+
+0:00:45.570,0:00:48.950
+data storage on developer.android.com.
+
+0:00:48.950,0:00:52.495
+We'll be working with these storage[br]APIs to build our sunshine database.

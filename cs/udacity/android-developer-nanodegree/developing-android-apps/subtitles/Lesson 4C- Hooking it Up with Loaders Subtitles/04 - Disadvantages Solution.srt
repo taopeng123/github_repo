@@ -1,0 +1,35 @@
+0:00:00.330,0:00:03.760
+Early versions of Android[br]don't have cursor loaders.
+
+0:00:03.760,0:00:07.960
+Instead, the cursor adapter requeried[br]the database on the main UI thread,
+
+0:00:07.960,0:00:10.650
+when data from a content[br]provider changed.
+
+0:00:10.650,0:00:14.090
+This caused frame rate[br]drops in many applications.
+
+0:00:14.090,0:00:16.280
+The first answer is a definite yes.
+
+0:00:17.620,0:00:21.220
+We noted how things like async[br]tasks are bound to the UI.
+
+0:00:21.220,0:00:23.700
+So something as little[br]as an orientation change
+
+0:00:23.700,0:00:27.160
+could cause the query to complete[br]after the activity stops.
+
+0:00:27.160,0:00:29.350
+So that's another definite yes.
+
+0:00:29.350,0:00:33.080
+The cursor being tied to the activity[br]also means that the data would
+
+0:00:33.080,0:00:37.040
+generally have to be requeried[br]when the screen rotates, so
+
+0:00:38.060,0:00:40.110
+there are definitely disadvantages.

@@ -1,0 +1,83 @@
+0:00:00.220,0:00:01.750
+Great.[br]You're done.
+
+0:00:01.750,0:00:03.930
+Let me show you how I[br]implemented this one.
+
+0:00:03.930,0:00:07.030
+Inside of detail fragment,[br]within detail activity.
+
+0:00:07.030,0:00:10.050
+First, of course,[br]we add a constant for the loader.
+
+0:00:10.050,0:00:13.850
+I've also added a projection for the[br]columns I want to get from the database.
+
+0:00:13.850,0:00:16.660
+And, of course, corresponding constants.
+
+0:00:16.660,0:00:19.680
+Then we have our detail fragment[br]implement our loader callbacks for
+
+0:00:19.680,0:00:20.900
+cursor loader.
+
+0:00:20.900,0:00:23.530
+Of course,[br]with parametrized type cursor.
+
+0:00:23.530,0:00:25.020
+In on create loader.
+
+0:00:25.020,0:00:29.490
+We create a new cursor loader for[br]the URI that came in from the intent.
+
+0:00:29.490,0:00:33.910
+In onLoadFinished, I format a string to[br]match what was in the original forecast
+
+0:00:33.910,0:00:39.350
+fragment and set it to the mForecast[br]variable as well as the TextView.
+
+0:00:39.350,0:00:42.010
+We don't have to do anything[br]with onLoaderReset.
+
+0:00:42.010,0:00:44.630
+Because there isn't any data that we[br]were holding onto that needs to be
+
+0:00:44.630,0:00:45.770
+cleaned up.
+
+0:00:45.770,0:00:48.200
+But, how do we fix the share intent?
+
+0:00:48.200,0:00:51.500
+I start by creating a member variable[br]for the share action provider.
+
+0:00:52.670,0:00:55.730
+I set this variable in[br]on create options menu.
+
+0:00:55.730,0:00:57.820
+Only if we have a forecast.
+
+0:00:57.820,0:01:01.665
+We don't make any assumptions about[br]the order in which our loader happens.
+
+0:01:01.665,0:01:05.735
+Finally in onload finish,[br]I set the share intent.
+
+0:01:05.735,0:01:09.035
+This will update the share action[br]provider if it already exists.
+
+0:01:09.035,0:01:11.035
+Let's make sure this still works.
+
+0:01:11.035,0:01:14.290
+The list as we would expect it to be and[br]when we click on one of these.
+
+0:01:14.290,0:01:16.120
+We get the detail view.
+
+0:01:16.120,0:01:18.450
+We even have a share action provider.
+
+0:01:18.450,0:01:23.220
+And as you can see, we can share it,[br]and there's our forecast.

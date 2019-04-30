@@ -1,0 +1,44 @@
+0:00:00.230,0:00:03.330
+All right, here's a big one. Finish
+
+0:00:03.330,0:00:06.290
+the SynchAdapter, making it fetch the weather
+
+0:00:06.290,0:00:09.470
+and store it in the database. Alter
+
+0:00:09.470,0:00:12.740
+the updateWeather function within the ForecastFragment to
+
+0:00:12.740,0:00:17.710
+start a sync with the SyncAdapter. Some things here. Pull the code from on
+
+0:00:17.710,0:00:21.070
+handle intent into our SyncAdapter. On handle
+
+0:00:21.070,0:00:25.150
+intent is inside of our Sunshine service.
+
+0:00:25.150,0:00:27.040
+The good news is that abstract threaded
+
+0:00:27.040,0:00:29.510
+sync adapter provides a background thread to
+
+0:00:29.510,0:00:31.460
+run the server fetch on, just like
+
+0:00:31.460,0:00:35.370
+intent service does. Also, just fetch the location
+
+0:00:35.370,0:00:38.110
+query from our utility class. Eventually, we
+
+0:00:38.110,0:00:40.030
+want to run syncs like this without any
+
+0:00:40.030,0:00:42.690
+involvement of the user. Finally, make the
+
+0:00:42.690,0:00:45.810
+sync adaptor run when we call Update Weather.

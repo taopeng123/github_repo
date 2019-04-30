@@ -1,0 +1,218 @@
+0:00:00.350,0:00:02.050
+Back in lesson four, we learned that the
+
+0:00:02.050,0:00:04.990
+Android Runtime will kill apps with no visible activities,
+
+0:00:04.990,0:00:07.300
+in order to free resources needed by the foreground
+
+0:00:07.300,0:00:10.110
+app. But what if your app has tasks that
+
+0:00:10.110,0:00:12.820
+need to continue when the activity isn't visible, things
+
+0:00:12.820,0:00:17.150
+like downloading files, uploading photos, or playing music? Well,
+
+0:00:17.150,0:00:21.357
+there's an application component for that. Services. We've already
+
+0:00:21.357,0:00:23.224
+introduced Activities, Content Providers,
+
+0:00:23.224,0:00:25.230
+Broadcast Receivers and Intents. Services,
+
+0:00:25.230,0:00:29.500
+are the final piece to the Android app component
+
+0:00:29.500,0:00:33.369
+puzzle. You start services much like you do activities, by
+
+0:00:33.369,0:00:36.880
+passing in an intent to a Start Service call.
+
+0:00:36.880,0:00:39.212
+And you can stop services the same way, by calling
+
+0:00:39.212,0:00:40.930
+Stop Service and passing in the name of the
+
+0:00:40.930,0:00:44.770
+service you want to stop. Unlike activities, services have no
+
+0:00:44.770,0:00:47.777
+user interface and they run at a higher priority than
+
+0:00:47.777,0:00:50.490
+background activities. This means that an app with a running
+
+0:00:50.490,0:00:52.690
+service is less likely to be killed by the run
+
+0:00:52.690,0:00:55.620
+time, in order to free resources for the foreground activities.
+
+0:00:55.620,0:00:58.350
+In fact, by default, the system will attempt to restart
+
+0:00:58.350,0:01:01.180
+services that are terminated before they are stopped from within
+
+0:01:01.180,0:01:05.129
+the app. This is reflected in this simplified life cycle.
+
+0:01:05.129,0:01:09.050
+Compared to Activities, Services are designed to execute longer running
+
+0:01:09.050,0:01:12.340
+tasks that shouldn't be interrupted. Typically, you'll only need to
+
+0:01:12.340,0:01:15.900
+override the onStartCommad handler, which is where you begin the background
+
+0:01:15.900,0:01:18.860
+task you wish to execute. But notice that there are
+
+0:01:18.860,0:01:21.880
+no handlers for monitoring changes in state, to reflect the
+
+0:01:21.880,0:01:24.600
+app moving to the background. This is because the running
+
+0:01:24.600,0:01:27.250
+service itself sends a signal to the framework that the
+
+0:01:27.250,0:01:30.930
+containing app should be considered higher priority than other apps
+
+0:01:30.930,0:01:34.180
+in the background that don't have running services. In some
+
+0:01:34.180,0:01:37.150
+cases your service may performing a task, that while not
+
+0:01:37.150,0:01:41.450
+having UI, can't be interrupted without interfering with the user experience.
+
+0:01:41.450,0:01:43.980
+For example, playing music or helping with in car
+
+0:01:43.980,0:01:47.720
+navigation. In these cases, you can indicate that your
+
+0:01:47.720,0:01:49.410
+server should be considered to be running in the
+
+0:01:49.410,0:01:54.530
+foreground by calling startForeground. You'll notice that this call takes
+
+0:01:54.530,0:01:57.330
+in a notification. This will be displayed, and can't
+
+0:01:57.330,0:01:59.850
+be dismissed until the service has stopped, or you
+
+0:01:59.850,0:02:03.680
+call stopForeground. You'll learn more about notifications a little
+
+0:02:03.680,0:02:06.600
+later, with Dan. But for now, note that a foreground
+
+0:02:06.600,0:02:10.440
+service runs at the same priority as a foreground
+
+0:02:10.440,0:02:13.330
+activity. Making it nearly impossible for the run time
+
+0:02:13.330,0:02:15.800
+to kill in order to free resources. Now, you
+
+0:02:15.800,0:02:18.460
+may be thinking to yourself, I could save a lot
+
+0:02:18.460,0:02:21.020
+of trouble dealing with life cycles, just by creating
+
+0:02:21.020,0:02:24.830
+long running, or even foreground services. Well, I grew up
+
+0:02:24.830,0:02:27.260
+along the coast in Australia, so I learned young
+
+0:02:27.260,0:02:32.160
+that swimming against the current is exhausting and ultimately futile.
+
+0:02:32.160,0:02:34.310
+In this case, that means making it more difficult
+
+0:02:34.310,0:02:37.060
+for the system to manage resources, ultimately leading to a
+
+0:02:37.060,0:02:40.780
+worse user experience. Swim with the current. Use foreground
+
+0:02:40.780,0:02:45.500
+services only when and for as long as absolutely necessary,
+
+0:02:45.500,0:02:49.020
+and stop all services as quickly as possible. It's
+
+0:02:49.020,0:02:52.520
+also important to note that like activities and receivers, services
+
+0:02:52.520,0:02:54.490
+run on the main thread. So you'll need to
+
+0:02:54.490,0:02:57.620
+use a background thread or a think task to execute
+
+0:02:57.620,0:02:59.190
+the long running tasks you wish to do
+
+0:02:59.190,0:03:02.410
+within your service. To make life easier, you can
+
+0:03:02.410,0:03:05.300
+use the intent service class. Which implements the most
+
+0:03:05.300,0:03:07.920
+common best practice pattern, for using intents, which are
+
+0:03:07.920,0:03:10.640
+executed within a service. It creates a queue of
+
+0:03:10.640,0:03:14.630
+incoming intents, passed in when start service is called.
+
+0:03:14.630,0:03:17.970
+These are then, processed sequentially on a background thread,
+
+0:03:17.970,0:03:22.970
+within the onHandleIntent handler, within your intent service implementation.
+
+0:03:22.970,0:03:25.840
+When the queue is empty the service self terminates
+
+0:03:25.840,0:03:28.650
+until a new intent is received and the process begins
+
+0:03:28.650,0:03:31.640
+again. Services are a powerful tool and it's important
+
+0:03:31.640,0:03:34.980
+to understand how you can use them but in practice
+
+0:03:34.980,0:03:37.290
+there's often a framework alternative to rolling your own
+
+0:03:37.290,0:03:40.770
+service implementation. Whether that be an intent service for executing
+
+0:03:40.770,0:03:43.810
+background tasks or the sync adapter which you'll learn about
+
+0:03:43.810,0:03:47.620
+later in this lesson. Perfect for performing background data synchronization

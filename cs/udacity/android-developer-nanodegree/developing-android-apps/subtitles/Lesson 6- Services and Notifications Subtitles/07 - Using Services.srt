@@ -1,0 +1,74 @@
+0:00:00.350,0:00:01.040
+All right.
+
+0:00:01.040,0:00:01.800
+You're done.
+
+0:00:01.800,0:00:04.570
+Let's talk about how I solved this one.
+
+0:00:04.570,0:00:07.370
+Let's take a look at the sunshine[br]service you just wrote.
+
+0:00:07.370,0:00:12.440
+To begin with, it's useful to have[br]some constants, a log tag, so
+
+0:00:12.440,0:00:14.840
+we can actually see[br]how it's functioning.
+
+0:00:14.840,0:00:18.860
+And most importantly,[br]this location query extra.
+
+0:00:18.860,0:00:23.540
+We use this location query extra[br]to pass the location query.
+
+0:00:23.540,0:00:25.330
+Into our Intents service.
+
+0:00:25.330,0:00:30.030
+In onHandleIntent, we actually put[br]the code that we had in do in background
+
+0:00:30.030,0:00:31.882
+in our fetch weather task.
+
+0:00:31.882,0:00:35.150
+However, as you can see the only[br]parameter we get is an intent.
+
+0:00:35.150,0:00:38.080
+So we pull the location[br]query out of a stringExtra.
+
+0:00:38.080,0:00:40.780
+Using the location query extra string.
+
+0:00:40.780,0:00:43.780
+We can copy the rest of the code[br]from fetch weather task here
+
+0:00:43.780,0:00:46.780
+because intent service also[br]creates a helper thread for
+
+0:00:46.780,0:00:50.240
+us to run code on,[br]similar to what a string task does.
+
+0:00:50.240,0:00:54.180
+Note that we also fix up all of[br]the code that refers to m context.
+
+0:00:54.180,0:00:57.080
+As a service, also has its own context.
+
+0:00:57.080,0:01:01.170
+The final thing we do,[br]is call our service from update weather,
+
+0:01:01.170,0:01:02.520
+with in forecast fragment.
+
+0:01:03.520,0:01:04.720
+We simply put an extra for
+
+0:01:04.720,0:01:08.180
+the location query,[br]instead of using it as a parameter.
+
+0:01:08.180,0:01:09.700
+And then start the service.
+
+0:01:09.700,0:01:13.250
+Then we can delete the fetch weather[br]task, and its associated test.

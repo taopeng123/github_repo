@@ -1,0 +1,41 @@
+0:00:00.390,0:00:05.689
+Done already. Let's go to the solution. In the menu layout file for the main
+
+0:00:05.689,0:00:10.540
+activity, called main.xml, we add another menu item
+
+0:00:10.540,0:00:12.740
+that will always be in the overflow menu.
+
+0:00:14.010,0:00:20.280
+We also define the string in the strings.xml file. The menu will be inflated in
+
+0:00:20.280,0:00:22.770
+the main activity class, so we can handle
+
+0:00:22.770,0:00:25.550
+the map menu item being inflated. By calling
+
+0:00:25.550,0:00:28.230
+helper method called open preferred location in
+
+0:00:28.230,0:00:31.650
+map. The helper method reads the users
+
+0:00:31.650,0:00:35.650
+preferred location from shared preferences. Then we
+
+0:00:35.650,0:00:39.240
+create a view intent, indicating it's location
+
+0:00:39.240,0:00:44.460
+in the data URI. The format of the data URI was from the documentation
+
+0:00:44.460,0:00:49.150
+page on common intents. Where you can append a postal code as a query parameter.
+
+0:00:50.490,0:00:54.479
+Finally, we start an activity with [SOUND] this intent. Note
+
+0:00:54.479,0:00:58.560
+that we only start the activity, if the activity resolves successfully.

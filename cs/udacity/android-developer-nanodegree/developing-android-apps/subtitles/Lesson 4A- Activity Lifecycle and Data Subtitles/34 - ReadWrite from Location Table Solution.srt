@@ -1,0 +1,86 @@
+0:00:01.050,0:00:04.140
+Here's what the testLocationTable[br]method looks like.
+
+0:00:04.140,0:00:07.000
+First, we grab a reference[br]to a writable database
+
+0:00:07.000,0:00:09.480
+because we'll be modifying the database.
+
+0:00:09.480,0:00:11.630
+Then we create content values for
+
+0:00:11.630,0:00:16.149
+a row of location data using[br]the function within test utilities.
+
+0:00:16.149,0:00:20.340
+Then we insert that content values[br]object into the location table.
+
+0:00:20.340,0:00:23.590
+The return value of the insert[br]statement should be row ID.
+
+0:00:23.590,0:00:28.040
+If it's negative one, we know[br]the insertion failed, so we assert that.
+
+0:00:28.040,0:00:31.970
+Then we query the location table and[br]pass in null for all the parameters
+
+0:00:31.970,0:00:35.640
+to get a default query of all tabled[br]rows and columns, since we want
+
+0:00:35.640,0:00:39.950
+a precisely verify that our database[br]only contains our inserted record.
+
+0:00:39.950,0:00:42.260
+The query will return a cursor.
+
+0:00:42.260,0:00:45.470
+And we are assert if we cannot[br]move it to the first row.
+
+0:00:45.470,0:00:49.940
+Finally, we call validate current record[br]from the test utility to validate
+
+0:00:49.940,0:00:52.450
+the query will return[br]the correct record.
+
+0:00:52.450,0:00:55.600
+Validate current record[br]grabs the set of value pairs
+
+0:00:55.600,0:00:57.460
+from the content values[br]that we inserted.
+
+0:00:57.460,0:01:01.390
+It then iterates through them,[br]using cursor.getColumnIndex
+
+0:01:01.390,0:01:04.030
+to get the index of each column[br]in the record set by name.
+
+0:01:05.120,0:01:08.350
+We need the column index to[br]get data from the cursor.
+
+0:01:08.350,0:01:11.065
+Note the projections[br]are always return in order.
+
+0:01:11.065,0:01:14.695
+So if we specify a projection,[br]we can safely use the indexes from our
+
+0:01:14.695,0:01:17.695
+projection array without having[br]to look them up like this.
+
+0:01:17.695,0:01:19.595
+Let's go back to our test.
+
+0:01:19.595,0:01:23.665
+We checked to make sure the database has[br]only one record by making sure we moved
+
+0:01:23.665,0:01:28.715
+to next fails, then we close the cursor[br]and database, we don't leak resources.
+
+0:01:28.715,0:01:31.360
+Finally, we return the locationRowId.
+
+0:01:31.360,0:01:34.040
+Let's run the test and see what happens.
+
+0:01:34.040,0:01:38.220
+And the test past, [SOUND],[br]only one more test to write.

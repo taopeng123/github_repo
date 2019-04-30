@@ -1,0 +1,50 @@
+0:00:00.260,0:00:03.070
+Now its your turn to build the temperature unit setting. This
+
+0:00:03.070,0:00:05.590
+will bring together a lot of the concepts that you've learned and
+
+0:00:05.590,0:00:08.520
+will take some time to implement, but we think you're ready for
+
+0:00:08.520,0:00:11.650
+it. Modify the app, so that the right temperature units are displayed
+
+0:00:11.650,0:00:15.410
+to the user. Use the assumption that we're syncing metric data from
+
+0:00:15.410,0:00:18.500
+the server. Eventually, we'll have a database on the device and we
+
+0:00:18.500,0:00:21.840
+don't want a mix of Fahrenheit and Celsius data in there. Hence,
+
+0:00:21.840,0:00:25.300
+we'll stay consistent by getting metric data from the server. And then,
+
+0:00:25.300,0:00:28.100
+we'll convert on the fly to the preferred units when
+
+0:00:28.100,0:00:31.330
+we update the UI. After you make these changes, I'll show
+
+0:00:31.330,0:00:33.750
+you what it looks like on the device. If you
+
+0:00:33.750,0:00:37.640
+go to settings, you'll see the temperature units preference. If you
+
+0:00:37.640,0:00:40.930
+tap on that, you see a dialog with two options.
+
+0:00:40.930,0:00:43.130
+If you switch to imperial and then you go back to
+
+0:00:43.130,0:00:46.230
+the forecast list, then you see that all the temperatures now
+
+0:00:46.230,0:00:50.660
+are in Fahrenheit. Once it works, answer this question. Which subclass
+
+0:00:50.660,0:00:52.030
+of preference did you use?

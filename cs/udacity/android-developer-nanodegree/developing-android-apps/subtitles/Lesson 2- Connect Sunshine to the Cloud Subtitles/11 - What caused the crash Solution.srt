@@ -1,0 +1,47 @@
+0:00:00.450,0:00:02.830
+If you run it on your phone, your Apple crashed
+
+0:00:02.830,0:00:06.270
+because of a network got main thread exception. We found
+
+0:00:06.270,0:00:08.990
+this answer by connecting our device to our computer and
+
+0:00:08.990,0:00:12.790
+then checking Android device monitor for the error. You can
+
+0:00:12.790,0:00:15.220
+see here that this is our package name and this
+
+0:00:15.220,0:00:18.010
+is our process ID. If you search the logs for
+
+0:00:18.010,0:00:22.390
+that process ID then our error appears. It's triggered ultimately
+
+0:00:22.390,0:00:25.700
+by a network on main thread exception. If you're curious
+
+0:00:25.700,0:00:28.560
+as to what line of our code actually caused
+
+0:00:28.560,0:00:30.730
+this, you can scroll down the stack trace to
+
+0:00:30.730,0:00:33.940
+read more. This is our framework code that you
+
+0:00:33.940,0:00:36.570
+can skip and here's where it actually hits our
+
+0:00:36.570,0:00:41.440
+app. It's within the placeholder fragment class, in the onCreateView method. And
+
+0:00:41.440,0:00:46.680
+it happens in main activity.java file, in line 116. So
+
+0:00:46.680,0:00:51.650
+if we go back to the code, on that line you can see that urlConnection.connect
+
+0:00:51.650,0:00:55.210
+actually caused the error, and that we can't do that on the main thread.

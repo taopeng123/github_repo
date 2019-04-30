@@ -1,0 +1,5 @@
+0:00:00.330,0:00:03.300
+Think about how that might work. What are some of the reasons
+
+0:00:03.300,0:00:06.860
+you may not want to create only a single activity within your application?

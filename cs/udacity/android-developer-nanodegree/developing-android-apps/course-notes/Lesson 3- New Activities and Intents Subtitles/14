@@ -1,0 +1,1 @@
+Once the Detail Activity is launched, it shows Hello World. Instead, we want to read the forecast data from the Intent, and display it. Make the appropriate changes in the app, so it matches the mocks. Then, verify the behavior by compiling and running the app.

@@ -1,0 +1,11 @@
+0:00:00.090,0:00:02.110
+That's right, whenever this app is running, it's
+
+0:00:02.110,0:00:05.260
+keeping the cell radio powered on continuously. In
+
+0:00:05.260,0:00:08.140
+fact, the radio updates alone are enough to
+
+0:00:08.140,0:00:10.640
+prevent the radio from ever returning to idle.

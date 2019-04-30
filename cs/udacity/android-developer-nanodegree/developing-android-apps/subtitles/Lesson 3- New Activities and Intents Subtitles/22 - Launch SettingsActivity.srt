@@ -1,0 +1,26 @@
+0:00:00.290,0:00:03.118
+In order to launch the SettingsActivity, we modify
+
+0:00:03.118,0:00:07.070
+Mainactivity.java, in the On options item selected method.
+
+0:00:07.070,0:00:09.360
+When the Settings Menu Item is selected, we
+
+0:00:09.360,0:00:13.590
+create a new, explicit intent, to the SettingsActivity Class.
+
+0:00:13.590,0:00:16.700
+We call Start activity, to launch this intent.
+
+0:00:16.700,0:00:19.290
+We don't call StartActivity for result because we're
+
+0:00:19.290,0:00:22.640
+not expecting a result from the SettingsActivity. Similarly
+
+0:00:22.640,0:00:25.400
+in the detail activity class, when the settings menu
+
+0:00:25.400,0:00:28.550
+is selected, we launch a new intent to SettingsActivity.

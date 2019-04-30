@@ -1,0 +1,35 @@
+0:00:00.080,0:00:03.440
+Hurray, you're done implementing wire frames for the app! Now
+
+0:00:03.440,0:00:06.150
+comes the visual polish part, where we tweak the styles
+
+0:00:06.150,0:00:08.950
+and the views to make the app look awesome. Here
+
+0:00:08.950,0:00:10.620
+are the visual mocks, for what the app should look
+
+0:00:10.620,0:00:13.310
+like, when we're done. If you work with a designer,
+
+0:00:13.310,0:00:16.050
+they should also give you red lines. Red lines specify
+
+0:00:16.050,0:00:21.990
+everything from sizes, font styles, colors, spacing, et cetera. This
+
+0:00:21.990,0:00:25.160
+should help you achieve pixel perfect layouts that match the
+
+0:00:25.160,0:00:28.500
+visual mocks. How did we come up with these values?
+
+0:00:28.500,0:00:31.370
+Well we used the Android design guide, which has information on
+
+0:00:31.370,0:00:34.060
+metrics and grids, and we adapted them to fit our
+
+0:00:34.060,0:00:36.920
+app's needs. You can click on the link for more info.

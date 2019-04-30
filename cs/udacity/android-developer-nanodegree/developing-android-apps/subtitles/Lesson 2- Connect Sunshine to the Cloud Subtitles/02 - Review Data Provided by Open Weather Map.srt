@@ -1,0 +1,53 @@
+0:00:00.340,0:00:02.320
+On that note, we're going to make our sunshine app
+
+0:00:02.320,0:00:05.410
+100 times better now by connecting it over the network
+
+0:00:05.410,0:00:10.360
+to the OpenWeatherMap service. OpenWeatherMap provides a free weather data
+
+0:00:10.360,0:00:13.480
+and forecast API. And the site is linked below, so
+
+0:00:13.480,0:00:16.570
+you can follow along. By scrolling through the site,
+
+0:00:16.570,0:00:19.600
+you can see what type of data is available. It
+
+0:00:19.600,0:00:22.540
+also has example queries so you can click on this
+
+0:00:22.540,0:00:25.440
+one to see what the weather is like in London.
+
+0:00:25.440,0:00:28.070
+It includes a user friendly description of the weather
+
+0:00:28.070,0:00:31.280
+condition, such as broken clouds, in this case. And
+
+0:00:31.280,0:00:34.110
+we'll use this later in our app. For the
+
+0:00:34.110,0:00:37.060
+full list of weather conditions, you can go back to
+
+0:00:37.060,0:00:40.330
+the main page. And scroll down. And then, click
+
+0:00:40.330,0:00:42.790
+on this link here for the Weather Condition Codes.
+
+0:00:43.950,0:00:45.700
+And on this page, we have the full list
+
+0:00:45.700,0:00:51.000
+of weather conditions. It contains everything, from scattered clouds to
+
+0:00:51.000,0:00:55.490
+freezing rain, or even volcanic ash. I don't know
+
+0:00:55.490,0:00:58.170
+about you, but hopefully that doesn't happen too often.

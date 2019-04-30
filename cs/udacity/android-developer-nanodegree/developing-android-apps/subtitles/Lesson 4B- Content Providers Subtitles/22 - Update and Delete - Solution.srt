@@ -1,0 +1,68 @@
+0:00:00.240,0:00:01.470
+Alright you're done.
+
+0:00:01.470,0:00:03.170
+Let's take a look at my solution.
+
+0:00:03.170,0:00:06.310
+For the delete method things[br]are pretty straight forward.
+
+0:00:06.310,0:00:10.770
+We just called db.delete with the[br]appropriate table, and the selection,
+
+0:00:10.770,0:00:12.290
+and the selection arguments.
+
+0:00:12.290,0:00:16.980
+One thing that I've done is if[br]the selection is null I set it to one.
+
+0:00:16.980,0:00:20.690
+This makes delete all rows return[br]the number of rows deleted.
+
+0:00:20.690,0:00:22.290
+And that can be useful.
+
+0:00:22.290,0:00:25.190
+I only notify the content[br]resolver of a change
+
+0:00:25.190,0:00:27.250
+if we actually have deleted some rows.
+
+0:00:27.250,0:00:29.090
+This isn't strictly necessary.
+
+0:00:29.090,0:00:31.730
+Update looks almost exactly like Delete.
+
+0:00:31.730,0:00:36.380
+Once again, based upon the URI[br]we select a different table and
+
+0:00:36.380,0:00:40.560
+call the update function with[br]the values in the selection arguments.
+
+0:00:40.560,0:00:44.860
+And I only notify for a change[br]we've actually updated some rows.
+
+0:00:45.980,0:00:47.430
+Alright.
+
+0:00:47.430,0:00:49.510
+Let's go to test our function.
+
+0:00:49.510,0:00:53.230
+In test provider you can see we've[br]uncommented out test delete records
+
+0:00:54.710,0:00:57.400
+as well as test update location.
+
+0:00:57.400,0:00:59.750
+Let's run the test to make sure[br]everything works correctly.
+
+0:01:00.930,0:01:03.230
+And as you can see everything passes.
+
+0:01:03.230,0:01:05.050
+We've done everything correct for[br]updating and
+
+0:01:05.050,0:01:06.280
+deleting the content provider.

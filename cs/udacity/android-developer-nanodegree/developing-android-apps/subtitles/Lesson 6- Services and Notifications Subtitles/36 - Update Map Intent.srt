@@ -1,0 +1,23 @@
+0:00:00.560,0:00:03.530
+All of you detail-oriented people probably noticed that
+
+0:00:03.530,0:00:05.640
+we never actually used the coordinates we get
+
+0:00:05.640,0:00:08.440
+from the server for location, relying instead on
+
+0:00:08.440,0:00:10.760
+both the maps API, and the weather API to
+
+0:00:10.760,0:00:14.440
+do the same thing with location queries. Unfortunately,
+
+0:00:14.440,0:00:18.680
+they don't always agree. Implement maps using the coordinates
+
+0:00:18.680,0:00:21.700
+stored in the location table. You'll want to start
+
+0:00:21.700,0:00:25.260
+by moving the menu code from MainActivity to WeatherFragment.

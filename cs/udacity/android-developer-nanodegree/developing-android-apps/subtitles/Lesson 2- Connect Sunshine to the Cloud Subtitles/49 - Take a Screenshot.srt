@@ -1,0 +1,47 @@
+0:00:00.440,0:00:02.730
+Now that our app is showing real data, we should take
+
+0:00:02.730,0:00:05.240
+a screenshot of our app, so we can remember what it was
+
+0:00:05.240,0:00:08.490
+like when we made it this far. I personally like doing this
+
+0:00:08.490,0:00:11.430
+throughout the process of building an app, because then I can look
+
+0:00:11.430,0:00:15.190
+back, and see how it evolved. I'm going to show you one
+
+0:00:15.190,0:00:18.170
+way that you can take a screenshot of your device. Open up
+
+0:00:18.170,0:00:22.080
+Android Device Monitor and then click on the device here. Then, click
+
+0:00:22.080,0:00:25.720
+on this camera icon, to do a screen capture. When it pops
+
+0:00:25.720,0:00:27.330
+up, you can hit Save, and then you're done.
+
+0:00:28.530,0:00:32.140
+On certain physical devices, there are actually hardware keys that
+
+0:00:32.140,0:00:35.440
+allow you to grab a screenshot. For example, on the
+
+0:00:35.440,0:00:37.910
+Nexus 5, you can long press on the volume down
+
+0:00:37.910,0:00:41.620
+and the power key, at the same time. That takes
+
+0:00:41.620,0:00:44.530
+a screenshot. It gets saved to the Photos app and
+
+0:00:44.530,0:00:46.940
+then you can share it out to anyone you want.
+
+0:00:46.940,0:00:49.410
+You can show them what an awesome app you're building.

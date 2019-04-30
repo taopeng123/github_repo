@@ -1,0 +1,23 @@
+0:00:00.360,0:00:02.310
+Now that we're storing the data we downloaded in
+
+0:00:02.310,0:00:05.300
+a sensible fashion, we're ready to build rich UIs
+
+0:00:05.300,0:00:08.210
+for each of our activities. That means learning about
+
+0:00:08.210,0:00:10.180
+fragments and how we can use them to create
+
+0:00:10.180,0:00:13.370
+complex user interfaces that can easily be adapted to
+
+0:00:13.370,0:00:15.850
+work seamlessly on a range of different devices and
+
+0:00:15.850,0:00:18.440
+screens. But first I'd like to tell you a
+
+0:00:18.440,0:00:21.190
+little more about the principles behind great Android design.

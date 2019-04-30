@@ -1,0 +1,11 @@
+0:00:00.320,0:00:04.550
+Implement the queries for weather and[br]location in our content provider.
+
+0:00:04.550,0:00:07.240
+Note that these are both basic queries.
+
+0:00:07.240,0:00:11.270
+Un comment out the test basic location[br]query function within test provider.
+
+0:00:11.270,0:00:13.700
+And, run the code to make sure[br]all of this is working well.

@@ -1,0 +1,26 @@
+0:00:00.210,0:00:01.530
+And here's the solution.
+
+0:00:01.530,0:00:02.920
+In the Utility class,
+
+0:00:02.920,0:00:05.830
+we add all the helper methods[br]that were provided in the gist.
+
+0:00:05.830,0:00:09.820
+We also declare the related[br]strings in the strings.xml file.
+
+0:00:09.820,0:00:13.252
+After we read the high temperature[br]value from the cursor, we go and
+
+0:00:13.252,0:00:18.060
+try to find the TextView represented[br]by the ID list_item_high_textview.
+
+0:00:18.060,0:00:21.470
+Then we use a Utility function[br]to format the temperature so
+
+0:00:21.470,0:00:23.890
+that it can be displayed[br]in the TextView.
+
+0:00:23.890,0:00:25.900
+Then we do the same for[br]the low temperature value.

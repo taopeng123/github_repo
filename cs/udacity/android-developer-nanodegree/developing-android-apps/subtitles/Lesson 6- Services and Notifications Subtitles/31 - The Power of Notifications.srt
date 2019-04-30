@@ -1,0 +1,62 @@
+0:00:00.640,0:00:02.710
+If an app updates in the background, but no one
+
+0:00:02.710,0:00:06.060
+opens it to find out, did it really happen? Notification
+
+0:00:06.060,0:00:09.040
+started off as a convenient way to notify users of
+
+0:00:09.040,0:00:12.780
+background updates. But they've grown to become a powerful standardized shortcut
+
+0:00:12.780,0:00:15.340
+to interact directly with apps in a light weight way.
+
+0:00:15.340,0:00:19.080
+Starting in Jelly Bean it was possible to expand notifications, making
+
+0:00:19.080,0:00:22.230
+them larger and containing more information. That also introduced the
+
+0:00:22.230,0:00:25.730
+concept of the rich notification, which is able to include actions
+
+0:00:25.730,0:00:27.740
+like these, to be performed on the data
+
+0:00:27.740,0:00:31.390
+included within the notification. This speeds up interaction and
+
+0:00:31.390,0:00:35.060
+helps users streamline their notification triage experience. As a
+
+0:00:35.060,0:00:38.890
+standardized UI designed specifically for conveying timely information in
+
+0:00:38.890,0:00:42.252
+limited screen space. Notifications were the obvious mechanism
+
+0:00:42.252,0:00:44.800
+to use, when Android expanded in to wearables with
+
+0:00:44.800,0:00:48.040
+Android Wear. Suddenly those rich notifications that you designed
+
+0:00:48.040,0:00:51.240
+for phones and tablets make your app wearable compatible,
+
+0:00:51.240,0:00:54.630
+for free. Don't overdo it though, there's a fine line between
+
+0:00:54.630,0:00:57.650
+useful and spammy. And it's only a couple of clicks for a
+
+0:00:57.650,0:00:59.630
+user to disable your app's notifications
+
+0:00:59.630,0:01:01.450
+permanently. So check out the instruction
+
+0:01:01.450,0:01:05.030
+that's below for links to the design guide in creating good notifications.

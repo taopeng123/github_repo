@@ -1,0 +1,29 @@
+0:00:00.280,0:00:05.100
+For the Mountain View postal code 94043,[br]this is what the query would look like.
+
+0:00:05.100,0:00:08.510
+You could have also used[br]94043 comma USA and
+
+0:00:08.510,0:00:10.690
+that would have given[br]us the same result.
+
+0:00:10.690,0:00:12.720
+We set the mode to be JSON format.
+
+0:00:12.720,0:00:15.810
+In reality, you actually don't[br]need this parameter because this
+
+0:00:15.810,0:00:18.280
+API sends back JSON data by default.
+
+0:00:18.280,0:00:21.430
+But just to be sure,[br]we set this parameter.
+
+0:00:21.430,0:00:23.900
+Then we set the temperature[br]units to be in metric, and
+
+0:00:23.900,0:00:27.160
+the count param to be 7[br]days of forecast data.
+
+0:00:27.160,0:00:29.190
+Let's take this URL and[br]use it in our app.

@@ -1,0 +1,26 @@
+0:00:00.080,0:00:02.940
+We use the FragmentManager to begin a transaction, to look that
+
+0:00:02.940,0:00:05.580
+we want to add this transaction to the back stack, and
+
+0:00:05.580,0:00:09.170
+then use the replace command, specifying the container ID, whose contents
+
+0:00:09.170,0:00:11.590
+we want to replace, and the new fragment we want to
+
+0:00:11.590,0:00:14.700
+put in there. And we execute the transaction by calling commit.
+
+0:00:14.700,0:00:18.070
+Now you can actually chain another of changes within the same
+
+0:00:18.070,0:00:21.160
+transaction, so it's also possible to achieve much of the same
+
+0:00:21.160,0:00:25.770
+effect by first removing the contents of container A and adding fragment
+
+0:00:25.770,0:00:27.010
+B to that container.

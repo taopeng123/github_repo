@@ -1,0 +1,89 @@
+0:00:00.590,0:00:02.710
+I like to think of intents as envelopes
+
+0:00:04.920,0:00:08.109
+each one includes who, or in this case, which component you want it
+
+0:00:08.109,0:00:11.290
+delivered to. And there's room for a small amount of data to be delivered,
+
+0:00:13.360,0:00:14.409
+packaged as extras.
+
+0:00:16.870,0:00:19.000
+Primitive tuples that will be available to the application
+
+0:00:19.000,0:00:23.550
+component that ultimately receives and opens this intent. So an
+
+0:00:23.550,0:00:26.910
+explicit intent, explicitly specifies the name of the recipient, as
+
+0:00:26.910,0:00:29.900
+you can see on this envelope. Implicit intents are a
+
+0:00:29.900,0:00:33.800
+lot more interesting. Here, we don't specify the name of
+
+0:00:33.800,0:00:36.550
+the class. We don't even know what it is. So,
+
+0:00:36.550,0:00:39.500
+how do we indicate which activity to launch? Well, you
+
+0:00:39.500,0:00:42.230
+know those stories you sometimes hear about letters with fake
+
+0:00:42.230,0:00:47.890
+addresses like these that somehow still find their way to the intended
+
+0:00:47.890,0:00:52.410
+recipient? Well the intent resolution system on Android, works the same way.
+
+0:00:54.660,0:00:56.940
+Finding an activity, capable of performing an action
+
+0:00:56.940,0:01:00.920
+you specify on the associated data. So, rather than
+
+0:01:00.920,0:01:03.420
+specifying the name of a class, you indicate
+
+0:01:03.420,0:01:05.930
+an action you'd like an activity to perform, and
+
+0:01:05.930,0:01:09.000
+on what data that action should be performed.
+
+0:01:09.000,0:01:13.210
+Like this, where we want to address an activity
+
+0:01:13.210,0:01:16.450
+that's capable of viewing a website. And because intents
+
+0:01:16.450,0:01:20.200
+can cross through application boundaries, the activity that started,
+
+0:01:20.200,0:01:22.900
+may not be part of your app. So,
+
+0:01:22.900,0:01:27.270
+you can include functionality like this, browsing websites or
+
+0:01:29.480,0:01:35.750
+making phone calls or choosing a contact from your address book. All
+
+0:01:35.750,0:01:39.150
+from within your app, without you having to implement any of it yourself.
+
+0:01:41.160,0:01:42.520
+You don't even need to know about the app
+
+0:01:42.520,0:01:45.530
+that will ultimately service your request. You can find
+
+0:01:45.530,0:01:47.850
+details of some of the intents supported by native
+
+0:01:47.850,0:01:50.970
+apps in Common Intents page of the Android developer site.

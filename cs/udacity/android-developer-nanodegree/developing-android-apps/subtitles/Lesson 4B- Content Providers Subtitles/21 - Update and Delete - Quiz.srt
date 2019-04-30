@@ -1,0 +1,20 @@
+0:00:00.125,0:00:03.759
+The update and delete methods look[br]a lot like the insert method,
+
+0:00:03.759,0:00:05.582
+except they update and delete.
+
+0:00:05.582,0:00:11.068
+And, both return the rows modified,[br]rather than a URI upon completion.
+
+0:00:11.068,0:00:14.597
+As you complete each section,[br]uncomment the test updater, or
+
+0:00:14.597,0:00:16.803
+test delete test to check your result.
+
+0:00:16.803,0:00:20.400
+Of course, make sure to notify your[br]content observers, and, of course,
+
+0:00:20.400,0:00:22.240
+close the database while you're at it

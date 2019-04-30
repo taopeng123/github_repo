@@ -1,0 +1,179 @@
+0:00:00.270,0:00:03.070
+In the tablet wire frames,[br]when a list item is selected,
+
+0:00:03.070,0:00:05.790
+it shows this blue[br]activated state background.
+
+0:00:05.790,0:00:08.430
+This can be done by setting[br]the background of the list item to be
+
+0:00:08.430,0:00:09.590
+a state drawable.
+
+0:00:09.590,0:00:10.900
+We can look at the documentation for
+
+0:00:10.900,0:00:12.988
+this StateListDrawable,[br]which is linked below.
+
+0:00:12.988,0:00:16.590
+Essentially, a StateListDrawable allows[br]you to specify different drawables
+
+0:00:16.590,0:00:18.740
+based on the state of the view.
+
+0:00:18.740,0:00:21.120
+We provide you a code for[br]the StateListDrawable.
+
+0:00:21.120,0:00:24.520
+Drop it in by creating a drawable[br]folder under the res directory.
+
+0:00:24.520,0:00:28.580
+When set as the background of a list[br]item, we see that the background is just
+
+0:00:28.580,0:00:32.330
+transparent by default such[br]as this today lay out here.
+
+0:00:32.330,0:00:34.970
+When the view is pressed,[br]then we see a grey background.
+
+0:00:34.970,0:00:38.640
+When the view is activated,[br]then we see this blue color.
+
+0:00:38.640,0:00:42.940
+This is also indicating that it's[br]the selected item in the two pane mode.
+
+0:00:42.940,0:00:45.970
+We also have a second version[br]of the touch_selector file for
+
+0:00:45.970,0:00:48.000
+Lollipop devices and above.
+
+0:00:48.000,0:00:50.630
+This is saved in[br]the drawable-v21 folder.
+
+0:00:50.630,0:00:52.950
+Set on platforms API level 21 and
+
+0:00:52.950,0:00:56.490
+above, it will use this[br]version of the touch_selector.
+
+0:00:56.490,0:01:00.050
+On older devices it will fall back[br]to the touch_selector in the base
+
+0:01:00.050,0:01:01.300
+drawable folder.
+
+0:01:01.300,0:01:05.250
+One of the main principles of material[br]design is responsive interaction.
+
+0:01:05.250,0:01:08.950
+One way to accomplish this is that[br]when a user touches a device,
+
+0:01:08.950,0:01:10.770
+the device will acknowledge[br]the interaction, and
+
+0:01:10.770,0:01:13.690
+a ripple will radiate out[br]from the touch point.
+
+0:01:13.690,0:01:15.880
+This is done with a ripple drawable.
+
+0:01:15.880,0:01:19.480
+You can add a ripple element in[br]your state list drawable xml.
+
+0:01:19.480,0:01:25.160
+For the v21 touch selector, it's the[br]same except that for the pressed state,
+
+0:01:25.160,0:01:28.890
+we have a ripple drawable with[br]a grey color for touch feedback.
+
+0:01:28.890,0:01:31.070
+And on a Lollypop device,[br]you can see the ripple.
+
+0:01:31.070,0:01:34.350
+In the list item layout, we set the[br]background to be this touch_selector.
+
+0:01:34.350,0:01:37.530
+We do the same for[br]the list_item_forecast_today layout.
+
+0:01:37.530,0:01:41.460
+Back in the touch_selector file, I want[br]to note that there's some colors here.
+
+0:01:41.460,0:01:45.800
+The @android color notation is for[br]a framework defined color.
+
+0:01:45.800,0:01:50.250
+The other colors are ones that we[br]defined in the colors.xml file.
+
+0:01:50.250,0:01:53.740
+This file is located in[br]the Values folder of your app.
+
+0:01:53.740,0:01:56.570
+It's useful to store colors[br]in a central location
+
+0:01:56.570,0:01:59.590
+if you need a reference colors[br]multiple times in your app.
+
+0:01:59.590,0:02:00.410
+As a hint.
+
+0:02:00.410,0:02:04.090
+to make a list item show its activated[br]state, you can look at the documentation
+
+0:02:04.090,0:02:07.400
+for the XML attribute choiceMode for[br]the ListView.
+
+0:02:07.400,0:02:09.949
+Once you find the right attribute,[br]you'll realize that you want different
+
+0:02:09.949,0:02:11.880
+behavior for[br]one pane versus two pane mode.
+
+0:02:11.880,0:02:15.760
+While you could change the behaviour[br]programatically in the Java code,
+
+0:02:15.760,0:02:19.748
+we'd like you to do it purely via[br]the resource XML files using a style.
+
+0:02:19.748,0:02:22.960
+Read this doc to learn about how[br]styles can be defined in XML.
+
+0:02:22.960,0:02:26.320
+And use what you learned earlier about[br]defining alternative resources for
+
+0:02:26.320,0:02:27.850
+different size devices.
+
+0:02:27.850,0:02:31.090
+In general, styles are a way that[br]you can group together attributes
+
+0:02:31.090,0:02:31.960
+for a view.
+
+0:02:31.960,0:02:36.072
+For example, these text attributes[br]are replaced by this style CodeFont.
+
+0:02:36.072,0:02:39.540
+The CodeFont style is defined[br]in the styles.xml file
+
+0:02:39.540,0:02:41.580
+located in the Values folder.
+
+0:02:41.580,0:02:45.240
+You can also have styles inherit other[br]styles by specifying the parent.
+
+0:02:45.240,0:02:48.740
+There are a couple of other examples[br]you can check out on this page.
+
+0:02:48.740,0:02:50.880
+This is what the app should[br]look like when you're done.
+
+0:02:50.880,0:02:53.940
+In one pane mode,[br]we don't see the activated state.
+
+0:02:53.940,0:02:56.570
+But there's still the regular[br]press state with the ripple and
+
+0:02:56.570,0:02:57.250
+then it goes away

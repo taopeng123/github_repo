@@ -1,0 +1,77 @@
+0:00:00.460,0:00:04.250
+After copying over the assets, updating[br]the launcher icon in the Android
+
+0:00:04.250,0:00:07.890
+manifest, and adding the helper[br]methods to the utility class,
+
+0:00:07.890,0:00:12.410
+we need to modify to detail fragment and[br]forecast it after classes.
+
+0:00:12.410,0:00:15.050
+In the detail fragment[br]onload finished method,
+
+0:00:15.050,0:00:17.350
+we read the weather condition[br]code from the cursor.
+
+0:00:17.350,0:00:21.670
+Then we pass this into the utility[br]helper method to get the resource ID for
+
+0:00:21.670,0:00:25.610
+the colored icon in order to[br]set it on the image view.
+
+0:00:25.610,0:00:28.730
+The ForecasterAdapter change is a little[br]trickier because we want to use
+
+0:00:28.730,0:00:32.610
+a colored icon for the today layout and[br]we want to use a gray icon for
+
+0:00:32.610,0:00:33.590
+the other days.
+
+0:00:33.590,0:00:35.660
+In order to distinguish between the two,
+
+0:00:35.660,0:00:38.880
+we call getItemViewType given[br]the current cursor position.
+
+0:00:38.880,0:00:40.410
+If the view type is today.
+
+0:00:40.410,0:00:42.970
+Then we get the weather[br]condition code from the cursor.
+
+0:00:42.970,0:00:47.010
+Then we get the resource ID for the[br]colored image from the helper method.
+
+0:00:47.010,0:00:48.820
+And then we set that[br]on to the image view.
+
+0:00:48.820,0:00:49.800
+If the view type is for
+
+0:00:49.800,0:00:53.740
+a future day, then we read the weather[br]condition code from the cursor.
+
+0:00:53.740,0:00:56.900
+Then we pass it into the helper[br]method to get the resource ID for
+
+0:00:56.900,0:01:00.270
+the gray icon and[br]then we set that on to the image view.
+
+0:01:00.270,0:01:03.290
+If you previously hard coded[br]an image into the layout,
+
+0:01:03.290,0:01:05.160
+then you should remove that value now.
+
+0:01:05.160,0:01:08.590
+Otherwise on app launch, it will[br]load up the placeholder image and
+
+0:01:08.590,0:01:10.280
+then flash to the actual icon.
+
+0:01:11.320,0:01:12.950
+Now that the wire frame[br]implementation for
+
+0:01:12.950,0:01:16.350
+the phone UI is pretty much complete,[br]let's look at the tablet UI.

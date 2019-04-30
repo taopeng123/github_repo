@@ -1,0 +1,62 @@
+0:00:00.190,0:00:03.850
+And now for the moment you've been waiting for, let's hit this green Run button.
+
+0:00:03.850,0:00:06.800
+It will prompt us to choose a device, without a physical device we
+
+0:00:06.800,0:00:10.700
+can test the app using the emulator that comes with the Android SDK.
+
+0:00:10.700,0:00:13.640
+An Android virtual device should have already been created for
+
+0:00:13.640,0:00:16.290
+you automatically when you set up Android Studio.
+
+0:00:16.290,0:00:19.010
+So you can go ahead and click OK.
+
+0:00:19.010,0:00:20.170
+While the emulator's booting up,
+
+0:00:20.170,0:00:24.130
+I want to point out that if you ever want to modify your emulator devices,
+
+0:00:24.130,0:00:28.140
+you can click on this button with the purple device and the Android, and
+
+0:00:28.140,0:00:31.520
+open up the AVD manager to manage your Android virtual devices.
+
+0:00:31.520,0:00:34.210
+It lists out your existing devices, and
+
+0:00:34.210,0:00:36.600
+you can always create another virtual device.
+
+0:00:36.600,0:00:40.660
+You can select the category of device and then a specific device.
+
+0:00:40.660,0:00:44.530
+Then you choose which platform version it should be running on.
+
+0:00:44.530,0:00:48.010
+And this is the only one that's available on this computer now.
+
+0:00:48.010,0:00:52.830
+So Lollipop is good, and we choose the Google API's target, because it
+
+0:00:52.830,0:00:56.810
+will include some Google services already pre-installed on the emulator.
+
+0:00:56.810,0:00:57.890
+You can choose Next.
+
+0:00:57.890,0:01:02.230
+There's a couple more options and settings that you can modify, for example,
+
+0:01:02.230,0:01:06.990
+if you want an SD card, or a camera you can change those here, and
+
+0:01:06.990,0:01:10.420
+then you can go ahead and click Finish, and it'll create a new AVD for you.

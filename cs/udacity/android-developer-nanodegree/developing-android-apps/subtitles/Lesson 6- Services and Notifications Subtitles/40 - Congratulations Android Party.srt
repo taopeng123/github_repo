@@ -1,0 +1,44 @@
+0:00:00.005,0:00:01.016
+[SOUND].
+
+0:00:01.016,0:00:01.842
+>> [LAUGH]
+
+0:00:01.842,0:00:03.310
+>> Content providers.
+
+0:00:03.310,0:00:06.640
+>> Congratulations, everyone, you've finished building the Sunshine App.
+
+0:00:06.640,0:00:08.150
+>> But there's always room for more sunshine.
+
+0:00:08.150,0:00:10.070
+>> There is, Dan, but now it's time
+
+0:00:10.070,0:00:12.100
+for the students to go build their final project.
+
+0:00:12.100,0:00:13.718
+>> And you can get a lot of the resources you
+
+0:00:13.718,0:00:16.622
+need to build really great mobile apps at the Android developer site.
+
+0:00:16.622,0:00:19.306
+>> And stay tuned for more from us and Udacity.
+
+0:00:19.306,0:00:25.184
+>> For now, I think it's
+
+0:00:25.184,0:00:34.165
+time to celebrate with some cake.
+
+0:00:34.165,0:00:35.983
+>> Woohoo.
+
+0:00:35.983,0:00:39.655
+>> Lemon tarts.
+
+0:00:39.655,0:00:44.749
+[MUSIC]

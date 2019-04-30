@@ -1,0 +1,20 @@
+0:00:00.500,0:00:04.450
+Follow these steps to create a unit[br]test to insert a row of data
+
+0:00:04.450,0:00:06.810
+into the location database table.
+
+0:00:06.810,0:00:09.320
+Then, query the table and[br]validate the values.
+
+0:00:10.370,0:00:14.920
+We're going to be filling out the test[br]location table function within TestDB.
+
+0:00:14.920,0:00:18.490
+The comment in that function should[br]guide you in completing your test.
+
+0:00:18.490,0:00:22.120
+This test function returns[br]the ID of the inserted row.
+
+0:00:22.120,0:00:24.100
+When you're done,[br]check the box to continue.

@@ -1,0 +1,131 @@
+0:00:00.670,0:00:03.730
+The cell radio in your device operates roughly like this.
+
+0:00:03.730,0:00:06.320
+From an initial idle state, it takes a couple of seconds
+
+0:00:06.320,0:00:09.120
+to turn on until it can start transmitting. That kind of
+
+0:00:09.120,0:00:12.430
+latency makes for a sucky web browsing experience. So rather than
+
+0:00:12.430,0:00:15.850
+going back to idle, state machine stays on at full power
+
+0:00:15.850,0:00:18.730
+for a certain amount of time. Typically, around five to ten
+
+0:00:18.730,0:00:22.940
+seconds before dropping to an intermediate low power mode that uses
+
+0:00:22.940,0:00:25.860
+less battery than full power, and has lower latency to return
+
+0:00:25.860,0:00:28.661
+to full power than the standby mode. If a new
+
+0:00:28.661,0:00:31.370
+transfer is initiated, the radio will be promoted back to
+
+0:00:31.370,0:00:34.560
+full power mode. And if nothing happens for another period
+
+0:00:34.560,0:00:38.020
+of time, typically around 30 seconds to a minute, it'll
+
+0:00:38.020,0:00:41.690
+drop back to standby. The exact latency in tail times
+
+0:00:41.690,0:00:45.000
+varies between carriers, and even in carriers between states and
+
+0:00:45.000,0:00:47.910
+countries, as they try to balance low latency with longer
+
+0:00:47.910,0:00:51.380
+battery life based on factors like cell congestion and typical
+
+0:00:51.380,0:00:54.830
+prevailing network conditions. So the exact timings vary. How
+
+0:00:54.830,0:00:58.630
+do we optimize our transfer frequency? Ultimately, it doesn't matter
+
+0:00:58.630,0:01:01.120
+what the specific timings are. You just need to
+
+0:01:01.120,0:01:03.712
+understand that the network is going to attempt to balance
+
+0:01:03.712,0:01:07.740
+low latency with high battery life. For us, when
+
+0:01:07.740,0:01:10.650
+it comes to planning out data transfers, we really like
+
+0:01:10.650,0:01:13.960
+to be somewhere around here,. Now, if we return
+
+0:01:13.960,0:01:16.550
+briefly to the cell radio state machine, we know that
+
+0:01:16.550,0:01:19.370
+every time we perform a data transfer, the radio will
+
+0:01:19.370,0:01:22.550
+stay active for at least another five seconds of full tail
+
+0:01:22.550,0:01:26.260
+time, and anywhere from 30 seconds to a minute at low
+
+0:01:26.260,0:01:30.010
+power before it finally returns to standby. That means every time
+
+0:01:30.010,0:01:32.830
+you initiate a transfer, you're powering the cell radio up for
+
+0:01:32.830,0:01:35.060
+at least 20 seconds. So let's take a look at how
+
+0:01:35.060,0:01:38.660
+that affects an app, using the little cookie approach. An app
+
+0:01:38.660,0:01:41.550
+like this can drain the battery without even having to transfer
+
+0:01:41.550,0:01:44.720
+much data. Each of these small peaks is
+
+0:01:44.720,0:01:47.270
+an app pinging its analytics back to the server,.
+
+0:01:47.270,0:01:50.940
+In this case, every 15 seconds. These logi-peaks represent
+
+0:01:50.940,0:01:54.540
+intermittent data transfers based on user interaction. For example,
+
+0:01:54.540,0:01:56.590
+they may be viewing a restaurant listing or looking
+
+0:01:56.590,0:01:59.900
+at tomorrow's weather forecast. Beneath it, we've graphed how
+
+0:01:59.900,0:02:03.230
+this affects the radio state. The blue shows active
+
+0:02:03.230,0:02:07.800
+data transfers. The red, the radio in full power.
+
+0:02:07.800,0:02:12.090
+And yellow showing low power mode. The gaps in between, if
+
+0:02:12.090,0:02:16.340
+there were any, indicate when the radio was idle. So while
+
+0:02:16.340,0:02:19.370
+this app is running, what is the percentage of time that
+
+0:02:19.370,0:02:22.180
+the cell radio is able to go back to its idle state?

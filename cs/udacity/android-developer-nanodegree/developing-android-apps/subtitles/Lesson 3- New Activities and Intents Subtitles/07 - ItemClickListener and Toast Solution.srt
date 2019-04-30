@@ -1,0 +1,26 @@
+0:00:00.360,0:00:04.810
+Done already? Let me show you how it's done. As I said before, we
+
+0:00:04.810,0:00:07.640
+get the forecast by calling getItem from
+
+0:00:07.640,0:00:10.940
+the forecast adapter. And here's how we actually
+
+0:00:10.940,0:00:14.542
+display the toast. Note that the context
+
+0:00:14.542,0:00:17.023
+is actually available through getActivity in our
+
+0:00:17.023,0:00:20.982
+fragment. However, it won't do anything unless
+
+0:00:20.982,0:00:25.450
+we also show the toast. Displaying a toast
+
+0:00:25.450,0:00:29.170
+is useful to see how an Android interaction works. But this method should
+
+0:00:29.170,0:00:33.060
+really be used to start our detail activity. This is what we'll do next.

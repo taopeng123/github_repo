@@ -1,0 +1,1 @@
+There's not one definition for big data, its a very subjective term. Most people would certainly consider a data set of several terabytes to be big data. But there are certainly plenty of people using Hadoop on significantly smaller data sets with really great results. A reasonable definition of big data might be, it's data that's too big to be processed on a single machine.

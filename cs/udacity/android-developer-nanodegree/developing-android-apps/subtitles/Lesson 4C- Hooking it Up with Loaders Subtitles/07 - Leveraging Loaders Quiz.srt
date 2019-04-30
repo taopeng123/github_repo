@@ -1,0 +1,41 @@
+0:00:00.540,0:00:02.378
+All right, it's your turn.
+
+0:00:02.378,0:00:05.100
+Implement a CursorLoader[br]in the forecast fragment
+
+0:00:05.100,0:00:08.390
+to load the cursor used[br]in the cursor adapter.
+
+0:00:08.390,0:00:12.020
+You want to pass zero in for the flags[br]when you create the cursor adapter as
+
+0:00:12.020,0:00:16.270
+the loader will now be responsible for[br]re-querying when data changes.
+
+0:00:16.270,0:00:19.050
+Also, it's easiest to[br]have ForcastFragment
+
+0:00:19.050,0:00:21.060
+implement the Loader Callbacks.
+
+0:00:21.060,0:00:22.495
+If after you're doing all of this,
+
+0:00:22.495,0:00:26.440
+your app still displays the weather,[br]you've probably done it right.
+
+0:00:26.440,0:00:29.990
+Make sure to check that you are using[br]the support library versions of all of
+
+0:00:29.990,0:00:31.320
+our classes.
+
+0:00:31.320,0:00:35.210
+Otherwise, you won't get[br]Android 2.3 compatibility.
+
+0:00:35.210,0:00:38.260
+I've provided the exact import[br]statements you need to use
+
+0:00:38.260,0:00:39.750
+in the instructor notes below.

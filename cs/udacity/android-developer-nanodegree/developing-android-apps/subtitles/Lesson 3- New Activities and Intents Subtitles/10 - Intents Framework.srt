@@ -1,0 +1,41 @@
+0:00:00.560,0:00:03.240
+To move from one activity. In this case,
+
+0:00:03.240,0:00:06.210
+the MainActivity in our sunshine app, to another, here
+
+0:00:06.210,0:00:11.300
+the DetailActivity, we call StartActivity. But note that when
+
+0:00:11.300,0:00:14.490
+using the StartActivity method, rather than specifying the class
+
+0:00:14.490,0:00:16.900
+name of the activity to start directly, that
+
+0:00:16.900,0:00:20.590
+class name is packaged explicitly within an intent. The
+
+0:00:20.590,0:00:22.990
+basic premise is simple. Whenever you need your app
+
+0:00:22.990,0:00:25.950
+components to communicate with each other, or the system,
+
+0:00:25.950,0:00:27.420
+you use intents to identify the
+
+0:00:27.420,0:00:30.950
+target destination. Starting activities within your
+
+0:00:30.950,0:00:32.912
+app is the simplest example. [SOUND]
+
+0:00:32.912,0:00:38.050
+With your intent explicitly indicating the target
+
+0:00:38.050,0:00:44.136
+using the context and a class name of the activity. Intents that use the
+
+0:00:44.136,0:00:48.090
+name of the component you're targeting directly, are known as explicit intents.

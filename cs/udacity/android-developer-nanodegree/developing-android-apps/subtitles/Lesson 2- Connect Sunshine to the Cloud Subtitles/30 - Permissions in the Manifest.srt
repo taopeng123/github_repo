@@ -1,0 +1,11 @@
+0:00:00.200,0:00:01.250
+Take a moment to explore the
+
+0:00:01.250,0:00:05.080
+security section of developers.android.com. Which of these
+
+0:00:05.080,0:00:06.990
+following activities can only be done
+
+0:00:06.990,0:00:09.330
+after declaring a uses-permission in the manifest?

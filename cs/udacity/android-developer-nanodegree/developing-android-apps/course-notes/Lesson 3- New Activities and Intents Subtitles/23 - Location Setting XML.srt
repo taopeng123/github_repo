@@ -1,0 +1,125 @@
+0:00:00.440,0:00:03.310
+We have our settings screen but no settings.
+
+0:00:03.310,0:00:06.550
+In the next several sections you're going to be adding our two settings.
+
+0:00:06.550,0:00:08.510
+I'll walk you through how we add our first setting for
+
+0:00:08.510,0:00:13.780
+location, then you'll do the temperature setting on your own, so listen closely.
+
+0:00:13.780,0:00:15.818
+First we design a preference XML file.
+
+0:00:15.818,0:00:18.320
+The root element should be a preference screen.
+
+0:00:19.320,0:00:21.750
+In this example we have a check box preference and
+
+0:00:21.750,0:00:24.130
+a list preference inside of it.
+
+0:00:24.130,0:00:27.260
+In order to add the preferences XML file to our app,
+
+0:00:27.260,0:00:31.570
+we first need to create an XML folder under the resources res directory.
+
+0:00:31.570,0:00:36.680
+Right-click on the res folder, go to new Android resource directory and
+
+0:00:36.680,0:00:39.210
+then type in XML as the name of the directory.
+
+0:00:40.220,0:00:42.905
+For resource type you can use XML and then hit OK.
+
+0:00:44.250,0:00:49.490
+Inside this folder, we right-click to create a new XML resource file.
+
+0:00:49.490,0:00:50.650
+We call it pref_general,
+
+0:00:50.650,0:00:54.990
+and the root element is a preference screen as we saw on the developer's site.
+
+0:00:54.990,0:00:57.020
+And then our preferences file is created.
+
+0:00:57.020,0:00:58.980
+Then add the location preference.
+
+0:00:58.980,0:01:03.420
+Since the wireframes showed an editable text field to input user location as
+
+0:01:03.420,0:01:06.318
+a string, we make this an EditTextPreference.
+
+0:01:06.318,0:01:10.620
+If you want to learn more about all the possible XML attributes,
+
+0:01:10.620,0:01:13.370
+you can google for EditTextPreference.
+
+0:01:13.370,0:01:14.890
+First we specify a title for
+
+0:01:14.890,0:01:18.230
+the preference which will be the label that's displayed to the user.
+
+0:01:18.230,0:01:20.170
+Then we specify a key.
+
+0:01:20.170,0:01:25.690
+And this key is actually the key value in SharedPreferences.
+
+0:01:25.690,0:01:29.610
+Going back to the code, we also add these attributes to describe the Edit Text
+
+0:01:29.610,0:01:32.780
+field in the pop up dialog that was shown in the wire frames.
+
+0:01:34.120,0:01:38.440
+Going back to the code, we can also configure properties of the Edit Text field.
+
+0:01:38.440,0:01:42.890
+We specify the input type to be text, and we cap it to a single line of text.
+
+0:01:42.890,0:01:45.790
+It's bad practice to hard code these strings here,
+
+0:01:45.790,0:01:50.290
+so we declare them as constants in the strings.XML file.
+
+0:01:50.290,0:01:51.970
+These are the strings we declared.
+
+0:01:51.970,0:01:54.520
+This is the name of the label of the preference.
+
+0:01:54.520,0:01:58.390
+It's user-visible, so we add a char limit for translation purposes.
+
+0:01:58.390,0:02:02.840
+You also specify location which is the name of the key in Shared Preferences.
+
+0:02:02.840,0:02:05.730
+We don't want to translate it because we always want to find the key based
+
+0:02:05.730,0:02:07.060
+on this name.
+
+0:02:07.060,0:02:10.169
+We also specify a constant for the default location.
+
+0:02:10.169,0:02:13.690
+We also don't translate this because we need to send it to the server API
+
+0:02:13.690,0:02:14.750
+like this.
+
+0:02:14.750,0:02:17.540
+When you're done with these steps check them off and continue

@@ -1,0 +1,83 @@
+0:00:01.030,0:00:04.939
+Inexact repeating alarms. Infinitely better than exact repeating alarms, but
+
+0:00:04.939,0:00:08.690
+still far from ideal. The problem with any kind of repeating
+
+0:00:08.690,0:00:11.350
+alarm is that it's still polling your server to check
+
+0:00:11.350,0:00:14.530
+for updates. So the more frequently you poll, the fresher the
+
+0:00:14.530,0:00:17.130
+data you can display, but the higher the cost in
+
+0:00:17.130,0:00:20.740
+battery life. You can pull as frequently to conserve battery but
+
+0:00:20.740,0:00:23.730
+that just means your content will be stale for longer.
+
+0:00:23.730,0:00:26.530
+You could just let the user decide the update frequency themselves,
+
+0:00:26.530,0:00:29.140
+but then you lose the magic. If only there was
+
+0:00:29.140,0:00:32.820
+a better way. Is such a thing possible? Yes it
+
+0:00:32.820,0:00:36.440
+is. Google cloud messaging lets your server notify your app
+
+0:00:36.440,0:00:39.340
+directly when there's data ready to be downloaded. Or it
+
+0:00:39.340,0:00:41.550
+can even include the new data in the message payload
+
+0:00:41.550,0:00:45.300
+itself. Using Google Cloud Messaging, you can send messages from
+
+0:00:45.300,0:00:48.260
+your server to any installed instance of your app via
+
+0:00:48.260,0:00:51.650
+the Google Cloud. As a result, you can stop polling,
+
+0:00:51.650,0:00:54.630
+which will immediately improve battery life and also improve the
+
+0:00:54.630,0:00:58.036
+freshness of your app. And instead, rely on your server
+
+0:00:58.036,0:01:01.670
+notifying clients when there's data to sync. These messages can
+
+0:01:01.670,0:01:04.785
+be simple tickles, that trigger a sync adapter by notifying your
+
+0:01:04.785,0:01:07.350
+app that there is new data or need to download.
+
+0:01:07.350,0:01:10.560
+Or you can include the new data within the message payload.
+
+0:01:10.560,0:01:14.140
+In the sunshine example, we're using someone else's server. But
+
+0:01:14.140,0:01:17.010
+even then, it may make sense to create your own middle
+
+0:01:17.010,0:01:20.780
+tier that pulls the source and notifies your installed app instances
+
+0:01:20.780,0:01:23.650
+when it notices a change. Now we're not going to set up a
+
+0:01:23.650,0:01:26.260
+server in this lesson, but you can see the full details for
+
+0:01:26.260,0:01:30.040
+using Google cloud messaging from the developer guide linked to instructor nets.

@@ -1,0 +1,29 @@
+0:00:00.470,0:00:02.880
+In the forecast fragment class, we modify the
+
+0:00:02.880,0:00:08.134
+onOptionsItemSelected method. When the Refresh menu item is selected,
+
+0:00:08.134,0:00:11.129
+we create a new FetchWeatherTask and then we call
+
+0:00:11.129,0:00:13.489
+execute on it. While the call is no longer
+
+0:00:13.489,0:00:16.487
+blocking the UI thread because it's an AsyncTask, the
+
+0:00:16.487,0:00:19.390
+app will still crash. If we check the logs,
+
+0:00:19.390,0:00:21.920
+we see that the app crashed. This time though,
+
+0:00:21.920,0:00:26.030
+with a security expression. It says Permission denied and
+
+0:00:26.030,0:00:29.810
+ask if you're missing the INTERNET permission or not. And indeed,
+
+0:00:29.810,0:00:32.670
+we are missing the INTERNET permission, so we need to request it.

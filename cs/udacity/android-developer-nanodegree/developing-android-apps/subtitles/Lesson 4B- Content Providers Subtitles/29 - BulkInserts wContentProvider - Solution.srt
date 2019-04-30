@@ -1,0 +1,59 @@
+0:00:00.440,0:00:01.830
+All right, you're done.
+
+0:00:01.830,0:00:03.690
+Let's take a look at the solution.
+
+0:00:03.690,0:00:06.390
+While we cannot insert[br]a vector directly,
+
+0:00:06.390,0:00:09.180
+we can easily convert[br]a vector to an array.
+
+0:00:09.180,0:00:13.520
+Once we've done this, the bulk insert[br]method will insert very efficiently.
+
+0:00:13.520,0:00:17.300
+As you can see, we've uncommented[br]out this next series of lines.
+
+0:00:17.300,0:00:20.250
+This allows us to test[br]our output to make sure
+
+0:00:20.250,0:00:22.749
+that we've actually inserted[br]the right thing into the database.
+
+0:00:24.420,0:00:25.550
+Let's actually run our app.
+
+0:00:27.090,0:00:29.990
+And as you can see, we're actually[br]reading the data out of the database
+
+0:00:29.990,0:00:32.536
+that we just inserted all correctly.
+
+0:00:32.536,0:00:36.750
+Now our back end will update[br]efficiently, but we really need to be
+
+0:00:36.750,0:00:40.100
+querying things before requesting[br]them from the internet.
+
+0:00:40.100,0:00:43.210
+After all, the main point is to[br]have a responsive application.
+
+0:00:43.210,0:00:45.770
+We're still not even updating[br]the screen until we've
+
+0:00:45.770,0:00:47.650
+pulled data down from the web.
+
+0:00:47.650,0:00:51.170
+We also want to avoid doing[br]our query on the UI thread,
+
+0:00:51.170,0:00:55.250
+because doing operations like queries on[br]the UI thread cause Android to not be
+
+0:00:55.250,0:00:59.470
+able to draw frames fast enough,[br]which introduces frame rate jitter.
+
+0:00:59.470,0:01:03.460
+Fortunately, Android offers[br]a pattern for that known as Loaders.

@@ -1,0 +1,14 @@
+0:00:01.000,0:00:03.880
+Let's see if we can figure out what happens when an app is terminated in
+
+0:00:03.880,0:00:08.690
+the background. Start the app again then hit the Home key. Now launch some other
+
+0:00:08.690,0:00:13.240
+apps before returning to ours. Try and pick apps with large memory footprints.
+
+0:00:13.240,0:00:17.310
+Can you figure out, which of the following lifecycle event handlers is the last
+
+0:00:17.310,0:00:21.000
+one guaranteed to be called, before your app maybe terminated by the runtime?

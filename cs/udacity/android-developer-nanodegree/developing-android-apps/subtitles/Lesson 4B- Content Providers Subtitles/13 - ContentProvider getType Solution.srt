@@ -1,0 +1,11 @@
+0:00:00.003,0:00:04.740
+The WEATHER_WITH_LOCATION_AND_DATE[br]function can only return a single row.
+
+0:00:04.740,0:00:06.656
+So we give it the ITEM_TYPE.
+
+0:00:06.656,0:00:10.278
+While the WEATHER_WITH_LOCATION[br]type returns multiple items.
+
+0:00:10.278,0:00:13.270
+So it gets CONTENT_TYPE, which is a dir.

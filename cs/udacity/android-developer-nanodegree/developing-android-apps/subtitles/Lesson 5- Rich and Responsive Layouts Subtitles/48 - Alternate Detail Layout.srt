@@ -1,0 +1,23 @@
+0:00:00.130,0:00:02.540
+We definitely need to define fragment detail in the
+
+0:00:02.540,0:00:04.930
+base layout folder, then we override it in the
+
+0:00:04.930,0:00:07.300
+layout land folder, so that we can achieve this
+
+0:00:07.300,0:00:11.000
+layout on phone landscape orientation. Tablet landscape view would
+
+0:00:11.000,0:00:13.200
+work fine because of this folder, but then tablet
+
+0:00:13.200,0:00:15.450
+portrait would fall back to this layout so we
+
+0:00:15.450,0:00:18.830
+should just define it in the layout sw600dp folder
+
+0:00:18.830,0:00:21.960
+so that all tablets regardless of orientation use this layout

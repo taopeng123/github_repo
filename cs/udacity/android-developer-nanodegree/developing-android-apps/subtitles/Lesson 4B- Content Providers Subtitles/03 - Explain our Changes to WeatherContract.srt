@@ -1,0 +1,128 @@
+0:00:00.425,0:00:04.617
+Now that you've added the URI[br]information to the WeatherContract, step
+
+0:00:04.617,0:00:08.751
+two of building our Content Provider,[br]I've got some explaining to do.
+
+0:00:08.751,0:00:11.038
+At the beginning of our WeatherContract,
+
+0:00:11.038,0:00:13.652
+you can see we defined[br]the CONTENT_AUTHORITY.
+
+0:00:13.652,0:00:17.551
+Next we added strings for[br]the BASE paths for our URIs.
+
+0:00:17.551,0:00:20.618
+Note how these paths[br]match our two tables.
+
+0:00:20.618,0:00:24.753
+For each of our tables,[br]LocationEntry and WeatherEntry,
+
+0:00:24.753,0:00:30.138
+we created a CONTENT_URI that represents[br]the base location for each table.
+
+0:00:30.138,0:00:34.011
+Something else that is convenient to[br]have in the contract are functions to
+
+0:00:34.011,0:00:36.268
+help build the Content Provider queries.
+
+0:00:36.268,0:00:39.309
+Now, for some URI builders and[br]decoder functions for WeatherEntry.
+
+0:00:39.309,0:00:43.778
+It's convenient to have these, as it[br]makes fewer places in your code aware of
+
+0:00:43.778,0:00:47.715
+the actual URI in coding,[br]keeping this knowledge in the contract.
+
+0:00:47.715,0:00:51.741
+Strings such as the location setting[br]can be impended with the impend path
+
+0:00:51.741,0:00:52.405
+function.
+
+0:00:52.405,0:00:55.865
+You'll be implementing the build[br]weather location function shortly.
+
+0:00:55.865,0:00:59.491
+In this case adding an additional[br]path to the URI does not
+
+0:00:59.491,0:01:01.275
+change the type of the URI.
+
+0:01:01.275,0:01:03.271
+See, they're both type DIR.
+
+0:01:03.271,0:01:07.591
+We can also use these functions to add[br]potentially useful query parameters.
+
+0:01:07.591,0:01:12.281
+In this case, we use a query[br]parameter for the start date.
+
+0:01:12.281,0:01:16.077
+Query parameters are useful when, for[br]when we have a fixed database query that
+
+0:01:16.077,0:01:18.504
+we want to have some limited[br]parametrization for.
+
+0:01:18.504,0:01:23.751
+In this case it will be a parameter for[br]our join between the two tables.
+
+0:01:23.751,0:01:25.470
+More on that later.
+
+0:01:25.470,0:01:29.594
+URI queries look just like[br]the queries you see in web URLs, and
+
+0:01:29.594,0:01:34.688
+give us the ability to add more richness[br]and complexity to our URI contract.
+
+0:01:34.688,0:01:39.288
+Finally, we have this function that[br]builds a two part URI with both weather
+
+0:01:39.288,0:01:40.538
+and date segments.
+
+0:01:40.538,0:01:44.717
+Below this we have helper functions that[br]hide the URI structure from our code.
+
+0:01:44.717,0:01:49.167
+For retrieving values in the URI and[br]place all this knowledge in one place.
+
+0:01:49.167,0:01:52.423
+Looking back at our list of URIs,[br]you can see that for
+
+0:01:52.423,0:01:56.271
+each URI I called out whether[br]the URI returned a list of items.
+
+0:01:56.271,0:02:01.938
+By labeling it with dir for directory or[br]a single item by labeling it with item.
+
+0:02:01.938,0:02:06.406
+Cursors returned from a content provider[br]have unique types based upon their
+
+0:02:06.406,0:02:09.066
+content and[br]the base path used for the query.
+
+0:02:09.066,0:02:12.497
+Android uses a form similar[br]to the internet media type or
+
+0:02:12.497,0:02:15.637
+mime type to describe[br]the type returned by the URI.
+
+0:02:15.637,0:02:18.589
+Cursors that can return more[br]than one item are prefixed
+
+0:02:18.589,0:02:20.906
+by the CURSOR_DIR_BASE_TYPE string.
+
+0:02:20.906,0:02:24.071
+While cursors that return only[br]a single item are prefixed by
+
+0:02:24.071,0:02:26.295
+the CURSOR_ITEM_BASE_TYPE string.
+
+0:02:26.295,0:02:31.120
+We define these types here for both[br]the location and the weather queries.

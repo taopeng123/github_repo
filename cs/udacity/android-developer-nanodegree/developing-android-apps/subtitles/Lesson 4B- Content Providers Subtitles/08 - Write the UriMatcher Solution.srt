@@ -1,0 +1,50 @@
+0:00:01.120,0:00:02.029
+All right, you're done.
+
+0:00:03.310,0:00:06.720
+Hopefully you started with[br]the provided buildUriMatcher function.
+
+0:00:06.720,0:00:10.440
+We begin with the new UriMatcher[br]that contains the NO_MATCH
+
+0:00:10.440,0:00:13.710
+function because we don't want[br]the root node to match anything.
+
+0:00:13.710,0:00:17.610
+This is typical behavior to make[br]the code more easy to read.
+
+0:00:17.610,0:00:21.190
+I'm making a shortcut to[br]the WeatherContract.CONTENT_AUTHORITY.
+
+0:00:21.190,0:00:23.840
+Our two base URIs are pretty simple.
+
+0:00:23.840,0:00:27.670
+Since we've already defined PATH_WEATHER[br]and PATH_LOCATION in the contract,
+
+0:00:27.670,0:00:31.730
+we can just assign them to their[br]corresponding integer constants there.
+
+0:00:31.730,0:00:35.515
+For PATH_WEATHER, we're going to match[br]a path with just one additional item.
+
+0:00:35.515,0:00:38.560
+WEATHER_WITH_LOCATION we're going[br]to match a path that just has
+
+0:00:38.560,0:00:40.180
+one additional item on it.
+
+0:00:40.180,0:00:43.832
+Because location can be a string,[br]we have to match it with an asterisk.
+
+0:00:43.832,0:00:47.450
+For WEATHER_WITH_LOCATION_AND_DATE[br]we're going to match two path items.
+
+0:00:47.450,0:00:50.440
+The first one of course will[br]be our location, a string.
+
+0:00:50.440,0:00:54.030
+But the second one will be our date,[br]which will always be a number.
+
+0:00:54.030,0:00:56.060
+Because of that we can[br]match with the hash sign.

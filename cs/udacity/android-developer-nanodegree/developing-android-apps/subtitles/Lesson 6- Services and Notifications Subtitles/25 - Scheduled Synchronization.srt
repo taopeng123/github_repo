@@ -1,0 +1,14 @@
+0:00:00.530,0:00:04.210
+You indeed must have a content provider marked as syncable, as well as
+
+0:00:04.210,0:00:06.610
+enable automatic sync for the sync adapter.
+
+0:00:06.610,0:00:08.250
+You don't need to schedule an immediate
+
+0:00:08.250,0:00:12.290
+sync, although it's nice for users, as we did. And, this is a minor
+
+0:00:12.290,0:00:17.060
+note, you don't set the interval in milliseconds, but instead set it in seconds.

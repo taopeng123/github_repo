@@ -1,0 +1,53 @@
+0:00:00.270,0:00:01.900
+In this app, we see an example of a
+
+0:00:01.900,0:00:05.630
+defragmented network traffic that uses the big cookie model. All
+
+0:00:05.630,0:00:08.490
+the repeating transfers have been bundled together, and all
+
+0:00:08.490,0:00:10.150
+the intermittent transfers have been
+
+0:00:10.150,0:00:12.200
+largely replaced with aggressive prefetching.
+
+0:00:13.220,0:00:16.440
+Obviously, you usually can't entirely predict what data users
+
+0:00:16.440,0:00:19.840
+might need, nor can you ignore either client or service
+
+0:00:19.840,0:00:22.380
+site changes the need to be synchronized. You can
+
+0:00:22.380,0:00:25.270
+aim to minimize the number of radio state transitions through
+
+0:00:25.270,0:00:28.140
+a combination of aggressive prefetching in addition to batching
+
+0:00:28.140,0:00:31.300
+and queueing any transfers that aren't time critical and
+
+0:00:31.300,0:00:35.080
+bundling these with user initiated time critical transfers, or
+
+0:00:35.080,0:00:38.050
+those initiated from the server. If we compare the impact
+
+0:00:38.050,0:00:40.320
+on the radio of the big cookie model compared
+
+0:00:40.320,0:00:43.150
+to the previous on demand approach, you can see it's
+
+0:00:43.150,0:00:46.500
+now idle nearly two thirds of the time. Even
+
+0:00:46.500,0:00:50.420
+the active radio percentage has significantly dropped, thanks to improved
+
+0:00:50.420,0:00:54.250
+download efficiency as a result of transmitting more data in one shot

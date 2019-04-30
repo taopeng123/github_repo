@@ -1,0 +1,242 @@
+0:00:00.070,0:00:02.090
+Once the two panes[br]are showing up on the tablet,
+
+0:00:02.090,0:00:04.450
+let's modify our code to[br]handle the list item click.
+
+0:00:04.450,0:00:07.770
+On the phone, if an item is[br]clicked in the forecast fragment,
+
+0:00:07.770,0:00:09.540
+then we must launch the detail activity.
+
+0:00:09.540,0:00:13.220
+On the tablet UI, once an item in[br]the forecast fragment is clicked,
+
+0:00:13.220,0:00:17.230
+we notify the main activity which goes[br]and replaces the detail fragment.
+
+0:00:17.230,0:00:19.680
+The reason the two fragments[br]don't talk to each other
+
+0:00:19.680,0:00:22.480
+is because we want to maintain[br]abstraction from each other.
+
+0:00:22.480,0:00:25.730
+If the forecast list fragment started[br]assuming that the detailed fragment was
+
+0:00:25.730,0:00:28.950
+always right next to it, then the[br]assumption would break, for example on
+
+0:00:28.950,0:00:32.600
+the phone, where the data fragment[br]is not inside the main activity.
+
+0:00:32.600,0:00:35.210
+Therefore, a fragment must[br]go through it's activity.
+
+0:00:35.210,0:00:38.920
+An activity must know how to dispatch[br]the event to the other fragments.
+
+0:00:38.920,0:00:41.000
+Keep in mind that a fragment[br]doesn't always has to be
+
+0:00:41.000,0:00:42.350
+used in the same activity.
+
+0:00:42.350,0:00:45.310
+In order for the forecast fragment[br]to talk to the main activity,
+
+0:00:45.310,0:00:47.140
+we should create a callback interface.
+
+0:00:47.140,0:00:50.390
+It's a better assumption to say that[br]the fragment will always be within
+
+0:00:50.390,0:00:52.970
+an activity that[br]implements this callback;
+
+0:00:52.970,0:00:56.890
+then to say that the forecast fragment[br]will always be inside the main activity.
+
+0:00:56.890,0:00:59.660
+The detail fragment is a good[br]example of how a fragment can
+
+0:00:59.660,0:01:03.240
+be used in two different activates, the[br]main activity and the detail activity.
+
+0:01:03.240,0:01:06.628
+So don't rely on get activity[br]returning a specific activity class.
+
+0:01:06.628,0:01:10.732
+Using the gist that we provided, use[br]a callback class to notify the activity
+
+0:01:10.732,0:01:12.730
+that a list item has been selected.
+
+0:01:12.730,0:01:15.310
+See the hint below on[br]the item click list listener.
+
+0:01:15.310,0:01:18.620
+Then, the activity can either[br]launch the detail activity or
+
+0:01:18.620,0:01:22.120
+replace a detail fragment based on[br]whether it is a phone or tablet.
+
+0:01:22.120,0:01:25.300
+When you work on this task you'll[br]run into an issue of how to pass
+
+0:01:25.300,0:01:29.960
+the selected items you arrive to the[br]detail fragment, now your instinct might
+
+0:01:29.960,0:01:33.910
+say to create a custom constructor[br]where you can pass in the date,
+
+0:01:33.910,0:01:37.880
+however, we don't normally create[br]custom fragment constructors.
+
+0:01:37.880,0:01:41.110
+If you ever rotate the device, for[br]example, the system can't call
+
+0:01:41.110,0:01:43.550
+your custom fragment constructor[br]with the right parameters.
+
+0:01:43.550,0:01:46.330
+However, it can use the empty[br]fragment constructor and
+
+0:01:46.330,0:01:49.470
+initialize it with the same[br]bundle of arguments used earlier.
+
+0:01:49.470,0:01:53.390
+So to pass information to initialize[br]a fragment, create a bundle of
+
+0:01:53.390,0:01:57.290
+key value pairs and then set that[br]as the arguments on the fragment.
+
+0:01:57.290,0:02:01.560
+Don't confuse this arguments bundle[br]with the savedInstanceState bundle.
+
+0:02:01.560,0:02:03.130
+Once a fragment has been initialized,
+
+0:02:03.130,0:02:08.160
+you can't change the arguments, you[br]can only read from them, as seen here.
+
+0:02:08.160,0:02:09.690
+On the other hand the save[br]state bundle is for
+
+0:02:09.690,0:02:12.750
+storing information once[br]a fragment has been running, and
+
+0:02:12.750,0:02:15.300
+you can populate it in the on[br]save instant state method.
+
+0:02:15.300,0:02:18.410
+The bundle can preserve state[br]across orientation changes or
+
+0:02:18.410,0:02:20.710
+if the fragment or[br]activity gets killed by the system,
+
+0:02:20.710,0:02:24.450
+that's why you receive it back again in[br]the onCreate or onCreateView methods.
+
+0:02:24.450,0:02:27.800
+Once the detail fragment starts[br]being displayed on the tablet,
+
+0:02:27.800,0:02:31.740
+we need to make sure that doesn't get[br]out of date if the location changes.
+
+0:02:31.740,0:02:33.120
+If the user went to Settings and
+
+0:02:33.120,0:02:37.270
+entered in a new location, when they[br]come back to the main activity,
+
+0:02:37.270,0:02:41.150
+in the onResume method, we should[br]detect that the location has changed.
+
+0:02:41.150,0:02:44.110
+We do this by comparing[br]the nLocation string
+
+0:02:44.110,0:02:46.950
+with the location that's[br]stored in shared preferences.
+
+0:02:46.950,0:02:50.330
+If there's a difference,[br]then we find the ForecastFragment and
+
+0:02:50.330,0:02:52.790
+notify that the location has changed.
+
+0:02:52.790,0:02:55.440
+Similarly, we find[br]the DetailFragment and
+
+0:02:55.440,0:02:57.850
+notify that the location has changed.
+
+0:02:57.850,0:03:01.180
+Since the DetailFragment is[br]a dynamically added fragment,
+
+0:03:01.180,0:03:04.980
+we need to make sure we find the right[br]instance in the FragmentManager.
+
+0:03:04.980,0:03:09.720
+We do this by calling findFragmentByTag[br]and passing in this tag.
+
+0:03:09.720,0:03:13.070
+We associated this tag[br]with this fragment
+
+0:03:13.070,0:03:16.840
+when we first did the fragment[br]transaction to add it to the screen.
+
+0:03:16.840,0:03:19.100
+If you didn't already create a tag and
+
+0:03:19.100,0:03:22.780
+associate it with the detail fragment[br]in the fragment transaction,
+
+0:03:22.780,0:03:26.080
+then go ahead and do it now in the[br]onCreate method of the main activity.
+
+0:03:26.080,0:03:29.140
+And you'll notice that the detail[br]fragment tag is just declared as
+
+0:03:29.140,0:03:31.670
+a string at the top of the file.
+
+0:03:31.670,0:03:34.190
+After we make the changes[br]to the main activity
+
+0:03:34.190,0:03:36.540
+we go over to the detail fragment,
+
+0:03:36.540,0:03:41.190
+we add a new method onLocationChanged[br]that takes in a new location string.
+
+0:03:42.300,0:03:45.560
+First, we try to figure[br]out what is the date for
+
+0:03:45.560,0:03:47.370
+the data that we're currently showing.
+
+0:03:47.370,0:03:50.470
+Then we create a new Uri[br]with the new location,
+
+0:03:50.470,0:03:52.540
+as well as the date we're[br]already displaying.
+
+0:03:52.540,0:03:55.810
+We update the nUri and[br]then we restart the loader.
+
+0:03:55.810,0:04:01.560
+See the instructor notes for the code[br]related to handling the location change.
+
+0:04:01.560,0:04:03.620
+This is what the app should[br]look like when you're done.
+
+0:04:03.620,0:04:06.730
+When you tap on a different date,[br]it updates the detail pane.
+
+0:04:06.730,0:04:09.850
+You can remove any hard coded data[br]because the layout should be populated
+
+0:04:09.850,0:04:10.670
+dynamically now.

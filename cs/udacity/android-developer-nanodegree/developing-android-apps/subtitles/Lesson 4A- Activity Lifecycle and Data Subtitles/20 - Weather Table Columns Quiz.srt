@@ -1,0 +1,29 @@
+0:00:00.340,0:00:04.340
+This is a good time to revisit[br]our final detail wireframe.
+
+0:00:04.340,0:00:07.550
+If we're going to store our weather[br]forecast information in a database
+
+0:00:07.550,0:00:10.270
+table, which columns[br]should our contract have?
+
+0:00:12.720,0:00:16.360
+In our database, we will have[br]a table of weather forecast entries.
+
+0:00:16.360,0:00:18.880
+We use a row to represent[br]each forecast day.
+
+0:00:18.880,0:00:21.520
+And we'll store each piece of data[br]associated with the forecast in
+
+0:00:21.520,0:00:22.750
+a separate column.
+
+0:00:22.750,0:00:26.345
+Taking a look at our weather UX,[br]which columns would we need for
+
+0:00:26.345,0:00:28.100
+the weather database table?
+
+0:00:28.100,0:00:30.830
+Think of which columns should[br]be in each database record.

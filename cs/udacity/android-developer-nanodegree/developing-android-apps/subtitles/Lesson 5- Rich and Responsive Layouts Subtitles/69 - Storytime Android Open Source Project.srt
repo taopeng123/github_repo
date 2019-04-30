@@ -1,0 +1,155 @@
+0:00:00.520,0:00:04.200
+Andy Rubin, head of Google's Android team in 2013,
+
+0:00:04.200,0:00:07.540
+famously defined Android's openness with this Tweet, offering the
+
+0:00:07.540,0:00:10.500
+instructions for downloading and building the Android source code.
+
+0:00:11.840,0:00:14.020
+As app developers, it's handy to be able to peep
+
+0:00:14.020,0:00:16.530
+behind the curtains and see how the framework actually
+
+0:00:16.530,0:00:19.070
+works. And it's an excellent way to find answers to
+
+0:00:19.070,0:00:22.230
+tricky, Stack Overflow questions. But the Android Open Source
+
+0:00:22.230,0:00:25.580
+Project, or AOSP as its commonly known, is much more
+
+0:00:25.580,0:00:28.170
+than that. The source code is available under the
+
+0:00:28.170,0:00:31.000
+Apache 2 license, so anyone can take it and do
+
+0:00:31.000,0:00:34.290
+anything they want with it, including modifying it and redistributing
+
+0:00:34.290,0:00:37.830
+it. And they have. Android has always had a passionate
+
+0:00:37.830,0:00:40.945
+community of modders, from Steve Kondik and the Cyanogen community
+
+0:00:40.945,0:00:44.240
+to XDA and many others who have been distributing modified
+
+0:00:44.240,0:00:47.100
+images of Android for phone owners brave enough to try
+
+0:00:47.100,0:00:50.580
+them. Even big companies like Amazon have taken the Android
+
+0:00:50.580,0:00:52.500
+source code and modified it for use in their own
+
+0:00:52.500,0:00:56.420
+line of products. That openness extends to the apps themselves, the
+
+0:00:56.420,0:00:59.790
+AOSP includes key mobile apps like the dialer, app launcher,
+
+0:00:59.790,0:01:03.170
+calendar, and email. And Google offers it own versions of each
+
+0:01:03.170,0:01:06.000
+as well. In the early days those native apps were
+
+0:01:06.000,0:01:08.870
+tightly bound to the framework and could only get updated along
+
+0:01:08.870,0:01:12.170
+with the platform. Which admittedly in the early days seemed like
+
+0:01:12.170,0:01:16.230
+every few weeks. But as the time between platform releases grew,
+
+0:01:16.230,0:01:18.860
+so did the efforts to unbundle those apps, allowing
+
+0:01:18.860,0:01:21.840
+them to be updated through Google Play. That was great
+
+0:01:21.840,0:01:23.670
+news for users, but it had an even better
+
+0:01:23.670,0:01:27.140
+side effect for us developers. Because apps like Gmail and
+
+0:01:27.140,0:01:30.170
+Maps depend on a number of proprietary Google APIs,
+
+0:01:30.170,0:01:34.140
+Google released Google Play Services. Also code named after food
+
+0:01:34.140,0:01:36.920
+to support the Google apps, while also giving us
+
+0:01:36.920,0:01:41.850
+developers Google specific APIs, like Maps, Wallet, Drive, and YouTube.
+
+0:01:41.850,0:01:44.480
+So now we get the latest and greatest Google specific APIs
+
+0:01:44.480,0:01:47.110
+every six weeks or so. And rather than being tied to
+
+0:01:47.110,0:01:51.540
+a specific platform, they're available on every device, back to Gingerbread.
+
+0:01:51.540,0:01:55.580
+Oh, and of course every native app is also entirely replaceable.
+
+0:01:55.580,0:01:57.830
+So you can publish apps to replace any of the apps
+
+0:01:57.830,0:02:00.490
+shipped with the device. And we can build our own SMS
+
+0:02:00.490,0:02:03.910
+apps, homescreens or maps apps, publish it on Play and give
+
+0:02:03.910,0:02:07.070
+users the choice to make it their default. When Android was first
+
+0:02:07.070,0:02:10.550
+announced, Andy Rubin described the AOSP as, all the software
+
+0:02:10.550,0:02:13.340
+to run a mobile phone but without the proprietary obstacles
+
+0:02:13.340,0:02:16.860
+that have hindered mobile innovation. Today, Android runs on more
+
+0:02:16.860,0:02:19.580
+than just mobiles, but the core of its purpose remains
+
+0:02:19.580,0:02:23.383
+the same. A platform and ecosystem that allows models, carriers,
+
+0:02:23.383,0:02:26.470
+OEMs and app developers to innovate and compete. So, armed
+
+0:02:26.470,0:02:29.560
+with an open, evolving platform enriched by a growing set
+
+0:02:29.560,0:02:32.380
+of Google API's and the ability to create great apps
+
+0:02:32.380,0:02:34.470
+that let users customize every aspect of
+
+0:02:34.470,0:02:37.270
+their user experience, you can use other people's
+
+0:02:37.270,0:02:39.640
+work to help define the computing platform of
+
+0:02:39.640,0:02:42.870
+the future. And that's my definition of open.

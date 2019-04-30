@@ -1,0 +1,20 @@
+0:00:01.660,0:00:04.190
+Thanks, Rado. Now that you understand what
+
+0:00:04.190,0:00:06.960
+intents are in glorious metaphor, let's use them
+
+0:00:06.960,0:00:10.370
+to do something useful. We'll replace the toast,
+
+0:00:10.370,0:00:12.660
+with an intent to launch the detail activity.
+
+0:00:14.940,0:00:18.830
+You'll need to pass in weather forecast data for the detail activity to
+
+0:00:18.830,0:00:22.230
+display. For more information, see the intent
+
+0:00:22.230,0:00:24.760
+extra constants defined in the intent class.

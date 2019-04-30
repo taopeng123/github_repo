@@ -1,0 +1,44 @@
+0:00:00.090,0:00:02.990
+We'll take advantage of what the framework offers in order to build our
+
+0:00:02.990,0:00:06.890
+SettingsActivity. Since we're supporting Gingerbread devices,
+
+0:00:06.890,0:00:10.628
+we'll use a preference activity class. If you're targeting Honeycomber later,
+
+0:00:10.628,0:00:13.220
+you'll want to use the PreferenceFragment class.
+
+0:00:13.220,0:00:16.480
+Create a new SettingsActivity class from the gist provided below.
+
+0:00:17.550,0:00:23.000
+Update the AndroidManifest to declare this new activity. You can see the way
+
+0:00:23.000,0:00:27.390
+detail activity is declared as an example. If you see that APIs are deprecated,
+
+0:00:27.390,0:00:31.600
+that's okay. That's a side effect of using PreferenceActivity, in order
+
+0:00:31.600,0:00:36.980
+to target Gingerbread devices. When you create your app for your final project,
+
+0:00:36.980,0:00:41.460
+you can use the wizard in Android Studio to create a new SettingsActivity.
+
+0:00:41.460,0:00:44.830
+The code the wizard provides will make your app backward compatible,
+
+0:00:44.830,0:00:49.040
+by using a combination of preference activity and PreferenceFragment.
+
+0:00:49.040,0:00:53.280
+Our gist is meant to be a simplified version of that for learning purposes. So
+
+0:00:53.280,0:00:56.970
+later, you'd be able to understand better what the wizard is doing.
+
+0:00:56.970,0:00:58.350
+Check these items off when you're done.

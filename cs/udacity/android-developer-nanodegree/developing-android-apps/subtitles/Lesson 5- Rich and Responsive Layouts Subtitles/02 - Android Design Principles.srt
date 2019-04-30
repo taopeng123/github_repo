@@ -1,0 +1,131 @@
+0:00:00.760,0:00:05.044
+Enchant me. Simplify my life. Make me amazing. They're
+
+0:00:05.044,0:00:09.530
+incredibly one-sided wedding vows, and the three key principles
+
+0:00:09.530,0:00:12.380
+underlying the Android team's creative vision for the platform
+
+0:00:12.380,0:00:14.840
+and the apps that run on it. As engineers,
+
+0:00:14.840,0:00:16.860
+it can sometimes be difficult to see past our
+
+0:00:16.860,0:00:19.710
+own delight at harnessing the power of an sdk
+
+0:00:19.710,0:00:22.960
+to bend a machine to our will, but ultimately,
+
+0:00:22.960,0:00:26.430
+our goal must be to create that same empowering experience
+
+0:00:26.430,0:00:29.660
+for our users. And we do that by creating apps
+
+0:00:29.660,0:00:32.320
+that are as esthetically pleasing as they are functional and
+
+0:00:32.320,0:00:35.240
+easy to use. Users judge the quality of your app
+
+0:00:35.240,0:00:38.390
+within the first 30 seconds. It may not be fair,
+
+0:00:38.390,0:00:41.480
+but a disproportionate amount of that judgement will be based
+
+0:00:41.480,0:00:44.533
+not on the functionality, but on the visual aesthetics. Does
+
+0:00:44.533,0:00:48.330
+it look polished? Does it look professional? How easy is
+
+0:00:48.330,0:00:51.800
+it to use? More than just looking pretty, the entire user
+
+0:00:51.800,0:00:55.490
+experience is critically important. With 30 seconds to
+
+0:00:55.490,0:00:58.505
+win users over, it's critical that that onboarding process
+
+0:00:58.505,0:01:01.520
+the time and effort required to go from downloading
+
+0:01:01.520,0:01:04.420
+your app to performing it's main function should be
+
+0:01:04.420,0:01:07.800
+as short and frictionless as possible. Not only
+
+0:01:07.800,0:01:10.390
+that, but a well designed app should evoke a
+
+0:01:10.390,0:01:14.530
+visceral reaction that speaks to the subconscious. It should
+
+0:01:14.530,0:01:17.020
+be fun to use. It should surprise in delightful
+
+0:01:17.020,0:01:20.590
+ways through subtle animations and smooth transitions that contribute
+
+0:01:20.590,0:01:23.890
+to a feeling of power and effortlessness. It should
+
+0:01:23.890,0:01:27.000
+let users touch and interact with objects directly rather
+
+0:01:27.000,0:01:29.490
+than having to use buttons and menus. And it should
+
+0:01:29.490,0:01:31.660
+use rich imagery and pictures in place of lots
+
+0:01:31.660,0:01:34.370
+of words and long sentences. It allows users to
+
+0:01:34.370,0:01:37.440
+customize your app, to make it theirs while providing
+
+0:01:37.440,0:01:41.805
+beautiful and sensible defaults. Create something that works like magic,
+
+0:01:41.805,0:01:44.430
+learning your preference in the context provided by
+
+0:01:44.430,0:01:47.260
+the device so it never asks users for information
+
+0:01:47.260,0:01:51.300
+that they've already provided. Provide simple shortcuts to complete
+
+0:01:51.300,0:01:55.460
+complex tasks, and remember data settings and customizations making
+
+0:01:55.460,0:01:58.750
+them available across every device. While it's good practice
+
+0:01:58.750,0:02:01.320
+to create a familiar and welcoming experience by creating
+
+0:02:01.320,0:02:03.630
+a look and feel that's consistent with the platforms
+
+0:02:03.630,0:02:06.810
+styles and themes, it's just as important to remember
+
+0:02:06.810,0:02:09.710
+that this, and all the other principles I've discussed
+
+0:02:09.710,0:02:12.270
+here, are really just a starting point for your
+
+0:02:12.270,0:02:16.190
+own creative vision. Deviation from the guidelines is encouraged,
+
+0:02:16.190,0:02:19.500
+but when you do do so, deviate with purpose.

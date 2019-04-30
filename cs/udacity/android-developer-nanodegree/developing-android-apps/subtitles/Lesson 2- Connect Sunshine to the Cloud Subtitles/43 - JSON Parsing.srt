@@ -1,0 +1,47 @@
+0:00:00.370,0:00:04.040
+We want the FetchWeatherTask to[br]return an array of string forecasts.
+
+0:00:05.210,0:00:08.840
+This means we need to modify[br]the return type of the AsyncTask to be
+
+0:00:08.840,0:00:10.160
+a string array.
+
+0:00:10.160,0:00:13.100
+The effect of this is that the[br]doInBackground method will now return
+
+0:00:13.100,0:00:14.530
+a string array.
+
+0:00:14.530,0:00:17.085
+In this method,[br]after we query the server and
+
+0:00:17.085,0:00:21.660
+then read in the input stream,[br]we're going to perform this code.
+
+0:00:21.660,0:00:25.600
+To parse the response from the server,[br]we call getWeatherDataFromJson.
+
+0:00:25.600,0:00:30.540
+We pass in the forecast JSON string,[br]as well as the number of forecast days.
+
+0:00:30.540,0:00:33.290
+To make sure that this is[br]returning the right string array,
+
+0:00:33.290,0:00:37.650
+we can go into the method, and then at[br]the bottom of the method, we just add
+
+0:00:37.650,0:00:41.990
+some logging statements to print out[br]every element of the string array.
+
+0:00:41.990,0:00:44.550
+Now, when you compile the code and[br]run it on your device,
+
+0:00:44.550,0:00:48.060
+you can hit the Refresh button to[br]pull the data from the server.
+
+0:00:48.060,0:00:51.650
+Then, if you open up log cat, you can[br]see that it was parsed correctly,
+
+0:00:51.650,0:00:54.020
+where you see all the forecast[br]entries being printed out.

@@ -1,0 +1,128 @@
+0:00:00.160,0:00:02.340
+As you can see, the receiver itself is pretty
+
+0:00:02.340,0:00:06.564
+simple. Extend the broadcast receiver class and override the
+
+0:00:06.564,0:00:09.680
+onreceive handle as you can see here. Receivers are
+
+0:00:09.680,0:00:13.520
+lightweight components meant to listen for broadcasts, reacts, and complete
+
+0:00:13.520,0:00:16.690
+within five seconds that usually means simply starting a
+
+0:00:16.690,0:00:19.350
+service or sending a notification. To have your receiver
+
+0:00:19.350,0:00:22.470
+start listening for broadcasts, you need to register it
+
+0:00:22.470,0:00:25.260
+either through an entry in your manifest like this or
+
+0:00:25.260,0:00:29.240
+dynamically within another application component usually an activity,
+
+0:00:29.240,0:00:33.080
+like this. Then you define the intent filter that
+
+0:00:33.080,0:00:36.370
+specifies the broadcast event you want to receive.
+
+0:00:36.370,0:00:38.570
+You can do that either here in the manifest
+
+0:00:38.570,0:00:40.430
+or if you're registering your receiver with an
+
+0:00:40.430,0:00:43.690
+application component such as an activity, you can create
+
+0:00:43.690,0:00:46.630
+your new intent filter like this. The biggest difference
+
+0:00:46.630,0:00:50.460
+between manifest and dynamic receivers is when they're triggered.
+
+0:00:50.460,0:00:53.880
+A programmatically-registered receiver will only receive broadcasts while
+
+0:00:53.880,0:00:57.890
+the app is running. While a manifest declared
+
+0:00:57.890,0:01:02.060
+receiver will start your app specifically to receive
+
+0:01:02.060,0:01:05.069
+your broadcasts. For example, I usually code with
+
+0:01:05.069,0:01:07.610
+my noise cancelling headphones on, so a music
+
+0:01:07.610,0:01:10.160
+app like this might want to register a runtime
+
+0:01:10.160,0:01:12.710
+receiver to listen to the system intent broadcast
+
+0:01:12.710,0:01:15.590
+that announces when headphones are unplugged. That will allow
+
+0:01:15.590,0:01:18.790
+it to automatically pause playback, when your audio routing switches
+
+0:01:18.790,0:01:21.950
+from headphone to speakers. In this case, we can use
+
+0:01:21.950,0:01:24.750
+a runtime receiver, because the app is guaranteed to be
+
+0:01:24.750,0:01:28.250
+running if music is playing. On the other hand, if I'm
+
+0:01:28.250,0:01:30.790
+using Google Cloud Messaging to listen for new data from
+
+0:01:30.790,0:01:34.730
+my server, I want to register a manifest receiver that always listens
+
+0:01:34.730,0:01:37.420
+for incoming tickles from my server and will wake up
+
+0:01:37.420,0:01:40.870
+my app if it's being terminated to trigger the update code,
+
+0:01:40.870,0:01:43.130
+usually a sync adapter, which is something we will discuss
+
+0:01:43.130,0:01:46.700
+later in lesson six. There's a bunch of system broadcasts
+
+0:01:46.700,0:01:48.920
+you can monitor to help your app react to changes
+
+0:01:48.920,0:01:51.880
+in the system. You can see the system broadcast actions within
+
+0:01:51.880,0:01:56.515
+the intent documentation at developer.android.com. One great use for broadcast
+
+0:01:56.515,0:02:00.030
+receivers is to monitor for changes to internet connectivity or
+
+0:02:00.030,0:02:03.230
+charging status. Imagine your app has to upload a movie
+
+0:02:03.230,0:02:06.170
+or calculate the next 10,000 moves in a game of chess,
+
+0:02:06.170,0:02:09.620
+how might you use a receiver to wait until the device is plugged in
+
+0:02:09.620,0:02:11.810
+before starting that process? Should it be
+
+0:02:11.810,0:02:13.870
+a manifest receiver or a broadcast receiver?

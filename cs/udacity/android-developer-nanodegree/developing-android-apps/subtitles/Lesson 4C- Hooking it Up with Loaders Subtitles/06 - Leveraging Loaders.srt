@@ -1,0 +1,110 @@
+0:00:00.402,0:00:03.650
+All right we're going to show you how[br]to create a CursorLoader in three
+
+0:00:03.650,0:00:05.360
+easy steps.
+
+0:00:05.360,0:00:08.790
+We start by creating an integer[br]constant for a Loader ID.
+
+0:00:08.790,0:00:11.110
+Then we implement the Loader Call backs.
+
+0:00:11.110,0:00:14.410
+Finally we initialize the Loader[br]with the LoaderManager.
+
+0:00:14.410,0:00:18.910
+We start just by creating a Loader ID,[br]which is an integer constant.
+
+0:00:18.910,0:00:21.570
+A single activity can[br]use multiple Loaders and
+
+0:00:21.570,0:00:23.580
+they are differentiated by these ID's.
+
+0:00:25.500,0:00:28.020
+The we have to fill in[br]the Loader Callbacks.
+
+0:00:28.020,0:00:30.760
+The Loader Callbacks[br]are a generic interface class,
+
+0:00:30.760,0:00:33.150
+with one parametrized type.
+
+0:00:33.150,0:00:37.260
+When we use the Loader Callbacks with a[br]CursorLoader, the parameterized type we
+
+0:00:37.260,0:00:41.480
+use is Cursor, which makes[br]the callbacks look like they do here.
+
+0:00:41.480,0:00:44.430
+The most interesting one for[br]us is onCreateLoader.
+
+0:00:45.880,0:00:50.165
+OnCreateLoader returns a loader[br]with parameterized type, Cursor.
+
+0:00:50.165,0:00:52.990
+This is where we create and[br]return our CursorLoader.
+
+0:00:54.310,0:00:57.795
+CursorLoader has a constructor that[br]takes all of the standard content
+
+0:00:57.795,0:01:02.445
+provider query parameters, and will[br]call the content provider on our behalf.
+
+0:01:02.445,0:01:05.114
+When it is executed[br]by the LoaderManager.
+
+0:01:05.114,0:01:07.774
+Since CursorLoader derives[br]an Async TaskLoader,
+
+0:01:07.774,0:01:10.765
+it will be executed in[br]a background thread.
+
+0:01:10.765,0:01:15.010
+OnLoadFinished is called when the loader[br]completes, and our data is ready.
+
+0:01:15.010,0:01:19.100
+To use the data in our cursor adaptor,[br]we just call SwapCursor,
+
+0:01:19.100,0:01:22.860
+but this is where we would also perform[br]any other UI updates we'd want to make
+
+0:01:22.860,0:01:24.585
+when the data is ready.
+
+0:01:24.585,0:01:28.920
+OnLoaderReset is typically only called[br]when our loader is being destroyed.
+
+0:01:28.920,0:01:32.780
+It means that we need to remove[br]all references to the Loader Data.
+
+0:01:32.780,0:01:37.190
+To do that we call SwapCursor[br]on our cursor adaptor with null.
+
+0:01:37.190,0:01:41.150
+Finally, we use the LoaderManager[br]to initialize our loader.
+
+0:01:41.150,0:01:42.780
+We pass in that loader ID,
+
+0:01:42.780,0:01:48.130
+the loader call back we just filled out,[br]and an optional bundle.
+
+0:01:48.130,0:01:51.840
+This will do all that cool life cycle[br]stuff we covered in the loader intro,
+
+0:01:51.840,0:01:55.880
+such as, calling onCreate loader if[br]the loader doesn't already exist.
+
+0:01:55.880,0:01:57.920
+When using loaders in a fragment,
+
+0:01:57.920,0:02:00.990
+we initialize our loader in[br]the onActivityCreated method.
+
+0:02:02.780,0:02:05.910
+And that's it,[br]you've got a basic CursorLoader.
+
+0:02:05.910,0:02:08.120
+We're going to have you write one for[br]our next exercise.

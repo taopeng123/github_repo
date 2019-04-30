@@ -1,0 +1,11 @@
+0:00:00.640,0:00:04.260
+Read through the documentation provided[br]in the instructor notes on foreign
+
+0:00:04.260,0:00:05.890
+keys and joins.
+
+0:00:05.890,0:00:09.220
+Describe what the foreign key[br]constraint does for sunshine.
+
+0:00:10.270,0:00:13.020
+What does this mean in terms[br]of testing our weather table?

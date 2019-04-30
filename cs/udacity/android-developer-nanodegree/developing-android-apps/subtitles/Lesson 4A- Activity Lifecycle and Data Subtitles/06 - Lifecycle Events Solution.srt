@@ -1,0 +1,5 @@
+0:00:00.480,0:00:05.850
+Starting with tear down, the app will first be paused, stopped, destroyed and
+
+0:00:05.850,0:00:08.340
+then recreated, restarted and resumed.

@@ -1,0 +1,50 @@
+0:00:00.390,0:00:01.770
+Now that you know how to create an
+
+0:00:01.770,0:00:05.410
+arbitrarily complex nested layout, it's important to understand
+
+0:00:05.410,0:00:08.109
+that they don't come for free. Once again,
+
+0:00:08.109,0:00:10.965
+the resource constraints of the platform spoil the party.
+
+0:00:10.965,0:00:15.351
+[SOUND] Inflating complex layouts can be expensive, potentially
+
+0:00:15.351,0:00:19.427
+impacting the performance and responsiveness of your app.
+
+0:00:19.427,0:00:21.765
+So there are two good rules of thumb
+
+0:00:21.765,0:00:25.620
+to help. First, keep your layout shallow and wide,
+
+0:00:25.620,0:00:28.930
+rather than deep and narrow. That means you're better
+
+0:00:28.930,0:00:32.490
+off with more siblings and fewer children. Because it's
+
+0:00:32.490,0:00:34.970
+never as simple as that, you also want to
+
+0:00:34.970,0:00:38.930
+avoid having excessive views. In the most general terms, that
+
+0:00:38.930,0:00:42.430
+means your activities' full hierarchy should never have more
+
+0:00:42.430,0:00:45.450
+than ten nested views or over 80 views in
+
+0:00:45.450,0:00:48.590
+total. That probably sounds like a lot, but let's
+
+0:00:48.590,0:00:51.350
+open up the Hierarchy Viewer tool in Android studio and
+
+0:00:51.350,0:00:53.170
+see just how quickly that can add up

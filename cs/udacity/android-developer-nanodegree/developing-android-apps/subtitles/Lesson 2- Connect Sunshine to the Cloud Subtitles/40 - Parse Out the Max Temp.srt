@@ -1,0 +1,47 @@
+0:00:00.480,0:00:02.719
+For the next step, let's do an exercise that focuses
+
+0:00:02.719,0:00:06.400
+on extracting out the value of one of those attributes. We're
+
+0:00:06.400,0:00:09.480
+going to do this exercise a little bit differently. You'll implement this
+
+0:00:09.480,0:00:12.740
+on the Udacity platform. And we'll be able to verify that
+
+0:00:12.740,0:00:16.420
+your code is correct. After this video, you'll see an IDE
+
+0:00:16.420,0:00:18.870
+like this. Where it contains some starter code, as well as
+
+0:00:18.870,0:00:22.790
+some j unit tests in a separate tab. In particular, we
+
+0:00:22.790,0:00:25.780
+want you to implement this function, to get the max temperature
+
+0:00:25.780,0:00:28.160
+for a day. You're given a weather JSON
+
+0:00:28.160,0:00:30.390
+string, formatted the same way as you would get
+
+0:00:30.390,0:00:32.700
+from the Open Weather Map service. And you
+
+0:00:32.700,0:00:35.910
+also get the day index that we care about.
+
+0:00:35.910,0:00:37.340
+Feel free to play around with the code
+
+0:00:37.340,0:00:40.520
+in Android Studio, or a separate development environment, before
+
+0:00:40.520,0:00:43.070
+you paste your answer here. Or you can use
+
+0:00:43.070,0:00:45.800
+the Udacity IDE. Whichever feels more natural to you.

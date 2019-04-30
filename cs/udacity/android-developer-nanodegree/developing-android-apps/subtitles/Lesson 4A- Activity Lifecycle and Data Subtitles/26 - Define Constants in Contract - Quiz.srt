@@ -1,0 +1,44 @@
+0:00:00.810,0:00:02.940
+Now, that you've seen[br]the WeatherEntry class for
+
+0:00:02.940,0:00:04.560
+the weather table, it's your turn.
+
+0:00:05.810,0:00:06.860
+Add the constants for
+
+0:00:06.860,0:00:11.850
+the location table in the LocationEntry[br]inner contract class.
+
+0:00:11.850,0:00:16.200
+These constants included the table name,[br]and the name of each column.
+
+0:00:16.200,0:00:19.950
+As we've shown in a few previous[br]diagrams, the columns need to store
+
+0:00:19.950,0:00:25.010
+the location setting, latitude,[br]longitude, and the city name.
+
+0:00:25.010,0:00:27.720
+After you finish coding[br]the location entry class,
+
+0:00:27.720,0:00:30.190
+make sure to look at the solution video.
+
+0:00:30.190,0:00:33.760
+You'll want to use the same constant[br]names that we use, since the code in
+
+0:00:33.760,0:00:38.280
+the other classes you received relies[br]on these constant names being the same.
+
+0:00:38.280,0:00:39.148
+Once you've finished,
+
+0:00:39.148,0:00:43.000
+you will have defined all of[br]the columns for both of the tables.
+
+0:00:43.000,0:00:47.300
+Next, we'll be ready to use these column[br]names to actually create the tables
+
+0:00:47.300,0:00:47.850
+in the database.

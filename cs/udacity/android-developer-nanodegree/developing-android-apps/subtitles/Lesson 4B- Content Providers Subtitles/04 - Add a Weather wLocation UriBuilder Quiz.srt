@@ -1,0 +1,17 @@
+0:00:00.380,0:00:03.540
+Write code to build a URI[br]to query the weather
+
+0:00:03.540,0:00:08.200
+with location within the weatherEntry[br]inner class within weatherContract.
+
+0:00:08.200,0:00:11.690
+Look at the instructor notes for[br]a link to the URI builder classes for
+
+0:00:11.690,0:00:13.370
+how to do this.
+
+0:00:13.370,0:00:16.370
+Uncomment out the test[br]weatherLocation function within
+
+0:00:16.370,0:00:19.560
+test weatherContract to[br]verify your implementation.

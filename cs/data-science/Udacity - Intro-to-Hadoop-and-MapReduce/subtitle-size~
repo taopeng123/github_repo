@@ -1,0 +1,16 @@
+Total: 129.4 kB
+129.4 * 9.6 / (1.2 * 1024) = 1.01 hours
+
+
+
+--
+
+database: 228.7 kB
+soft dev proc: 1.2 MB (about 9.6 hours)
+
+ios: 1.8 MB
+ml: 2.9 MB
+
+big data: 479.2 kB
+ml4t: 901.8 kB
+data visual: 6 hours (1.2*1024*6/9.6 = 768 kB)

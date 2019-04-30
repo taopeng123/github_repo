@@ -1,0 +1,20 @@
+0:00:00.430,0:00:03.130
+In the previous explanation[br]of our content URIs,
+
+0:00:03.130,0:00:05.910
+I showed the four types[br]we will use in this app.
+
+0:00:05.910,0:00:10.260
+Fill out the buildUriMatcher function in[br]the WeatherProvider class we gave you.
+
+0:00:10.260,0:00:10.850
+To help you,
+
+0:00:10.850,0:00:14.620
+we've given you a link to the UriMatcher[br]documentation in the instructor notes.
+
+0:00:14.620,0:00:19.040
+Un-comment the UriMatcher[br]test in test UriMatcher, and
+
+0:00:19.040,0:00:20.850
+run it to see if you've[br]done your work correctly.

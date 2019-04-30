@@ -1,0 +1,104 @@
+0:00:00.090,0:00:02.990
+Once you install Android Studio you can open it and check for
+
+0:00:02.990,0:00:04.570
+updates before proceeding.
+
+0:00:04.570,0:00:07.096
+Looks like we have the latest version installed already, so
+
+0:00:07.096,0:00:08.191
+we can close this dialog.
+
+0:00:08.191,0:00:11.960
+We're going to be setting up a new project using Android Studio version 1.01.
+
+0:00:11.960,0:00:16.490
+As you follow along, if things look differently on your computer, that's okay.
+
+0:00:16.490,0:00:19.410
+It's probably because you're on a newer version of Android Studio.
+
+0:00:19.410,0:00:22.020
+For the most up-to-date instructions on how to get started,
+
+0:00:22.020,0:00:24.260
+you can always check the instructor notes below.
+
+0:00:24.260,0:00:27.240
+Now, let's click here to start a new Android Studio project.
+
+0:00:27.240,0:00:30.550
+In the project wizard, we set the app name to be Sunshine.
+
+0:00:30.550,0:00:33.180
+Then we provide a corresponding package name.
+
+0:00:33.180,0:00:36.570
+The package name should be globally unique across all packages installed
+
+0:00:36.570,0:00:37.540
+on Android.
+
+0:00:37.540,0:00:38.900
+To avoid conflicts,
+
+0:00:38.900,0:00:41.970
+use the reverse of the name of the internet domain that you own.
+
+0:00:41.970,0:00:44.520
+This follows the Java package name conventions.
+
+0:00:44.520,0:00:46.620
+We're using the combat example name space for
+
+0:00:46.620,0:00:48.680
+our Sunshine app because it's a sample.
+
+0:00:48.680,0:00:52.240
+But you cannot publish an app on Google Play with that name space.
+
+0:00:52.240,0:00:54.840
+Usually leaving the default package name is fine.
+
+0:00:54.840,0:00:58.270
+However, this course was originally filmed with a older version of
+
+0:00:58.270,0:01:03.110
+Android Studio where the module name app was included by default.
+
+0:01:03.110,0:01:04.950
+So, we'll edit the package name here, so
+
+0:01:04.950,0:01:08.180
+it matches what we had in the older version of Android Studio.
+
+0:01:08.180,0:01:10.920
+For your code to match the rest of the code in this course,
+
+0:01:10.920,0:01:12.960
+you should add the dot app as well.
+
+0:01:12.960,0:01:16.800
+Next, we choose our project location and then we can hit Next.
+
+0:01:16.800,0:01:19.400
+Now we need to choose our minimum SDK version.
+
+0:01:19.400,0:01:20.940
+In previous versions of Android Studio,
+
+0:01:20.940,0:01:24.070
+you would also have to select the target SDK.
+
+0:01:24.070,0:01:27.230
+Now the project wizard automatically sets the target SDK
+
+0:01:27.230,0:01:29.590
+to the latest version of Android.
+
+0:01:29.590,0:01:30.850
+Even though it's already selected for
+
+0:01:30.850,0:01:34.480
+you, it's important to know the distinction between minimum and target SDK.

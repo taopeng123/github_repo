@@ -1,0 +1,74 @@
+0:00:00.380,0:00:02.190
+Let me the explain the reasoning that I use when I
+
+0:00:02.190,0:00:05.150
+look at a new layout. It looks like there's two equally spaced
+
+0:00:05.150,0:00:09.120
+columns here. That signals to me we need linear layout weights,
+
+0:00:09.120,0:00:12.460
+where each of these have equal weights. So let's create a horizontal
+
+0:00:12.460,0:00:16.712
+linear layout. Within this first chart, we have three vertically stacked
+
+0:00:16.712,0:00:19.830
+text views, so we have a vertical linear layout, and the same
+
+0:00:19.830,0:00:23.030
+goes for this second chart with has two elements vertically stacked
+
+0:00:23.030,0:00:25.570
+on top of each other, which means we use a vertical linear
+
+0:00:25.570,0:00:28.220
+layout as well. And here's the code, we created a
+
+0:00:28.220,0:00:32.490
+new list item forecasts today XML file under the layout folder.
+
+0:00:32.490,0:00:35.340
+The code looks very similar to list item forecast. I
+
+0:00:35.340,0:00:38.540
+has a horizontal linear layout, as a root element. The first
+
+0:00:38.540,0:00:41.370
+channel is a vertical linear layout with the width zero
+
+0:00:41.370,0:00:44.970
+and a weight of one. The second child is another vertical
+
+0:00:44.970,0:00:47.300
+linear layout with a width of zero and a weight
+
+0:00:47.300,0:00:50.600
+of one, that way the horizontal space will be distributed evenly
+
+0:00:50.600,0:00:53.200
+among each child. If you go back to the first
+
+0:00:53.200,0:00:55.700
+linear layout, notice that we have three text views within
+
+0:00:55.700,0:00:59.630
+it. For date, high temperature, and low temperature. We specify
+
+0:00:59.630,0:01:02.550
+gravity to be center horizontal. So anything within the linear
+
+0:01:02.550,0:01:06.220
+layout will be centered horizontally. Otherwise, by default, they would
+
+0:01:06.220,0:01:09.590
+be left aligned to the linear layout. The same applies
+
+0:01:09.590,0:01:12.270
+for the second linear layout. We specify gravity to be
+
+0:01:12.270,0:01:15.720
+center horizontal so that the icon and the weather forecast
+
+0:01:15.720,0:01:18.130
+text view within it are also centered horizontally.

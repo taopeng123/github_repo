@@ -1,0 +1,41 @@
+0:00:00.560,0:00:04.070
+So, Rato, what have we learned in this lesson?
+
+0:00:04.070,0:00:06.300
+>> Well, I learned that I do not want to write
+
+0:00:06.300,0:00:10.060
+databases and content providers. What did you learn in this lesson?
+
+0:00:10.060,0:00:14.440
+>> Well, J unit tests are awesome, and building
+
+0:00:14.440,0:00:16.230
+the back end framework of our apps is the
+
+0:00:16.230,0:00:19.270
+most glorious of work. It's an absolutely vital part
+
+0:00:19.270,0:00:22.480
+of creating a robust app with a great user experience.
+
+0:00:22.480,0:00:25.715
+>> And I also learned that Dan cannot do an English accent.
+
+0:00:25.715,0:00:29.309
+>> [SOUND]. Fortunately, you can get ready to welcome back Katherine
+
+0:00:29.309,0:00:32.912
+for lesson 5, where we'll shatter our activity into fragments, use
+
+0:00:32.912,0:00:36.517
+our content providers to populate more complex UIs, and build layouts
+
+0:00:36.517,0:00:39.900
+that work as well on tablets as they do on phones.
+
+0:00:39.900,0:00:42.100
+>> Which seems like a convenient segway
+
+0:00:42.100,0:00:44.300
+into the history and evolution of Android hardware,

@@ -1,0 +1,62 @@
+0:00:00.430,0:00:03.490
+Once you've learned how to parse JSON[br]data, it's pretty straightforward to
+
+0:00:03.490,0:00:06.370
+be able to parse the rest[br]of the fields that we need.
+
+0:00:06.370,0:00:08.109
+Since this isn't a course on Java or
+
+0:00:08.109,0:00:12.470
+JSON, we're going to provide you with[br]the parsing code in the gist below.
+
+0:00:12.470,0:00:14.280
+And this is what the gist looks like.
+
+0:00:14.280,0:00:16.070
+There are three helper methods.
+
+0:00:16.070,0:00:18.430
+The first is for formatting dates.
+
+0:00:18.430,0:00:20.640
+The second is for rounding temperatures.
+
+0:00:20.640,0:00:25.450
+The third is returning a forecast JSON[br]string into an array of forecasts.
+
+0:00:25.450,0:00:29.960
+This method also handles associating[br]a date with each forecast entry.
+
+0:00:29.960,0:00:33.930
+We start with a current date, and we[br]increment one for each successive day.
+
+0:00:33.930,0:00:36.750
+Notice that we also use Julian dates,[br]which is the number of
+
+0:00:36.750,0:00:39.570
+days that have passed since[br]the beginning of the Julian period.
+
+0:00:39.570,0:00:41.813
+More information is in[br]the instructor notes below, but
+
+0:00:41.813,0:00:44.400
+it's how we'll consistently[br]deal with dates in our app.
+
+0:00:44.400,0:00:47.550
+That way, when comparing dates,[br]we don't have to worry about taking into
+
+0:00:47.550,0:00:50.760
+account time zones or[br]daylight savings time.
+
+0:00:50.760,0:00:54.040
+Update the fetch weather tasks to[br]use these helper functions and
+
+0:00:54.040,0:00:57.890
+the doInBackground method should[br]return a string array of forecasts.
+
+0:00:57.890,0:01:00.750
+You can log the output to check[br]that the array is correct.
+
+0:01:00.750,0:01:03.150
+The format of one day's[br]forecast should look like this.

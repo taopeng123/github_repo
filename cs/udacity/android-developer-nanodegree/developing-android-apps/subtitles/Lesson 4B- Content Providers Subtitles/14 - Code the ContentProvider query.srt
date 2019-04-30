@@ -1,0 +1,59 @@
+0:00:00.340,0:00:01.280
+For us,
+
+0:00:01.280,0:00:06.090
+query will be the most complex of[br]the required content provider methods.
+
+0:00:06.090,0:00:09.120
+We've given you the bones,[br]of the query operation.
+
+0:00:09.120,0:00:12.970
+As you can see,[br]we use our SURI nature object,
+
+0:00:12.970,0:00:16.149
+once again to switch on the type of URI.
+
+0:00:16.149,0:00:19.220
+Note that each response from this[br]function, will return a cursor that
+
+0:00:19.220,0:00:23.740
+corresponds to the incoming[br]query as defined by the URI.
+
+0:00:23.740,0:00:26.470
+This is the only function where we[br]will have to fill out a different
+
+0:00:26.470,0:00:30.000
+response for every type of[br]URI in the content provider,
+
+0:00:30.000,0:00:32.360
+as several of them[br]are used in queries only.
+
+0:00:32.360,0:00:36.520
+At the bottom of our function, we're[br]going to set the notification URI for
+
+0:00:36.520,0:00:39.370
+our cursor to the one that[br]was passed into the function.
+
+0:00:39.370,0:00:43.550
+This causes the cursor to register[br]a content observer, to watch for
+
+0:00:43.550,0:00:47.430
+changes that happen to that URI and[br]any of its descendants.
+
+0:00:47.430,0:00:51.020
+This allows the content provider,[br]to easily tell the UI when the cursor
+
+0:00:51.020,0:00:55.040
+changes, on operations like[br]a database insert or update.
+
+0:00:55.040,0:00:57.620
+We'll see more on this later,[br]when we cover inserting and
+
+0:00:57.620,0:00:59.300
+updating the database.
+
+0:00:59.300,0:01:03.840
+Uncomment the test basic weather query[br]function within test provider and
+
+0:01:03.840,0:01:07.600
+run this code when you're finished, to[br]make sure all of this is working well.

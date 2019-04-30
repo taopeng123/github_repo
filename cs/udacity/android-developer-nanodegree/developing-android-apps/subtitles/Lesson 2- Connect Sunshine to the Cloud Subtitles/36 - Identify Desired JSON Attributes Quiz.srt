@@ -1,0 +1,44 @@
+0:00:00.500,0:00:04.390
+The URL that we built looks good, and the JSON string from the server,
+
+0:00:04.390,0:00:08.440
+also looks good, however, it still is one long string.
+
+0:00:08.440,0:00:12.170
+Let's look at it more carefully to see what data, we should extract from it.
+
+0:00:12.170,0:00:15.400
+In order to make sense of the string that comes back from the server.
+
+0:00:15.400,0:00:20.090
+We can put it through a JSON formatter or a JSON prettifier.
+
+0:00:20.090,0:00:20.710
+If you Google for
+
+0:00:20.710,0:00:24.810
+those terms, you'll be able to find a helpful tool, such as this one.
+
+0:00:24.810,0:00:26.570
+Here we pasted the result of the web query.
+
+0:00:30.110,0:00:33.749
+Then it formatted the output for us, showing us the hierarchy of these element.
+
+0:00:34.840,0:00:37.890
+Now based on the wire frames that you saw for the sunshine app,
+
+0:00:37.890,0:00:41.680
+can you tell us which of these leaf nodes we care about extracting?
+
+0:00:41.680,0:00:45.210
+Even though we will have to traverse through parent nodes, for the purposes of
+
+0:00:45.210,0:00:47.870
+the quiz on the next screen, we're just looking at the leaf nodes.
+
+0:00:49.080,0:00:51.740
+Make your selection below on which attributes we'll need to
+
+0:00:51.740,0:00:53.450
+display the list of forecasts.

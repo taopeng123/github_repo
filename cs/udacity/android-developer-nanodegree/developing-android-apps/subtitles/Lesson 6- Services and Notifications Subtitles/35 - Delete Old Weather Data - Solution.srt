@@ -1,0 +1,20 @@
+0:00:00.160,0:00:01.740
+All right, you're done.
+
+0:00:01.740,0:00:03.150
+Let's look at the solution.
+
+0:00:03.150,0:00:06.780
+Inside of our sync adapter,[br]right after doing our bulk insert,
+
+0:00:06.780,0:00:09.400
+we can just call the content[br]provider with a delete,
+
+0:00:09.400,0:00:12.690
+with the date as our current[br]JulianStartDay minus 1.
+
+0:00:12.690,0:00:16.090
+This is one of the advantages[br]of using Julian days.
+
+0:00:16.090,0:00:16.590
+Done.

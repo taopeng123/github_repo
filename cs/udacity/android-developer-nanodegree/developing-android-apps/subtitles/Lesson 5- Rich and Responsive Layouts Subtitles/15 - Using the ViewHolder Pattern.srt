@@ -1,0 +1,80 @@
+0:00:00.496,0:00:04.750
+In the ForecastAdaptor bindView method,[br]we have to traverse a view hierarchy to
+
+0:00:04.750,0:00:07.480
+find the views in order[br]to set data onto them.
+
+0:00:07.480,0:00:08.890
+If it's a recycled view,
+
+0:00:08.890,0:00:12.450
+meaning it's been used in the list[br]previously to display other data,
+
+0:00:12.450,0:00:16.129
+we still have to traverse the view[br]hierarchy to find all the views.
+
+0:00:16.129,0:00:18.930
+To remove unnecessary[br]find view by ID calls,
+
+0:00:18.930,0:00:20.810
+we can use the view holder pattern.
+
+0:00:20.810,0:00:23.290
+For a list item layout that[br]contains different views,
+
+0:00:23.290,0:00:25.270
+we can create a view holder object.
+
+0:00:25.270,0:00:28.740
+It contains member variables that[br]reference each view in the layout.
+
+0:00:28.740,0:00:32.009
+The view holder object is stored[br]in the tag field of the view.
+
+0:00:32.009,0:00:35.022
+The next time that the view[br]is recycled and used again,
+
+0:00:35.022,0:00:38.113
+we can just immediately set[br]the data onto these fields.
+
+0:00:38.113,0:00:40.667
+You don't have to go[br]find all the views again.
+
+0:00:40.667,0:00:43.779
+This is our ViewHolder class,[br]you can name it anything you want,
+
+0:00:43.779,0:00:44.974
+it's just a java class.
+
+0:00:44.974,0:00:48.794
+Given the list item layout,[br]we do all the fine view by ID calls.
+
+0:00:48.794,0:00:51.778
+That way, we can hold references[br]to all the child views.
+
+0:00:51.778,0:00:53.020
+In the newView method,
+
+0:00:53.020,0:00:57.620
+after we've inflated the view, we create[br]a new viewHolder object from that view.
+
+0:00:57.620,0:01:00.190
+Then we set the ViewHolder[br]as the tag of the view.
+
+0:01:00.190,0:01:03.120
+The tag can be used towards any object,[br]but don't abuse it,
+
+0:01:03.120,0:01:05.650
+because when you read it back, you[br]have to know what you stored in there.
+
+0:01:07.640,0:01:09.720
+Then in the adapter bindView call,
+
+0:01:09.720,0:01:13.170
+we read from the tag to get[br]back the viewHolder object.
+
+0:01:13.170,0:01:16.300
+Now we immediately have references to[br]all the individual views that we need to
+
+0:01:16.300,0:01:20.040
+update, such as the icon view,[br]date view, description view, and so on.

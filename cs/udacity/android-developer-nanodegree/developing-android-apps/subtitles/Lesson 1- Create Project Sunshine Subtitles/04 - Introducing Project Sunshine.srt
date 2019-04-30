@@ -1,0 +1,47 @@
+0:00:00.630,0:00:04.770
+In the course, we're going to build a weather app called Sunshine. The main
+
+0:00:04.770,0:00:09.800
+screen is a list of this week's forecast, with an emphasized presentation for
+
+0:00:09.800,0:00:14.870
+today's weather. With just a quick glance, I can decide if,
+
+0:00:14.870,0:00:20.560
+today is a stay inside, in code day. Or if I should code from the park,
+
+0:00:20.560,0:00:26.256
+instead. We have icons to indicate conditions, like snow,
+
+0:00:26.256,0:00:30.790
+rain, fog or sunshine. We can scroll through the list,
+
+0:00:30.790,0:00:34.730
+to see a long range forecast. With a click on one of the forecasts,
+
+0:00:34.730,0:00:38.900
+will bring up a detailed view containing the rest of the weathery goodness,
+
+0:00:38.900,0:00:43.390
+which also gives us the ability to share the weather with our friends.
+
+0:00:43.390,0:00:48.940
+We can go to Settings and change the unit of measure, as well as the location.
+
+0:00:48.940,0:00:53.500
+The app can even post system wide notifications, to let us know about weather
+
+0:00:53.500,0:00:58.930
+conditions without even entering the app. So, you might ask, why are we
+
+0:00:58.930,0:01:03.120
+building a weather app? We chose the weather app because it's a simple concept,
+
+0:01:03.120,0:01:07.590
+which touches most of the core APIs we want to teach and everyone can relate to
+
+0:01:07.590,0:01:12.090
+weather, unless you're in a bunker. By the end of the course, you'll be able
+
+0:01:12.090,0:01:16.110
+to use those APIs and concepts to build your own app for your final project.

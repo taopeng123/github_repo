@@ -1,0 +1,68 @@
+0:00:00.290,0:00:02.350
+Let's continue looking at our DB helper.
+
+0:00:03.450,0:00:06.360
+The other important function[br]that we are required to fill in
+
+0:00:06.360,0:00:08.290
+is the on-upgrade method.
+
+0:00:08.290,0:00:11.740
+This function gets called when the[br]database has already been created but
+
+0:00:11.740,0:00:13.740
+the version is changed.
+
+0:00:13.740,0:00:18.110
+A version change or upgrade should[br]signify that the columns, tables or
+
+0:00:18.110,0:00:21.060
+general structure[br]the database has changed.
+
+0:00:21.060,0:00:24.744
+The SQLite Open Helper knows[br]the database version has changed because
+
+0:00:24.744,0:00:27.810
+the version we passed into[br]its constructure has changed.
+
+0:00:28.840,0:00:31.600
+Make sure to always change[br]the database version
+
+0:00:31.600,0:00:34.460
+when you make changes[br]to the database tables.
+
+0:00:34.460,0:00:37.570
+You might think,[br]why would I care about this?
+
+0:00:37.570,0:00:40.590
+I'm not upgrading anything yet,[br]so why bother?
+
+0:00:40.590,0:00:43.400
+Because it's important to make sure[br]that your application won't have
+
+0:00:43.400,0:00:45.635
+errors when you make changes[br]to the database tables.
+
+0:00:45.635,0:00:50.160
+Since we are going to be using our[br]database as a cache for web data, and
+
+0:00:50.160,0:00:53.680
+not for use generated content,[br]we'll drop the tables,
+
+0:00:53.680,0:00:54.900
+which deletes all of the data.
+
+0:00:55.910,0:00:59.450
+If the data had contained information[br]that was user generated, of course,
+
+0:00:59.450,0:01:01.130
+we'd want to preserve it.
+
+0:01:01.130,0:01:05.360
+To do that, we'd likely use[br]alter table to add new columns.
+
+0:01:05.360,0:01:06.660
+See the instructor notes for
+
+0:01:06.660,0:01:10.200
+more information on alter table if you[br]are interested in how this is done.

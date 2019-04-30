@@ -1,0 +1,68 @@
+0:00:00.840,0:00:02.050
+And, that's it.
+
+0:00:02.050,0:00:04.640
+We finished creating[br]our ContentProvider.
+
+0:00:04.640,0:00:09.140
+Since this has been an involved section,[br]let's talk about what we created.
+
+0:00:09.140,0:00:13.550
+We started off by defining the URI's[br]that our ContentProvider will support.
+
+0:00:13.550,0:00:16.930
+We then updated our contract[br]to reflect these URIs.
+
+0:00:19.150,0:00:23.800
+From there, we built a URIMatcher that[br]matches these URIs to constants we use
+
+0:00:23.800,0:00:28.620
+in switch statements in all of the other[br]required content provider functions.
+
+0:00:28.620,0:00:31.580
+Then we implemented the getType[br]function to return the type of
+
+0:00:31.580,0:00:34.060
+cursor returned for each URI.
+
+0:00:34.060,0:00:37.030
+We then implemented[br]the ContentProvider query functions,
+
+0:00:37.030,0:00:41.330
+followed by the write operations insert,[br]update, and delete.
+
+0:00:41.330,0:00:44.260
+Finally, we talked about[br]the optional BulkInsert
+
+0:00:44.260,0:00:48.220
+function to make updates to our[br]database in a single transaction.
+
+0:00:48.220,0:00:52.760
+This performs much faster, and causes[br]less wear and tear on the flash chip,
+
+0:00:52.760,0:00:56.310
+compared to updating the database[br]in multiple transaction.
+
+0:00:56.310,0:00:59.210
+There are lots of libraries out[br]there in the Android open source
+
+0:00:59.210,0:01:01.980
+world to help you built[br]ContentProviders.
+
+0:01:01.980,0:01:04.935
+If you want to use them,[br]you'll be able to use them now
+
+0:01:04.935,0:01:07.925
+with the confidence that you know how[br]they work, and what they are doing.
+
+0:01:09.005,0:01:11.215
+So all queries and
+
+0:01:11.215,0:01:15.265
+updates to the database can now be done[br]through the ContentProvider interface.
+
+0:01:15.265,0:01:17.145
+But, we're still not[br]using it in our code.
+
+0:01:18.455,0:01:19.075
+Let's fix that.

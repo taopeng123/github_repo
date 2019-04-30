@@ -1,0 +1,50 @@
+0:00:00.450,0:00:03.190
+The solution is to override the onPostExecute method
+
+0:00:03.190,0:00:05.510
+of the AsyncTask. And this runs on the main
+
+0:00:05.510,0:00:09.410
+thread. We received the string array of forecast results,
+
+0:00:09.410,0:00:11.590
+which came as a return value from the do
+
+0:00:11.590,0:00:15.930
+in background method above. First, we clear the ForecastAdapter
+
+0:00:15.930,0:00:19.300
+of all the previous forecast entries. Then we go
+
+0:00:19.300,0:00:21.810
+ahead and add each new forecast entry one by
+
+0:00:21.810,0:00:25.500
+one to the ForecastAdapter. This is what ultimately triggers
+
+0:00:25.500,0:00:29.050
+the listView to update. Note that if you're targeting Honeycomb
+
+0:00:29.050,0:00:32.210
+devices and above, you can use an addAll method here,
+
+0:00:32.210,0:00:34.430
+so you don't have to add them one by one.
+
+0:00:34.430,0:00:38.320
+You can just add it once and update the listView once.
+
+0:00:38.320,0:00:41.060
+Once you hit Refresh, you'll see the weather forecast for
+
+0:00:41.060,0:00:44.700
+the next seven days for your location. Even though we hit
+
+0:00:44.700,0:00:47.820
+Refresh, we don't have any verbose logging statements being printed
+
+0:00:47.820,0:00:50.520
+out here. We don't need them anymore, because we have a
+
+0:00:50.520,0:00:53.500
+way to check that our code is correct by looking at the UI now.

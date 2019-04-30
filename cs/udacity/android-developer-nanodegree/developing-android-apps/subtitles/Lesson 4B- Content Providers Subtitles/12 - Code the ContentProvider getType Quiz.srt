@@ -1,0 +1,14 @@
+0:00:00.400,0:00:05.080
+Finish up get type, adding the remaining[br]unhandled cases in the switch statement
+
+0:00:05.080,0:00:08.710
+to return mime types for[br]the remaining URI types.
+
+0:00:08.710,0:00:09.800
+Once again,
+
+0:00:09.800,0:00:14.570
+use test get type within test provider[br]to validate that our answer is correct.
+
+0:00:14.570,0:00:17.030
+Remember, the stuff to add[br]is in weather contract.

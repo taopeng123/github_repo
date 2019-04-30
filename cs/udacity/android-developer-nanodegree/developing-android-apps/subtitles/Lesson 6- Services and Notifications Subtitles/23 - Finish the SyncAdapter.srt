@@ -1,0 +1,35 @@
+0:00:00.200,0:00:01.350
+All right, you're done.
+
+0:00:02.760,0:00:04.640
+Let's look at the solution.
+
+0:00:04.640,0:00:10.550
+Okay, we'll begin by adding a log tag[br]in to our AbstractThreadedSyncAdapter.
+
+0:00:10.550,0:00:14.580
+Since this stuff runs in the background,[br]it's helpful to have some logging.
+
+0:00:14.580,0:00:18.590
+Since we ultimately want the syncAdapter[br]to run in an unattended mode,
+
+0:00:18.590,0:00:21.960
+we pull the location query[br]from our Utility class, and
+
+0:00:21.960,0:00:25.020
+then we paste in the code from[br]our existing sunshine service.
+
+0:00:25.020,0:00:27.030
+We'll have to patch a few things up.
+
+0:00:27.030,0:00:30.520
+We'll have to call get contexts[br]to get the current context.
+
+0:00:30.520,0:00:35.150
+For example, we copy over[br]the getWeatherDataFromJson function
+
+0:00:35.150,0:00:37.690
+as well as the addLocation function.
+
+0:00:37.690,0:00:41.210
+Finally we fix updateWeather[br]to use our syncAdapter.

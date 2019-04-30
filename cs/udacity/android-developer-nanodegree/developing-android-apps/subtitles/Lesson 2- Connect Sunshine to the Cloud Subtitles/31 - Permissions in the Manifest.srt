@@ -1,0 +1,26 @@
+0:00:00.460,0:00:03.340
+While declaring a commission is required for using a
+
+0:00:03.340,0:00:07.240
+camera, making a phone call, or accessing contact details. You
+
+0:00:07.240,0:00:09.440
+can do each of these things using a system app
+
+0:00:09.440,0:00:13.340
+as an intermediator. Because the camera app, dialer, and contacts
+
+0:00:13.340,0:00:15.090
+app will each be used to provide the data
+
+0:00:15.090,0:00:17.950
+you request users have the chance to cancel the action
+
+0:00:17.950,0:00:21.300
+you initiated giving them run time ability to refuse your
+
+0:00:21.300,0:00:25.830
+access. However, UI can only access the user's current location
+
+0:00:25.830,0:00:28.170
+if it explicitly declares a user's permission.

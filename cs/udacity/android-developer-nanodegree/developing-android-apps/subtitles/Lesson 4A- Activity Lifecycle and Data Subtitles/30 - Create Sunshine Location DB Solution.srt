@@ -1,0 +1,17 @@
+0:00:00.250,0:00:03.661
+Here's the solution for[br]the location table creation statement.
+
+0:00:03.661,0:00:07.553
+As I mentioned before,[br]we make the location setting unique.
+
+0:00:07.553,0:00:12.204
+This is particularly important because[br]the ID of the existing location is
+
+0:00:12.204,0:00:17.700
+used as a foreign key in our weather[br]table, and therefore must not change.
+
+0:00:17.700,0:00:20.590
+And this constraint will prevent[br]the same location setting
+
+0:00:20.590,0:00:21.840
+from having multiple IDs.

@@ -1,0 +1,20 @@
+Total: 129.4 kB
+129.4 * 9.6 / (1.2 * 1024) = 1.01 hours
+
+Lesson 1: Big Data, 32.2 kB
+Lesson 2: HDFS and MapReduce, 35.2 kB
+Lesson 3: MapReduce Code, 17.6 kB
+Lesson 4: MapReduce Design Patterns, 28.0 kB
+Project
+
+--
+
+database: 228.7 kB
+soft dev proc: 1.2 MB (about 9.6 hours)
+
+ios: 1.8 MB
+ml: 2.9 MB
+
+big data: 479.2 kB
+ml4t: 901.8 kB
+data visual: 6 hours (1.2*1024*6/9.6 = 768 kB)

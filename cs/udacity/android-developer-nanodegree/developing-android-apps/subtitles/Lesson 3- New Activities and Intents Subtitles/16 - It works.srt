@@ -1,0 +1,20 @@
+0:00:00.400,0:00:03.320
+Woo Hoo. Clicking our list items works.
+
+0:00:03.320,0:00:03.920
+>> Woo Hoo. [CLAP]
+
+0:00:03.920,0:00:05.730
+>> Our app is awesome.
+
+0:00:05.730,0:00:05.900
+>> Yeah.
+
+0:00:05.900,0:00:15.070
+>> But clicking on the settings menu does nothing. Whomp whomp. #sadtrombone.
+
+0:00:15.070,0:00:19.990
+>> Mm, don't do that again. Let me save
+
+0:00:19.990,0:00:22.350
+you from Dan. And let's go build the settings now.

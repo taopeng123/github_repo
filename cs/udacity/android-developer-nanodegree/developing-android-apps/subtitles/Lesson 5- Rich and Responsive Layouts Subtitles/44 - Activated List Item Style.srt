@@ -1,0 +1,38 @@
+0:00:00.150,0:00:03.240
+From the documentation, we want singleChoice, mode so
+
+0:00:03.240,0:00:06.080
+that the list item only shows one selected item at a time.
+
+0:00:06.080,0:00:09.540
+You can declare this attribute on the list view in the fragment_main file.
+
+0:00:09.540,0:00:12.920
+However, we don't want to specify ChoiceMode in one ping mode. So, to
+
+0:00:12.920,0:00:16.860
+have these different code paths, we could copy the file in the Layout folder and
+
+0:00:16.860,0:00:19.870
+put it in the Layout and put it in the Layout-sw600dp folder.
+
+0:00:19.870,0:00:23.460
+A better solution is to declare a style. So, we have one layout file but
+
+0:00:23.460,0:00:27.281
+different styles. In the Base styles file in the values folder,
+
+0:00:27.281,0:00:30.580
+we declare ForecastListStyle. We leave it empty because we don't need to
+
+0:00:30.580,0:00:35.640
+specify ChoiceMode. We create a new styles file in the values-sw600dp folder.
+
+0:00:35.640,0:00:40.390
+In the two pane case, the ForecastListStyle does include the ChoiceMode.
+
+0:00:40.390,0:00:43.840
+The two files have a different number of styles. If it's not declared in
+
+0:00:43.840,0:00:46.410
+a higher folder, then it will just fall back to the Base style.

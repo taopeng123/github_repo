@@ -1,0 +1,68 @@
+0:00:00.140,0:00:02.360
+The solution of the previous quiz said that we
+
+0:00:02.360,0:00:05.030
+had to define the wide detail fragment layout in two
+
+0:00:05.030,0:00:09.630
+places. The layout-land and the layout-sw600dp folder. To avoid having
+
+0:00:09.630,0:00:13.050
+multiple copies of this file, we should use layout aliasing.
+
+0:00:13.050,0:00:15.700
+We can check the documentation for layout aliases to see
+
+0:00:15.700,0:00:18.670
+an example. Say we have a main layout file that's
+
+0:00:18.670,0:00:22.177
+for one pane UI. In the layout large and layout-sw600dp
+
+0:00:22.177,0:00:25.190
+folders, we want a multi pane layout. In case you're
+
+0:00:25.190,0:00:28.380
+wondering, layout large is for backward compatibility purposes for
+
+0:00:28.380,0:00:32.280
+large devices prior to Android 3.2, that's when the SW
+
+0:00:32.280,0:00:35.340
+qualifiers were introduced. So back to the point. To
+
+0:00:35.340,0:00:38.290
+avoid code duplication, we can define the two pane layout
+
+0:00:38.290,0:00:41.161
+in the base layout folder. Then, in the values-large
+
+0:00:41.161,0:00:44.870
+and values-sw600dp folders, we can create a reference so that
+
+0:00:44.870,0:00:48.100
+the main layout actually maps to the two pane layout.
+
+0:00:48.100,0:00:50.950
+In the Java code, you can reference it as r.layout.main,
+
+0:00:50.950,0:00:53.640
+but it's actually referencing the two pane layout.
+
+0:00:53.640,0:00:55.110
+This is what the detail fragment should look
+
+0:00:55.110,0:00:57.070
+like afterwards. And this is what the phone
+
+0:00:57.070,0:00:59.610
+landscape view looks like. If you rotate the
+
+0:00:59.610,0:01:02.460
+device, the phone portrait view should be different.
+
+0:01:02.460,0:01:04.400
+In the next coding task, we're going to make
+
+0:01:04.400,0:01:07.800
+the today list item look more like the other items in the list for the tablet.

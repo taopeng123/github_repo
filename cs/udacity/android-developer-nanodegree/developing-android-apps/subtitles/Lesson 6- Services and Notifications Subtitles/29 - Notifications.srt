@@ -1,0 +1,50 @@
+0:00:00.310,0:00:05.160
+All right, you're done. There were a lot of new things that time. But, afterall,
+
+0:00:05.160,0:00:08.530
+you're becoming a seasoned Android programmer by now.
+
+0:00:08.530,0:00:12.910
+As I mentioned before, we're going to use NotificationCompat.Builder
+
+0:00:12.910,0:00:15.310
+to build our notification. It's easy to build
+
+0:00:15.310,0:00:18.000
+a nice looking notification that has our icon
+
+0:00:18.000,0:00:21.220
+representing the weather forecast, the title for our
+
+0:00:21.220,0:00:25.390
+App. And our content text, the forecast with
+
+0:00:25.390,0:00:28.600
+highs and lows. We're going to use another class
+
+0:00:28.600,0:00:32.130
+from the support library, to create a task stack builder
+
+0:00:32.130,0:00:34.960
+for our pending intent. This is a simple case
+
+0:00:34.960,0:00:37.880
+of task stack builder, because all we have is a
+
+0:00:37.880,0:00:40.980
+single item on our stack. We just add the
+
+0:00:40.980,0:00:43.700
+next intent and use it to build out pending intent
+
+0:00:43.700,0:00:47.470
+that we pass into the notification manager. Finally we call
+
+0:00:47.470,0:00:51.150
+the notification manager with the built intent from our builder,
+
+0:00:51.150,0:00:55.480
+with a notify function. One of the great things about notification manager is
+
+0:00:55.480,0:00:58.490
+it can be used from any thread even though it is displaying UI.

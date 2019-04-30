@@ -1,0 +1,32 @@
+0:00:00.500,0:00:02.203
+All right.[br]Now it's your turn.
+
+0:00:02.203,0:00:06.656
+Use a projection in your implementation[br]of the CursorLoader and ForecastAdapter
+
+0:00:06.656,0:00:10.653
+to make your code a bit more efficient[br]in its use of the content provider and
+
+0:00:10.653,0:00:11.312
+database.
+
+0:00:11.312,0:00:12.955
+In the ForecastAdapter,
+
+0:00:12.955,0:00:17.870
+you'll be modifying the convert[br]cursor row to UX format function.
+
+0:00:17.870,0:00:21.819
+Because our code will be making use of[br]this projection in future sessions,
+
+0:00:21.819,0:00:24.980
+we've done step one and[br]step two for you.
+
+0:00:24.980,0:00:27.550
+See the instructor notes for[br]the string array you should use for
+
+0:00:27.550,0:00:30.620
+our projection and the constants for[br]the column indices.
+
+0:00:30.620,0:00:33.770
+Note that we get more data than[br]we are using in the UI right now.

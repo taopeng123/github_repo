@@ -1,0 +1,83 @@
+0:00:00.830,0:00:03.070
+One of the most used implicit intents
+
+0:00:03.070,0:00:05.490
+in Android is the share intent. It's [LAUGH]
+
+0:00:05.490,0:00:07.560
+awesome. It's a great way to waste time
+
+0:00:07.560,0:00:11.356
+for both you and your friends. [SOUND] [LAUGH].
+
+0:00:11.356,0:00:12.720
+>> Dan!
+
+0:00:12.720,0:00:15.780
+>> You can leverage your favorite apps to share photos, texts,
+
+0:00:15.780,0:00:18.910
+videos and general links. And the best part is you don't have
+
+0:00:18.910,0:00:21.990
+to even know what the user's favorite apps are. Just tell
+
+0:00:21.990,0:00:25.840
+Android what data you want to share and it shows your users
+
+0:00:25.840,0:00:28.050
+a list of apps that will share it. Apps that
+
+0:00:28.050,0:00:30.680
+may not have existed when you app was written. To
+
+0:00:30.680,0:00:33.660
+make it even easier to share Android 4.0 added the
+
+0:00:33.660,0:00:37.070
+share action provider and we have it for previous releases of
+
+0:00:37.070,0:00:40.270
+Android as part of a support library. It operates using
+
+0:00:40.270,0:00:44.890
+the action send intent. If we use Raytoe's glorious envelope metaphor,
+
+0:00:44.890,0:00:47.510
+it would be addressed to anyone who could perform action
+
+0:00:47.510,0:00:51.490
+send. The data descend would be included with it as extras
+
+0:00:51.490,0:00:55.060
+either as text, or URI to the binary data. And
+
+0:00:55.060,0:00:57.600
+the MIME type would indicate what the URI points to.
+
+0:01:01.220,0:01:03.470
+Here's what the share action provider will bring to
+
+0:01:03.470,0:01:06.850
+our app: the glorious wire frame. There will be
+
+0:01:06.850,0:01:09.270
+an additional icon in the action bar which will
+
+0:01:09.270,0:01:11.980
+drop down a menu when clicked to reveal potential
+
+0:01:11.980,0:01:15.150
+share actions. Another icon will be added to the
+
+0:01:15.150,0:01:17.640
+right of this one that contains the last application
+
+0:01:17.640,0:01:22.450
+shared to. Add a ShareActionProvider to the fragment within
+
+0:01:22.450,0:01:27.000
+DetailActivity. It will share weather in the following format.
+
+0:01:27.000,0:01:32.844
+Yes, it's just the string we passed into the view plus #SunshineApp.

@@ -1,0 +1,68 @@
+0:00:00.360,0:00:03.420
+Let's go through the wire frames for the settings UI.
+
+0:00:03.420,0:00:07.010
+Within the detail activity in the overflow menu, there's a settings menu item.
+
+0:00:07.010,0:00:10.970
+When you tap on the setting's menu item, it opens up the settings activity.
+
+0:00:11.980,0:00:15.800
+If you tap of location, it pops up a dialog, where you can enter in your
+
+0:00:15.800,0:00:20.320
+postal code. Feel free to use your preferred method for inputting location,
+
+0:00:20.320,0:00:24.970
+such as city name. Just verify that the data coming back from the server is for
+
+0:00:24.970,0:00:29.420
+the location you expect. Note that there's no validation on this string input.
+
+0:00:29.420,0:00:33.528
+If you're trying to make this app a production app, you would want some kind of
+
+0:00:33.528,0:00:39.070
+air handling here. If you tap on pick your units, it opens up a dialogue
+
+0:00:39.070,0:00:42.820
+where you can choose to display temperature within the app as wither metric or
+
+0:00:42.820,0:00:46.640
+imperial units. This is basically just Celsius or Fahrenheit, and
+
+0:00:46.640,0:00:50.280
+that is what this settings activity does. Remember that you don't want to make
+
+0:00:50.280,0:00:53.570
+everything a setting. If you're discussing a feature with a teammate and you
+
+0:00:53.570,0:00:58.010
+can't decide on something, don't compromise by just making it a user setting.
+
+0:00:58.010,0:01:02.180
+There are instances where making a difficult product decision now will be better
+
+0:01:02.180,0:01:06.050
+for the user, because then they won't have the burden of having to decide what
+
+0:01:06.050,0:01:10.020
+the value of the setting should be. And remember, there's always an opportunity
+
+0:01:10.020,0:01:14.490
+in an app update to add the setting later. If you add it to begin with, it's
+
+0:01:14.490,0:01:18.090
+infinitely harder to take away the setting because some users might get angry
+
+0:01:18.090,0:01:22.210
+with you. If you're having trouble deciding if something should be a setting or
+
+0:01:22.210,0:01:25.765
+not, you can check out the setting section in the Android design guide,
+
+0:01:25.765,0:01:30.170
+which is linked below. It contains a workflow diagram that could help you.
+
+0:01:30.170,0:01:32.820
+Very few roads often lead to making something a setting.

@@ -1,0 +1,1 @@
+And the answer of course is all of these provide useful information.  But in order to store them, you'll need a way to scale your storage capacity up to massive volume.  Hadoop, which stores data in a distributed way across multiple machines does that. You'll see how in the next lesson.

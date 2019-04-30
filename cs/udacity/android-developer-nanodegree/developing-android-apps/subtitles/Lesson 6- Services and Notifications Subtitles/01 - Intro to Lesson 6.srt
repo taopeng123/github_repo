@@ -1,0 +1,35 @@
+0:00:00.430,0:00:02.540
+Now that we've finished build the UI for our app,
+
+0:00:02.540,0:00:04.660
+it's time to think about how it should operate when it's
+
+0:00:04.660,0:00:08.280
+not in the foreground. One of the most powerful features of
+
+0:00:08.280,0:00:10.930
+Android, is the ability for any app to run in the
+
+0:00:10.930,0:00:15.070
+background. But with great power comes great responsibility. So, you need
+
+0:00:15.070,0:00:18.920
+to be very conscious of how it's consuming resources. In this
+
+0:00:18.920,0:00:22.820
+lesson, you'll learn more about how the Android framework manages background
+
+0:00:22.820,0:00:25.470
+apps and you'll be introduced to the service class to help
+
+0:00:25.470,0:00:28.480
+make that happen. You'll also learn techniques for efficient
+
+0:00:28.480,0:00:31.920
+data transfers using sync adapters and Google Cloud messaging. And
+
+0:00:31.920,0:00:34.520
+be introduced to the notification framework to send messages
+
+0:00:34.520,0:00:36.820
+to your users when your app isn't in the foreground.

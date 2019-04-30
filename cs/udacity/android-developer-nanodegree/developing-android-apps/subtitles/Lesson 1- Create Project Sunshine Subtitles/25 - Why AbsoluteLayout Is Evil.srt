@@ -1,0 +1,62 @@
+0:00:00.450,0:00:03.730
+Building something that looks great in the visual layout editor is the easy
+
+0:00:03.730,0:00:08.960
+part. You also need to consider different screens and orientations. As you
+
+0:00:08.960,0:00:12.460
+begin to layout your UI, there's a temptation to build it pixel perfect for
+
+0:00:12.460,0:00:16.120
+the device you happen to be using at the time. This is reinforced by
+
+0:00:16.120,0:00:20.320
+the fact that your apps window doesn't generally change size while it's running.
+
+0:00:20.320,0:00:22.720
+So you can't just grab the lower i-corner and grow and
+
+0:00:22.720,0:00:26.530
+shrink your app to see how it behaves. But if you've ever developed for
+
+0:00:26.530,0:00:29.660
+the web or desktop, you know this static approach is a bad idea.
+
+0:00:30.760,0:00:36.950
+When Android first launched, HVGA 480 by 320 resolution screens were standard.
+
+0:00:36.950,0:00:41.260
+As we began exploring how to build engaging user experiences on those devices,
+
+0:00:41.260,0:00:44.650
+we could use absolute layouts to define the exact location of each
+
+0:00:44.650,0:00:50.840
+screen element. But within a year, the first WVGA Android phones were released.
+
+0:00:50.840,0:00:54.850
+And now Android runs on everything from phones to phablets, tablets, TVs and
+
+0:00:54.850,0:01:00.030
+wearables with any screen size, resolution and aspect ratio you can imagine.
+
+0:01:00.030,0:01:03.008
+So, just like desktop or web where you might use panels or
+
+0:01:03.008,0:01:07.104
+CSS, your Android UI needs to scale based on the screen it's running within,
+
+0:01:07.104,0:01:09.546
+which is why absolute layout was deprecated.
+
+0:01:09.546,0:01:14.284
+[BLANK_AUDIO]
+
+0:01:14.284,0:01:17.559
+In favor of layouts like LinearLayout, RelativeLayout and
+
+0:01:17.559,0:01:20.063
+GridLayout, they can dynamically resize and
+
+0:01:20.063,0:01:23.930
+adapt to any screen, following the principles of responsive design.

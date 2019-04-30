@@ -1,0 +1,20 @@
+0:00:00.650,0:00:04.180
+In lesson one, we built a new project with a basic UI backed with mock
+
+0:00:04.180,0:00:06.730
+data. In this lesson, we'll hook sunshine up
+
+0:00:06.730,0:00:09.140
+with the Cloud, replacing the mock data with
+
+0:00:09.140,0:00:11.397
+real weather data using the OpenWeatherMap API.
+
+0:00:12.420,0:00:14.320
+To do that, we'll learn about the Android
+
+0:00:14.320,0:00:16.860
+permission system, Network I/O, and how to move
+
+0:00:16.860,0:00:19.460
+time consuming tasks off the main UI thread.

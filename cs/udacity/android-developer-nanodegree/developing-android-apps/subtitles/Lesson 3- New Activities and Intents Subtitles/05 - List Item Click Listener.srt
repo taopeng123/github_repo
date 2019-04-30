@@ -1,0 +1,11 @@
+0:00:00.370,0:00:04.380
+The answer is setOnItemClickListener. We should register
+
+0:00:04.380,0:00:06.980
+an OnItemClickListener with the list view via the
+
+0:00:06.980,0:00:10.440
+setOnItemClickListener method. Then, when an item in the
+
+0:00:10.440,0:00:12.831
+list view is clicked, the callback is invoked.

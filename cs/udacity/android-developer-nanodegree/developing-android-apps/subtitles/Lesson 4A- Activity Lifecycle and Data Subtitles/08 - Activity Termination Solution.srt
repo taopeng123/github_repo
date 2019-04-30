@@ -1,0 +1,14 @@
+0:00:00.610,0:00:05.030
+Since Honeycomb, Android apps can rely on, on stop being called, before the app
+
+0:00:05.030,0:00:09.688
+is at risk of being terminated. But if you're supporting pre-Honeycomb devices,
+
+0:00:09.688,0:00:12.980
+you should prepare for termination, as early as after on paused.
+
+0:00:12.980,0:00:16.350
+[BLANK_AUDIO]
+
+0:00:16.350,0:00:19.850
+Let's take a closer look at how you should prepare for an untimely app death.

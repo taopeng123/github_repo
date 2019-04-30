@@ -1,0 +1,50 @@
+0:00:00.330,0:00:04.098
+We've talked about using intents within Sunshine to start activities and send
+
+0:00:04.098,0:00:07.390
+data between apps. But what if you want to broadcast a message to
+
+0:00:07.390,0:00:11.630
+many apps? For example, the system will broadcast a message, saying that the
+
+0:00:11.630,0:00:16.180
+device is charging or that it's just finished rebooting. To do that ourselves,
+
+0:00:19.780,0:00:24.350
+we use the SendBroadcast method to broadcast an intent. And those broadcasts
+
+0:00:24.350,0:00:26.900
+are received by broadcast receivers, typically
+
+0:00:26.900,0:00:30.430
+referred to as simply, receivers. Using intent
+
+0:00:30.430,0:00:34.010
+filters, like the ones we saw earlier, they indicate which broadcast they're
+
+0:00:34.010,0:00:37.960
+interested in. So if we return to our envelope metaphor from earlier, in
+
+0:00:41.070,0:00:43.080
+the case of a broadcast intent, your
+
+0:00:43.080,0:00:47.140
+envelope is basically addressed to any broadcast receiver
+
+0:00:47.140,0:00:49.170
+that's interested in knowing that this event has
+
+0:00:49.170,0:00:51.940
+happened. And it does that using intent filter.
+
+0:00:56.490,0:00:59.670
+So intents, which are broadcast, are transmitted to every
+
+0:00:59.670,0:01:01.980
+app with a broadcast receiver that has an intent
+
+0:01:01.980,0:01:05.349
+filter telling the system your ideas are intriguing to
+
+0:01:05.349,0:01:08.341
+me and I wish to subscribe to end user.

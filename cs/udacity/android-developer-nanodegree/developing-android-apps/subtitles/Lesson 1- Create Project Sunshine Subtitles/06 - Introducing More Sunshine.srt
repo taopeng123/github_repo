@@ -1,0 +1,17 @@
+0:00:00.148,0:00:05.400
+Thanks Raydo. But let's start thinking about Sunshine, meaning our app. I'm not
+
+0:00:05.400,0:00:09.430
+convinced I'm ever going to tire of the obvious puns our app name allows.
+
+0:00:09.430,0:00:13.050
+Remember, as we progress through this course and build this app together, you
+
+0:00:13.050,0:00:16.600
+should be thinking about the app you want to create. There are too many weather
+
+0:00:16.600,0:00:20.310
+apps already after all. By the end of the course, you could be ready to tackle
+
+0:00:20.310,0:00:24.430
+the final project. Using all your new Android know how to build your own app.

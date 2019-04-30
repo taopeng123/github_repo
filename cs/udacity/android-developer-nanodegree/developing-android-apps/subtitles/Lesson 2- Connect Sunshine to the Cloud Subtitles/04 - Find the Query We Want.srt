@@ -1,0 +1,47 @@
+0:00:00.190,0:00:03.660
+Now, we should be able to find the most[br]appropriate URL that our app should use.
+
+0:00:04.780,0:00:07.780
+Based on the UX wireframes[br]we saw earlier, we want
+
+0:00:07.780,0:00:11.480
+the weather forecast for a week's worth[br]of data given a certain postal cost.
+
+0:00:11.480,0:00:16.900
+For the purposes of this quiz and our[br]example code that we'll be showing you.
+
+0:00:16.900,0:00:19.440
+We'll be using the Mountain View[br]postal code, which is 94043.
+
+0:00:19.440,0:00:25.000
+By all means you should use the postal[br]code for your own location.
+
+0:00:25.000,0:00:28.890
+Or you can use city name or[br]latitude, longitude coordinates.
+
+0:00:28.890,0:00:31.580
+If it doesn't find your[br]location based on postal code.
+
+0:00:31.580,0:00:34.720
+Try using postal code followed by[br]a comma, followed by the country code.
+
+0:00:34.720,0:00:37.670
+See the discussion forum for[br]more examples.
+
+0:00:37.670,0:00:40.930
+Next, we want the response from[br]the server to be in JSON format.
+
+0:00:40.930,0:00:44.600
+And we also want the temperatures[br]to be reported in metric units.
+
+0:00:44.600,0:00:47.410
+We choose metric for[br]doing the query, but our UI will be
+
+0:00:47.410,0:00:50.815
+able to displace celsius or[br]fahrenheit based ion user preferences.
+
+0:00:50.815,0:00:53.330
+Wnd we'll just do[br]the conversion ourselves.
+
+0:00:53.330,0:00:56.230
+Enter the URL in the box that[br]fulfills these requirements.

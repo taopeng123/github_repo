@@ -1,0 +1,158 @@
+0:00:00.070,0:00:04.170
+Apparently the app shows dummy data[br]that was hard coded into the XML file.
+
+0:00:04.170,0:00:06.650
+Let's make the actual[br]weather data appear on screen
+
+0:00:06.650,0:00:08.280
+using the forecast adapter.
+
+0:00:08.280,0:00:11.220
+For now we'll use the same layout for[br]all list items, but
+
+0:00:11.220,0:00:14.730
+we'll incorporate the today[br]XML layout in the next video.
+
+0:00:14.730,0:00:17.960
+Conceptually the forecast adapter[br]manages the logics so that for
+
+0:00:17.960,0:00:21.620
+each row of cursor we create[br]corresponding list item.
+
+0:00:21.620,0:00:25.340
+Think back on the explanation in[br]lesson one about the array adapter,
+
+0:00:25.340,0:00:27.960
+except instead of[br]the datasource being an array,
+
+0:00:27.960,0:00:31.350
+now the datasource is a cursor[br]from the database The layout for
+
+0:00:31.350,0:00:34.590
+the list item is defined in[br]the list item forecast XML file.
+
+0:00:34.590,0:00:36.980
+For one row of the cursor,[br]we're going to go through and
+
+0:00:36.980,0:00:38.780
+extract out the values.
+
+0:00:38.780,0:00:42.160
+We call it binding the data to[br]the views because we take the value in
+
+0:00:42.160,0:00:44.650
+each column and[br]we set it on to a different view.
+
+0:00:44.650,0:00:46.060
+For example,
+
+0:00:46.060,0:00:49.610
+the high temperature value would be set[br]on to the high temperature text view.
+
+0:00:49.610,0:00:53.590
+The low temperature value will be set[br]onto the low temperature text view.
+
+0:00:53.590,0:00:56.690
+For the next row,[br]we bind the data in the same way
+
+0:00:56.690,0:01:00.100
+until we create a list item for[br]each row in the cursor.
+
+0:01:00.100,0:01:02.640
+Currently, our code[br]defines forecast adapter
+
+0:01:02.640,0:01:05.459
+as extending from[br]the cursor adapter class.
+
+0:01:05.459,0:01:06.910
+If you look at the documentation for
+
+0:01:06.910,0:01:10.090
+cursor adapter, you'll notice[br]that it's an abstract class.
+
+0:01:10.090,0:01:17.420
+There are two abstract methods that we[br]need to override, bindView, and newView.
+
+0:01:17.420,0:01:22.050
+The newView method returns a new list[br]item layout, but has no data in it.
+
+0:01:22.050,0:01:25.050
+The bindView method takes[br]an existing list item layout and
+
+0:01:25.050,0:01:27.760
+updates it,[br]with the data from the cursor.
+
+0:01:27.760,0:01:31.080
+In the forecast adapter[br]class in the newView method
+
+0:01:31.080,0:01:34.550
+we inflate the list item[br]forecast XML layout.
+
+0:01:34.550,0:01:36.120
+Then in the bindView method,
+
+0:01:36.120,0:01:39.990
+we bind the data from the cursor[br]to the individual views.
+
+0:01:39.990,0:01:43.540
+For example, from the cursor we[br]read out the weather description.
+
+0:01:44.640,0:01:48.100
+Then we have to go through the view[br]hierarchy to find the TextView
+
+0:01:48.100,0:01:51.020
+that has the id[br]list_item_forecast_textview.
+
+0:01:51.020,0:01:54.950
+Once we find the TextView, then we can[br]update it with the right description.
+
+0:01:54.950,0:01:56.550
+We've provided a gist of code for
+
+0:01:56.550,0:01:58.810
+the bindView method,[br]to help you get started.
+
+0:01:58.810,0:02:01.600
+But we left some to-dos in there for[br]you to do.
+
+0:02:01.600,0:02:04.790
+In the gist, we also included some[br]helper methods and strings for
+
+0:02:04.790,0:02:06.180
+date formatting.
+
+0:02:06.180,0:02:06.890
+That's because,
+
+0:02:06.890,0:02:10.840
+in our current implementation, all[br]the dates are displayed in the same way.
+
+0:02:10.840,0:02:14.280
+In the wire frames, though,[br]we have a more friendly date format.
+
+0:02:14.280,0:02:18.640
+Such as today, tomorrow,[br]Wednesday, Thursday, etc.
+
+0:02:18.640,0:02:19.490
+Here's the logic for
+
+0:02:19.490,0:02:22.650
+what the helper method does to[br]get the friendly date string.
+
+0:02:22.650,0:02:26.840
+If it's this week, it says today or[br]tomorrow or the day of the week.
+
+0:02:26.840,0:02:31.540
+If it's more than a week out, then we[br]use the format Monday June 8 and so on.
+
+0:02:31.540,0:02:32.420
+After you compile and
+
+0:02:32.420,0:02:36.270
+run the app, the actual weather forecast[br]data should now be showing in the app.
+
+0:02:36.270,0:02:38.930
+And it's using a more[br]friendly date format.
+
+0:02:38.930,0:02:40.230
+Check these boxes when you're done.

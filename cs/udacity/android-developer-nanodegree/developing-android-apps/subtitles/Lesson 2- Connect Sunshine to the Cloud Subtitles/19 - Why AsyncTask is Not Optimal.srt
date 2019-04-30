@@ -1,0 +1,53 @@
+0:00:00.320,0:00:01.800
+Before we go any further, I need to
+
+0:00:01.800,0:00:04.110
+jump in here. Catherine has already said that
+
+0:00:04.110,0:00:06.410
+the refresh button is for debugging only, but
+
+0:00:06.410,0:00:08.600
+let's look at why. In real life, you
+
+0:00:08.600,0:00:10.720
+should always seek to eliminate the refresh button
+
+0:00:10.720,0:00:12.970
+from your app. A good app should work
+
+0:00:12.970,0:00:16.560
+like a good butler, giving you what you want before you even have to ask for
+
+0:00:19.360,0:00:19.860
+it.
+
+0:00:21.720,0:00:23.720
+Much like the Save button, it's a relic of a
+
+0:00:23.720,0:00:27.370
+bygone age. That's the best a reassuring safety blanket for those
+
+0:00:27.370,0:00:30.370
+of us who grew up with floppy disks. With the ability
+
+0:00:30.370,0:00:33.670
+to run background tasks or send messages directly from the server
+
+0:00:33.670,0:00:36.860
+to our app, there's really no reason to force users
+
+0:00:36.860,0:00:39.960
+to manually hit refresh. But the app is up to date
+
+0:00:39.960,0:00:43.300
+and sync with the cloud should be a given. But like
+
+0:00:43.300,0:00:47.230
+we said, this is for debugging, so like print line it's
+
+0:00:47.230,0:00:51.370
+acceptable for this particular purpose. Let's also take a look at
+
+0:00:51.370,0:00:55.650
+our background threading model, which of the following is potential an issue?

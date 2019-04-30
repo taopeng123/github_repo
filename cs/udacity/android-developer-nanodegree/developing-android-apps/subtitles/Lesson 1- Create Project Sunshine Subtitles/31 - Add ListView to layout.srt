@@ -1,0 +1,38 @@
+0:00:00.290,0:00:04.870
+Thanks, Rado. Now that we know the distinct advantages of using a list view,
+
+0:00:04.870,0:00:08.750
+we can use a list view to display the list of weather forecasts in our app.
+
+0:00:08.750,0:00:12.580
+Now, which file in the layout folder should we modify to accomplish this?
+
+0:00:13.640,0:00:17.150
+Well, we want to add the list view directly to the fragment. If you open up
+
+0:00:17.150,0:00:21.690
+the fragment_main.xml file, you'll notice that the layout includes a relative
+
+0:00:21.690,0:00:26.360
+layout as the parent view, as well as a child TextView. Modify this file so that
+
+0:00:26.360,0:00:31.960
+we show a ListView instead of a TextView and assign it an ID ListViewForecast so
+
+0:00:31.960,0:00:36.460
+we can reference it later. Also, since this layout only contains one child's
+
+0:00:36.460,0:00:40.380
+view, it would be more efficient to actually switch to a FrameLayout instead of
+
+0:00:40.380,0:00:43.840
+a RelativeLayout. After you make the changes, compile and
+
+0:00:43.840,0:00:48.160
+run your app. You'll be a little underwhelmed with the blank screen, but
+
+0:00:48.160,0:00:52.030
+that's okay. That's because we haven't populated the list view with data yet,
+
+0:00:52.030,0:00:55.230
+and that will come in a later step. Check the box when you're done.

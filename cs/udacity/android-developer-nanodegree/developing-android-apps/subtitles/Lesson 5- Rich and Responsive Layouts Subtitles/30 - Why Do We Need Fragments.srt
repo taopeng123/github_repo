@@ -1,0 +1,143 @@
+0:00:00.990,0:00:02.810
+So now you know, where fragments are used and
+
+0:00:02.810,0:00:05.700
+where we're going to use them in our app. You're
+
+0:00:05.700,0:00:09.070
+probably starting to ask, why use fragments at all?
+
+0:00:09.070,0:00:11.810
+If we want to group UI components, couldn't we just create
+
+0:00:11.810,0:00:14.520
+a View Group or maybe a re-usable XML layout
+
+0:00:14.520,0:00:19.240
+definition? Yes. But, the real power in fragments goes
+
+0:00:19.240,0:00:22.220
+beyond grouping UI elements. They allow us to fully
+
+0:00:22.220,0:00:26.350
+modularize our activities, including the life cycle events they receive
+
+0:00:26.350,0:00:28.990
+in the app state that they maintain. Fragments were
+
+0:00:28.990,0:00:33.090
+first introduced in Honeycomb to solve a particular problem. Honeycomb
+
+0:00:33.090,0:00:36.390
+was the first Android release to support tablets, and
+
+0:00:36.390,0:00:38.680
+it turned out, the best way for most apps to
+
+0:00:38.680,0:00:41.780
+create a great tablet UI. Is put two or
+
+0:00:41.780,0:00:46.910
+more, of their phone activities alongside each other. For example,
+
+0:00:46.910,0:00:48.710
+if you had a phone app that started with a
+
+0:00:48.710,0:00:51.520
+list activity like this, which you then clicked an item
+
+0:00:51.520,0:00:54.570
+would open a detailed activity like this one. What
+
+0:00:54.570,0:00:57.840
+we call a master detail flow. A good tablet
+
+0:00:57.840,0:01:01.060
+UI would put them side by side like this.
+
+0:01:01.060,0:01:04.760
+Functionally, clicking an item on this list, now replaces this
+
+0:01:04.760,0:01:07.310
+activity on the right, rather than starting a new
+
+0:01:07.310,0:01:08.680
+one, as it would have done on the phone.
+
+0:01:09.760,0:01:13.940
+Now unfortunately, Android didn't always support embedding activities within
+
+0:01:13.940,0:01:18.410
+other activities. At least, it didn't until we introduced fragments.
+
+0:01:18.410,0:01:20.260
+Now if you just look at the UI elements, you could
+
+0:01:20.260,0:01:23.470
+be excused for thinking you could achieve much the same thing
+
+0:01:23.470,0:01:27.870
+using an activity that was built using U Groups and layouts,
+
+0:01:27.870,0:01:32.630
+without bothering the fragments, which is true up to a point.
+
+0:01:32.630,0:01:34.712
+But then you'd have to pass through all of the activity
+
+0:01:34.712,0:01:37.860
+life cycle events, manage the state of each piece of the
+
+0:01:37.860,0:01:40.390
+UI, keep track of the state of each of the portions
+
+0:01:40.390,0:01:43.770
+as they changed. And remember, which screen elements were on screen
+
+0:01:43.770,0:01:46.710
+at any given time, in order to maintain app state.
+
+0:01:47.740,0:01:50.470
+All of which, is exactly what the Fragment Manager does
+
+0:01:50.470,0:01:53.500
+for you, when you use Fragments. And that lets you
+
+0:01:53.500,0:01:56.230
+take a step back and, and treat each fragment as though
+
+0:01:56.230,0:01:59.240
+it were a mini activity. For example, in the world
+
+0:01:59.240,0:02:02.400
+of activities, you start one activity from the other, and that
+
+0:02:02.400,0:02:05.400
+transaction is recorded on the back stack. So, hitting the
+
+0:02:05.400,0:02:09.090
+Back button, we'll undo that transaction and bring the first activity
+
+0:02:09.090,0:02:11.310
+to the front. Now the same thing can
+
+0:02:11.310,0:02:13.870
+happen with fragment transactions. In this case, rather
+
+0:02:13.870,0:02:16.580
+than starting a new activity, we simply replace
+
+0:02:16.580,0:02:19.480
+the list fragment with the detail fragment. And then
+
+0:02:19.480,0:02:21.740
+the back button will undo that transaction and
+
+0:02:21.740,0:02:24.210
+reverse it. So in theory, you can really take
+
+0:02:24.210,0:02:26.880
+any act with multiple activities and replace it
+
+0:02:26.880,0:02:29.950
+with a single activity that's host to multiple fragments.

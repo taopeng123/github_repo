@@ -1,0 +1,35 @@
+0:00:00.840,0:00:04.030
+Hey, Dan. want to see our weather app, so far, that we've been building?
+
+0:00:05.800,0:00:09.400
+>> Pretty cool. But I want something more.
+
+0:00:09.400,0:00:11.250
+>> Well, we're not done yet. We just started
+
+0:00:11.250,0:00:14.090
+two lessons ago. Give us a break. But fair
+
+0:00:14.090,0:00:16.750
+enough, there's still a bunch more work left to
+
+0:00:16.750,0:00:18.780
+do. What do you think we should do next?
+
+0:00:18.780,0:00:21.130
+>> Well for starters, let's make the list
+
+0:00:21.130,0:00:22.300
+item do something when you click on it.
+
+0:00:23.480,0:00:25.952
+>> Well, since you seem to be the expert on clicking on
+
+0:00:25.952,0:00:30.130
+list items, why don't you do it? I'm going to go eat some jellybeans.
+
+0:00:30.130,0:00:32.659
+>> I think Catherine was mocking me there.
+
+0:00:32.659,0:00:34.910
+Speaking of mocks, let's go do some UI.

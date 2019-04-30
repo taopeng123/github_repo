@@ -1,0 +1,41 @@
+0:00:00.120,0:00:03.760
+Here's an overview of the changes[br]we're going to be making to Sunshine.
+
+0:00:03.760,0:00:07.700
+We'll continue to refer to this map[br]as we move these coding exercises.
+
+0:00:07.700,0:00:11.260
+There are lots of terms in this map[br]that we haven't discussed before
+
+0:00:11.260,0:00:15.720
+such as database contract,[br]content provider, and DB Helper.
+
+0:00:15.720,0:00:18.820
+Each one of these blocks represents[br]a section of our modular
+
+0:00:18.820,0:00:20.720
+data storage solution.
+
+0:00:20.720,0:00:24.560
+We start by defining our data[br]storage in terms of a contract.
+
+0:00:24.560,0:00:27.850
+We then implement[br]the database using SQLite.
+
+0:00:27.850,0:00:32.390
+And finally, we layer a fundamental[br]Android class between our UI and
+
+0:00:32.390,0:00:35.160
+the data storage called[br]a content provider.
+
+0:00:35.160,0:00:40.100
+Ultimately, building our data storage[br]in this way allows Sunshine to leverage
+
+0:00:40.100,0:00:42.150
+powerful Android frameworks.
+
+0:00:42.150,0:00:46.270
+We'll explain all of this in more[br]detail as we implement each section.
+
+0:00:46.270,0:00:47.010
+Let's get started.

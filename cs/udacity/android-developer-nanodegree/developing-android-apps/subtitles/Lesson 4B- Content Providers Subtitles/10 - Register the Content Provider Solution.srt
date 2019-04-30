@@ -1,0 +1,26 @@
+0:00:00.210,0:00:01.070
+Alright, you're done.
+
+0:00:02.190,0:00:03.390
+Let's take a look at the solution.
+
+0:00:04.460,0:00:09.050
+Hopefully, you added a provider tag[br]to the Androidmanifest.xml file to
+
+0:00:09.050,0:00:12.695
+register the weather provider[br]class with the content authority.
+
+0:00:12.695,0:00:16.184
+The authorities attribute needs to[br]match the content authority from
+
+0:00:16.184,0:00:17.685
+the weather contract,
+
+0:00:17.685,0:00:22.205
+while the name attribute needs to match[br]the class name of your weather provider.
+
+0:00:22.205,0:00:25.565
+Note that you don't have to[br]specify the full package name.
+
+0:00:25.565,0:00:28.615
+The additional package of the class[br]is all you need, as I did here.

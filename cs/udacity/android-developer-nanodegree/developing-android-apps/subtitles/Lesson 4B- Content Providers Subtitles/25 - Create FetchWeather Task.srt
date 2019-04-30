@@ -1,0 +1,17 @@
+0:00:00.445,0:00:03.245
+All right, let's get serious now.
+
+0:00:03.245,0:00:07.118
+We need to change our code to store our[br]weather information in the database
+
+0:00:07.118,0:00:09.376
+using the content[br]provider we just built.
+
+0:00:09.376,0:00:12.789
+After all, weather is serious business.
+
+0:00:12.789,0:00:15.578
+The next step just[br]involves some refactoring,
+
+0:00:15.578,0:00:19.770
+to make sure you get it right,[br]we'll give you some instructions next.

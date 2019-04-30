@@ -1,0 +1,23 @@
+0:00:00.330,0:00:02.100
+So now you've taken a UI with mock data
+
+0:00:02.100,0:00:04.390
+and learned how to update with the real data. You
+
+0:00:04.390,0:00:06.955
+learned how to use permissions, move time consuming processes
+
+0:00:06.955,0:00:09.540
+of the UI thread, and were introduced to the basics
+
+0:00:09.540,0:00:12.410
+of network I/O. Join us again in lesson three,
+
+0:00:12.410,0:00:14.990
+where we'll create more activities and learn how to navigate
+
+0:00:14.990,0:00:17.700
+between them. But first, come with me as I take
+
+0:00:17.700,0:00:20.190
+you on another voyage in to the history of Android

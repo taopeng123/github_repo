@@ -1,0 +1,158 @@
+0:00:00.220,0:00:02.670
+It's time to implement the red lines for the main activity. We
+
+0:00:02.670,0:00:04.939
+can do one part together so that you get the hang of it.
+
+0:00:04.939,0:00:09.640
+We begin by styling the list item Forecast Layout. The red line specifies
+
+0:00:09.640,0:00:12.240
+that the image should be 32 dp by 32 dp. We could hard
+
+0:00:12.240,0:00:15.100
+code the image view to be 32 by 32 dp, but it's actually
+
+0:00:15.100,0:00:18.330
+the same as leaving it as wrapped content for height and width. To
+
+0:00:18.330,0:00:21.970
+know what the icon size would be if we wrap content, we open
+
+0:00:21.970,0:00:25.370
+up the MDPI version of the icon and we do verify that it
+
+0:00:25.370,0:00:28.450
+is 32 pixels by 32 pixels. Whether we hard code it
+
+0:00:28.450,0:00:31.400
+or just add wrap content, visually, the imagine will still look
+
+0:00:31.400,0:00:34.310
+the same, but in the future it will be more flexible
+
+0:00:34.310,0:00:38.210
+if we just specify wrap content in case the image size changes.
+
+0:00:38.210,0:00:41.150
+Next we style the text. On ice cream sandwich and above,
+
+0:00:41.150,0:00:44.060
+Roboto is the default font for text views. It is created
+
+0:00:44.060,0:00:47.310
+specifically to satisfy the requirements of UI and to optimize for
+
+0:00:47.310,0:00:50.510
+high density screens. The red line indicates that the font family is
+
+0:00:50.510,0:00:53.130
+Roboto sans serif condensed, so we add that to the
+
+0:00:53.130,0:00:56.240
+code. On the topic of font sizes, having too many font
+
+0:00:56.240,0:00:58.820
+sizes in your app can confuse your user about the visual
+
+0:00:58.820,0:01:01.540
+hierarchy of your app, as to what's important and what's not
+
+0:01:01.540,0:01:05.110
+important. The Android design guide recommends these four type sizes
+
+0:01:05.110,0:01:08.800
+for consistency with a platform and for user experience. In our
+
+0:01:08.800,0:01:11.710
+app, we stick to the standard type sizes. And that's an
+
+0:01:11.710,0:01:15.540
+intentional part of the design, such as the large temperature values.
+
+0:01:15.540,0:01:17.750
+Hence, when the red line say that the date text
+
+0:01:17.750,0:01:21.100
+should be 22sp for font size, we could specify Android
+
+0:01:21.100,0:01:24.420
+text size to be 22sp, but the text appearance large
+
+0:01:24.420,0:01:27.210
+attribute already maps to that value. Note that the font
+
+0:01:27.210,0:01:30.520
+sizes are specified in S-P, not dips. S-P stands for
+
+0:01:30.520,0:01:33.130
+scaled pixels, so you can scale with the device font
+
+0:01:33.130,0:01:36.771
+size. In our app, we specify text appearance large and
+
+0:01:36.771,0:01:41.090
+text appearance small, which will give up 22spand 14sp respectively.
+
+0:01:41.090,0:01:43.880
+The default font color is black, so we don't need to specify
+
+0:01:43.880,0:01:47.110
+the android text color attribute on our text views. Let's look at the
+
+0:01:47.110,0:01:50.790
+spacing for the elements within the list item now. We have three children.
+
+0:01:50.790,0:01:53.680
+The first one is 60 dp wide, with the image centered inside of
+
+0:01:53.680,0:01:56.124
+it. So we can add a frame layout around the image view
+
+0:01:56.124,0:01:58.601
+and set the gravity to be center on the image, that way the
+
+0:01:58.601,0:02:02.695
+image centers itself within the parent. For the other two columns, we shouldn't
+
+0:02:02.695,0:02:06.150
+hard code such high dp values. Because otherwise the layout won't scale across
+
+0:02:06.150,0:02:09.650
+other devices. Instead, we can use linear layout weights, the weight of
+
+0:02:09.650,0:02:12.610
+seven here, and the weight of five. We just tried different values
+
+0:02:12.610,0:02:16.390
+until we got approximately equal to these values. The trick in doing
+
+0:02:16.390,0:02:19.490
+red lines is that you want to match the visual specs, but
+
+0:02:19.490,0:02:21.910
+you also want to be flexible in the code, so that it
+
+0:02:21.910,0:02:24.840
+adapts to different screen sizes. And this is what the code looks
+
+0:02:24.840,0:02:26.770
+like for the list_items_forecast layout. We
+
+0:02:26.770,0:02:28.930
+have a horizontal linear layout, containing
+
+0:02:28.930,0:02:31.530
+the frame layout with the image view. Then we have a vertical
+
+0:02:31.530,0:02:35.050
+linear layout with weight seven. And then we have another vertical layout
+
+0:02:35.050,0:02:37.620
+with weight five. We can check the link below for the full
+
+0:02:37.620,0:02:40.650
+code file. This is what is looks like when you're done. These
+
+0:02:40.650,0:02:43.110
+items looks polished, but we haven't gotten to the today item yet.

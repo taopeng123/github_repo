@@ -1,0 +1,26 @@
+0:00:00.170,0:00:02.180
+These are the attributes[br]that we care about.
+
+0:00:02.180,0:00:04.660
+You might be wondering[br]why time is not included.
+
+0:00:04.660,0:00:06.750
+The weather API provides the date and
+
+0:00:06.750,0:00:10.380
+GMT time, but doesn't provide[br]time zones for the location.
+
+0:00:10.380,0:00:13.820
+So unfortunately, the date could be[br]incorrect in some cases depending on
+
+0:00:13.820,0:00:15.900
+your location and time of day.
+
+0:00:15.900,0:00:16.570
+Instead, for
+
+0:00:16.570,0:00:20.200
+a more accurate experience, we'll be[br]computing the date ourselves based on
+
+0:00:20.200,0:00:23.150
+the device time of when you fetched[br]the weather forecast from the server.

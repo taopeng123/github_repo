@@ -1,0 +1,1 @@
+Thanks, Rado. Now that you understand what intents are in glorious metaphor, let's use them to do something useful. We'll replace the toast, with an intent to launch the detail activity.  You'll need to pass in weather forecast data for the detail activity to display. For more information, see the intent extra constants defined in the intent class.

@@ -1,0 +1,17 @@
+0:00:00.620,0:00:04.970
+Imagine spending hours, crafting the perfect layout. What happens to
+
+0:00:04.970,0:00:09.540
+that layout, when you rotate the device, into a landscape orientation?
+
+0:00:09.540,0:00:13.850
+Or when it's run on a device, with a much larger screen? The good news,
+
+0:00:13.850,0:00:17.400
+is that Android provides excellent tools to help you with layouts.
+
+0:00:17.400,0:00:21.150
+You'll want to understand them to make your app look amazing across the wide
+
+0:00:21.150,0:00:25.160
+variety of phones, tablets and other devices you'll want your app to work on.

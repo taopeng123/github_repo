@@ -1,0 +1,41 @@
+0:00:00.400,0:00:02.220
+All right, you're done.
+
+0:00:02.220,0:00:04.130
+Let's take a look at the solution.
+
+0:00:04.130,0:00:07.330
+Adding support for the location[br]insert looks almost identical
+
+0:00:07.330,0:00:09.100
+to adding the support for weather.
+
+0:00:09.100,0:00:14.620
+We just have to select the right table[br]name, and return the right location URI.
+
+0:00:14.620,0:00:18.570
+Remember, at the end of the function,[br]we can just call notify change on
+
+0:00:18.570,0:00:21.584
+the content resolver to notify[br]all of the registered observers.
+
+0:00:22.780,0:00:27.210
+Note that we must use the past in URI,[br]and not the return URI,
+
+0:00:27.210,0:00:30.540
+as that will not correctly notify[br]our cursors of the change.
+
+0:00:30.540,0:00:33.980
+Since we also uncommented[br]test insert read provider,
+
+0:00:33.980,0:00:37.910
+lets run our test just to make sure[br]everything's still working well.
+
+0:00:37.910,0:00:39.820
+Note that nothing appears[br]on device screen.
+
+0:00:41.000,0:00:42.420
+And, our test passed.
+
+0:00:42.420,0:00:44.850
+We're well on our way to[br]building our content provider.

@@ -1,0 +1,23 @@
+0:00:00.490,0:00:03.320
+Sunshine looks something like this, but it doesn't show
+
+0:00:03.320,0:00:05.320
+most of the fun information we have about the
+
+0:00:05.320,0:00:07.710
+weather. We want to show a detailed view when
+
+0:00:07.710,0:00:09.790
+the user clicks on a day within the list.
+
+0:00:13.170,0:00:17.210
+Okay, that was a bit anticlimactic. It doesn't really do anything
+
+0:00:17.210,0:00:22.610
+useful yet. But it will contain all sorts of great weathery details,
+
+0:00:22.610,0:00:26.440
+things that weather nerds love such as barometric pressure and that
+
+0:00:26.440,0:00:32.220
+navigators love such as wind speed and direction eventually, but baby steps.

@@ -1,0 +1,215 @@
+0:00:00.330,0:00:03.420
+So how did you break up the UI[br]into smaller components?
+
+0:00:03.420,0:00:06.640
+Well, you might've thought that[br]this could be two columns.
+
+0:00:06.640,0:00:08.970
+But then it would be hard to[br]position the elements here.
+
+0:00:08.970,0:00:11.960
+You could center them vertically[br]within the height of the screen.
+
+0:00:11.960,0:00:14.650
+But it wouldn't necessarily line up[br]with the temperature views on the left
+
+0:00:14.650,0:00:15.520
+hand side.
+
+0:00:15.520,0:00:18.620
+Instead this looks more like[br]a horizontal linear layout.
+
+0:00:18.620,0:00:21.660
+Then the rest of the elements could[br]be laid out by using a vertical
+
+0:00:21.660,0:00:22.720
+linear layout.
+
+0:00:22.720,0:00:25.000
+The vertical linear layout[br]would have six children.
+
+0:00:25.000,0:00:29.460
+The third element would be a horizontal[br]linear layout composed of two children.
+
+0:00:29.460,0:00:32.990
+The first would be another vertical[br]linear layout with these two text views
+
+0:00:32.990,0:00:36.450
+and the second element would be another[br]vertical linear layout composed of.
+
+0:00:36.450,0:00:37.350
+These two elements.
+
+0:00:37.350,0:00:40.330
+To make the contents of the whole[br]screen vertically scrollable
+
+0:00:40.330,0:00:42.250
+we put it inside a scroll view.
+
+0:00:42.250,0:00:45.470
+Using a list view her would be overkill[br]because we don't need to scale
+
+0:00:45.470,0:00:48.300
+to an infinite number of item and[br]we don't need recycling.
+
+0:00:48.300,0:00:50.340
+There's a fixed number of[br]fields on the screen so
+
+0:00:50.340,0:00:52.170
+the scroll view is the perfect choice.
+
+0:00:52.170,0:00:55.740
+I can show you our implementation for[br]the fragment detail XML layout.
+
+0:00:55.740,0:00:57.580
+We hardcoded some data in the layout.
+
+0:00:57.580,0:01:00.250
+So that it would show up as[br]a preview in the Design pane.
+
+0:01:00.250,0:01:02.960
+At the root of the view hierarchy,[br]we have a ScrollView.
+
+0:01:02.960,0:01:05.260
+ScrollViews can only have max one child.
+
+0:01:05.260,0:01:07.470
+So we set that to be[br]the vertical LinearLayout.
+
+0:01:07.470,0:01:10.960
+Inside of this layout, we have[br]a TextView for the day of the week.
+
+0:01:10.960,0:01:14.010
+The calendar date and[br]then a horizontal linear layout.
+
+0:01:14.010,0:01:16.260
+This is followed by[br]the humidity text view,
+
+0:01:16.260,0:01:18.750
+wind text view, and pressure text view.
+
+0:01:18.750,0:01:22.120
+In the XMO code we see the scroll[br]view with the child linear layout.
+
+0:01:22.120,0:01:23.590
+We give it some padding of 16 dips so
+
+0:01:23.590,0:01:27.180
+that the content is not flesh up[br]against the edge of the screen.
+
+0:01:27.180,0:01:30.850
+Then we see the text views followed[br]by the horizontal linear layout.
+
+0:01:30.850,0:01:33.710
+We specify layout margin top of 16 dip
+
+0:01:33.710,0:01:36.450
+to give it some more space from[br]the bottom of this text view.
+
+0:01:36.450,0:01:40.070
+Within this horizontal linear layout[br]we have one vertical linear layout.
+
+0:01:40.070,0:01:42.540
+Which has a width of 0 and[br]a weight of 1, and
+
+0:01:42.540,0:01:45.570
+another linear layout with[br]a width of 0 and a weight of 1.
+
+0:01:45.570,0:01:48.240
+That means that both of these[br]children have equal width.
+
+0:01:48.240,0:01:52.320
+For this linear layout, we specify[br]gravity to be center horizontal.
+
+0:01:52.320,0:01:56.110
+That means that the contents inside[br]of it will be centered horizontally.
+
+0:01:56.110,0:01:59.340
+Which includes the icon as well[br]as the forecast text view.
+
+0:01:59.340,0:02:03.260
+Lastly we have the remaining text[br]views for the other weather details.
+
+0:02:03.260,0:02:06.320
+When the layout looks good,[br]we update the detail fragment.
+
+0:02:06.320,0:02:08.460
+At this point,[br]we also move it into its own file.
+
+0:02:09.660,0:02:10.910
+In the unload finish method,
+
+0:02:10.910,0:02:14.890
+we used to have a find view by[br]ID call to find the text view.
+
+0:02:14.890,0:02:17.520
+Now that the detail fragment[br]has a lot more views
+
+0:02:17.520,0:02:20.940
+we don't want to continue adding even[br]more fine view by ID calls here.
+
+0:02:20.940,0:02:23.740
+Because it will have to traverse[br]the view hierarchy every time that
+
+0:02:23.740,0:02:25.790
+the loader refreshes.
+
+0:02:25.790,0:02:28.590
+Instead we modify the on create method.
+
+0:02:28.590,0:02:31.120
+Once the fragment is[br]inflated we go ahead and
+
+0:02:31.120,0:02:34.410
+find a reference to all the views[br]we are going to need later on.
+
+0:02:34.410,0:02:37.420
+We store these views as member[br]variables of the class,
+
+0:02:37.420,0:02:40.130
+which is why the name[br]starts with the letter m.
+
+0:02:40.130,0:02:43.520
+In the on create loader method we[br]make sure that the projection for
+
+0:02:43.520,0:02:46.950
+our content provider query contains[br]all the information that we need.
+
+0:02:48.050,0:02:49.860
+It's declared at the top of the file.
+
+0:02:49.860,0:02:52.430
+Before we had it called[br]forecast columns, but
+
+0:02:52.430,0:02:54.600
+we just renamed it to detail columns.
+
+0:02:54.600,0:02:57.860
+And we also added some more columns[br]because now we're displaying more
+
+0:02:57.860,0:02:59.590
+information on the screen.
+
+0:02:59.590,0:03:03.510
+Then in the onLoadFinished method we get[br]a cursor back with the data we need.
+
+0:03:03.510,0:03:06.050
+We read the weather[br]condition ID from the cursor
+
+0:03:06.050,0:03:09.790
+because we're going to need it to[br]determine which image to display but for
+
+0:03:09.790,0:03:11.300
+now we can use a place order icon.
+
+0:03:11.300,0:03:15.550
+We continue reading from the cursor[br]to get the date, the description and
+
+0:03:15.550,0:03:16.672
+the other fields.
+
+0:03:16.672,0:03:20.730
+To format the data properly for the user[br]we also copied over the strings and
+
+0:03:20.730,0:03:22.425
+the utility method from the gist.

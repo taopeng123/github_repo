@@ -1,0 +1,56 @@
+0:00:01.010,0:00:02.969
+All right, you're done.
+
+0:00:02.969,0:00:04.220
+Let's take a look at the solution.
+
+0:00:05.720,0:00:08.002
+Just like in our content provider test,
+
+0:00:08.002,0:00:13.580
+we can use get content resolver to[br]query based upon the content URI.
+
+0:00:13.580,0:00:17.180
+Remember, that the default[br]location entry content URI
+
+0:00:17.180,0:00:20.160
+just passes all of the parameters[br]into the database.
+
+0:00:20.160,0:00:24.190
+So, we can easily construct a query[br]containing the location query
+
+0:00:24.190,0:00:26.230
+to see if it is in the database yet.
+
+0:00:26.230,0:00:30.010
+Remember that the default[br]location entry content URI
+
+0:00:30.010,0:00:34.320
+passes all of the parameters into[br]the database, so we can easily construct
+
+0:00:34.320,0:00:38.310
+a query containing the location setting[br]to see if it is in the database yet.
+
+0:00:38.310,0:00:41.240
+If it's not,[br]then the query will return an empty set.
+
+0:00:41.240,0:00:45.060
+And we should insert the new city name,[br]location setting, and
+
+0:00:45.060,0:00:46.870
+coordinates together.
+
+0:00:46.870,0:00:50.810
+Note that we're calling that ad location[br]method, from inside doing background.
+
+0:00:50.810,0:00:53.730
+Which calls getWeatherDataFromJson.
+
+0:00:53.730,0:00:56.950
+We've uncommented out the test[br]ad location function.
+
+0:00:56.950,0:01:00.520
+Now, we'll run our tests,[br]and our tests all pass.
+
+0:01:00.520,0:01:02.070
+We're ready to move on to the next step.

@@ -1,0 +1,125 @@
+0:00:00.610,0:00:03.350
+Of all the Android launch devices, the Nexus 1 will
+
+0:00:03.350,0:00:06.560
+always hold a special place in my heart. That's not
+
+0:00:06.560,0:00:08.970
+to take anything away from my first Android device, the
+
+0:00:08.970,0:00:11.970
+HTC G1, that launched Android into the world with its
+
+0:00:11.970,0:00:17.420
+distinctive chin and slide-out keyboard, or the HTC Magic. First
+
+0:00:17.420,0:00:19.450
+pre release android phone I got to dog food when
+
+0:00:19.450,0:00:22.070
+I joined google. And the first, the wave of devices
+
+0:00:22.070,0:00:25.970
+we gave every attendee starting at google IO in 2009.
+
+0:00:25.970,0:00:29.180
+2010 was the year android went from that's
+
+0:00:29.180,0:00:33.650
+interesting to global phenomenon. Growing from 100,000 activations a
+
+0:00:33.650,0:00:37.410
+day in May, to over 300,000 by December.
+
+0:00:37.410,0:00:39.210
+That was seriously helped by the release of the
+
+0:00:39.210,0:00:41.950
+Motorola Droid. I can still remember the offices
+
+0:00:41.950,0:00:44.760
+here in building 44 echoing with the constant refrain
+
+0:00:44.760,0:00:48.670
+of Droid as each device rebooted. The Droid was
+
+0:00:48.670,0:00:51.120
+the first of the thinner, higher res, more powerful
+
+0:00:51.120,0:00:54.150
+Android devices that have since become standard. And it
+
+0:00:54.150,0:00:57.090
+was also the device whose release on Verizon here in
+
+0:00:57.090,0:00:59.420
+the U,S. Really kicked off the flood of Android
+
+0:00:59.420,0:01:02.570
+activations. But I was a Londoner then, and the Droid
+
+0:01:02.570,0:01:04.910
+was a [UNKNOWN] only phone, so it was never
+
+0:01:04.910,0:01:08.050
+really a device I truly used. Then, there was the
+
+0:01:08.050,0:01:12.320
+Nexus One, code-named Passion. The first device I felt was
+
+0:01:12.320,0:01:16.160
+pure Android was also the phone we brought with us
+
+0:01:16.160,0:01:19.410
+on our 2010 Android Developer Labs World Tour. Me
+
+0:01:19.410,0:01:22.200
+and my colleagues travel across the world. Seven cities
+
+0:01:22.200,0:01:25.590
+in ten days. Introducing over twenty thousand developers to
+
+0:01:25.590,0:01:29.250
+Android by way of presentations and a free Nexus 1.
+
+0:01:29.250,0:01:32.090
+As a result, I made a lot of friends
+
+0:01:32.090,0:01:35.200
+across Europe and learned exactly how many boxes of phones
+
+0:01:35.200,0:01:37.840
+I can carry across snow drifts in Stockholm and
+
+0:01:37.840,0:01:41.340
+icy roads in Berlin. Since then, The Nexus S4 and
+
+0:01:41.340,0:01:43.890
+five have each improved on what it takes, to make
+
+0:01:43.890,0:01:47.350
+a great android phone. And OEMs across the world, have
+
+0:01:47.350,0:01:51.150
+created 1000s of different Android devices. Starting with the Motorola
+
+0:01:51.150,0:01:55.080
+Zoom, which led Android's official expansion into tablets, and leading the
+
+0:01:55.080,0:01:57.960
+way for the Nexus 7 and 10. But that was
+
+0:01:57.960,0:02:00.490
+just the start, Those changes paved the way for the
+
+0:02:00.490,0:02:02.740
+Android mobile [UNKNOWN] west, to grow into what could be,
+
+0:02:02.740,0:02:06.450
+the brains behind anything, from phones and tablets, to TVs, cars
+
+0:02:06.450,0:02:10.509
+and wearables, like Android wear. It's impossible to know, what comes
+
+0:02:10.509,0:02:15.510
+next. Who knows? Maybe the next Android devices, will be Androids themselves.

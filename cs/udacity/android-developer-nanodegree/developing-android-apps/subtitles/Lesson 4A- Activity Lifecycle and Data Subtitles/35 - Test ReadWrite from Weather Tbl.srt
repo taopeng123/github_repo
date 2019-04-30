@@ -1,0 +1,20 @@
+0:00:00.740,0:00:02.990
+We've tested the location table so
+
+0:00:02.990,0:00:06.760
+now we should test the weather table[br]in a test weather table method.
+
+0:00:06.760,0:00:09.600
+Follow the steps to create[br]a test to Insert a row of data
+
+0:00:09.600,0:00:11.470
+into the weather database table.
+
+0:00:11.470,0:00:15.360
+Noting that we have to first insert into[br]the location table to get the location
+
+0:00:15.360,0:00:17.010
+key for the weather query.
+
+0:00:17.010,0:00:19.370
+Then query the table and[br]validate the values.

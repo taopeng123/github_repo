@@ -1,0 +1,110 @@
+0:00:00.170,0:00:04.250
+Now it's time to finish creating our[br]new view by drawing its contents.
+
+0:00:04.250,0:00:07.050
+And we do that within our[br]custom view's onDraw method.
+
+0:00:07.050,0:00:10.760
+Now the Android canvas is pretty[br]standard, as far as canvas APIs go.
+
+0:00:10.760,0:00:12.680
+Used as a painter's algorithm,
+
+0:00:12.680,0:00:15.680
+meaning that each new thing you paint[br]will cover anything beneath it.
+
+0:00:15.680,0:00:18.450
+The canvas and paint classes.
+
+0:00:18.450,0:00:22.480
+Up for a variety of brushes and[br]help us to draw and fill lines, boxes,
+
+0:00:22.480,0:00:25.780
+circles, and text with colors,[br]patterns, gradients, and images.
+
+0:00:25.780,0:00:28.140
+As well as offering the ability to move,[br]rotate, and
+
+0:00:28.140,0:00:30.430
+scale the campus while you draw.
+
+0:00:30.430,0:00:33.216
+And I could spend a lot of time here[br]detailing exactly how to use each of
+
+0:00:33.216,0:00:35.523
+these tools, but[br]there's nothing unique to Android and
+
+0:00:35.523,0:00:38.610
+it's covered really well on[br]the documentation link below.
+
+0:00:38.610,0:00:41.430
+It is possible though to create[br]pretty advanced UIs this way.
+
+0:00:41.430,0:00:45.033
+For example if we start by drawing[br]a circle and then add a second circle,
+
+0:00:45.033,0:00:47.820
+and then you just need to finish[br]drawing the rest of the compass.
+
+0:00:47.820,0:00:49.710
+Here's an example I prepared earlier.
+
+0:00:49.710,0:00:52.940
+The specifics of what you draw are[br]different for every view, but one thing
+
+0:00:52.940,0:00:56.830
+that is consistent is the resource[br]constraint device you're drawing on.
+
+0:00:56.830,0:00:59.550
+And that the onDraw method will be[br]called every time the screen is
+
+0:00:59.550,0:01:00.350
+refreshed.
+
+0:01:00.350,0:01:02.210
+Potentially many times a second.
+
+0:01:02.210,0:01:05.360
+That means any object created[br]here within your onDraw method,
+
+0:01:05.360,0:01:07.880
+including things like paint[br]objects will be created and
+
+0:01:07.880,0:01:10.500
+destroyed with alarming frequency.
+
+0:01:10.500,0:01:14.070
+Object creation and destruction can[br]be expensive on Android, potentially
+
+0:01:14.070,0:01:17.510
+affecting the smoothness of your UI[br]when garbage collection is initiated.
+
+0:01:17.510,0:01:18.490
+The solution?
+
+0:01:18.490,0:01:21.740
+Move the scope of any object[br]used within the onDraw loop.
+
+0:01:21.740,0:01:23.340
+Into the class scope.
+
+0:01:23.340,0:01:26.390
+Go ahead and override the onDraw[br]method within your new view, and
+
+0:01:26.390,0:01:28.190
+draw the new control.
+
+0:01:28.190,0:01:31.370
+In fact, why not take this opportunity[br]to create a custom control
+
+0:01:31.370,0:01:34.620
+that can display the wind speed, and[br]direction fused within sunshine.
+
+0:01:34.620,0:01:37.920
+Once you're done, you can add it to your[br]layout, using its full package name and
+
+0:01:37.920,0:01:40.740
+class name in your XML, like this.
+
+0:01:40.740,0:01:43.790
+Run it, and then post a screenshot[br]of your new view into the forum.

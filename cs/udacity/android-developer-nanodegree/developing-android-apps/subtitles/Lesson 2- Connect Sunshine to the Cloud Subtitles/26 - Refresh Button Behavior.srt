@@ -1,0 +1,65 @@
+0:00:00.300,0:00:01.895
+The solution is that we need to call
+
+0:00:01.895,0:00:05.760
+Fragment.setHasOptionsMenu(true). That way, we'll
+
+0:00:05.760,0:00:07.910
+get appropriate options menu callback
+
+0:00:07.910,0:00:09.850
+methods in the fragment, so that we can
+
+0:00:09.850,0:00:12.120
+inflate the menu and for when a menu item
+
+0:00:12.120,0:00:15.190
+is selected. And this is where the fragment
+
+0:00:15.190,0:00:17.760
+inflates the menu. Remember from before that in the
+
+0:00:17.760,0:00:21.310
+ForecastFragment class, we have a public empty constructor, and
+
+0:00:21.310,0:00:25.650
+we also override onCreateView? We also define fetchWeatherTask here.
+
+0:00:25.650,0:00:28.020
+Now, we're going to overide an additional fragment life
+
+0:00:28.020,0:00:31.340
+cycle method called onCreate. This is where the fragment
+
+0:00:31.340,0:00:34.691
+is created, and this happens before the onCreate view
+
+0:00:34.691,0:00:37.790
+method, which is where the UI gets initialized. So, in
+
+0:00:37.790,0:00:41.570
+onCreate, we're going to call setHasOptionsMenu to be true to
+
+0:00:41.570,0:00:44.430
+indicate that we want call backs for these methods.
+
+0:00:44.430,0:00:47.560
+When onCreateOptionsMenu is called, we're going to inflate the menu
+
+0:00:47.560,0:00:51.510
+layout that we defined earlier called forecast fragment. We'll also
+
+0:00:51.510,0:00:55.090
+get notified when a menu item is selected. When a menu item with
+
+0:00:55.090,0:00:57.350
+ID action refresh is called, we're going to
+
+0:00:57.350,0:01:00.030
+return true for now. We're going to go
+
+0:01:00.030,0:01:04.140
+over the activity and fragment life cycle methods in more detail in later
+
+0:01:04.140,0:01:08.110
+lessons, but if you want, you can read the documentation linked below for now.

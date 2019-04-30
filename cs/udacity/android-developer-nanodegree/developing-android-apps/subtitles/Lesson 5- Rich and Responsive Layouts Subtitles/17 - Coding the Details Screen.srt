@@ -1,0 +1,89 @@
+0:00:00.150,0:00:02.330
+You've implemented the main[br]activity wireframe, so
+
+0:00:02.330,0:00:05.050
+now we can move onto[br]the detail activity wireframe.
+
+0:00:05.050,0:00:06.120
+This is what it looks like.
+
+0:00:06.120,0:00:08.500
+We have the date, the high and[br]low temperatures, and
+
+0:00:08.500,0:00:10.010
+then additional weather information.
+
+0:00:10.010,0:00:13.030
+We also have the weather icon,[br]and the weather forecast.
+
+0:00:13.030,0:00:14.470
+And these line up horizontally.
+
+0:00:14.470,0:00:17.240
+Build up the layout XML for[br]this wire frame.
+
+0:00:17.240,0:00:21.060
+Then modify the detail fragments that[br]you can populate all this information,
+
+0:00:21.060,0:00:22.490
+including these new views.
+
+0:00:22.490,0:00:25.640
+While you're doing that, you might as[br]well move the detail fragment into its
+
+0:00:25.640,0:00:28.750
+own file, so[br]it's separate from the detail activity.
+
+0:00:28.750,0:00:32.290
+Before you get started, I want to point[br]out that this layout has the information
+
+0:00:32.290,0:00:33.960
+taking up a lot of vertical space.
+
+0:00:33.960,0:00:36.320
+If you rotate your device[br]into landscape mode, or
+
+0:00:36.320,0:00:37.880
+you have a smaller height device,.
+
+0:00:37.880,0:00:39.650
+Some of the content could get cut off.
+
+0:00:39.650,0:00:42.870
+So think about how you can make this[br]layout be vertically scrollable.
+
+0:00:42.870,0:00:43.910
+To show you what I mean,
+
+0:00:43.910,0:00:46.770
+I added a couple of more lines of[br]text at the bottom of the layout.
+
+0:00:46.770,0:00:48.680
+Then I made the content[br]vertically scrollable.
+
+0:00:48.680,0:00:50.340
+So you could see all the information.
+
+0:00:50.340,0:00:52.970
+So go ahead and[br]make that change to your layout as well.
+
+0:00:52.970,0:00:55.840
+When you're done with all these steps,[br]this is what the App should look like.
+
+0:00:55.840,0:00:57.878
+We don't care about[br]the visual details now.
+
+0:00:57.878,0:00:59.970
+We just want to make sure that[br]the functionality is hooked up, so
+
+0:00:59.970,0:01:02.390
+all the right information[br]is displayed on screen.
+
+0:01:02.390,0:01:05.590
+You can use the code snippets provided[br]below for helper functions and
+
+0:01:05.590,0:01:07.500
+strings that you're going to need.
+
+0:01:07.500,0:01:09.950
+And again, leaving a place[br]holder image is fine for now.

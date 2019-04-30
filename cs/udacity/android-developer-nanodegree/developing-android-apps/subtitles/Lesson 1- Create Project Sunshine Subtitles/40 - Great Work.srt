@@ -1,0 +1,5 @@
+0:00:00.520,0:00:04.900
+And now we have this beautiful list of weather data in our app. Great job.
+
+0:00:04.900,0:00:05.400
+High five. [SOUND]

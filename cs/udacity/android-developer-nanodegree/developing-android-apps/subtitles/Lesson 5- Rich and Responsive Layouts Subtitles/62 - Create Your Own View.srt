@@ -1,0 +1,5 @@
+0:00:00.410,0:00:02.080
+Excellent. Now let's get started putting
+
+0:00:02.080,0:00:04.740
+some actual content into our custom view.

@@ -1,0 +1,101 @@
+0:00:00.350,0:00:02.410
+There's a lot to learn with making background
+
+0:00:02.410,0:00:05.610
+transactions efficient. But the good news is that Android
+
+0:00:05.610,0:00:08.070
+gives you the Sync Manager framework that implements
+
+0:00:08.070,0:00:11.190
+many of these best practices. You utilize that framework
+
+0:00:11.190,0:00:14.480
+by implementing a sync adapter. The framework, originally
+
+0:00:14.480,0:00:18.235
+introduced in Android 2.0 Eclair or Android API level
+
+0:00:18.235,0:00:21.880
+5, allows Android applications to leverage the same
+
+0:00:21.880,0:00:25.610
+basic framework that Google apps use for efficient synchronization.
+
+0:00:25.610,0:00:27.990
+Ultimately, it's a centralized place to put all
+
+0:00:27.990,0:00:31.060
+of the device data transfers in one place.
+
+0:00:31.060,0:00:33.310
+So that they all be scheduled intelligently by
+
+0:00:33.310,0:00:38.460
+the OS. In other words, that's one big cookie.
+
+0:00:38.460,0:00:42.250
+Android Sync Manager handles synchronization requests using sync
+
+0:00:42.250,0:00:45.100
+adapters. The Sync Manager batches and time shifts
+
+0:00:45.100,0:00:47.480
+these requests when possible to allow your data
+
+0:00:47.480,0:00:50.770
+transfers to be scheduled with transfers from other apps,
+
+0:00:50.770,0:00:52.930
+all working towards the goal of reducing the
+
+0:00:52.930,0:00:55.040
+number of times the system has to switch on
+
+0:00:55.040,0:00:58.100
+the radio. If your device has less memory,
+
+0:00:58.100,0:01:01.890
+it will schedule fewer simultaneous synchs. The Synch Manager
+
+0:01:01.890,0:01:03.950
+also takes care of things like checking for
+
+0:01:03.950,0:01:07.980
+network connectivity before initiating transfers and retrying downloads when
+
+0:01:07.980,0:01:12.520
+connectivity is dropped. The synchronization framework works with content
+
+0:01:12.520,0:01:16.020
+providers for two way synchronization and leverages the Android
+
+0:01:16.020,0:01:18.500
+account manager to provide synchronization services that are
+
+0:01:18.500,0:01:21.290
+tied to accounts. Our application will do neither
+
+0:01:21.290,0:01:23.110
+of these things, but we'll still have to
+
+0:01:23.110,0:01:25.710
+deal with some of the complexity of these features.
+
+0:01:25.710,0:01:29.170
+This can make SyncAdapter seem daunting at first.
+
+0:01:29.170,0:01:32.680
+What does the SyncManager do to help you fetch
+
+0:01:32.680,0:01:36.480
+data from the network? Does it schedule your
+
+0:01:36.480,0:01:42.410
+network jobs with other apps, implement a synchronization protocol,
+
+0:01:42.410,0:01:46.550
+store account information, or has logic to retry
+
+0:01:46.550,0:01:49.650
+your request? Select all of these that match.

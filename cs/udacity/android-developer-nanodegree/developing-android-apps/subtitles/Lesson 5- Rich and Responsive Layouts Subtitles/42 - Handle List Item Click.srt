@@ -1,0 +1,155 @@
+0:00:00.358,0:00:02.054
+In the Forecast Fragment class,
+
+0:00:02.054,0:00:05.890
+we add the Callback interface[br]that was provided in the gist.
+
+0:00:05.890,0:00:10.220
+Then, in the onCreateView method,[br]we modify the list item click behavior.
+
+0:00:10.220,0:00:13.590
+When an item is clicked, instead of[br]always launching a new intent to
+
+0:00:13.590,0:00:17.170
+the detail activity,[br]we want to notify the Callback instead.
+
+0:00:17.170,0:00:18.330
+We call getActivity and
+
+0:00:18.330,0:00:23.380
+then cast it to a Callback object,[br]then we can call onItemSelected on it.
+
+0:00:23.380,0:00:26.890
+We pass the URI that represents[br]the selected location and date.
+
+0:00:27.920,0:00:31.988
+Then, in the main activity,[br]we implement the Callback interface.
+
+0:00:31.988,0:00:36.110
+In the onItemSelected method, we fork[br]the behavior based on the mTwoPane
+
+0:00:36.110,0:00:38.070
+variable that we defined earlier.
+
+0:00:38.070,0:00:41.890
+If we're in two-pane mode,[br]then we create a DetailFragment and
+
+0:00:41.890,0:00:44.660
+put the URI inside the arguments bundle.
+
+0:00:44.660,0:00:47.406
+Then we replace the existing[br]DetailFragment in
+
+0:00:47.406,0:00:51.540
+the weather_detail_container,[br]using the DETAILFRAGMENT_TAG.
+
+0:00:51.540,0:00:55.780
+In one pane mode, we create a new[br]Intent to launch the DetailActivity and
+
+0:00:55.780,0:00:57.690
+we set the data URI.
+
+0:00:57.690,0:00:59.120
+In the DetailActivity,
+
+0:00:59.120,0:01:03.920
+we modify the onCreate method to read[br]the data URI from the incoming intent.
+
+0:01:03.920,0:01:08.540
+We take the URI and set it as[br]an arguments in the new DetailFragment.
+
+0:01:08.540,0:01:12.300
+Then we dynamically add this[br]fragment to this container.
+
+0:01:12.300,0:01:15.900
+In the detail fragment,[br]we modify the onCreateView method
+
+0:01:15.900,0:01:19.120
+to read the arguments that[br]the fragment was initialized with.
+
+0:01:19.120,0:01:24.260
+We read the data URI and[br]store that in the member variable mUri.
+
+0:01:24.260,0:01:28.540
+In the OnCreateLoader method,[br]we remove some code that relied on
+
+0:01:28.540,0:01:33.170
+incoming intent, and[br]switched it to use mUri instead.
+
+0:01:33.170,0:01:37.495
+Whether this DetailFragment is in[br]the main activity or the DetailActivity,
+
+0:01:37.495,0:01:39.520
+it should have mUri set.
+
+0:01:39.520,0:01:43.170
+Then we're going to use mUri to[br]query the content provider for
+
+0:01:43.170,0:01:46.350
+the data to display in[br]this DetailFragment.
+
+0:01:46.350,0:01:48.050
+When you try it out on the tablet,
+
+0:01:48.050,0:01:51.300
+there is one bug related to[br]navigation that we should fix.
+
+0:01:51.300,0:01:55.430
+Say we select tomorrow's date, if you[br]navigate to the settings activity, and
+
+0:01:55.430,0:01:58.720
+then hit the up button,[br]the detail fragment is blank.
+
+0:01:58.720,0:02:02.190
+That's because a brand new instance[br]of main activity got launched, and
+
+0:02:02.190,0:02:04.850
+for a brand new instance,[br]nothing is selected yet.
+
+0:02:04.850,0:02:08.850
+To fix this, when the setting activity[br]up button is pressed, we want to
+
+0:02:08.850,0:02:12.430
+navigate to the previous running[br]instance of the main activity where
+
+0:02:12.430,0:02:16.688
+the tomorrow item is selected and now[br]create a new instance of main activity.
+
+0:02:16.688,0:02:21.910
+In the SettingsActivity, override this[br]method, which the system will call
+
+0:02:21.910,0:02:25.790
+in order to get the parent activity[br]intent for the up button behavior.
+
+0:02:25.790,0:02:28.940
+Get the parent activity[br]intent from the super class,
+
+0:02:28.940,0:02:31.770
+this should create a new[br]intent to main activity.
+
+0:02:31.770,0:02:35.570
+Then add the intent flag called[br]FLAG_ACTIVITY_CLEAR_TOP.
+
+0:02:35.570,0:02:38.730
+This flag indicates that we should[br]check if the main activity is
+
+0:02:38.730,0:02:40.360
+already running in our task.
+
+0:02:40.360,0:02:44.270
+And to use that one instead of[br]creating a new main activity instance.
+
+0:02:44.270,0:02:46.850
+Also this method didn't[br]exist prior to Jelly Bean so
+
+0:02:46.850,0:02:50.170
+we need to add this[br]@TargetApi annotation.
+
+0:02:50.170,0:02:53.120
+If you check the documentation for[br]the activity class,
+
+0:02:53.120,0:02:57.160
+the getParentActivityIntent method[br]was only added in API level 16,
+
+0:02:57.160,0:03:00.477
+and you can check that version[br]16 maps to Jelly Bean.

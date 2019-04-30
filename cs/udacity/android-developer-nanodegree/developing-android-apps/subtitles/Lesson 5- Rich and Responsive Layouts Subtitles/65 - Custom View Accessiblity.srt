@@ -1,0 +1,53 @@
+0:00:00.180,0:00:02.700
+So you've got a pretty sweet looking control, but what about
+
+0:00:02.700,0:00:07.160
+users who can't see the shiny hotness? Accessibility is a key consideration
+
+0:00:07.160,0:00:10.560
+when building apps and particularly when you're creating new views. You
+
+0:00:10.560,0:00:13.850
+can start by adding a content description, as you would for every
+
+0:00:13.850,0:00:16.360
+other view in your layout, to ensure that they are all
+
+0:00:16.360,0:00:19.820
+accessible. But what about views like our wind speed, and direction gauge,
+
+0:00:19.820,0:00:23.250
+where the content isn't static? Knowing you're looking at a wind
+
+0:00:23.250,0:00:25.630
+gauge isn't very useful if you don't know what the speed and
+
+0:00:25.630,0:00:28.640
+direction it's displaying are. Well, there are couple
+
+0:00:28.640,0:00:32.020
+of options here. For generic views, which don't control
+
+0:00:32.020,0:00:34.890
+their own values, this simplest alternative is to
+
+0:00:34.890,0:00:38.485
+set the content description within your app at runtime.
+
+0:00:38.485,0:00:40.280
+An even more robust solution is to send
+
+0:00:40.280,0:00:43.480
+an accessibility event from within your view. Whenever the
+
+0:00:43.480,0:00:46.990
+visual content has been modified. Then override the dispatch
+
+0:00:46.990,0:00:50.830
+populate accessibility event, and then the current control's visual
+
+0:00:50.830,0:00:54.534
+value, the accessibility event. Go ahead and add accessibility handlers
+
+0:00:54.534,0:00:56.730
+to your view and then click here when you're done.
