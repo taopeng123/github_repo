@@ -1,0 +1,21 @@
+Week 2
+
+(done) 14 min, Reduction Operations
+(done) 6 min, Pair RDDs
+(done) 20 min, Transformations and Actions on Pair RDDs
+(done) 17 min, Joins
+
+Week 3
+
+(done) 14 min, Shuffling: What it is and why it's important
+(done) 14 min, Partitioning
+(done) 11 min, Optimizing with Partitioners
+(done) 16 min, Wide vs Narrow Dependencies
+
+Week 4
+
+(done) 14 min, Structured vs Unstructured Data
+(done) 17 min, Spark SQL
+(done) 26 min, DataFrames (1)
+(done) 30 min, DataFrames (2)
+43 min, Datasets
