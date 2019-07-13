@@ -1,0 +1,140 @@
+1
+00:00:00,000 --> 00:00:01,945
+Before we move on to coding,
+
+2
+00:00:01,945 --> 00:00:05,430
+I should mention one more detail about the total style transfer loss.
+
+3
+00:00:05,430 --> 00:00:08,220
+We have values for the content and style loss,
+
+4
+00:00:08,220 --> 00:00:10,230
+but because they're calculated differently,
+
+5
+00:00:10,230 --> 00:00:12,250
+these values will be pretty different,
+
+6
+00:00:12,250 --> 00:00:15,930
+and we want our target image to take both into account fairly equally.
+
+7
+00:00:15,930 --> 00:00:20,010
+So, it's necessary to apply constant weights, alpha and beta,
+
+8
+00:00:20,010 --> 00:00:22,050
+to the content and style losses,
+
+9
+00:00:22,050 --> 00:00:24,740
+such that the total loss reflects an equal balance.
+
+10
+00:00:24,740 --> 00:00:27,300
+In practice, this means multiplying the style loss
+
+11
+00:00:27,300 --> 00:00:30,265
+by a much larger weight value than the content loss.
+
+12
+00:00:30,265 --> 00:00:32,690
+You'll often see this expressed as a ratio of
+
+13
+00:00:32,690 --> 00:00:35,650
+the content and style weights, alpha over beta.
+
+14
+00:00:35,650 --> 00:00:39,265
+In the paper, we see the effects of a bigger or smaller ratio.
+
+15
+00:00:39,265 --> 00:00:42,230
+Here is an example of a content and style image.
+
+16
+00:00:42,230 --> 00:00:45,260
+We can imagine that the content weight alpha is one,
+
+17
+00:00:45,260 --> 00:00:47,290
+and that the style weight beta is 10.
+
+18
+00:00:47,290 --> 00:00:51,320
+You can see that this target image is mostly content without much style,
+
+19
+00:00:51,320 --> 00:00:54,540
+but as beta increases to 100, then 1,000,
+
+20
+00:00:54,540 --> 00:00:56,320
+and alpha stays at one,
+
+21
+00:00:56,320 --> 00:00:59,310
+we can see more and more style in the generated image.
+
+22
+00:00:59,310 --> 00:01:01,435
+Finally, we see that this can go too far,
+
+23
+00:01:01,435 --> 00:01:03,640
+and at a ratio of 10 to the negative four,
+
+24
+00:01:03,640 --> 00:01:05,470
+we see that most of the content is gone,
+
+25
+00:01:05,470 --> 00:01:07,395
+and only style remains.
+
+26
+00:01:07,395 --> 00:01:10,365
+So, in general, the smaller the alpha-beta ratio,
+
+27
+00:01:10,365 --> 00:01:12,595
+the more stylistic effect you will see.
+
+28
+00:01:12,595 --> 00:01:15,335
+This makes intuitive sense because a smaller ratio
+
+29
+00:01:15,335 --> 00:01:18,725
+corresponds to a larger value for beta, the style weight.
+
+30
+00:01:18,725 --> 00:01:23,180
+You may find that certain ratios work well for one image, but not another.
+
+31
+00:01:23,180 --> 00:01:25,400
+These weights will be good values to change to get
+
+32
+00:01:25,400 --> 00:01:28,105
+the exact kind of stylized effect that you want.
+
+33
+00:01:28,105 --> 00:01:31,310
+All right. Now that you know the theory and math behind using
+
+34
+00:01:31,310 --> 00:01:34,560
+a pre-trained CNN to separate the content and style of an image,
+
+35
+00:01:34,560 --> 00:01:38,480
+next, you'll see how to implement style transfer in PyTorch.
+

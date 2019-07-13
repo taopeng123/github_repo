@@ -1,0 +1,192 @@
+1
+00:00:00,243 --> 00:00:03,107
+Até agora,
+vimos como treinar uma MLP
+
+2
+00:00:03,140 --> 00:00:06,568
+para classificar dígitos escritos
+à mão no conjunto de dados MNIST
+
+3
+00:00:06,601 --> 00:00:08,844
+e obtivemos uma precisão
+muito boa.
+
+4
+00:00:08,877 --> 00:00:11,372
+As MLPs são uma boa
+solução nesse caso.
+
+5
+00:00:11,405 --> 00:00:14,570
+Outras soluções para a tarefa
+de classificação do MNIST
+
+6
+00:00:14,603 --> 00:00:16,708
+e dos erros
+do conjunto de dados
+
+7
+00:00:16,741 --> 00:00:19,187
+podem ser explorados
+no link fornecido abaixo.
+
+8
+00:00:19,220 --> 00:00:22,923
+Os melhores algoritmos,
+os que têm menos erros de teste,
+
+9
+00:00:22,956 --> 00:00:26,817
+são os que usam redes neurais
+convolucionais, as CNNs.
+
+10
+00:00:26,850 --> 00:00:29,670
+Para a maioria das tarefas
+de classificação de imagem,
+
+11
+00:00:29,703 --> 00:00:32,610
+as CNNs e as MLPs
+não se comparam.
+
+12
+00:00:32,643 --> 00:00:34,549
+As CNNs se saem bem melhor.
+
+13
+00:00:34,582 --> 00:00:36,707
+O banco de dados MNIST
+é uma exceção,
+
+14
+00:00:36,740 --> 00:00:39,114
+pois é um processo limpo.
+
+15
+00:00:39,147 --> 00:00:41,907
+As imagens dos dígitos
+têm o mesmo tamanho
+
+16
+00:00:41,940 --> 00:00:45,331
+e estão centralizadas
+em uma grade de 28x28px.
+
+17
+00:00:45,364 --> 00:00:50,230
+Imagine que, em vez de classificar
+o dígito nestas imagens claras,
+
+18
+00:00:50,263 --> 00:00:53,673
+usássemos imagens
+com dígitos em qualquer lugar
+
+19
+00:00:53,706 --> 00:00:56,737
+e, às vezes,
+pequenos ou grandes.
+
+20
+00:00:56,770 --> 00:00:59,865
+Seria uma tarefa mais desafiadora
+para a MLP.
+
+21
+00:00:59,898 --> 00:01:02,657
+No mundo real,
+para os dados bagunçados,
+
+22
+00:01:02,690 --> 00:01:05,787
+as CNNs terão vantagem
+sobre as MLPs.
+
+23
+00:01:05,820 --> 00:01:08,092
+Vejamos por que
+esse deve ser o caso.
+
+24
+00:01:08,125 --> 00:01:11,019
+Vimos que, para fazer
+uma imagem caber em uma MLP,
+
+25
+00:01:11,052 --> 00:01:13,692
+devemos converter a imagem
+a um vetor.
+
+26
+00:01:13,725 --> 00:01:17,436
+A MLP trata a imagem convertida
+como um vetor de números
+
+27
+00:01:17,469 --> 00:01:19,156
+sem nenhuma
+estrutura especial.
+
+28
+00:01:19,189 --> 00:01:22,933
+Ela não sabe que os números
+estavam arranjados espacialmente
+
+29
+00:01:22,966 --> 00:01:24,048
+em uma grade.
+
+30
+00:01:24,081 --> 00:01:26,031
+As CNNs, por outro lado,
+são construídas
+
+31
+00:01:26,064 --> 00:01:27,979
+com a finalidade
+de trabalhar com
+
+32
+00:01:28,012 --> 00:01:31,220
+ou de elucidar os padrões
+em dados multidimensionais.
+
+33
+00:01:31,253 --> 00:01:33,756
+Diferente das MLPs,
+as CNNs entendem o fato
+
+34
+00:01:33,789 --> 00:01:37,024
+de que os pixels que estão próximos
+nas imagens
+
+35
+00:01:37,057 --> 00:01:40,689
+são mais relacionados
+dos que os pixels distantes.
+
+36
+00:01:40,722 --> 00:01:44,852
+Nesta seção, discutiremos
+a matemática por trás disso.
+
+37
+00:01:44,885 --> 00:01:47,685
+Mostraremos os tipos de camadas
+que constituem uma CNN
+
+38
+00:01:47,718 --> 00:01:51,152
+e falaremos sobre os papéis delas
+no processamento do input
+
+39
+00:01:51,185 --> 00:01:53,197
+e na formação
+de uma rede completa.
+

@@ -1,0 +1,134 @@
+1
+00:00:00,123 --> 00:00:03,112
+Vimos como criar dois tipos
+de redes neurais
+
+2
+00:00:03,145 --> 00:00:04,816
+para classificação de imagem
+
+3
+00:00:04,849 --> 00:00:08,464
+e como as redes neurais
+convolucionais seguem passos
+
+4
+00:00:08,497 --> 00:00:10,048
+para classificar uma imagem.
+
+5
+00:00:10,081 --> 00:00:13,272
+Para recapitular, a CNN pega
+uma imagem de input
+
+6
+00:00:13,305 --> 00:00:16,934
+e passa a imagem por várias
+camadas convolucionais e de pooling.
+
+7
+00:00:16,967 --> 00:00:19,278
+Obtemos um conjunto
+de mapas de características
+
+8
+00:00:19,311 --> 00:00:21,366
+de tamanho menor
+do que a imagem original,
+
+9
+00:00:21,399 --> 00:00:24,791
+que aprendeu a destilar informações
+sobre o conteúdo
+
+10
+00:00:24,824 --> 00:00:26,335
+na imagem original.
+
+11
+00:00:26,368 --> 00:00:29,097
+Achatamos os mapas,
+criando um vetor de características
+
+12
+00:00:29,130 --> 00:00:32,665
+que passamos em uma série de camadas
+lineares completamente conectadas
+
+13
+00:00:32,698 --> 00:00:35,016
+para produzir a probabilidade
+de distribuição
+
+14
+00:00:35,049 --> 00:00:36,281
+de pontuações de classe.
+
+15
+00:00:36,314 --> 00:00:40,105
+A partir disso, extraímos a classe
+prevista da imagem de input.
+
+16
+00:00:40,138 --> 00:00:44,689
+Resumindo, uma imagem entra
+e um rótulo de previsão sai.
+
+17
+00:00:44,722 --> 00:00:47,762
+Vimos os conceitos fundamentais
+por trás das CNNs
+
+18
+00:00:47,795 --> 00:00:50,233
+e, em aulas futuras,
+veremos as técnicas
+
+19
+00:00:50,266 --> 00:00:52,327
+que alavancam
+arquiteturas existentes
+
+20
+00:00:52,360 --> 00:00:55,655
+e técnicas para melhorar
+o desempenho de um modelo.
+
+21
+00:00:55,688 --> 00:01:00,471
+Saiba que as CNNs não se restringem
+à classificação de imagem,
+
+22
+00:01:00,504 --> 00:01:02,672
+elas podem ser usadas
+para qualquer tarefa
+
+23
+00:01:02,705 --> 00:01:04,322
+com quantidade fixa
+de outputs,
+
+24
+00:01:04,355 --> 00:01:07,703
+como as tarefas de regressão,
+que observam os pontos no rosto
+
+25
+00:01:07,736 --> 00:01:09,599
+ou que detectam poses humanas.
+
+26
+00:01:09,632 --> 00:01:12,792
+As aplicações das CNNs
+são muitas.
+
+27
+00:01:12,825 --> 00:01:14,315
+Depois de ver algumas,
+
+28
+00:01:14,348 --> 00:01:17,039
+espero que tenha ficado animado
+em aprender mais.
+

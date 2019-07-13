@@ -1,0 +1,240 @@
+1
+00:00:00,000 --> 00:00:04,080
+To make sure that our target image has the same content as our content image,
+
+2
+00:00:04,080 --> 00:00:06,570
+we formalize the idea of a content loss,
+
+3
+00:00:06,570 --> 00:00:09,585
+that compares the content representations of the two images.
+
+4
+00:00:09,585 --> 00:00:11,730
+Next, we want to do the same thing for
+
+5
+00:00:11,730 --> 00:00:15,525
+the style representations of our target image and style image.
+
+6
+00:00:15,525 --> 00:00:19,485
+The style representation of an image relies on looking at correlations
+
+7
+00:00:19,485 --> 00:00:23,480
+between the features in individual layers of the VGG-19 network,
+
+8
+00:00:23,480 --> 00:00:27,350
+in other words looking at how similar the features in a single layer are.
+
+9
+00:00:27,350 --> 00:00:31,450
+Similarities will include the general colors and textures found in that layer.
+
+10
+00:00:31,450 --> 00:00:36,220
+We typically find the similarities between features in multiple layers in the network.
+
+11
+00:00:36,220 --> 00:00:40,160
+By including the correlations between multiple layers of different sizes,
+
+12
+00:00:40,160 --> 00:00:44,480
+we can obtain a multiscale style representation of the input image,
+
+13
+00:00:44,480 --> 00:00:47,455
+one that captures large and small style features.
+
+14
+00:00:47,455 --> 00:00:51,140
+The style representation is calculated as an image passes through
+
+15
+00:00:51,140 --> 00:00:55,250
+the network at the first convolutional layer in all five stacks,
+
+16
+00:00:55,250 --> 00:00:58,995
+conv1_1, conv2_1, up to conv5_1.
+
+17
+00:00:58,995 --> 00:01:02,760
+The correlations at each layer are given by a Gram matrix.
+
+18
+00:01:02,760 --> 00:01:05,780
+The matrix is a result of a couple of operations,
+
+19
+00:01:05,780 --> 00:01:08,220
+and it's easiest to see in a simple example.
+
+20
+00:01:08,220 --> 00:01:11,095
+Say, we start off with a four by four image,
+
+21
+00:01:11,095 --> 00:01:15,405
+and we convolve it with eight different image filters to create a convolutional layer.
+
+22
+00:01:15,405 --> 00:01:17,960
+This layer will be four by four in height and width,
+
+23
+00:01:17,960 --> 00:01:19,265
+and eight in depth.
+
+24
+00:01:19,265 --> 00:01:22,190
+Thinking about the style representation for this layer,
+
+25
+00:01:22,190 --> 00:01:23,480
+we can say that this layer has
+
+26
+00:01:23,480 --> 00:01:26,815
+eight feature maps that we want to find the relationships between.
+
+27
+00:01:26,815 --> 00:01:29,350
+The first step in calculating the Gram matrix,
+
+28
+00:01:29,350 --> 00:01:31,650
+will be to vectorize the values in this layer.
+
+29
+00:01:31,650 --> 00:01:33,890
+This is very similar to what you've seen before,
+
+30
+00:01:33,890 --> 00:01:37,940
+in the case of vectorizing an image so that it can be seen by an NLP.
+
+31
+00:01:37,940 --> 00:01:40,760
+The first row of four values in the feature map,
+
+32
+00:01:40,760 --> 00:01:44,185
+will become the first four values in a vector with length 16.
+
+33
+00:01:44,185 --> 00:01:47,635
+The last row will be the last four values in that vector.
+
+34
+00:01:47,635 --> 00:01:50,570
+By flattening the XY dimensions of the feature maps,
+
+35
+00:01:50,570 --> 00:01:55,445
+we're converting a 3D convolutional layer into a 2D matrix of values.
+
+36
+00:01:55,445 --> 00:01:59,350
+The next step is to multiply this matrix by its transpose.
+
+37
+00:01:59,350 --> 00:02:04,030
+Essentially, multiplying the features in each map to get the gram matrix.
+
+38
+00:02:04,030 --> 00:02:08,840
+This operation treats each value in the feature map as an individual sample,
+
+39
+00:02:08,840 --> 00:02:11,265
+unrelated in space to other values.
+
+40
+00:02:11,265 --> 00:02:15,920
+So, the resultant Gram matrix contains non-localized information about the layer.
+
+41
+00:02:15,920 --> 00:02:18,650
+Non-localized information, is information that would
+
+42
+00:02:18,650 --> 00:02:21,785
+still be there even if an image was shuffled around in space.
+
+43
+00:02:21,785 --> 00:02:25,819
+For example, even if the content of a filtered image is not identifiable,
+
+44
+00:02:25,819 --> 00:02:29,590
+you should still be able to see prominent colors and textures the style.
+
+45
+00:02:29,590 --> 00:02:33,200
+Finally, we're left with the square eight by eight Gram matrix,
+
+46
+00:02:33,200 --> 00:02:36,220
+whose values indicate the similarities between the the layers.
+
+47
+00:02:36,220 --> 00:02:38,570
+So, G row four column two,
+
+48
+00:02:38,570 --> 00:02:40,880
+will hold a value that indicates the similarity
+
+49
+00:02:40,880 --> 00:02:43,940
+between the fourth and second feature maps in a layer.
+
+50
+00:02:43,940 --> 00:02:47,180
+Importantly, the dimensions of this matrix are related
+
+51
+00:02:47,180 --> 00:02:50,660
+only to the number of feature maps in the convolutional layer,
+
+52
+00:02:50,660 --> 00:02:53,615
+it doesn't depend on the dimensions of the input image.
+
+53
+00:02:53,615 --> 00:02:55,550
+I should note that the Gram matrix is
+
+54
+00:02:55,550 --> 00:03:00,515
+just one mathematical way of representing the idea of shared in prominent styles.
+
+55
+00:03:00,515 --> 00:03:04,455
+Style itself is an abstract idea but the Gram matrix,
+
+56
+00:03:04,455 --> 00:03:06,780
+is the most widely used in practice.
+
+57
+00:03:06,780 --> 00:03:09,080
+Now that we've defined the Gram matrix as having
+
+58
+00:03:09,080 --> 00:03:11,310
+information about the style of a given layer,
+
+59
+00:03:11,310 --> 00:03:13,760
+next we can calculate a style loss that compares
+
+60
+00:03:13,760 --> 00:03:16,800
+the style of our target image and our style image.
+

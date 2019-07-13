@@ -1,0 +1,68 @@
+1
+00:00:00,000 --> 00:00:03,360
+When we talk about spatial patterns in an image,
+
+2
+00:00:03,360 --> 00:00:05,545
+we're often talking about one of two things,
+
+3
+00:00:05,545 --> 00:00:08,945
+color or shape, and I want to focus on shape for a moment.
+
+4
+00:00:08,945 --> 00:00:12,945
+Shape can also be thought of as patterns of intensity in an image.
+
+5
+00:00:12,945 --> 00:00:16,635
+Intensity is a measure of light and dark, similar to brightness,
+
+6
+00:00:16,635 --> 00:00:20,805
+and we can often use this knowledge to detect the shape of objects in an image.
+
+7
+00:00:20,805 --> 00:00:25,220
+For example, say, you're trying to distinguish a person from a background in an image.
+
+8
+00:00:25,220 --> 00:00:28,970
+You can look at the contrast that occurs where the person ends and the background
+
+9
+00:00:28,970 --> 00:00:32,820
+begins to define a shape boundary that separates the two.
+
+10
+00:00:32,820 --> 00:00:38,060
+You can often identify the edges of an object by looking at abrupt changes in intensity,
+
+11
+00:00:38,060 --> 00:00:41,590
+which happen when an image changes from a very dark to light area.
+
+12
+00:00:41,590 --> 00:00:43,130
+In the next few videos,
+
+13
+00:00:43,130 --> 00:00:46,400
+you'll be using and creating specific image filters that look at
+
+14
+00:00:46,400 --> 00:00:50,140
+groups of pixels and detect big changes in intensity in an image.
+
+15
+00:00:50,140 --> 00:00:54,070
+These filters produce an output that shows various edges and shapes.
+
+16
+00:00:54,070 --> 00:00:56,540
+So, let's take a closer look at these filters and
+
+17
+00:00:56,540 --> 00:00:59,310
+see what role they play in a convolutional neural network.
+

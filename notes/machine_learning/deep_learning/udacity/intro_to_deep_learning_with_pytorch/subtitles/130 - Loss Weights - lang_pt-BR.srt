@@ -1,0 +1,176 @@
+1
+00:00:00,528 --> 00:00:03,333
+Antes de vermos o código,
+devo mencionar mais um detalhe
+
+2
+00:00:03,366 --> 00:00:05,409
+sobre a total
+transferência de estilo.
+
+3
+00:00:05,442 --> 00:00:08,044
+Temos valores para as perdas
+de conteúdo e de estilo,
+
+4
+00:00:08,077 --> 00:00:10,193
+mas, como os calculamos
+de modos distintos,
+
+5
+00:00:10,226 --> 00:00:12,305
+esses valores serão
+bem diferentes.
+
+6
+00:00:12,338 --> 00:00:16,291
+E queremos que a imagem-alvo
+considere ambos igualmente.
+
+7
+00:00:16,324 --> 00:00:19,916
+Então é necessário aplicar
+as constantes de peso alfa e beta
+
+8
+00:00:19,949 --> 00:00:22,021
+às perdas de conteúdo
+e de estilo,
+
+9
+00:00:22,054 --> 00:00:24,605
+de modo que a perda total
+seja um valor equilibrado.
+
+10
+00:00:24,638 --> 00:00:27,197
+Na prática, basta multiplicar
+a perda de estilo
+
+11
+00:00:27,230 --> 00:00:30,270
+por um valor de peso bem maior
+do que a perda de conteúdo.
+
+12
+00:00:30,303 --> 00:00:31,676
+Isso costuma ser expresso
+
+13
+00:00:31,709 --> 00:00:34,166
+pela razão entre os pesos
+do conteúdo e do estilo,
+
+14
+00:00:34,199 --> 00:00:35,799
+ou seja,
+alfa dividido por beta.
+
+15
+00:00:35,832 --> 00:00:39,458
+No artigo, vemos os efeitos
+de uma razão maior ou menor.
+
+16
+00:00:39,491 --> 00:00:42,229
+Estes são exemplos
+de imagens de conteúdo e de estilo.
+
+17
+00:00:42,262 --> 00:00:47,460
+Aqui o peso de conteúdo alfa é 1,
+e o peso de estilo beta é 10.
+
+18
+00:00:47,493 --> 00:00:51,343
+Note que a imagem-alvo
+não apresenta muito estilo.
+
+19
+00:00:51,376 --> 00:00:54,636
+Mas, conforme beta aumenta
+para 100 e depois para 1.000,
+
+20
+00:00:54,669 --> 00:00:56,220
+e alfa se mantém 1,
+
+21
+00:00:56,253 --> 00:00:59,237
+o estilo fica cada vez mais evidente
+na imagem gerada.
+
+22
+00:00:59,270 --> 00:01:01,313
+Por fim, vemos que isso
+foi longe demais
+
+23
+00:01:01,346 --> 00:01:03,524
+e que, na razão de 10 para -4,
+
+24
+00:01:03,557 --> 00:01:07,402
+quase todo o conteúdo foi eliminado,
+e só o estilo foi preservado.
+
+25
+00:01:07,435 --> 00:01:10,289
+Então, em geral, quanto menor
+a razão de alfa para beta,
+
+26
+00:01:10,322 --> 00:01:12,631
+mais efeitos de estilo
+veremos.
+
+27
+00:01:12,664 --> 00:01:15,238
+Intuitivamente, faz sentido,
+porque uma razão menor
+
+28
+00:01:15,271 --> 00:01:18,837
+corresponde a um valor maior
+de beta, ou seja, o peso de estilo.
+
+29
+00:01:18,870 --> 00:01:21,985
+Algumas razões funcionam bem
+para certos tipos de imagem,
+
+30
+00:01:22,018 --> 00:01:23,119
+e não para outros.
+
+31
+00:01:23,152 --> 00:01:25,015
+E você pode mudar
+os valores do peso
+
+32
+00:01:25,048 --> 00:01:28,182
+para obter exatamente
+o efeito de estilo que você quer.
+
+33
+00:01:28,215 --> 00:01:30,552
+Bom, agora que você sabe
+a teoria e o cálculo
+
+34
+00:01:30,585 --> 00:01:32,289
+por trás
+de uma CNN pré-treinada
+
+35
+00:01:32,322 --> 00:01:34,724
+para separar o conteúdo
+e o estilo de uma imagem,
+
+36
+00:01:34,757 --> 00:01:38,113
+verá como implementar
+transferência de estilo no PyTorch.
+

@@ -1,0 +1,269 @@
+1
+00:00:00,548 --> 00:00:03,273
+Até agora, vimos o desempenho
+dos nossos modelos
+
+2
+00:00:03,306 --> 00:00:06,058
+a partir das alterações
+em cada epoch,
+
+3
+00:00:06,091 --> 00:00:09,953
+mas é difícil determinar
+a quantidade necessária de epochs.
+
+4
+00:00:09,986 --> 00:00:13,193
+As epochs devem trazer
+a precisão,
+
+5
+00:00:13,226 --> 00:00:15,722
+sem que haja um sobreajuste
+dos dados.
+
+6
+00:00:15,755 --> 00:00:19,977
+Um método prático exige
+dividir os dados em três conjuntos
+
+7
+00:00:20,010 --> 00:00:23,337
+chamados de "treinamento",
+de "validação" e de "teste".
+
+8
+00:00:23,370 --> 00:00:25,658
+Cada um é tratado separadamente
+pelo modelo.
+
+9
+00:00:25,691 --> 00:00:29,042
+O modelo observa o conjunto
+de treinamento durante o treinamento
+
+10
+00:00:29,075 --> 00:00:31,193
+para decidir
+como modificar os pesos.
+
+11
+00:00:31,226 --> 00:00:34,017
+Após cada epoch de treinamento,
+conferimos o modelo
+
+12
+00:00:34,050 --> 00:00:37,847
+observando a perda de treinamento
+e a perda no conjunto de validação,
+
+13
+00:00:37,880 --> 00:00:40,389
+mas é importante perceber
+que o modelo não usa
+
+14
+00:00:40,422 --> 00:00:42,117
+o conjunto de validação
+
+15
+00:00:42,150 --> 00:00:44,253
+para o passo
+de retropropagação.
+
+16
+00:00:44,286 --> 00:00:46,989
+O conjunto de treinamento
+encontra os padrões,
+
+17
+00:00:47,022 --> 00:00:49,504
+atualiza e determina
+os pesos do modelo.
+
+18
+00:00:49,537 --> 00:00:53,054
+O conjunto de validação nos informa
+se o modelo está se saindo bem
+
+19
+00:00:53,087 --> 00:00:54,541
+no conjunto de validação.
+
+20
+00:00:54,574 --> 00:00:57,999
+Desta forma, nos dará uma ideia
+sobre a generalização do modelo
+
+21
+00:00:58,032 --> 00:01:01,342
+em um conjunto de dados
+separado do conjunto de treinamento.
+
+22
+00:01:01,375 --> 00:01:04,480
+A ideia é que, como o modelo
+não usa o conjunto de validação
+
+23
+00:01:04,513 --> 00:01:05,847
+para decidir os pesos,
+
+24
+00:01:05,880 --> 00:01:09,191
+ele poderá dizer quando houver
+um sobreajuste nos dados.
+
+25
+00:01:09,224 --> 00:01:13,031
+Por fim, o conjunto de teste
+confere a precisão do modelo
+
+26
+00:01:13,064 --> 00:01:15,120
+depois do treinamento.
+
+27
+00:01:15,153 --> 00:01:17,839
+Isso fica mais fácil de ver
+em um exemplo.
+
+28
+00:01:17,872 --> 00:01:20,654
+Imagine um modelo
+que treinará por 200 epochs
+
+29
+00:01:20,687 --> 00:01:24,790
+e, por volta da epoch 100,
+a perda de treinamento diminui,
+
+30
+00:01:24,823 --> 00:01:28,054
+mas a perda da validação
+começa a aumentar.
+
+31
+00:01:28,087 --> 00:01:30,509
+Isso indica que o modelo
+está se sobreajustando
+
+32
+00:01:30,542 --> 00:01:33,617
+aos dados de treinamento,
+porque não está generalizando bem
+
+33
+00:01:33,650 --> 00:01:36,887
+para ter um bom desempenho
+no conjunto de validação.
+
+34
+00:01:36,920 --> 00:01:41,415
+Se notar esse tipo de divisão
+nas perdas,
+
+35
+00:01:41,448 --> 00:01:45,280
+pare de mudar os pesos da rede
+por volta da epoch 100
+
+36
+00:01:45,313 --> 00:01:48,370
+e ignore ou descarte os pesos
+das epochs posteriores,
+
+37
+00:01:48,403 --> 00:01:50,659
+nas quais há evidência
+de sobreajuste.
+
+38
+00:01:50,692 --> 00:01:56,017
+Esse processo também é útil
+quando temos arquiteturas múltiplas.
+
+39
+00:01:56,050 --> 00:01:59,776
+Por exemplo, quando decidimos
+a quantidade de camadas do modelo,
+
+40
+00:01:59,809 --> 00:02:04,217
+salvamos os pesos das arquiteturas
+para comparar posteriormente.
+
+41
+00:02:04,250 --> 00:02:08,225
+Opte pelo modelo
+com a menor perda de validação.
+
+42
+00:02:08,258 --> 00:02:11,628
+Você deve estar se perguntando
+sobre o 3º conjunto de dados.
+
+43
+00:02:11,661 --> 00:02:14,358
+Por que não usamos
+o conjunto de teste?
+
+44
+00:02:14,391 --> 00:02:17,150
+A ideia é que,
+ao testarmos o modelo,
+
+45
+00:02:17,183 --> 00:02:20,382
+ele observe dados
+que nunca foram vistos antes.
+
+46
+00:02:20,415 --> 00:02:22,683
+Mesmo o modelo não usando
+a validação
+
+47
+00:02:22,716 --> 00:02:26,135
+para atualizar os pesos,
+o processo de seleção do modelo
+
+48
+00:02:26,168 --> 00:02:29,071
+se baseia no desempenho
+nos conjuntos de treinamento
+
+49
+00:02:29,104 --> 00:02:30,431
+e de validação.
+
+50
+00:02:30,464 --> 00:02:35,263
+No final, o modelo é influenciado
+pelo conjunto de validação.
+
+51
+00:02:35,296 --> 00:02:38,126
+Precisamos de um teste diferente
+para ver
+
+52
+00:02:38,159 --> 00:02:41,473
+como o modelo selecionado
+generaliza e reage com dados
+
+53
+00:02:41,506 --> 00:02:43,935
+nunca vistos antes.
+
+54
+00:02:43,968 --> 00:02:46,463
+No próximo vídeo,
+veremos como usar essas ideias
+
+55
+00:02:46,496 --> 00:02:48,525
+para ajustar
+a arquitetura da rede.
+

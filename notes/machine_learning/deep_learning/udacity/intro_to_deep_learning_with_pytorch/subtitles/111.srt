@@ -1,0 +1,344 @@
+1
+00:00:04,099 --> 00:00:10,379
+In image processing, filters are used to filter out unwanted or irrelevant information in
+
+2
+00:00:10,380 --> 00:00:16,234
+an image or to amplify features like object boundaries or other distinguishing traits.
+
+3
+00:00:16,234 --> 00:00:19,169
+High-pass filters are used to make an image
+
+4
+00:00:19,170 --> 00:00:22,545
+appear sharper and enhance high-frequency parts of an image,
+
+5
+00:00:22,545 --> 00:00:25,110
+which are areas where the levels of intensity in
+
+6
+00:00:25,109 --> 00:00:30,399
+neighboring pixels rapidly change like from very dark to very light pixels.
+
+7
+00:00:30,399 --> 00:00:33,375
+Since we're looking at patterns of intensity,
+
+8
+00:00:33,375 --> 00:00:37,844
+the filters we'll be working with will be operating on grayscale images that represent
+
+9
+00:00:37,844 --> 00:00:42,869
+this information and display patterns of lightness and darkness in a simple format.
+
+10
+00:00:42,869 --> 00:00:46,724
+Let's take a closer look at this panda image as an example.
+
+11
+00:00:46,725 --> 00:00:50,594
+What do you think will happen if we apply a high-pass filter?
+
+12
+00:00:50,594 --> 00:00:55,319
+Well, where there is no change or a little change in intensity in the original picture,
+
+13
+00:00:55,319 --> 00:00:57,975
+such as in these large areas of dark and light,
+
+14
+00:00:57,975 --> 00:01:02,399
+a high-pass filter will black these areas out and turn the pixels black,
+
+15
+00:01:02,399 --> 00:01:06,539
+but in these areas where a pixel is way brighter than its immediate neighbors,
+
+16
+00:01:06,540 --> 00:01:10,550
+the high-pass filter will enhance that change and create a line.
+
+17
+00:01:10,549 --> 00:01:14,325
+You can see that this has the effect of emphasizing edges.
+
+18
+00:01:14,325 --> 00:01:17,969
+Edges or just areas in an image where the intensity changes very
+
+19
+00:01:17,969 --> 00:01:22,709
+quickly and these edges often indicate object boundaries.
+
+20
+00:01:22,709 --> 00:01:26,444
+Now, let's see how exactly a filter like this works.
+
+21
+00:01:26,444 --> 00:01:29,339
+The filters I'll be talking about are in the form of
+
+22
+00:01:29,340 --> 00:01:32,385
+matrices often called convolution kernels,
+
+23
+00:01:32,385 --> 00:01:36,150
+which are just grids of numbers that modify an image.
+
+24
+00:01:36,150 --> 00:01:40,109
+Here's an example of a high-pass filter that does edge detection.
+
+25
+00:01:40,109 --> 00:01:44,209
+It's a three by three kernel whose elements all sum to zero.
+
+26
+00:01:44,209 --> 00:01:48,434
+It's important that for edge detection all of the elements sum to zero
+
+27
+00:01:48,435 --> 00:01:53,284
+because this filter is computing the difference or change between neighboring pixels.
+
+28
+00:01:53,284 --> 00:01:58,185
+Differences are calculated by subtracting pixel values from one another.
+
+29
+00:01:58,185 --> 00:02:03,007
+In this case, subtracting the value of the pixels that surround a center pixel,
+
+30
+00:02:03,007 --> 00:02:06,030
+and if these kernel values did not add up to zero,
+
+31
+00:02:06,030 --> 00:02:08,280
+that would mean that this calculated difference will be
+
+32
+00:02:08,280 --> 00:02:10,770
+either positively or negatively weighted,
+
+33
+00:02:10,770 --> 00:02:12,960
+which will have the effect of brightening or
+
+34
+00:02:12,960 --> 00:02:16,629
+darkening the entire filtered image respectively.
+
+35
+00:02:16,629 --> 00:02:17,984
+To apply this filter,
+
+36
+00:02:17,985 --> 00:02:21,960
+an input image F(xy) is convolved with this kernel,
+
+37
+00:02:21,960 --> 00:02:25,110
+which I'll call k. This is called kernel
+
+38
+00:02:25,110 --> 00:02:29,340
+convolution and convolution is represented by an asterisk,
+
+39
+00:02:29,340 --> 00:02:31,899
+not to be mistaken for a multiplication.
+
+40
+00:02:31,899 --> 00:02:34,770
+Kernel convolution is an important operation in
+
+41
+00:02:34,770 --> 00:02:40,195
+computer vision applications and it's the basis for convolutional neural networks.
+
+42
+00:02:40,194 --> 00:02:41,739
+It involves taking a kernel,
+
+43
+00:02:41,740 --> 00:02:43,575
+which is our small grid of numbers,
+
+44
+00:02:43,574 --> 00:02:47,484
+and passing it over an image pixel by pixel transforming it
+
+45
+00:02:47,485 --> 00:02:51,585
+based on what these numbers are and we'll see that by changing these numbers,
+
+46
+00:02:51,585 --> 00:02:55,860
+we can create many different effects from edge detection to blurring an image.
+
+47
+00:02:55,860 --> 00:03:01,245
+I'll walk through an example using this three by three edge detection filter.
+
+48
+00:03:01,245 --> 00:03:03,569
+To better see the pixel operations,
+
+49
+00:03:03,569 --> 00:03:08,128
+I'll zoom in on this panda right by its ear to see the grayscale pixel values.
+
+50
+00:03:08,128 --> 00:03:11,849
+First, for every pixel in this greyscale image,
+
+51
+00:03:11,849 --> 00:03:16,245
+we put our kernel over it so that the pixel is in the center of the kernel,
+
+52
+00:03:16,245 --> 00:03:19,719
+and I'm just choosing this pixel as an example.
+
+53
+00:03:19,719 --> 00:03:24,764
+Then we look at the three by three grid of pixels centered around that one pixel.
+
+54
+00:03:24,764 --> 00:03:27,689
+We then take the numbers in our kernel and multiply them
+
+55
+00:03:27,689 --> 00:03:31,080
+with their corresponding pixel in pairs.
+
+56
+00:03:31,080 --> 00:03:34,254
+So this pixel in the top left corner, 120,
+
+57
+00:03:34,254 --> 00:03:38,799
+is multiplied by the kernel corner zero and next to that,
+
+58
+00:03:38,800 --> 00:03:41,889
+we multiply the value 140 by negative one,
+
+59
+00:03:41,889 --> 00:03:44,769
+and the next, another 120 by zero.
+
+60
+00:03:44,769 --> 00:03:49,645
+We do that for all nine pixel kernel value pairs.
+
+61
+00:03:49,645 --> 00:03:54,472
+Notice that the center pixel with a value of 220 will be multiplied by four,
+
+62
+00:03:54,472 --> 00:03:56,615
+the center kernel value.
+
+63
+00:03:56,615 --> 00:04:02,560
+Finally, these values are all summed up to get a new pixel value, 60.
+
+64
+00:04:02,560 --> 00:04:05,590
+This value means a very small edge has been detected,
+
+65
+00:04:05,590 --> 00:04:09,025
+which we can see by looking at this three by three area in the image.
+
+66
+00:04:09,025 --> 00:04:13,010
+It changes from light at the bottom to a little darker on top,
+
+67
+00:04:13,009 --> 00:04:15,354
+but it changes very gradually.
+
+68
+00:04:15,354 --> 00:04:20,349
+These multipliers in our kernel are often called weights because they determine how
+
+69
+00:04:20,350 --> 00:04:25,700
+important or how weighty a pixel is in forming a new output image.
+
+70
+00:04:25,699 --> 00:04:27,610
+In this case, for edge detection,
+
+71
+00:04:27,610 --> 00:04:30,520
+the center pixel is the most important followed by
+
+72
+00:04:30,519 --> 00:04:34,479
+its closest pixels on the top and bottom and to its left and right,
+
+73
+00:04:34,480 --> 00:04:38,155
+which are negative weights that increase the contrast in the image.
+
+74
+00:04:38,154 --> 00:04:42,744
+The corners are the farthest away from the center pixel and in this example,
+
+75
+00:04:42,745 --> 00:04:44,899
+we don't give them any weight.
+
+76
+00:04:44,899 --> 00:04:47,230
+So this weighted sum becomes the value for
+
+77
+00:04:47,230 --> 00:04:53,100
+the corresponding pixel at the same location XY in the output image,
+
+78
+00:04:53,100 --> 00:04:57,610
+and you do this for every pixel position in the original image until you have
+
+79
+00:04:57,610 --> 00:05:00,655
+a complete output image that's about the same size
+
+80
+00:05:00,654 --> 00:05:05,069
+as the input image with new filtered pixel values.
+
+81
+00:05:05,069 --> 00:05:06,865
+The only thing you need to consider,
+
+82
+00:05:06,865 --> 00:05:08,439
+other than this weighted sum,
+
+83
+00:05:08,439 --> 00:05:11,858
+is what to do at the edges and corners of your image since
+
+84
+00:05:11,858 --> 00:05:16,680
+the kernel cannot be nicely laid over three by three pixel values everywhere.
+
+85
+00:05:16,680 --> 00:05:19,629
+Next, let's get a little more practice with these kinds of
+
+86
+00:05:19,629 --> 00:05:22,360
+high-pass filters then get into coding our own.
+

@@ -1,0 +1,329 @@
+1
+00:00:00,216 --> 00:00:02,831
+Após obtermos as características
+de conteúdo e estilo
+
+2
+00:00:02,864 --> 00:00:04,326
+e as matrizes de Gram,
+
+3
+00:00:04,359 --> 00:00:07,732
+em seguida, temos que definir
+as perdas de estilo e de conteúdo.
+
+4
+00:00:07,765 --> 00:00:10,496
+Além disso, temos que definir
+as perdas de peso.
+
+5
+00:00:10,529 --> 00:00:13,775
+Assim poderemos atualizar
+iterativamente nossa imagem-alvo.
+
+6
+00:00:13,808 --> 00:00:18,229
+Primeiro definimos o peso de estilo
+de cada camada de estilo.
+
+7
+00:00:18,262 --> 00:00:21,002
+Note que conv4_2 foi excluída.
+
+8
+00:00:21,035 --> 00:00:24,013
+Estes pesos darão a um conjunto
+de características de estilo
+
+9
+00:00:24,046 --> 00:00:25,971
+mais importância
+do que a outros.
+
+10
+00:00:26,004 --> 00:00:29,777
+Por exemplo, prefiro dar mais peso
+às camadas iniciais.
+
+11
+00:00:29,810 --> 00:00:31,463
+Estas características são
+maiores
+
+12
+00:00:31,496 --> 00:00:34,266
+devido ao tamanho espacial
+dos mapas de características,
+
+13
+00:00:34,299 --> 00:00:38,196
+enquanto as camadas finais
+dão mais ênfase aos detalhes.
+
+14
+00:00:38,229 --> 00:00:41,662
+Mas é uma questão de preferência,
+e você pode aplicar a sua.
+
+15
+00:00:41,695 --> 00:00:45,133
+Eu sugiro manter os valores
+entre 0 a 1.
+
+16
+00:00:45,166 --> 00:00:46,628
+Aqui temos alfa e beta,
+
+17
+00:00:46,661 --> 00:00:50,397
+que são o peso de conteúdo
+e o peso de estilo.
+
+18
+00:00:50,430 --> 00:00:52,907
+Anteriormente, definimos
+esses valores numa razão
+
+19
+00:00:52,940 --> 00:00:55,857
+que dá a mesma importância
+para o estilo e para o conteúdo
+
+20
+00:00:55,890 --> 00:00:58,155
+no processo de criação
+da imagem-alvo.
+
+21
+00:00:58,188 --> 00:01:00,403
+E, em razão do cálculo
+da perda de estilo,
+
+22
+00:01:00,436 --> 00:01:03,217
+daremos à perda de estilo
+um peso muito maior
+
+23
+00:01:03,250 --> 00:01:04,684
+do que à perda de conteúdo.
+
+24
+00:01:04,717 --> 00:01:08,877
+Aqui é 1x10/6,
+e a perda de conteúdo é 1.
+
+25
+00:01:08,910 --> 00:01:10,395
+Se beta for grande demais,
+
+26
+00:01:10,428 --> 00:01:12,719
+o efeito do estilo pode ficar
+exagerado.
+
+27
+00:01:12,752 --> 00:01:15,245
+Mas estes valores são
+bons pontos de partida.
+
+28
+00:01:15,278 --> 00:01:17,321
+Em seguida, começa
+o loop de iteração,
+
+29
+00:01:17,354 --> 00:01:20,664
+e aqui é onde você mudará
+a imagem-alvo.
+
+30
+00:01:20,697 --> 00:01:22,611
+Este não é
+um processo de treinamento,
+
+31
+00:01:22,644 --> 00:01:26,249
+então você decide quando quer parar
+de atualizar a imagem-alvo.
+
+32
+00:01:26,282 --> 00:01:28,349
+Sugiro fazer
+ao menos 2.000 iterações,
+
+33
+00:01:28,382 --> 00:01:30,052
+mas você pode fazer
+mais ou menos,
+
+34
+00:01:30,085 --> 00:01:32,139
+dependendo
+dos recursos do seu computador
+
+35
+00:01:32,172 --> 00:01:33,722
+e do efeito desejado.
+
+36
+00:01:33,755 --> 00:01:35,295
+Neste loop de iteração,
+
+37
+00:01:35,328 --> 00:01:38,502
+quero que você calcule primeiro
+a perda de conteúdo,
+
+38
+00:01:38,535 --> 00:01:40,378
+que é
+a diferença quadrática média
+
+39
+00:01:40,411 --> 00:01:43,977
+entre as representações
+da imagem-alvo e de conteúdo.
+
+40
+00:01:44,010 --> 00:01:46,526
+Incluí um exemplo de código
+aqui.
+
+41
+00:01:46,559 --> 00:01:48,037
+Obtemos essas representações
+
+42
+00:01:48,070 --> 00:01:50,171
+passando as características
+da imagem-alvo
+
+43
+00:01:50,204 --> 00:01:53,220
+e comparando-as,
+numa camada específica -
+
+44
+00:01:53,253 --> 00:01:55,169
+neste caso, conv4_2 -,
+
+45
+00:01:55,202 --> 00:01:58,309
+com as características
+da imagem de conteúdo dessa camada.
+
+46
+00:01:58,342 --> 00:02:01,824
+Subtraímos as duas representações,
+elevamos essa diferença ao quadrado
+
+47
+00:02:01,857 --> 00:02:03,204
+e calculamos a média.
+
+48
+00:02:03,237 --> 00:02:05,356
+Assim vamos obter
+a perda de conteúdo.
+
+49
+00:02:05,389 --> 00:02:09,214
+Em seguida, você fará algo parecido
+para obter a perda de estilo.
+
+50
+00:02:09,247 --> 00:02:11,708
+Mas, desta vez, terá que passar
+por várias camadas
+
+51
+00:02:11,741 --> 00:02:13,965
+para obter todas
+as representações do estilo.
+
+52
+00:02:13,998 --> 00:02:16,292
+Todas as camadas relevantes
+foram listadas
+
+53
+00:02:16,325 --> 00:02:18,338
+no dicionário
+de pesos de estilo acima.
+
+54
+00:02:18,371 --> 00:02:20,703
+Aqui você deve calcular
+target_features
+
+55
+00:02:20,736 --> 00:02:23,918
+para poder acessar
+cada característica-alvo por camada.
+
+56
+00:02:23,951 --> 00:02:26,412
+Use as características de estilo
+da imagem-alvo
+
+57
+00:02:26,445 --> 00:02:29,140
+para calcular a matriz de Gram
+dessa camada.
+
+58
+00:02:29,173 --> 00:02:33,218
+Depois compare-a com a matriz
+da imagem de estilo dessa camada,
+
+59
+00:02:33,251 --> 00:02:36,254
+com o peso de estilo especificado
+para essa camada.
+
+60
+00:02:36,287 --> 00:02:38,512
+Aqui os resultados são
+somados e normalizados
+
+61
+00:02:38,545 --> 00:02:40,491
+pelo número de valores
+da camada.
+
+62
+00:02:40,799 --> 00:02:44,917
+Por fim, some tudo
+e calcule a perda total.
+
+63
+00:02:44,950 --> 00:02:47,706
+Isto é o que será usado
+para atualizar a imagem-alvo
+
+64
+00:02:47,739 --> 00:02:49,932
+através da retropropagação.
+
+65
+00:02:49,965 --> 00:02:52,847
+Tente completar sozinho
+este código de perda.
+
+66
+00:02:52,880 --> 00:02:54,943
+Este é o último código
+de que vai precisar
+
+67
+00:02:54,976 --> 00:02:56,786
+para fazer
+a transferência de estilo.
+
+68
+00:02:56,819 --> 00:03:01,143
+Depois você pode testar este método
+com suas próprias imagens-alvo.
+

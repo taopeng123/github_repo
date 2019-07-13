@@ -1,0 +1,100 @@
+1
+00:00:00,000 --> 00:00:05,670
+Hi. Here's my solution for your building and training this network using dropout now.
+
+2
+00:00:05,670 --> 00:00:06,975
+Just like I showed you before,
+
+3
+00:00:06,975 --> 00:00:10,590
+we can define our dropout module as
+
+4
+00:00:10,590 --> 00:00:14,985
+self.dropout and then nn.dropout to give it some drop probability.
+
+5
+00:00:14,985 --> 00:00:16,320
+So, in this case, 20 percent,
+
+6
+00:00:16,320 --> 00:00:20,895
+and then just adding it to our forward method now on each of our hidden layers.
+
+7
+00:00:20,895 --> 00:00:23,960
+Now, our validation code looks basically the same as
+
+8
+00:00:23,960 --> 00:00:26,750
+before except now we're using model.eval.
+
+9
+00:00:26,750 --> 00:00:29,315
+So, again, this turns our model into
+
+10
+00:00:29,315 --> 00:00:32,725
+evaluation or inference mode which turns off dropout.
+
+11
+00:00:32,725 --> 00:00:34,890
+Then, like the same way before,
+
+12
+00:00:34,890 --> 00:00:37,255
+we just go through our data and the test say,
+
+13
+00:00:37,255 --> 00:00:40,820
+calculate the losses and accuracy and after all that,
+
+14
+00:00:40,820 --> 00:00:44,465
+we do model.train to set the model back into train mode,
+
+15
+00:00:44,465 --> 00:00:47,080
+turn dropout back on,
+
+16
+00:00:47,080 --> 00:00:48,860
+and then continue on in train smart.
+
+17
+00:00:48,860 --> 00:00:52,775
+So, now, we're using dropout and if you look at
+
+18
+00:00:52,775 --> 00:00:57,460
+again the training loss and the validation loss over these epochs that we're training,
+
+19
+00:00:57,460 --> 00:01:00,140
+you actually see that the validation loss sticks a
+
+20
+00:01:00,140 --> 00:01:03,445
+lot closer to the train loss as we train.
+
+21
+00:01:03,445 --> 00:01:07,805
+So, here, with dropout, we've managed to at least reduce overfitting.
+
+22
+00:01:07,805 --> 00:01:15,395
+So, the validation losses isn't as low as we got without dropout being is still,
+
+23
+00:01:15,395 --> 00:01:17,610
+you can see that it's still dropping.
+
+24
+00:01:17,610 --> 00:01:19,840
+So, if we kept training for longer,
+
+25
+00:01:19,840 --> 00:01:25,600
+we would most likely manage to get our validation loss lower than without dropout.
+

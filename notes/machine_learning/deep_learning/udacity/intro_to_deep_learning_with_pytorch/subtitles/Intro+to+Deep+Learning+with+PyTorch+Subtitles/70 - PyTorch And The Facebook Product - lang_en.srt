@@ -1,0 +1,92 @@
+1
+00:00:00,000 --> 00:00:01,680
+So, when I think about Pitrad,
+
+2
+00:00:01,680 --> 00:00:05,130
+especially it'd been supportive by all these different cloud providers,
+
+3
+00:00:05,130 --> 00:00:10,695
+I think of it as being a separate entity from Facebook.
+
+4
+00:00:10,695 --> 00:00:14,745
+Which I think it definitely has its own life and community,
+
+5
+00:00:14,745 --> 00:00:22,010
+but I'm wondering where it fits in the larger Facebook product or if it fits at all,
+
+6
+00:00:22,010 --> 00:00:24,245
+where might it be used in that product?
+
+7
+00:00:24,245 --> 00:00:28,970
+So, Facebook has needs and the AI space.
+
+8
+00:00:28,970 --> 00:00:34,090
+They have Facebook AI Research and as fundamental research.
+
+9
+00:00:34,880 --> 00:00:37,890
+We do research in the open,
+
+10
+00:00:37,890 --> 00:00:39,060
+we use open datasets,
+
+11
+00:00:39,060 --> 00:00:41,220
+we build our research,
+
+12
+00:00:41,220 --> 00:00:46,360
+we publish it onto archive, to peer review.
+
+13
+00:00:46,610 --> 00:00:52,655
+We also have a huge set of needs for products at Facebook.
+
+14
+00:00:52,655 --> 00:00:56,545
+Whether it's our camera enhancements,
+
+15
+00:00:56,545 --> 00:01:00,690
+or whether it is our machine translation,
+
+16
+00:01:00,690 --> 00:01:07,650
+or whether it's our accessibility interfaces, or integrity filtering.
+
+17
+00:01:07,650 --> 00:01:15,810
+So, we need tools that can do all of these.
+
+18
+00:01:15,810 --> 00:01:22,700
+I think Facebook's investment is mostly on the perspective that if you need tools,
+
+19
+00:01:22,700 --> 00:01:25,820
+we are going to invest in tools anyways,
+
+20
+00:01:25,820 --> 00:01:28,460
+might as well make it an open-source investment.
+
+21
+00:01:28,460 --> 00:01:38,140
+Because Ferris mission is to do AI research in the open and advance humanity using AI.
+
+22
+00:01:38,140 --> 00:01:40,670
+So, this seems very,
+
+23
+00:01:40,670 --> 00:01:43,800
+very fitting with that mission as well.
+

@@ -1,0 +1,331 @@
+1
+00:00:00,302 --> 00:00:03,110
+Quando uma CNN é treinada
+para classificar imagens,
+
+2
+00:00:03,143 --> 00:00:05,307
+as camadas convolucionais
+aprendem a extrair
+
+3
+00:00:05,340 --> 00:00:08,437
+características cada vez mais
+complexas de uma imagem.
+
+4
+00:00:08,470 --> 00:00:10,275
+Além disso,
+as camadas max pooling
+
+5
+00:00:10,308 --> 00:00:12,739
+descartam informações espaciais
+detalhadas
+
+6
+00:00:12,772 --> 00:00:17,035
+que se mostrem irrelevantes
+para a tarefa de classificação.
+
+7
+00:00:17,068 --> 00:00:20,438
+Como resultado disso,
+conforme nos aprofundamos na CNN,
+
+8
+00:00:20,471 --> 00:00:23,329
+a imagem de input é convertida
+em mapas de características
+
+9
+00:00:23,362 --> 00:00:26,025
+que se importam cada vez mais
+com o conteúdo da imagem
+
+10
+00:00:26,058 --> 00:00:29,627
+e cada vez menos com a textura
+e a cor dos pixels.
+
+11
+00:00:29,660 --> 00:00:32,432
+As camadas finais da rede
+por vezes são chamadas
+
+12
+00:00:32,465 --> 00:00:35,512
+de "representação do conteúdo"
+da imagem.
+
+13
+00:00:35,545 --> 00:00:37,754
+Deste modo, uma CNN treinada
+já aprendeu
+
+14
+00:00:37,787 --> 00:00:39,756
+a representar o conteúdo
+de uma imagem.
+
+15
+00:00:39,789 --> 00:00:41,246
+Mas e quanto ao estilo?
+
+16
+00:00:41,279 --> 00:00:43,511
+O estilo pode ser visto
+como traços distintos
+
+17
+00:00:43,544 --> 00:00:45,557
+das pinceladas de uma pintura:
+
+18
+00:00:45,590 --> 00:00:48,315
+a textura, as cores, a cobertura
+e assim por diante.
+
+19
+00:00:48,348 --> 00:00:50,509
+Para transferir o estilo,
+precisamos mesclar
+
+20
+00:00:50,542 --> 00:00:53,416
+o conteúdo de uma imagem
+com o estilo de outra.
+
+21
+00:00:53,449 --> 00:00:56,617
+Mas como podemos separar
+apenas o estilo de uma imagem?
+
+22
+00:00:56,650 --> 00:00:58,863
+Para representar o estilo
+da imagem de input,
+
+23
+00:00:58,896 --> 00:01:03,198
+é usado um espaço que detecta
+informações de textura e cor.
+
+24
+00:01:03,231 --> 00:01:05,900
+Esse espaço procura
+correlações espaciais
+
+25
+00:01:05,933 --> 00:01:07,782
+presentes
+na camada de uma rede.
+
+26
+00:01:07,815 --> 00:01:09,373
+Uma correlação é uma medida
+
+27
+00:01:09,406 --> 00:01:12,436
+da relação
+entre duas ou mais variáveis.
+
+28
+00:01:12,469 --> 00:01:15,051
+Por exemplo, veja
+as características extraídas
+
+29
+00:01:15,084 --> 00:01:18,443
+da 1ª camada convolucional,
+que têm uma profundidade.
+
+30
+00:01:18,476 --> 00:01:21,927
+A profundidade é o número de mapas
+de características da camada.
+
+31
+00:01:21,960 --> 00:01:25,882
+Em cada mapa, medimos até que ponto
+as características detectadas
+
+32
+00:01:25,915 --> 00:01:28,621
+estão relacionadas
+com os outros mapas da camada.
+
+33
+00:01:28,654 --> 00:01:32,898
+A cor detectada num mapa é igual
+a alguma cor de outro mapa?
+
+34
+00:01:32,931 --> 00:01:36,739
+E quanto à diferença entre as bordas
+e os cantos, por exemplo?
+
+35
+00:01:36,772 --> 00:01:39,523
+Veja quais cores e formas
+do conjunto de características
+
+36
+00:01:39,556 --> 00:01:41,736
+estão relacionadas ou não.
+
+37
+00:01:41,769 --> 00:01:43,763
+Digamos que detectamos
+que minimapas
+
+38
+00:01:43,796 --> 00:01:47,820
+da 1ª camada convolucional
+têm bordas rosa similares.
+
+39
+00:01:47,853 --> 00:01:50,734
+Se houver cores e formas em comum
+entre os mapas,
+
+40
+00:01:50,767 --> 00:01:54,002
+isso pode ser considerado
+parte do estilo da imagem.
+
+41
+00:01:54,035 --> 00:01:57,528
+Então as semelhanças e diferenças
+entre as características da camada
+
+42
+00:01:57,561 --> 00:02:00,922
+oferecem algumas informações
+sobre as texturas e as cores
+
+43
+00:02:00,955 --> 00:02:02,584
+contidas em uma imagem.
+
+44
+00:02:02,617 --> 00:02:05,633
+Mas, ao mesmo tempo, elas também
+desconsideram informações
+
+45
+00:02:05,666 --> 00:02:10,114
+sobre a disposição e a identidade
+dos diferentes objetos da imagem.
+
+46
+00:02:10,147 --> 00:02:13,062
+Vimos que conteúdo e estilo
+podem ser componentes separados
+
+47
+00:02:13,095 --> 00:02:14,229
+de uma imagem.
+
+48
+00:02:14,262 --> 00:02:17,345
+Vamos aplicar isso a um exemplo
+de transferência de estilo.
+
+49
+00:02:17,378 --> 00:02:20,344
+A transferência de estilo
+usa duas imagens diferentes,
+
+50
+00:02:20,377 --> 00:02:23,833
+que chamamos de "imagem de estilo"
+e "imagem de conteúdo".
+
+51
+00:02:23,866 --> 00:02:25,278
+Através de uma CNN treinada,
+
+52
+00:02:25,311 --> 00:02:27,713
+a transferência detecta
+o estilo de uma imagem
+
+53
+00:02:27,746 --> 00:02:29,469
+e o conteúdo da outra.
+
+54
+00:02:29,502 --> 00:02:33,218
+Por fim, ela tenta mesclar as duas
+para criar uma 3ª imagem.
+
+55
+00:02:33,251 --> 00:02:36,039
+Nessa nova imagem,
+os objetos e a disposição deles
+
+56
+00:02:36,072 --> 00:02:38,045
+são extraídos
+da imagem de conteúdo.
+
+57
+00:02:38,078 --> 00:02:41,235
+E as cores e texturas vêm
+da imagem de estilo.
+
+58
+00:02:41,268 --> 00:02:43,406
+Veja o exemplo
+da imagem do gato -
+
+59
+00:02:43,439 --> 00:02:44,662
+a imagem de conteúdo -
+
+60
+00:02:44,695 --> 00:02:48,197
+sendo mesclada com a imagem
+de ondas do artista Hokusai.
+
+61
+00:02:48,230 --> 00:02:50,567
+A transferência de estilo
+cria uma nova imagem
+
+62
+00:02:50,600 --> 00:02:52,241
+que preserva
+o conteúdo do gato,
+
+63
+00:02:52,274 --> 00:02:54,627
+mas o retrata
+com as cores e a textura,
+
+64
+00:02:54,660 --> 00:02:57,139
+ou o estilo,
+da gravura da onda.
+
+65
+00:02:57,172 --> 00:03:00,133
+Essa é a teoria de como funciona
+a transferência de estilo.
+
+66
+00:03:00,166 --> 00:03:03,441
+A seguir, veremos como podemos
+extrair características
+
+67
+00:03:03,474 --> 00:03:05,531
+de diferentes camadas
+de uma rede treinada
+
+68
+00:03:05,564 --> 00:03:09,210
+e usá-las para mesclar o estilo
+e o conteúdo de duas imagens.
+

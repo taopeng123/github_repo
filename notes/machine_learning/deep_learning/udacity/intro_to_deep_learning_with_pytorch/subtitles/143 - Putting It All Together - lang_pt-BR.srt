@@ -1,0 +1,155 @@
+1
+00:00:00,100 --> 00:00:02,150
+Lá vamos nós.
+Como vimos antes,
+
+2
+00:00:02,200 --> 00:00:05,500
+aqui está a arquitetura
+do LSTM com as quatro portas.
+
+3
+00:00:05,550 --> 00:00:06,950
+Ali está
+a porta esquecimento,
+
+4
+00:00:07,000 --> 00:00:09,850
+que toma uma memória de longo prazo
+e a esquece em parte.
+
+5
+00:00:09,900 --> 00:00:13,050
+A porta aprendizagem mescla
+a memória de curto prazo e o evento
+
+6
+00:00:13,100 --> 00:00:15,700
+como informações
+recentemente aprendidas.
+
+7
+00:00:15,750 --> 00:00:19,650
+A porta lembrança junta memórias
+de longo prazo que mantemos
+
+8
+00:00:19,700 --> 00:00:21,400
+a novas informações
+aprendidas
+
+9
+00:00:21,450 --> 00:00:23,450
+para atualizar nossa memória
+de longo prazo
+
+10
+00:00:23,500 --> 00:00:24,700
+e apresentá-la como saída.
+
+11
+00:00:24,750 --> 00:00:27,850
+Por fim, a porta uso também recebe
+informações recém-aprendidas
+
+12
+00:00:27,900 --> 00:00:30,600
+junto com memórias de longo prazo
+ainda não esquecidas
+
+13
+00:00:30,650 --> 00:00:32,400
+e as usa
+para fazer previsões
+
+14
+00:00:32,450 --> 00:00:34,650
+e atualizar a memória
+de curto prazo.
+
+15
+00:00:34,700 --> 00:00:36,600
+É assim que tudo fica junto.
+
+16
+00:00:36,650 --> 00:00:38,750
+Não é tão complicado assim,
+certo?
+
+17
+00:00:38,800 --> 00:00:42,200
+Você deve estar pensando:
+"Espere aí. Que arbitrário!
+
+18
+00:00:42,250 --> 00:00:45,300
+Por que usar tanh algumas vezes
+e sigmoide outras?
+
+19
+00:00:45,350 --> 00:00:47,300
+Por que multiplicar por vezes,
+somar outras
+
+20
+00:00:47,350 --> 00:00:50,100
+e outras aplicar funções lineares
+mais complicadas?
+
+21
+00:00:50,150 --> 00:00:51,800
+Devem lhe ocorrer
+outras arquiteturas
+
+22
+00:00:51,850 --> 00:00:54,050
+mais sensatas
+ou mais simples.
+
+23
+00:00:54,100 --> 00:00:57,550
+E você tem toda a razão.
+É uma construção arbitrária.
+
+24
+00:00:57,600 --> 00:00:59,350
+Como muitas coisas
+em machine learning,
+
+25
+00:00:59,400 --> 00:01:02,950
+o motivo para ser assim
+é porque funciona.
+
+26
+00:01:03,000 --> 00:01:04,150
+Na seção seguinte,
+
+27
+00:01:04,200 --> 00:01:07,750
+veremos outras arquiteturas,
+mais simples ou complexas,
+
+28
+00:01:07,800 --> 00:01:09,850
+que também cumprem o papel.
+
+29
+00:01:09,900 --> 00:01:11,950
+Mas pode procurar outras
+e experimentar.
+
+30
+00:01:12,000 --> 00:01:13,900
+É uma área
+em desenvolvimento,
+
+31
+00:01:13,950 --> 00:01:16,500
+então, se você inventar
+outra arquitetura que funcione,
+
+32
+00:01:16,550 --> 00:01:17,950
+maravilha.
+

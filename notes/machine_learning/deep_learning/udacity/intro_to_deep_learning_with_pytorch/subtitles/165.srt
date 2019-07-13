@@ -1,0 +1,324 @@
+1
+00:00:00,000 --> 00:00:05,835
+Now, let's see how we actually load our Script Module into C++.
+
+2
+00:00:05,835 --> 00:00:09,420
+So for this, there is a requirement that we need LibTorch,
+
+3
+00:00:09,420 --> 00:00:13,380
+so this is the C++ API for
+
+4
+00:00:13,380 --> 00:00:18,240
+PyTorch and we'll also want to use CMake for building our actual application.
+
+5
+00:00:18,240 --> 00:00:20,265
+So, here we're just going to make
+
+6
+00:00:20,265 --> 00:00:23,430
+a very simple C++ application
+
+7
+00:00:23,430 --> 00:00:27,420
+that only loads in our module and then if that's successful,
+
+8
+00:00:27,420 --> 00:00:29,640
+it's just going to print out okay.
+
+9
+00:00:29,640 --> 00:00:32,970
+So here, we are including LibTorch and
+
+10
+00:00:32,970 --> 00:00:37,350
+then we are creating our main application function,
+
+11
+00:00:37,350 --> 00:00:41,445
+and this is going to take some arguments from the command line.
+
+12
+00:00:41,445 --> 00:00:45,500
+So, where we're going to use this, is that we're going to call our application from
+
+13
+00:00:45,500 --> 00:00:49,535
+the command line and pass in the path to our Script Module,
+
+14
+00:00:49,535 --> 00:00:51,475
+which we exported before.
+
+15
+00:00:51,475 --> 00:00:56,675
+Here, this line is where we actually load in our Script Module.
+
+16
+00:00:56,675 --> 00:00:59,180
+So, we're going to create a shared pointer for
+
+17
+00:00:59,180 --> 00:01:03,860
+our Script Module and then we use torch jit load,
+
+18
+00:01:03,860 --> 00:01:07,260
+to actually load in our module itself.
+
+19
+00:01:07,260 --> 00:01:12,320
+So, argv here is the path to our exported Script Module.
+
+20
+00:01:12,320 --> 00:01:14,750
+Then, if our module isn't null,
+
+21
+00:01:14,750 --> 00:01:17,360
+so if we actually did load in this thing,
+
+22
+00:01:17,360 --> 00:01:21,950
+then we're going to print out okay to the standard output.
+
+23
+00:01:21,950 --> 00:01:23,720
+It's like I was mentioning before,
+
+24
+00:01:23,720 --> 00:01:28,350
+we are using CMake to build our application,
+
+25
+00:01:28,350 --> 00:01:34,030
+so this is an example of CMakeLists.txt that's going to configure how we build it.
+
+26
+00:01:34,030 --> 00:01:38,430
+Specifically, it's going to be looking for the LibTorch package,
+
+27
+00:01:38,430 --> 00:01:39,975
+so find package torch.
+
+28
+00:01:39,975 --> 00:01:42,860
+We get LibTorch, you can just download it
+
+29
+00:01:42,860 --> 00:01:45,790
+from the download page here on the PyTorch website.
+
+30
+00:01:45,790 --> 00:01:47,535
+So, if you download it and unzip it,
+
+31
+00:01:47,535 --> 00:01:51,240
+then you'll get this folder with the structure, looks like this.
+
+32
+00:01:51,240 --> 00:01:54,070
+So, when we're building our application,
+
+33
+00:01:54,070 --> 00:01:56,960
+we just need to point CMake to this library
+
+34
+00:01:56,960 --> 00:02:00,200
+and then it will automatically have all the headers,
+
+35
+00:02:00,200 --> 00:02:01,775
+libraries, and everything it needs,
+
+36
+00:02:01,775 --> 00:02:04,675
+and it will compile our application for us.
+
+37
+00:02:04,675 --> 00:02:06,670
+Then to build our application,
+
+38
+00:02:06,670 --> 00:02:10,250
+we want to have our application directory look like this.
+
+39
+00:02:10,250 --> 00:02:13,670
+So, we have this top-level directory example app,
+
+40
+00:02:13,670 --> 00:02:18,155
+and then include our CMakeLists.txt which is up here,
+
+41
+00:02:18,155 --> 00:02:22,425
+just copy this, and then our actual C++ file.
+
+42
+00:02:22,425 --> 00:02:25,520
+We'll create a build directory then move into that directory,
+
+43
+00:02:25,520 --> 00:02:29,270
+so then we will call CMake and we'll point it to our LibTorch package,
+
+44
+00:02:29,270 --> 00:02:30,805
+so wherever that is,
+
+45
+00:02:30,805 --> 00:02:33,435
+and then the dot dot here will point it to
+
+46
+00:02:33,435 --> 00:02:38,000
+our actual C++ files in the directory one above from here.
+
+47
+00:02:38,000 --> 00:02:41,410
+Type make and this should build our application.
+
+48
+00:02:41,410 --> 00:02:43,200
+So, if everything went well,
+
+49
+00:02:43,200 --> 00:02:46,565
+now we just need to call our application and then pass
+
+50
+00:02:46,565 --> 00:02:50,990
+in our saved Script Module and then if it loads in,
+
+51
+00:02:50,990 --> 00:02:53,695
+everything's good, then it'll return an okay for us.
+
+52
+00:02:53,695 --> 00:02:56,100
+So, that was just a really simple scripting,
+
+53
+00:02:56,100 --> 00:02:59,760
+we weren't really doing anything with the model itself,
+
+54
+00:02:59,760 --> 00:03:02,135
+we were just loading it in and making sure that worked.
+
+55
+00:03:02,135 --> 00:03:07,284
+So, we can add just a few lines to our existing application,
+
+56
+00:03:07,284 --> 00:03:10,760
+where we're actually going to pass them data through our model.
+
+57
+00:03:10,760 --> 00:03:14,825
+Here, we're just creating a vector called inputs and then
+
+58
+00:03:14,825 --> 00:03:19,525
+we're going to create a torch Tensor of ones with the size 1,
+
+59
+00:03:19,525 --> 00:03:21,505
+3, 224 by 224,
+
+60
+00:03:21,505 --> 00:03:26,170
+and going to insert this into our vector inputs.
+
+61
+00:03:26,170 --> 00:03:29,960
+So, we have our model loaded into module here
+
+62
+00:03:29,960 --> 00:03:33,695
+and we just call the forward method on this passing our inputs,
+
+63
+00:03:33,695 --> 00:03:38,950
+and then we convert it to a Tensor and we're going to set this to this variable output.
+
+64
+00:03:38,950 --> 00:03:42,470
+Now, we can look at the values and output using output.slice and so,
+
+65
+00:03:42,470 --> 00:03:44,570
+we're going to look at the first dimension.
+
+66
+00:03:44,570 --> 00:03:47,420
+We're going to start at zero and then end at the fifth element.
+
+67
+00:03:47,420 --> 00:03:52,510
+Here's a nice little tip, if you want to learn more about the PyTorch C++ API,
+
+68
+00:03:52,510 --> 00:03:54,570
+then check out the docs here.
+
+69
+00:03:54,570 --> 00:03:57,345
+So, pytorch.org/cppdocs.
+
+70
+00:03:57,345 --> 00:04:03,620
+So, now if we again build and compile this application then run it,
+
+71
+00:04:03,620 --> 00:04:08,130
+you'll see that we actually get an output from our model.
+
+72
+00:04:08,130 --> 00:04:15,020
+This is a pretty simple example of how you use the C++ API and Script modules.
+
+73
+00:04:15,020 --> 00:04:16,910
+But using the same process,
+
+74
+00:04:16,910 --> 00:04:22,100
+you should be able to start deploying your own models to C++ environments.
+
+75
+00:04:22,100 --> 00:04:24,800
+So, the general workflow for this will be
+
+76
+00:04:24,800 --> 00:04:28,460
+building and defining your model in Python with PyTorch,
+
+77
+00:04:28,460 --> 00:04:30,800
+training it there, and then once it's all trained,
+
+78
+00:04:30,800 --> 00:04:36,890
+you can convert it to a Script Module either with tracing or the annotations,
+
+79
+00:04:36,890 --> 00:04:40,500
+then serialize it with the save method,
+
+80
+00:04:40,500 --> 00:04:44,610
+and then from there you can use the C++ API to load it into
+
+81
+00:04:44,610 --> 00:04:48,930
+a C++ application and go from there. Cheers.
+

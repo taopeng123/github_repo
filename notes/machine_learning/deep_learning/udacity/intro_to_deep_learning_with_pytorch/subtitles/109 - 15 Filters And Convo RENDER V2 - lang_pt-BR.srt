@@ -1,0 +1,130 @@
+1
+00:00:00,297 --> 00:00:03,521
+Uma rede neural convolucional
+é uma rede neural especial,
+
+2
+00:00:03,554 --> 00:00:06,144
+que consegue se lembrar
+de informações espaciais.
+
+3
+00:00:06,177 --> 00:00:09,930
+As redes que vimos até agora
+só observam inputs individuais,
+
+4
+00:00:09,963 --> 00:00:13,272
+mas as redes convolucionais
+observam a imagem como um todo
+
+5
+00:00:13,305 --> 00:00:16,703
+ou em fragmentos,
+analisando grupos de pixels.
+
+6
+00:00:16,736 --> 00:00:19,016
+A chave para preservar
+informações espaciais
+
+7
+00:00:19,049 --> 00:00:21,315
+está em algo chamado
+"camada convolucional".
+
+8
+00:00:21,348 --> 00:00:24,594
+Uma camada convolucional aplica
+uma série de filtros de imagem
+
+9
+00:00:24,627 --> 00:00:26,570
+conhecidos
+como "Kernel convolucional"
+
+10
+00:00:26,603 --> 00:00:28,219
+a uma imagem de input.
+
+11
+00:00:28,252 --> 00:00:30,778
+As imagens filtradas
+terão aparências distintas.
+
+12
+00:00:30,811 --> 00:00:34,686
+Os filtros podem extrair recursos
+como as bordas dos objetos
+
+13
+00:00:34,719 --> 00:00:38,086
+ou as cores que distinguem
+as diferentes classes de imagens.
+
+14
+00:00:38,119 --> 00:00:40,399
+Para classificar dígitos,
+por exemplo,
+
+15
+00:00:40,432 --> 00:00:43,190
+a CNN aprenderá a identificar
+padrões espaciais,
+
+16
+00:00:43,223 --> 00:00:46,189
+como as curvas e as linhas
+que constituem o número 6,
+
+17
+00:00:46,222 --> 00:00:48,118
+que diferenciam os dígitos.
+
+18
+00:00:48,151 --> 00:00:50,585
+As camadas posteriores
+aprenderão a combinar
+
+19
+00:00:50,618 --> 00:00:52,271
+cores e recursos espaciais
+
+20
+00:00:52,304 --> 00:00:54,770
+para produzir um output
+como um rótulo de classe.
+
+21
+00:00:54,803 --> 00:00:58,064
+Antes de definirmos
+e treinarmos uma CNN,
+
+22
+00:00:58,097 --> 00:00:59,395
+nos próximos vídeos,
+
+23
+00:00:59,428 --> 00:01:02,852
+aprenderemos sobre os filtros
+de uma camada convolucional,
+
+24
+00:01:02,885 --> 00:01:06,244
+sobre como se definem e como
+transformam a imagem de input.
+
+25
+00:01:06,277 --> 00:01:09,124
+Esse será um conhecimento
+fundamental
+
+26
+00:01:09,157 --> 00:01:10,868
+para o treinamento de uma CNN
+
+27
+00:01:10,901 --> 00:01:13,782
+e para a visualização
+do funcionamento da CNN treinada.
+
