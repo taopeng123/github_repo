@@ -1,0 +1,204 @@
+1
+00:00:00,323 --> 00:00:02,364
+Estamos prontos
+para apresentar a você
+
+2
+00:00:02,397 --> 00:00:06,065
+o segundo e último tipo de camada
+que você precisa conhecer
+
+3
+00:00:06,098 --> 00:00:09,896
+antes de construir
+sua própria rede convolucional.
+
+4
+00:00:09,929 --> 00:00:12,286
+As chamadas
+"camadas de pooling"
+
+5
+00:00:12,319 --> 00:00:15,809
+costumam usar
+camadas convolucionais como input.
+
+6
+00:00:15,842 --> 00:00:19,281
+A camada convolucional é uma pilha
+de mapas de características,
+
+7
+00:00:19,314 --> 00:00:22,962
+em que há um mapa de características
+para cada filtro.
+
+8
+00:00:22,995 --> 00:00:24,572
+Um conjunto de dados
+complicado,
+
+9
+00:00:24,605 --> 00:00:26,801
+com muitas classes de objetos
+diferentes,
+
+10
+00:00:26,834 --> 00:00:29,814
+requer
+um grande número de filtros,
+
+11
+00:00:29,847 --> 00:00:33,603
+e cada um será responsável
+por encontrar um padrão na imagem.
+
+12
+00:00:33,636 --> 00:00:35,962
+Mais filtros implicam
+numa pilha maior,
+
+13
+00:00:35,995 --> 00:00:39,257
+portanto a dimensionalidade
+das nossas camadas convolucionais
+
+14
+00:00:39,290 --> 00:00:40,893
+pode ser bem grande.
+
+15
+00:00:40,926 --> 00:00:44,593
+Uma dimensionalidade maior exigirá
+que usemos mais parâmetros,
+
+16
+00:00:44,626 --> 00:00:46,809
+o que pode gerar sobreajuste.
+
+17
+00:00:46,842 --> 00:00:50,791
+Assim, precisamos de um método
+que reduza essa dimensionalidade.
+
+18
+00:00:50,824 --> 00:00:54,856
+Esse é o papel da camada de pooling
+na rede convolucional.
+
+19
+00:00:55,289 --> 00:00:56,403
+Vamos nos concentrar
+
+20
+00:00:56,436 --> 00:00:59,239
+em dois tipos diferentes
+de camada de pooling.
+
+21
+00:00:59,272 --> 00:01:02,447
+O primeiro tipo é
+a camada max pooling.
+
+22
+00:01:02,480 --> 00:01:05,551
+Ela usa uma pilha
+de mapas de características
+
+23
+00:01:05,584 --> 00:01:06,898
+como input.
+
+24
+00:01:06,931 --> 00:01:11,579
+Aqui nós ampliamos e visualizamos
+os 3 mapas de características.
+
+25
+00:01:11,612 --> 00:01:13,342
+Assim como
+na camada convolucional,
+
+26
+00:01:13,375 --> 00:01:16,346
+definiremos
+o tamanho da janela e o stride
+
+27
+00:01:16,379 --> 00:01:19,224
+e, neste caso,
+o tamanho de janela será 2
+
+28
+00:01:19,257 --> 00:01:21,085
+e o stride será 2.
+
+29
+00:01:21,118 --> 00:01:23,023
+Para construir
+a camada max pooling,
+
+30
+00:01:23,056 --> 00:01:25,966
+trabalharemos com cada mapa
+de características em separado.
+
+31
+00:01:25,999 --> 00:01:28,702
+Vamos começar
+com o primeiro mapa.
+
+32
+00:01:28,735 --> 00:01:32,892
+Começamos com a janela do canto
+superior esquerdo da imagem.
+
+33
+00:01:32,925 --> 00:01:36,653
+O valor do nó correspondente
+na camada max pooling
+
+34
+00:01:36,686 --> 00:01:42,169
+é calculado pegando o maior
+valor de pixel contido na janela.
+
+35
+00:01:42,202 --> 00:01:47,057
+Neste caso, a janela contém
+1, 9, 5 e 4,
+
+36
+00:01:47,090 --> 00:01:49,478
+então 9 é o maior valor.
+
+37
+00:01:50,082 --> 00:01:51,847
+Se continuarmos
+esse processo
+
+38
+00:01:51,880 --> 00:01:54,391
+e o aplicarmos a todos
+os mapas de características,
+
+39
+00:01:54,424 --> 00:01:58,615
+o output será uma pilha
+com o mesmo número de mapas,
+
+40
+00:01:58,648 --> 00:02:02,902
+mas cada mapa de características
+será reduzido em largura e altura.
+
+41
+00:02:02,935 --> 00:02:06,010
+Neste caso, o mapa terá
+metade da largura e da altura
+
+42
+00:02:06,043 --> 00:02:08,030
+da camada convolucional
+anterior.
+

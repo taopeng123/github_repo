@@ -1,0 +1,440 @@
+1
+00:00:00,298 --> 00:00:04,279
+Vimos como abordar a tarefa
+de classificação de imagem.
+
+2
+00:00:04,312 --> 00:00:07,575
+Neste notebook, veremos
+como carregar um dado de imagem,
+
+3
+00:00:07,608 --> 00:00:09,527
+definir um modelo e treiná-lo.
+
+4
+00:00:09,560 --> 00:00:11,808
+Você já pode ter visto
+esse processo
+
+5
+00:00:11,841 --> 00:00:14,639
+quando vimos aprendizado profundo
+no PyTorch,
+
+6
+00:00:14,672 --> 00:00:19,038
+mas o aconselho a checar
+este outro exemplo.
+
+7
+00:00:19,071 --> 00:00:21,326
+Apresentarei este código
+como exercício,
+
+8
+00:00:21,359 --> 00:00:24,560
+assim você poderá mudá-lo,
+definir o seu modelo
+
+9
+00:00:24,593 --> 00:00:26,855
+e experimentar sozinho
+no notebook Jupyter,
+
+10
+00:00:26,888 --> 00:00:28,241
+assim como agora.
+
+11
+00:00:28,274 --> 00:00:29,929
+Minha primeira ação
+no notebook
+
+12
+00:00:29,962 --> 00:00:33,343
+foi carregar as bibliotecas
+torch e NumPy.
+
+13
+00:00:33,376 --> 00:00:35,946
+Importarei os conjuntos de dados
+do torchvision
+
+14
+00:00:35,979 --> 00:00:37,651
+e as bibliotecas
+de transformação.
+
+15
+00:00:37,684 --> 00:00:40,324
+Usarei isso para carregar
+o conjunto de dados MNIST,
+
+16
+00:00:40,357 --> 00:00:42,819
+transformando-o
+em um tipo dado tensor.
+
+17
+00:00:42,852 --> 00:00:47,118
+É no transforms.ToTensor
+que defino a transformação.
+
+18
+00:00:47,151 --> 00:00:51,363
+O tipo de dado tensor
+é bem parecido com o array NumPy,
+
+19
+00:00:51,396 --> 00:00:54,997
+mas pode ser movido para uma GPU
+para que o cálculo seja mais rápido,
+
+20
+00:00:55,030 --> 00:00:56,693
+mas veremos isso depois.
+
+21
+00:00:56,726 --> 00:01:00,269
+Eu configurei alguns parâmetros
+para carregar os dados da imagem.
+
+22
+00:01:00,302 --> 00:01:03,676
+Posso definir o tamanho do lote,
+que é a quantidade de imagens
+
+23
+00:01:03,709 --> 00:01:06,157
+que veremos
+na iteração de treino.
+
+24
+00:01:06,190 --> 00:01:09,832
+Uma iteração significa que a rede
+comete o erro uma vez
+
+25
+00:01:09,865 --> 00:01:12,379
+e aprende com isso
+a partir da retropropagação.
+
+26
+00:01:12,412 --> 00:01:15,588
+Os workers são para quando
+carregarmos dados em paralelo.
+
+27
+00:01:15,621 --> 00:01:18,120
+Para a maioria dos casos,
+o zero funcionará bem.
+
+28
+00:01:18,661 --> 00:01:23,466
+Vou carregar os dados de treinamento
+e de teste com datasets.MNIST.
+
+29
+00:01:23,499 --> 00:01:27,281
+Baixarei o conjunto, transformando-o
+no tipo de dado tensor
+
+30
+00:01:27,314 --> 00:01:28,746
+definido aqui.
+
+31
+00:01:28,779 --> 00:01:32,690
+Colocarei os dados
+em um diretório chamado "data".
+
+32
+00:01:32,723 --> 00:01:36,290
+Por fim, criarei carregadores
+de treinamento e de teste,
+
+33
+00:01:36,323 --> 00:01:38,890
+que pegarão os dados
+definidos acima,
+
+34
+00:01:38,923 --> 00:01:41,658
+o tamanho do lote
+e a quantidade de workers.
+
+35
+00:01:41,691 --> 00:01:46,740
+Os carregadores possibilitam
+iterar os dados um lote por vez.
+
+36
+00:01:46,773 --> 00:01:49,333
+Baixar os dados pode levar
+um ou dois minutos.
+
+37
+00:01:49,950 --> 00:01:51,548
+Depois de baixar os dados,
+
+38
+00:01:51,581 --> 00:01:54,477
+dou o primeiro passo da tarefa
+de análise de imagem
+
+39
+00:01:54,510 --> 00:01:56,204
+e visualizo os dados.
+
+40
+00:01:56,237 --> 00:01:59,547
+Pego um lote de imagens
+e os rótulos.
+
+41
+00:01:59,580 --> 00:02:01,524
+Estou agrupando 20.
+
+42
+00:02:01,557 --> 00:02:05,557
+Vemos uma variedade
+de imagens MNIST e os rótulos.
+
+43
+00:02:05,590 --> 00:02:08,620
+Esse passo permite conferir
+e garantir que as imagens
+
+44
+00:02:08,653 --> 00:02:10,540
+sejam como eu espero.
+
+45
+00:02:10,573 --> 00:02:13,308
+Posso até observar os detalhes
+de uma imagem.
+
+46
+00:02:13,341 --> 00:02:15,739
+Aqui estou observando
+uma imagem do conjunto,
+
+47
+00:02:15,772 --> 00:02:18,724
+exibindo os valores
+da escala de cinza.
+
+48
+00:02:18,757 --> 00:02:21,109
+Vemos que os valores
+são normalizados
+
+49
+00:02:21,142 --> 00:02:23,924
+e os pixels mais claros
+são próximos do 1,
+
+50
+00:02:23,957 --> 00:02:26,499
+os pixels em preto
+são iguais a 0.
+
+51
+00:02:26,532 --> 00:02:28,707
+A seguir vem a parte
+mais interessante,
+
+52
+00:02:28,740 --> 00:02:30,771
+que é definir o modelo MOP.
+
+53
+00:02:30,804 --> 00:02:34,037
+Falamos sobre definir as camadas
+ocultas de input e de output,
+
+54
+00:02:34,070 --> 00:02:37,035
+então eu deixarei esta seção
+para que você complete,
+
+55
+00:02:37,068 --> 00:02:39,724
+mas quero falar
+sobre algumas coisas daqui.
+
+56
+00:02:39,757 --> 00:02:41,748
+Primeiro, sobre a função init.
+
+57
+00:02:41,781 --> 00:02:43,956
+Para definir uma rede neural
+no PyTorch,
+
+58
+00:02:43,989 --> 00:02:45,201
+definimos um nome,
+
+59
+00:02:45,234 --> 00:02:47,567
+qualquer camada
+com valores de peso
+
+60
+00:02:47,600 --> 00:02:49,219
+na função init.
+
+61
+00:02:49,252 --> 00:02:53,098
+Neste caso, usaremos as camadas
+lineares completamente conectadas.
+
+62
+00:02:53,131 --> 00:02:55,618
+Eu defini a primeira camada
+de input,
+
+63
+00:02:55,651 --> 00:02:58,133
+que chamei de "fc1".
+
+64
+00:02:58,166 --> 00:03:02,164
+Ela tem 784 ou 28x28 inputs
+
+65
+00:03:02,197 --> 00:03:04,356
+e a quantidade de nós ocultos.
+
+66
+00:03:04,389 --> 00:03:07,732
+Esta é a quantidade de outputs
+que a camada produzirá.
+
+67
+00:03:07,765 --> 00:03:10,735
+Por ora, deixarei como 1,
+mas isso precisará ser alterado
+
+68
+00:03:10,768 --> 00:03:12,632
+para criar
+uma solução que funciona.
+
+69
+00:03:12,665 --> 00:03:16,196
+A seguir, definimos o comportamento
+feedforward da rede,
+
+70
+00:03:16,229 --> 00:03:21,277
+que é como o input será passado
+pelas camadas e será transformado.
+
+71
+00:03:21,310 --> 00:03:24,111
+Assumi que o X será uma imagem
+em escala de cinza,
+
+72
+00:03:24,144 --> 00:03:25,683
+como uma imagem MNIST,
+
+73
+00:03:25,716 --> 00:03:28,347
+e forneci um código inicial.
+
+74
+00:03:28,380 --> 00:03:32,571
+Primeiro eu achatei a imagem X
+com a função view,
+
+75
+00:03:32,604 --> 00:03:36,282
+que pega a quantidade de linhas
+e de colunas e espreme o input
+
+76
+00:03:36,315 --> 00:03:38,074
+no formato desejado.
+
+77
+00:03:38,107 --> 00:03:42,746
+Neste caso, a quantidade de colunas
+será igual a 28x28 ou 784.
+
+78
+00:03:42,779 --> 00:03:45,970
+Ao usar -1 aqui,
+a função ajustará automaticamente
+
+79
+00:03:46,003 --> 00:03:49,203
+os valores de X
+para este formato de coluna.
+
+80
+00:03:49,236 --> 00:03:54,018
+O resultado é que o X
+será um vetor com 784 valores.
+
+81
+00:03:54,051 --> 00:03:55,899
+Depois eu passo
+o vetor flatten
+
+82
+00:03:55,932 --> 00:03:58,731
+para a primeira camada
+completamente conectada.
+
+83
+00:03:58,764 --> 00:04:01,674
+Eu chamo a camada pelo nome
+passando o input
+
+84
+00:04:01,707 --> 00:04:04,418
+e aplico
+a função de ativação ReLU.
+
+85
+00:04:04,451 --> 00:04:07,818
+Ela deve ser aplicada no output
+de toda camada oculta,
+
+86
+00:04:07,851 --> 00:04:11,163
+para que os outputs tenham
+valores positivos consistentes.
+
+87
+00:04:11,196 --> 00:04:13,946
+Por fim,
+retorno o X transformado.
+
+88
+00:04:13,979 --> 00:04:15,369
+Para completar o modelo,
+
+89
+00:04:15,402 --> 00:04:17,842
+devemos adicionar às funções
+init e forward,
+
+90
+00:04:17,875 --> 00:04:22,337
+para que o X final retornado seja
+uma lista de pontuação de classe.
+
+91
+00:04:22,370 --> 00:04:25,876
+A seguir, descreverei
+como treinar um modelo definido
+
+92
+00:04:25,909 --> 00:04:27,885
+e terminar esta tarefa.
+

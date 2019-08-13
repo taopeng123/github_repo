@@ -1,0 +1,196 @@
+1
+00:00:00,000 --> 00:00:05,910
+Then I kind of have two sort of last questions for you, like big picture.
+
+2
+00:00:05,910 --> 00:00:08,880
+Like if you think about maybe just a year from now,
+
+3
+00:00:08,880 --> 00:00:12,240
+so I'm not like thinking too far for this tooling,
+
+4
+00:00:12,240 --> 00:00:15,300
+where would you want to see
+
+5
+00:00:15,300 --> 00:00:18,825
+like PyTorch being used or where would you want that community to sort of be?
+
+6
+00:00:18,825 --> 00:00:22,860
+Yeah. So, I've been thinking about this pretty hard.
+
+7
+00:00:22,860 --> 00:00:25,530
+I mean we have all these awesome community.
+
+8
+00:00:25,530 --> 00:00:29,805
+If you see people who use pi torch,
+
+9
+00:00:29,805 --> 00:00:33,810
+they publish in ICLR, in NIPS,
+
+10
+00:00:33,810 --> 00:00:38,025
+in ICML, CVPR all of these like top tier conferences.
+
+11
+00:00:38,025 --> 00:00:42,905
+We got the deep learning crowd
+
+12
+00:00:42,905 --> 00:00:48,515
+especially in research and startups maybe not the United Airlines.
+
+13
+00:00:48,515 --> 00:00:49,160
+Right.
+
+14
+00:00:49,160 --> 00:00:50,810
+We got these people.
+
+15
+00:00:50,810 --> 00:00:52,850
+Next thing I was thinking was,
+
+16
+00:00:52,850 --> 00:00:55,220
+deep learning itself is becoming
+
+17
+00:00:55,220 --> 00:01:01,370
+a very pervasive and essential competent and many other fields.
+
+18
+00:01:01,370 --> 00:01:09,885
+If you look at health care plus data that sub-field.
+
+19
+00:01:09,885 --> 00:01:12,840
+Or you look at computational chemistry,
+
+20
+00:01:12,840 --> 00:01:15,210
+you take what CERN does,
+
+21
+00:01:15,210 --> 00:01:16,865
+you know, particle physics.
+
+22
+00:01:16,865 --> 00:01:20,990
+All of these areas like you take like a Neurobiology,
+
+23
+00:01:20,990 --> 00:01:23,960
+Neuroscience, they're all starting.
+
+24
+00:01:23,960 --> 00:01:25,475
+If you carefully look,
+
+25
+00:01:25,475 --> 00:01:28,115
+they're all starting to use deep learning.
+
+26
+00:01:28,115 --> 00:01:30,125
+The way they use it,
+
+27
+00:01:30,125 --> 00:01:32,130
+is it's a very,
+
+28
+00:01:32,130 --> 00:01:38,420
+very rudimentary- for them it's like oh look there's this GitHub repo
+
+29
+00:01:38,420 --> 00:01:45,744
+that shows us how to put in our like our brain scans,
+
+30
+00:01:45,744 --> 00:01:49,140
+and then get out segmented version.
+
+31
+00:01:49,140 --> 00:01:52,365
+It's like some unit implementation somewhere.
+
+32
+00:01:52,365 --> 00:01:56,925
+I think more- empowering them more
+
+33
+00:01:56,925 --> 00:02:01,995
+by lowering- their main problem is they didn't know deep learning.
+
+34
+00:02:01,995 --> 00:02:07,100
+So, my thinking is,
+
+35
+00:02:07,100 --> 00:02:10,670
+maybe we should just go into these fields and build them
+
+36
+00:02:10,670 --> 00:02:15,950
+packages that are- that lower their barrier of entry to use deep learning.
+
+37
+00:02:15,950 --> 00:02:19,970
+So, there's like 10 research labs they
+
+38
+00:02:19,970 --> 00:02:24,515
+use neuroscience who do neuroscience who want to use deep learning capabilities,
+
+39
+00:02:24,515 --> 00:02:28,670
+just go understand what they actually need,
+
+40
+00:02:28,670 --> 00:02:33,000
+and then build a cute package which they can relate to.
+
+41
+00:02:33,000 --> 00:02:35,560
+When we say a PyTorch is pythonic,
+
+42
+00:02:35,560 --> 00:02:39,630
+Python people who use use Python can relate to it, right?
+
+43
+00:02:39,630 --> 00:02:40,780
+Yeah.
+
+44
+00:02:40,910 --> 00:02:47,700
+I want PyTorch to be neurosciencic and particle physicic.
+
+45
+00:02:47,700 --> 00:02:50,810
+So, I'm just making sure that those communities are
+
+46
+00:02:50,810 --> 00:02:55,270
+empowered and not just like poking holes randomly.
+
+47
+00:02:55,270 --> 00:02:57,745
+Yeah. Yeah, I like the idea of linear,
+
+48
+00:02:57,745 --> 00:03:03,605
+going to ask people what they need as far as like kind of a data analysis tool.
+
+49
+00:03:03,605 --> 00:03:04,080
+Yeah.
+

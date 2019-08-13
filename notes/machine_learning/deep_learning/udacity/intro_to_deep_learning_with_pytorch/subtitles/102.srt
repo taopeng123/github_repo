@@ -1,0 +1,304 @@
+1
+00:00:00,000 --> 00:00:02,790
+After loading in data and defining a model,
+
+2
+00:00:02,790 --> 00:00:06,835
+the next task is to define your loss and optimization functions.
+
+3
+00:00:06,835 --> 00:00:09,745
+For a simple classification problem like this one,
+
+4
+00:00:09,745 --> 00:00:14,200
+I recommend starting with cross-entropy loss and a method of gradient descent.
+
+5
+00:00:14,200 --> 00:00:16,380
+But you may also find it useful to read
+
+6
+00:00:16,380 --> 00:00:20,279
+the documentation on the various types of loss functions and optimizers.
+
+7
+00:00:20,279 --> 00:00:22,960
+In fact, let's check out the loss documentation.
+
+8
+00:00:22,960 --> 00:00:25,570
+You can see a few different types of loss here,
+
+9
+00:00:25,570 --> 00:00:28,100
+and we can read about cross-entropy loss.
+
+10
+00:00:28,100 --> 00:00:32,355
+The documentation says that the cross-entropy function is actually performing
+
+11
+00:00:32,355 --> 00:00:37,395
+a softmax function on an output layer and then doing negative log loss.
+
+12
+00:00:37,395 --> 00:00:40,760
+This means that you only need your model to produce class scores,
+
+13
+00:00:40,760 --> 00:00:43,310
+and then this loss function will turn those into
+
+14
+00:00:43,310 --> 00:00:46,715
+probabilities using a softmax function and calculate the loss,
+
+15
+00:00:46,715 --> 00:00:49,985
+even details how these calculations are performed.
+
+16
+00:00:49,985 --> 00:00:52,670
+You'll also notice that this loss is calculated
+
+17
+00:00:52,670 --> 00:00:55,310
+as an average value over a batch of images.
+
+18
+00:00:55,310 --> 00:00:59,510
+So, if a batch of 20 images is seen by our model during training,
+
+19
+00:00:59,510 --> 00:01:03,290
+the return loss will be the average loss over those 20 images.
+
+20
+00:01:03,290 --> 00:01:04,760
+Now back to our notebook,
+
+21
+00:01:04,760 --> 00:01:07,040
+the loss and optimization functions will really
+
+22
+00:01:07,040 --> 00:01:09,955
+define how the network updates its weights as it trains.
+
+23
+00:01:09,955 --> 00:01:12,795
+Next, we'll get to the actual training loop,
+
+24
+00:01:12,795 --> 00:01:15,450
+this as the number of epochs we will train for.
+
+25
+00:01:15,450 --> 00:01:17,630
+Epochs are how many times we want the model to
+
+26
+00:01:17,630 --> 00:01:19,930
+iterate through the entire training dataset.
+
+27
+00:01:19,930 --> 00:01:23,960
+One epoch for example means it sees every training image just once.
+
+28
+00:01:23,960 --> 00:01:27,320
+And I suggest starting with at least 20 epochs for this dataset.
+
+29
+00:01:27,320 --> 00:01:30,290
+It's good practice to start small if you're testing out
+
+30
+00:01:30,290 --> 00:01:32,630
+different model architectures and then increase
+
+31
+00:01:32,630 --> 00:01:35,495
+the number of epochs when you're trying to train your final model.
+
+32
+00:01:35,495 --> 00:01:39,870
+Then, we loop over each epoch and I'm going to keep track of the training loss as I go.
+
+33
+00:01:39,870 --> 00:01:42,800
+Inside this epoch loop is the batch loop.
+
+34
+00:01:42,800 --> 00:01:46,490
+Here, the train loader will load a batch of training data and we can
+
+35
+00:01:46,490 --> 00:01:50,270
+look at the images and the true labels for every image in that batch.
+
+36
+00:01:50,270 --> 00:01:51,680
+At the start of the batch loop,
+
+37
+00:01:51,680 --> 00:01:54,430
+we clear out any gradient calculations that PyTorch
+
+38
+00:01:54,430 --> 00:01:57,565
+has accumulated using optimizer.zero_grad.
+
+39
+00:01:57,565 --> 00:02:01,060
+Then, we call in our model and perform a forward pass.
+
+40
+00:02:01,060 --> 00:02:03,655
+Our model takes in the input images,
+
+41
+00:02:03,655 --> 00:02:08,270
+the data from our train loader and then this returns the predicted class scores,
+
+42
+00:02:08,270 --> 00:02:09,320
+which I'll call output.
+
+43
+00:02:09,320 --> 00:02:11,810
+Next, we use our defined loss function to
+
+44
+00:02:11,810 --> 00:02:15,270
+compare these predicted outputs and the true labels, the target.
+
+45
+00:02:15,270 --> 00:02:17,540
+These were again gotten from our train loader.
+
+46
+00:02:17,540 --> 00:02:23,415
+So, we compare a batch of outputs and target labels and calculate the cross-entropy loss.
+
+47
+00:02:23,415 --> 00:02:25,850
+To complete the backpropagation steps,
+
+48
+00:02:25,850 --> 00:02:28,730
+we then perform a backward pass to compute the gradient of
+
+49
+00:02:28,730 --> 00:02:32,015
+the loss and we perform a single optimization step.
+
+50
+00:02:32,015 --> 00:02:36,755
+This step is actually responsible for updating the values of the weights in our network.
+
+51
+00:02:36,755 --> 00:02:39,595
+Finally, we compute a running training loss.
+
+52
+00:02:39,595 --> 00:02:43,610
+This last item is a loss value that's averaged over the batch
+
+53
+00:02:43,610 --> 00:02:47,715
+and in this case we actually want to record the accumulated loss over the batch,
+
+54
+00:02:47,715 --> 00:02:49,035
+not the average quite yet.
+
+55
+00:02:49,035 --> 00:02:52,970
+So, I'm going to multiply it by the batch size data.size(0).
+
+56
+00:02:52,970 --> 00:02:56,810
+Then, after this loop has completed and we've gone through one whole epoch,
+
+57
+00:02:56,810 --> 00:02:59,760
+I'll calculate the average loss over that epoch.
+
+58
+00:02:59,760 --> 00:03:01,190
+To do this, I'm going to divide
+
+59
+00:03:01,190 --> 00:03:05,310
+the accumulated loss by the total number of images in our training set.
+
+60
+00:03:05,310 --> 00:03:09,560
+This returns an average training loss and I'll print it out after each epoch.
+
+61
+00:03:09,560 --> 00:03:12,620
+I should note that this is just one way to calculate the average loss.
+
+62
+00:03:12,620 --> 00:03:14,365
+And as you look at example code,
+
+63
+00:03:14,365 --> 00:03:16,065
+you may see a different calculation.
+
+64
+00:03:16,065 --> 00:03:20,380
+For example, you could calculate the average loss at any point in this batch loop,
+
+65
+00:03:20,380 --> 00:03:23,540
+as long as you add up the loss for every input image and then
+
+66
+00:03:23,540 --> 00:03:27,550
+divide the accumulated loss by the number of images seen by the network.
+
+67
+00:03:27,550 --> 00:03:31,040
+Now, after you run this training loop for some time after a number of epochs,
+
+68
+00:03:31,040 --> 00:03:34,730
+you'll be able to test your model on previously unseen test data.
+
+69
+00:03:34,730 --> 00:03:38,810
+I've provided some code that iterates through the test data from our test loader,
+
+70
+00:03:38,810 --> 00:03:41,245
+and applies our trained model to that data.
+
+71
+00:03:41,245 --> 00:03:43,490
+This code will allow you to see how well
+
+72
+00:03:43,490 --> 00:03:45,920
+your model performs on each class in our dataset.
+
+73
+00:03:45,920 --> 00:03:48,200
+Next, you'll have a chance to take a look at
+
+74
+00:03:48,200 --> 00:03:52,500
+this exercise code and a solution to creating an MLP for image classification.
+
+75
+00:03:52,500 --> 00:03:54,665
+I encourage you to look at the solution
+
+76
+00:03:54,665 --> 00:03:57,530
+after you've attempted to build a network of your own.
+

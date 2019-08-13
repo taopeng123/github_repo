@@ -1,0 +1,236 @@
+1
+00:00:00,000 --> 00:00:04,320
+So after we have our content and style features and gram matrices,
+
+2
+00:00:04,320 --> 00:00:07,670
+next we need to define style and content losses.
+
+3
+00:00:07,670 --> 00:00:10,620
+Alongside these, we need to define loss weights.
+
+4
+00:00:10,620 --> 00:00:13,740
+This way, we can iteratively update our target image.
+
+5
+00:00:13,740 --> 00:00:18,255
+First up, we're defining our style weights for each of our individual style layers.
+
+6
+00:00:18,255 --> 00:00:20,970
+Notice that conv4_2 is excluded here.
+
+7
+00:00:20,970 --> 00:00:23,400
+Now, these are just weights that are going to give one set of
+
+8
+00:00:23,400 --> 00:00:25,940
+style features more importance than another's.
+
+9
+00:00:25,940 --> 00:00:29,640
+For example, I prefer to weigh earlier layers a little bit more.
+
+10
+00:00:29,640 --> 00:00:34,065
+These features are often larger due to the spatial size of these feature maps.
+
+11
+00:00:34,065 --> 00:00:38,130
+Whereas weighting later layers might emphasize more fine-grain features.
+
+12
+00:00:38,130 --> 00:00:41,645
+But again, this is really a preference and up to you to customize.
+
+13
+00:00:41,645 --> 00:00:45,100
+I'd recommend keeping the values within the zero to one range.
+
+14
+00:00:45,100 --> 00:00:46,705
+Then we have are alpha and beta,
+
+15
+00:00:46,705 --> 00:00:50,660
+which I'm going to descriptively name our content weight and our style weight.
+
+16
+00:00:50,660 --> 00:00:54,290
+Earlier, we discussed this as a ratio that makes sure that style and
+
+17
+00:00:54,290 --> 00:00:58,215
+content are equally important in the target image creation process.
+
+18
+00:00:58,215 --> 00:01:00,505
+Because of how style loss is calculated,
+
+19
+00:01:00,505 --> 00:01:04,840
+we basically want to give our style loss a much larger weight than the content loss.
+
+20
+00:01:04,840 --> 00:01:08,840
+Here, it's 1 times 10 to the 6th and content loss is just one.
+
+21
+00:01:08,840 --> 00:01:10,440
+Now, if beta is too large,
+
+22
+00:01:10,440 --> 00:01:12,780
+you may see too much of a stylized effect,
+
+23
+00:01:12,780 --> 00:01:15,060
+but these values are good starting points.
+
+24
+00:01:15,060 --> 00:01:17,520
+Next, we enter the iteration loop,
+
+25
+00:01:17,520 --> 00:01:20,585
+and here's where you're actually going to be changing your target image.
+
+26
+00:01:20,585 --> 00:01:22,710
+Now, this is not a training process,
+
+27
+00:01:22,710 --> 00:01:26,240
+so it's arbitrary where you stop updating the target image.
+
+28
+00:01:26,240 --> 00:01:28,475
+I'd recommend at least 2,000 iterations,
+
+29
+00:01:28,475 --> 00:01:30,800
+but you may want to do more or less depending on
+
+30
+00:01:30,800 --> 00:01:33,620
+your computing resources and desired effect.
+
+31
+00:01:33,620 --> 00:01:35,365
+So, in this iteration loop,
+
+32
+00:01:35,365 --> 00:01:38,405
+I'm going to ask you to calculate the content loss first.
+
+33
+00:01:38,405 --> 00:01:40,850
+This will just be the mean square difference between
+
+34
+00:01:40,850 --> 00:01:44,060
+the target and content representations.
+
+35
+00:01:44,060 --> 00:01:46,545
+I've given you some example code up here.
+
+36
+00:01:46,545 --> 00:01:50,300
+We can get those representations by getting the features from our target image,
+
+37
+00:01:50,300 --> 00:01:53,325
+and then comparing those features at a particular layer,
+
+38
+00:01:53,325 --> 00:01:55,160
+in this case conv4_2,
+
+39
+00:01:55,160 --> 00:01:58,230
+to the features at that layer for our content image.
+
+40
+00:01:58,230 --> 00:02:00,650
+We're going to subtract these two representations and
+
+41
+00:02:00,650 --> 00:02:03,180
+then square that difference and calculate the mean.
+
+42
+00:02:03,180 --> 00:02:05,285
+This will give us our content loss.
+
+43
+00:02:05,285 --> 00:02:09,125
+Next in this loop, you're going to do something similar for the style loss.
+
+44
+00:02:09,125 --> 00:02:10,880
+Only this time, you have to go through
+
+45
+00:02:10,880 --> 00:02:14,000
+multiple layers for our multiple representations for style.
+
+46
+00:02:14,000 --> 00:02:18,205
+Recall that each of our relevant layers was listed in our style_weights dictionary above.
+
+47
+00:02:18,205 --> 00:02:20,930
+Here, I'm assuming you've calculated our target features so
+
+48
+00:02:20,930 --> 00:02:23,795
+you can access a single target feature by layer.
+
+49
+00:02:23,795 --> 00:02:25,640
+You'll get some style features from
+
+50
+00:02:25,640 --> 00:02:28,945
+the target image and calculate the gram matrix for that layer.
+
+51
+00:02:28,945 --> 00:02:32,510
+Then you have to compare with this style_gram for the style image at
+
+52
+00:02:32,510 --> 00:02:36,410
+that layer weighting it with our specified style weight for this layer.
+
+53
+00:02:36,410 --> 00:02:38,090
+Here, these are going to be added up and
+
+54
+00:02:38,090 --> 00:02:40,400
+normalized by the number of values in that layer.
+
+55
+00:02:40,400 --> 00:02:44,640
+Finally, you should be able to add up everything and calculate a total loss.
+
+56
+00:02:44,640 --> 00:02:49,705
+This is what will be used to update the target image using typical back propagation.
+
+57
+00:02:49,705 --> 00:02:52,835
+So, try out completing this loss code on your own.
+
+58
+00:02:52,835 --> 00:02:56,670
+This is the last piece of code you'll need to implement style transfer.
+
+59
+00:02:56,670 --> 00:03:01,330
+Then, you'll be able to test this method on target images of your own design.
+

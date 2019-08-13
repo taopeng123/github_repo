@@ -1,0 +1,404 @@
+1
+00:00:00,000 --> 00:00:03,955
+Okay. Now that you've tried to define and train a classifier of your own,
+
+2
+00:00:03,955 --> 00:00:06,220
+I'll show you a solution that I created.
+
+3
+00:00:06,220 --> 00:00:08,980
+After loading in my data and processing it,
+
+4
+00:00:08,980 --> 00:00:11,210
+I defined a complete CNN.
+
+5
+00:00:11,210 --> 00:00:14,670
+I've kept my initial convolutional layer, conv1,
+
+6
+00:00:14,670 --> 00:00:18,620
+that sees our input image and outputs a stack of 16 feature maps.
+
+7
+00:00:18,620 --> 00:00:22,470
+I'm defining all my convolutional layers first, defining two more.
+
+8
+00:00:22,470 --> 00:00:27,440
+Each of which doubles the depth of the output until we get to a layer with a depth of 64.
+
+9
+00:00:27,440 --> 00:00:29,795
+So, we're starting with an image depth of three,
+
+10
+00:00:29,795 --> 00:00:33,890
+then moving to 16, then 32, and finally 64.
+
+11
+00:00:33,890 --> 00:00:37,820
+Each of these layers uses a convolutional kernel of size three by three,
+
+12
+00:00:37,820 --> 00:00:39,395
+and has a padding of one.
+
+13
+00:00:39,395 --> 00:00:42,310
+You can also see that I've kept my one max pooling layer,
+
+14
+00:00:42,310 --> 00:00:45,245
+which will down-sample any XY size by two.
+
+15
+00:00:45,245 --> 00:00:51,070
+I've also included a dropout layer with a probability of 0.25 to prevent overfitting.
+
+16
+00:00:51,070 --> 00:00:54,360
+Finally, I also have a couple of fully connected layers.
+
+17
+00:00:54,360 --> 00:00:57,230
+This first layer will be responsible for taking as
+
+18
+00:00:57,230 --> 00:01:00,360
+input my final downside stack of feature maps.
+
+19
+00:01:00,360 --> 00:01:02,810
+I know that my original input image which is
+
+20
+00:01:02,810 --> 00:01:06,080
+32 by 32 by three is getting squished in the x and
+
+21
+00:01:06,080 --> 00:01:08,990
+y dimension and stretched in the depth dimension as it
+
+22
+00:01:08,990 --> 00:01:11,930
+moves through each convolutional and pooling layer.
+
+23
+00:01:11,930 --> 00:01:14,060
+In the forward function, you can see that I apply
+
+24
+00:01:14,060 --> 00:01:16,310
+a pooling layer after each convolutional layer.
+
+25
+00:01:16,310 --> 00:01:20,010
+So, this image will reduce in size to 16 by 16,
+
+26
+00:01:20,010 --> 00:01:21,440
+then eight by eight,
+
+27
+00:01:21,440 --> 00:01:24,755
+and finally four by four after the last pooling layer.
+
+28
+00:01:24,755 --> 00:01:28,950
+The third convolutional layer will have produced a depth of 64,
+
+29
+00:01:28,950 --> 00:01:30,930
+and that's how I get these values.
+
+30
+00:01:30,930 --> 00:01:33,320
+Four by four, for my final XY size,
+
+31
+00:01:33,320 --> 00:01:35,230
+and 64 for my depth.
+
+32
+00:01:35,230 --> 00:01:39,100
+That's the number of inputs that this first fully connected layer should see.
+
+33
+00:01:39,100 --> 00:01:41,760
+Then I'm having that produced 500 outputs.
+
+34
+00:01:41,760 --> 00:01:46,369
+These 500 outputs will feed as input into my final classification layer,
+
+35
+00:01:46,369 --> 00:01:50,495
+which will see these as inputs and produce 10 class scores as outputs.
+
+36
+00:01:50,495 --> 00:01:53,955
+So, let's see how all these layers are used in the forward function.
+
+37
+00:01:53,955 --> 00:01:58,430
+First, I'm adding a sequence of convolutional and pooling layers in sequence,
+
+38
+00:01:58,430 --> 00:02:01,190
+and passing our input image into our first convolutional layer,
+
+39
+00:02:01,190 --> 00:02:04,160
+applying an activation function than a pooling layer.
+
+40
+00:02:04,160 --> 00:02:07,660
+I'm doing the same thing for our second and third convolutional layers.
+
+41
+00:02:07,660 --> 00:02:09,690
+Finally, this resultant x,
+
+42
+00:02:09,690 --> 00:02:11,945
+I'm going to flatten into a vector shape.
+
+43
+00:02:11,945 --> 00:02:15,840
+This will allow me to pass it as input into a fully connected layer.
+
+44
+00:02:15,840 --> 00:02:19,190
+In between this flattening layer and each fully-connected layer,
+
+45
+00:02:19,190 --> 00:02:21,615
+I'm adding a dropout layer to prevent overfitting.
+
+46
+00:02:21,615 --> 00:02:26,265
+But then in passing my flattened image input x into my first fully connected layer.
+
+47
+00:02:26,265 --> 00:02:27,790
+As with all my hidden layers,
+
+48
+00:02:27,790 --> 00:02:30,095
+I'm applying a relu activation function.
+
+49
+00:02:30,095 --> 00:02:34,015
+Finally, one more dropout layer and my last fully connected layer.
+
+50
+00:02:34,015 --> 00:02:37,510
+The resultant x should be a list of 10 class scores.
+
+51
+00:02:37,510 --> 00:02:41,050
+Finally, I instantiate this model and I move it to GPU.
+
+52
+00:02:41,050 --> 00:02:43,940
+Below you can see that I've printed out each
+
+53
+00:02:43,940 --> 00:02:47,230
+of the layers in my unit function to make sure they're as I expect.
+
+54
+00:02:47,230 --> 00:02:50,235
+This shows me the number of inputs and outputs for each layer,
+
+55
+00:02:50,235 --> 00:02:51,795
+the kernel size, the stride,
+
+56
+00:02:51,795 --> 00:02:53,545
+and the padding, and they all checkout.
+
+57
+00:02:53,545 --> 00:02:56,935
+So, just to summarize, for every convolutional layer that I defined,
+
+58
+00:02:56,935 --> 00:03:00,115
+I apply a relu function and a max pooling layer right after that.
+
+59
+00:03:00,115 --> 00:03:01,730
+After that series of layers,
+
+60
+00:03:01,730 --> 00:03:05,435
+I flatten that representation and pass it to my fully-connected layer.
+
+61
+00:03:05,435 --> 00:03:10,245
+Adding some dropout, I'm finally passing it so that it produces 10 class scores.
+
+62
+00:03:10,245 --> 00:03:12,265
+So, I have my complete model,
+
+63
+00:03:12,265 --> 00:03:13,990
+and then I'm moving onto training.
+
+64
+00:03:13,990 --> 00:03:16,340
+I'm going to use a standard cross entropy loss,
+
+65
+00:03:16,340 --> 00:03:18,835
+which is useful for classification tasks like this,
+
+66
+00:03:18,835 --> 00:03:20,975
+and Stochastic Gradient Descent.
+
+67
+00:03:20,975 --> 00:03:22,755
+Then I'm actually training the network,
+
+68
+00:03:22,755 --> 00:03:25,320
+and I decided on training for 30 epochs.
+
+69
+00:03:25,320 --> 00:03:27,590
+I decided on this value after watching
+
+70
+00:03:27,590 --> 00:03:30,420
+the training and validation loss decrease over time.
+
+71
+00:03:30,420 --> 00:03:34,090
+I can see that I might have stopped training even earlier around epoch 20,
+
+72
+00:03:34,090 --> 00:03:37,250
+which is where the validation loss stops decreasing.
+
+73
+00:03:37,250 --> 00:03:38,780
+I saved my model here,
+
+74
+00:03:38,780 --> 00:03:40,810
+the one that got the best validation loss,
+
+75
+00:03:40,810 --> 00:03:43,050
+and then I loaded and tested it out.
+
+76
+00:03:43,050 --> 00:03:44,640
+I can see when I test this,
+
+77
+00:03:44,640 --> 00:03:47,850
+that I get an overall accuracy of about 70 percent.
+
+78
+00:03:47,850 --> 00:03:50,880
+That's not bad, it's much better than guessing for example.
+
+79
+00:03:50,880 --> 00:03:53,025
+If you've given this task in honest attempt,
+
+80
+00:03:53,025 --> 00:03:55,415
+I can say congratulations on getting this far.
+
+81
+00:03:55,415 --> 00:03:58,655
+You've really learned a lot about programming your own neural networks.
+
+82
+00:03:58,655 --> 00:04:01,565
+Of course we can see that it does better on some classes than
+
+83
+00:04:01,565 --> 00:04:05,050
+others and it's always interesting to think about why that might be the case.
+
+84
+00:04:05,050 --> 00:04:09,655
+In general, it seems like my model does better on vehicles rather than animals.
+
+85
+00:04:09,655 --> 00:04:12,770
+It's probably because animals really vary in color and size,
+
+86
+00:04:12,770 --> 00:04:15,350
+and so I might be able to improve this model if
+
+87
+00:04:15,350 --> 00:04:18,245
+I had more images in that particular data set.
+
+88
+00:04:18,245 --> 00:04:21,260
+It may also help to add another convolutional layer and see if
+
+89
+00:04:21,260 --> 00:04:24,165
+I could suss out more complex patterns in these images.
+
+90
+00:04:24,165 --> 00:04:28,140
+Here I'm just further visualizing which images it gets right or wrong.
+
+91
+00:04:28,140 --> 00:04:32,000
+There's plenty of room to tinker with and optimize the CNN further,
+
+92
+00:04:32,000 --> 00:04:33,125
+and I encourage you to do this,
+
+93
+00:04:33,125 --> 00:04:34,965
+it's a great learning experience.
+
+94
+00:04:34,965 --> 00:04:37,065
+I should mention that in 2015,
+
+95
+00:04:37,065 --> 00:04:39,200
+there was an online competition where
+
+96
+00:04:39,200 --> 00:04:42,740
+data scientists competed to classify images in this database.
+
+97
+00:04:42,740 --> 00:04:44,905
+The winning architecture was a CNN,
+
+98
+00:04:44,905 --> 00:04:48,055
+and it achieved over 95 percent test accuracy.
+
+99
+00:04:48,055 --> 00:04:51,695
+It took about 90 hours to train on a GPU,
+
+100
+00:04:51,695 --> 00:04:53,935
+which I do not encourage in this classroom.
+
+101
+00:04:53,935 --> 00:04:58,270
+But it does demonstrate that good accuracy is not a trivial task.
+

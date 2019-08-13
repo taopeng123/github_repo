@@ -1,0 +1,228 @@
+1
+00:00:00,000 --> 00:00:02,610
+First, here's how I went about creating a vocab
+
+2
+00:00:02,610 --> 00:00:05,370
+to int dictionary and encoding our word data,
+
+3
+00:00:05,370 --> 00:00:07,315
+and there are a few ways to do this.
+
+4
+00:00:07,315 --> 00:00:10,920
+I chose to use this important counter to create a dictionary that
+
+5
+00:00:10,920 --> 00:00:14,830
+maps the most common words in our reviews text to the smallest integers.
+
+6
+00:00:14,830 --> 00:00:18,930
+So the first thing I'm doing is to get a count of how many times each of our words
+
+7
+00:00:18,930 --> 00:00:23,480
+actually appears in our data using counter and passing in our words.
+
+8
+00:00:23,480 --> 00:00:26,680
+Then with these counts, I'm creating assorted vocabulary.
+
+9
+00:00:26,680 --> 00:00:30,185
+This sorts each unique word by its frequency of occurrence.
+
+10
+00:00:30,185 --> 00:00:32,690
+So this vocab should hold all of the unique words that
+
+11
+00:00:32,690 --> 00:00:35,210
+make up our word data without any repeats,
+
+12
+00:00:35,210 --> 00:00:37,235
+and it will be sorted by commonality.
+
+13
+00:00:37,235 --> 00:00:39,650
+I also know that I want to start encoding
+
+14
+00:00:39,650 --> 00:00:43,020
+my words with the integer value of one rather than zero.
+
+15
+00:00:43,020 --> 00:00:48,275
+So the most common word like be or of should actually be encoded as one.
+
+16
+00:00:48,275 --> 00:00:51,575
+I'm making sure that we start our indexing at one by using
+
+17
+00:00:51,575 --> 00:00:55,510
+enumerate and passing in our vocab and our starting index, one.
+
+18
+00:00:55,510 --> 00:00:58,340
+Enumerate is going to return a numerical value,
+
+19
+00:00:58,340 --> 00:01:02,365
+ii, and a word in our vocabulary. It will do this in order.
+
+20
+00:01:02,365 --> 00:01:04,670
+So our first index is going to be one,
+
+21
+00:01:04,670 --> 00:01:08,795
+and the first word is going to be the most common word in our assorted vocabulary.
+
+22
+00:01:08,795 --> 00:01:11,150
+So to create the dictionary vocab to int,
+
+23
+00:01:11,150 --> 00:01:13,580
+I'm taking each unique word in our vocab and
+
+24
+00:01:13,580 --> 00:01:16,190
+mapping it to an index starting at the value one.
+
+25
+00:01:16,190 --> 00:01:20,845
+Great. Next, I'm using this dictionary to tokenize all of our word data.
+
+26
+00:01:20,845 --> 00:01:23,550
+So here, I'm looking at each individual review.
+
+27
+00:01:23,550 --> 00:01:26,315
+Each of these is one item and review split
+
+28
+00:01:26,315 --> 00:01:29,060
+from before when I separated reviews by the newline character.
+
+29
+00:01:29,060 --> 00:01:31,335
+Then, for each word in a review,
+
+30
+00:01:31,335 --> 00:01:35,120
+I'm using my dictionary to convert that word into its integer value,
+
+31
+00:01:35,120 --> 00:01:38,215
+and I'm appending the token as review to reviews_ints.
+
+32
+00:01:38,215 --> 00:01:41,770
+So the end result will be a list of tokenized reviews.
+
+33
+00:01:41,770 --> 00:01:43,880
+Here in the cells below, I'm printing out
+
+34
+00:01:43,880 --> 00:01:47,540
+the length of my dictionary and my first sample encoded review.
+
+35
+00:01:47,540 --> 00:01:51,205
+I can see that my dictionary is a bit over 74,000 words long,
+
+36
+00:01:51,205 --> 00:01:55,050
+which means that we have this many unique words that make up our reviews data.
+
+37
+00:01:55,050 --> 00:01:57,290
+Let's take a look at this tokenized review.
+
+38
+00:01:57,290 --> 00:02:00,379
+I'm not seeing any zero values which is good,
+
+39
+00:02:00,379 --> 00:02:03,020
+and these encoded values look as I might expect.
+
+40
+00:02:03,020 --> 00:02:05,575
+So I've successfully encoded the review words,
+
+41
+00:02:05,575 --> 00:02:07,215
+and I'll move on to the next task,
+
+42
+00:02:07,215 --> 00:02:09,050
+which is encoding our labels.
+
+43
+00:02:09,050 --> 00:02:11,000
+So in this case, I want to look at
+
+44
+00:02:11,000 --> 00:02:15,840
+my label's text data and turn the word positive into one and negative into zero.
+
+45
+00:02:15,840 --> 00:02:18,770
+Now we haven't much processed our labels data,
+
+46
+00:02:18,770 --> 00:02:23,590
+and I know much like the reviews text that a new label is on every new line in this file.
+
+47
+00:02:23,590 --> 00:02:26,390
+So I can get a list of labels, labels_split,
+
+48
+00:02:26,390 --> 00:02:30,410
+by splitting our loaded in data using the newline character as a delimiter.
+
+49
+00:02:30,410 --> 00:02:32,550
+Then I just have a statement that says,
+
+50
+00:02:32,550 --> 00:02:35,505
+for every label in this label_split list,
+
+51
+00:02:35,505 --> 00:02:38,750
+I'm going to add one to my array if it reads as positive,
+
+52
+00:02:38,750 --> 00:02:40,555
+and a zero otherwise.
+
+53
+00:02:40,555 --> 00:02:42,915
+I'm wrapping this in np.array,
+
+54
+00:02:42,915 --> 00:02:47,300
+and that's all I need to do to create an array of encoded labels. All right.
+
+55
+00:02:47,300 --> 00:02:50,660
+This is a good start. There are still a few data clean up and
+
+56
+00:02:50,660 --> 00:02:54,305
+formatting steps that I'll want to take before we get to defining our model.
+
+57
+00:02:54,305 --> 00:02:56,730
+So let's address those tasks next.
+

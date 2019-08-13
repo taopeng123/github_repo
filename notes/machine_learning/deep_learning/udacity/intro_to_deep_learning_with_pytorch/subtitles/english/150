@@ -1,0 +1,244 @@
+1
+00:00:00,000 --> 00:00:04,940
+So, this is my complete get_batches code that generates mini-batches of data.
+
+2
+00:00:04,940 --> 00:00:07,530
+So, the first thing I wanted to do here is get
+
+3
+00:00:07,530 --> 00:00:11,170
+the total number of complete batches that we can make in batches.
+
+4
+00:00:11,170 --> 00:00:16,040
+To do that, I first calculated how many characters were in a complete mini-batch.
+
+5
+00:00:16,040 --> 00:00:17,430
+So, in one mini-batch,
+
+6
+00:00:17,430 --> 00:00:21,200
+there's going to be batch size times sequence length number of characters.
+
+7
+00:00:21,200 --> 00:00:24,270
+Then, the number of complete batches that we can make is
+
+8
+00:00:24,270 --> 00:00:28,470
+just the length of the array divided by the total number of characters in a mini-batch.
+
+9
+00:00:28,470 --> 00:00:31,085
+This double slash is an integer division
+
+10
+00:00:31,085 --> 00:00:34,365
+which we'll just round down any decimal leftover from this division.
+
+11
+00:00:34,365 --> 00:00:37,640
+With that, we have the number of completely full batches that we can make.
+
+12
+00:00:37,640 --> 00:00:40,550
+Then, we get our array and we take all the characters in
+
+13
+00:00:40,550 --> 00:00:45,275
+the array up to n_batches times this total character size for a mini-batch.
+
+14
+00:00:45,275 --> 00:00:47,390
+So here, we're making sure that we're keeping
+
+15
+00:00:47,390 --> 00:00:49,850
+only enough characters to make full batches,
+
+16
+00:00:49,850 --> 00:00:51,715
+and we may lose some characters here.
+
+17
+00:00:51,715 --> 00:00:54,410
+But in general, you're going to have enough data that getting rid
+
+18
+00:00:54,410 --> 00:00:57,345
+of a last unfold batch is not really going to matter.
+
+19
+00:00:57,345 --> 00:01:00,350
+Next, with reshaping, we can take our array and we
+
+20
+00:01:00,350 --> 00:01:03,465
+can make the number of rows equal to our batch size,
+
+21
+00:01:03,465 --> 00:01:06,920
+and that's just how many sequences we want to include in a mini-batch.
+
+22
+00:01:06,920 --> 00:01:09,200
+So, we just say we want the number of rows
+
+23
+00:01:09,200 --> 00:01:12,110
+to be batch size and then we put this negative one.
+
+24
+00:01:12,110 --> 00:01:15,360
+Negative one here is kind of a dimension placeholder,
+
+25
+00:01:15,360 --> 00:01:17,975
+and it'll just automatically fill up the second dimension
+
+26
+00:01:17,975 --> 00:01:21,145
+to whatever size it needs to be to accommodate all the data.
+
+27
+00:01:21,145 --> 00:01:26,555
+Then finally, I'm iterating over my batch data using a window of length sequence length.
+
+28
+00:01:26,555 --> 00:01:31,855
+So here, I'm taking in a reshaped complete array and then looking at all our rows,
+
+29
+00:01:31,855 --> 00:01:36,980
+all our batches, and the columns are in a range from n to n plus sequence length,
+
+30
+00:01:36,980 --> 00:01:38,790
+which makes our sequence length window.
+
+31
+00:01:38,790 --> 00:01:41,650
+This completes x our input mini-batch.
+
+32
+00:01:41,650 --> 00:01:44,930
+Then, what I did here for the target y is I just
+
+33
+00:01:44,930 --> 00:01:48,860
+initialized an array of all zeros that's the same shape as x,
+
+34
+00:01:48,860 --> 00:01:52,730
+and I just kind of fill it up with values from our x array shifted by one.
+
+35
+00:01:52,730 --> 00:01:54,440
+From the start to the end,
+
+36
+00:01:54,440 --> 00:01:56,775
+I just shifted over x by one.
+
+37
+00:01:56,775 --> 00:01:59,840
+Then in the case of reaching the very end of our array,
+
+38
+00:01:59,840 --> 00:02:04,310
+I'm going to make the last element of y equal to the first element in our array.
+
+39
+00:02:04,310 --> 00:02:06,425
+I'm not super sure why most people do it this way,
+
+40
+00:02:06,425 --> 00:02:11,095
+wrapping our array around so that the last element of y is the first element of x.
+
+41
+00:02:11,095 --> 00:02:12,495
+But I've seen this many times,
+
+42
+00:02:12,495 --> 00:02:14,450
+and so I did it in the cyclical way and it
+
+43
+00:02:14,450 --> 00:02:16,580
+seems like the network trains perfectly fine doing this.
+
+44
+00:02:16,580 --> 00:02:18,435
+So, it does not seem to be a problem.
+
+45
+00:02:18,435 --> 00:02:21,775
+The main thing is we want x and y to be the same size.
+
+46
+00:02:21,775 --> 00:02:24,940
+So, if you did this right and you want to test your implementation,
+
+47
+00:02:24,940 --> 00:02:27,595
+you should have gotten batches that looks something like this.
+
+48
+00:02:27,595 --> 00:02:29,450
+Right here, we have a batch size of eight,
+
+49
+00:02:29,450 --> 00:02:30,920
+so you have eight rows here,
+
+50
+00:02:30,920 --> 00:02:33,495
+and then we're just printing out the first 10 items in a sequence.
+
+51
+00:02:33,495 --> 00:02:35,205
+So, you should see 10 items here.
+
+52
+00:02:35,205 --> 00:02:39,955
+The important thing to note here is that you want to make sure that the elements in x,
+
+53
+00:02:39,955 --> 00:02:41,750
+like the actual encoded values,
+
+54
+00:02:41,750 --> 00:02:43,915
+are shifted over by one in y.
+
+55
+00:02:43,915 --> 00:02:48,965
+So, we have 51 as the first item here and as the zeroth item here,
+
+56
+00:02:48,965 --> 00:02:51,140
+then 23 and 23.
+
+57
+00:02:51,140 --> 00:02:55,280
+Likewise, 55 is here and 55 is here in y. I
+
+58
+00:02:55,280 --> 00:02:57,245
+basically want to make sure that everything is shifted
+
+59
+00:02:57,245 --> 00:02:59,420
+over correctly, and this looks good.
+
+60
+00:02:59,420 --> 00:03:01,160
+So now that we have our batch data,
+
+61
+00:03:01,160 --> 00:03:04,530
+the next step we'll talk about is actually building the network.
+

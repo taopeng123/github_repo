@@ -1,0 +1,244 @@
+1
+00:00:00,344 --> 00:00:02,547
+Vimos que você pode controlar
+o comportamento
+
+2
+00:00:02,580 --> 00:00:03,943
+de uma camada convolucional
+
+3
+00:00:03,976 --> 00:00:08,018
+especificando o número de filtros
+e o tamanho de cada filtro.
+
+4
+00:00:08,051 --> 00:00:10,585
+Por exemplo, para aumentar
+o número de nós
+
+5
+00:00:10,634 --> 00:00:12,062
+de uma camada convolucional,
+
+6
+00:00:12,095 --> 00:00:14,453
+você pode aumentar
+o número de filtros.
+
+7
+00:00:14,486 --> 00:00:17,003
+Para aumentar o tamanho
+dos padrões detectados,
+
+8
+00:00:17,036 --> 00:00:19,509
+você pode aumentar
+o tamanho do filtro.
+
+9
+00:00:19,542 --> 00:00:22,672
+Mas há outros hiperparâmetros
+que podem ser ajustados.
+
+10
+00:00:22,705 --> 00:00:27,552
+Um desses hiperparâmetros é chamado
+de "stride" da convolução.
+
+11
+00:00:27,585 --> 00:00:31,903
+O stride é o quanto o filtro
+se desloca sobre a imagem.
+
+12
+00:00:31,936 --> 00:00:35,751
+No exemplo do vídeo anterior,
+o stride era 1.
+
+13
+00:00:35,784 --> 00:00:37,642
+E deslocamos
+a janela convolucional
+
+14
+00:00:37,675 --> 00:00:40,221
+horizontal e verticalmente
+sobre a imagem,
+
+15
+00:00:40,254 --> 00:00:42,042
+1 pixel de cada vez.
+
+16
+00:00:42,075 --> 00:00:44,670
+Se o stride for 1,
+a camada convolucional
+
+17
+00:00:44,703 --> 00:00:48,694
+terá a mesma largura e altura
+que a imagem de input.
+
+18
+00:00:48,727 --> 00:00:51,915
+Nesta animação, desenhamos
+a camada convolucional roxa
+
+19
+00:00:51,948 --> 00:00:54,253
+como mapas de características
+empilhadas.
+
+20
+00:00:54,286 --> 00:00:57,540
+Se, em vez disso,
+definirmos que o stride é 2,
+
+21
+00:00:57,573 --> 00:01:01,987
+a camada convolucional terá metade
+da largura e altura da imagem.
+
+22
+00:01:02,020 --> 00:01:04,085
+É um valor aproximado,
+porque vai depender
+
+23
+00:01:04,118 --> 00:01:06,583
+do que você fará
+na borda da imagem.
+
+24
+00:01:06,616 --> 00:01:09,120
+Para ver como a questão da borda
+faz diferença,
+
+25
+00:01:09,153 --> 00:01:13,315
+considere o exemplo do brinquedo,
+uma imagem 5x5 em escala de cinza.
+
+26
+00:01:13,348 --> 00:01:17,548
+Suponha que usaremos outro filtro,
+com altura e largura iguais a 2.
+
+27
+00:01:17,581 --> 00:01:19,687
+Suponha que o stride
+também será 2.
+
+28
+00:01:19,720 --> 00:01:21,001
+Agora, assim como antes,
+
+29
+00:01:21,034 --> 00:01:24,820
+começamos com o filtro
+no canto superior esquerdo da imagem
+
+30
+00:01:24,853 --> 00:01:29,586
+e calculamos o valor do primeiro nó
+da camada convolucional.
+
+31
+00:01:29,619 --> 00:01:32,738
+Depois deslocamos o filtro
+2 unidades para a direita
+
+32
+00:01:32,771 --> 00:01:34,191
+e fazemos a mesma coisa.
+
+33
+00:01:34,224 --> 00:01:37,896
+Mas, quando deslocamos o filtro
+mais 2 unidades para a direita,
+
+34
+00:01:37,929 --> 00:01:40,909
+o filtro se estende
+para fora da imagem.
+
+35
+00:01:40,942 --> 00:01:45,518
+O que fazemos agora? Mantemos
+o nó convolucional correspondente?
+
+36
+00:01:46,097 --> 00:01:48,830
+Por enquanto,
+vamos preencher os espaços
+
+37
+00:01:48,863 --> 00:01:51,944
+onde o filtro ultrapassa a imagem
+com um ponto de interrogação
+
+38
+00:01:51,977 --> 00:01:54,021
+e seguir em frente.
+
+39
+00:01:54,054 --> 00:01:56,476
+Bom, o que faremos
+com os nós
+
+40
+00:01:56,509 --> 00:01:59,695
+em que o filtro se estendeu
+para fora da imagem?
+
+41
+00:01:59,728 --> 00:02:03,314
+A primeira opção é
+nós nos livrarmos deles.
+
+42
+00:02:03,347 --> 00:02:05,446
+Note que, se escolhermos
+essa opção,
+
+43
+00:02:05,479 --> 00:02:07,568
+é possível
+que a camada convolucional
+
+44
+00:02:07,601 --> 00:02:11,775
+não vá ter informações
+sobre algumas áreas da imagem.
+
+45
+00:02:11,808 --> 00:02:17,208
+É o caso das bordas da direita
+e inferior da imagem.
+
+46
+00:02:17,241 --> 00:02:20,493
+A segunda opção é
+nós nos prevenirmos
+
+47
+00:02:20,526 --> 00:02:23,361
+preenchendo a imagem
+com valores 0,
+
+48
+00:02:23,394 --> 00:02:26,841
+para que o filtro tenha
+mais espaço para se mover.
+
+49
+00:02:26,874 --> 00:02:29,400
+Agora, quando preenchemos
+a camada convolucional,
+
+50
+00:02:29,433 --> 00:02:32,895
+asseguramos valores
+para todas as áreas da imagem.
+

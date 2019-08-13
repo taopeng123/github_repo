@@ -1,0 +1,742 @@
+1
+00:00:00,334 --> 00:00:03,100
+Observe esta imagem
+de um cachorro.
+
+2
+00:00:03,133 --> 00:00:06,801
+Uma única região desta imagem
+pode ter muitos padrões
+
+3
+00:00:06,834 --> 00:00:08,467
+que queremos detectar.
+
+4
+00:00:08,501 --> 00:00:11,467
+Observe esta região,
+por exemplo.
+
+5
+00:00:11,501 --> 00:00:15,701
+Ela tem dentes,
+alguns bigodes e uma língua.
+
+6
+00:00:15,734 --> 00:00:18,667
+Neste caso,
+para entender esta imagem,
+
+7
+00:00:18,701 --> 00:00:20,000
+nós precisamos de filtros
+
+8
+00:00:20,033 --> 00:00:23,033
+para detectar
+as três características.
+
+9
+00:00:23,067 --> 00:00:27,100
+Um para os dentes, um para
+os bigodes e um para a língua.
+
+10
+00:00:27,133 --> 00:00:31,067
+Lembre-se do caso do filtro
+convolucional único.
+
+11
+00:00:31,100 --> 00:00:35,000
+Adicionar outro filtro
+seria o esperado,
+
+12
+00:00:35,033 --> 00:00:38,567
+pois nós colocaríamos
+coleções adicionais de nós
+
+13
+00:00:38,601 --> 00:00:40,400
+na camada convolucional.
+
+14
+00:00:40,434 --> 00:00:43,567
+Esta coleção possui
+conjunto próprio de pesos
+
+15
+00:00:43,601 --> 00:00:46,868
+que são diferentes dos pesos
+dos nós azuis acima deles.
+
+16
+00:00:46,901 --> 00:00:51,100
+É comum ter dezenas
+ou centenas destas coleções
+
+17
+00:00:51,133 --> 00:00:52,901
+em uma camada convolucional,
+
+18
+00:00:52,934 --> 00:00:55,968
+cada uma correspondendo
+ao seu próprio filtro.
+
+19
+00:00:56,000 --> 00:01:00,167
+Vamos executar alguns códigos
+para ver como são as coleções.
+
+20
+00:01:00,200 --> 00:01:04,167
+Afinal cada uma é formatada
+da mesma forma que uma imagem,
+
+21
+00:01:04,200 --> 00:01:06,868
+como uma matriz de valores.
+
+22
+00:01:06,901 --> 00:01:10,567
+Nós veremos o resultado do bloco
+de anotações do Jupyter.
+
+23
+00:01:10,601 --> 00:01:14,667
+Você pode fazer junto
+clicando no link abaixo.
+
+24
+00:01:14,701 --> 00:01:17,033
+Digamos que estamos trabalhando
+com a imagem
+
+25
+00:01:17,067 --> 00:01:20,701
+do carro autônomo da Udacity
+como entrada.
+
+26
+00:01:20,734 --> 00:01:24,267
+Vamos utilizar quatro filtros
+com quatro pixels de altura
+
+27
+00:01:24,300 --> 00:01:26,834
+e quatro pixels de largura.
+
+28
+00:01:26,868 --> 00:01:32,033
+Cada filtro será envolvido
+na altura e largura da imagem
+
+29
+00:01:32,067 --> 00:01:36,467
+para produzir uma coleção de nós
+na camada convolucional.
+
+30
+00:01:36,501 --> 00:01:39,300
+Neste caso,
+como temos quatro filtros,
+
+31
+00:01:39,334 --> 00:01:41,734
+Nós teremos
+quatro coleções de nós.
+
+32
+00:01:41,767 --> 00:01:45,033
+Na prática,
+nós chamaremos as coleções
+
+33
+00:01:45,067 --> 00:01:48,601
+de mapas de recurso
+ou de mapas de ativação.
+
+34
+00:01:48,634 --> 00:01:50,968
+Quando visualizamos
+os mapas de recurso,
+
+35
+00:01:51,000 --> 00:01:54,534
+eles parecem
+imagens filtradas.
+
+36
+00:01:54,567 --> 00:01:58,300
+Nós pegamos todas as informações
+complicadas e densas
+
+37
+00:01:58,334 --> 00:02:00,000
+da imagem original
+
+38
+00:02:00,033 --> 00:02:02,000
+e, em cada um
+dos quatro casos,
+
+39
+00:02:02,033 --> 00:02:04,067
+fornecemos uma imagem
+mais simples
+
+40
+00:02:04,100 --> 00:02:06,534
+com menos informações.
+
+41
+00:02:06,567 --> 00:02:08,734
+Abordando
+a estrutura dos filtros,
+
+42
+00:02:08,767 --> 00:02:12,767
+vemos que os dois primeiros
+descobriram limites verticais
+
+43
+00:02:12,801 --> 00:02:16,834
+e os dois últimos,
+limites horizontais.
+
+44
+00:02:16,868 --> 00:02:19,534
+Se os valores no mapa
+de recursos forem menores
+
+45
+00:02:19,567 --> 00:02:21,400
+isso significa
+que o padrão do filtro
+
+46
+00:02:21,434 --> 00:02:23,601
+foi detectado na imagem.
+
+47
+00:02:23,634 --> 00:02:25,868
+Você consegue combinar
+as regiões menores
+
+48
+00:02:25,901 --> 00:02:28,534
+em cada mapa de recurso
+com as áreas correspondentes
+
+49
+00:02:28,567 --> 00:02:30,334
+na imagem original?
+
+50
+00:02:31,167 --> 00:02:33,701
+Neste mapa de ativação,
+por exemplo,
+
+51
+00:02:33,734 --> 00:02:36,400
+vemos
+uma linha branca nítida
+
+52
+00:02:36,434 --> 00:02:39,133
+definindo o limite
+direito do carro.
+
+53
+00:02:39,167 --> 00:02:42,667
+Isso é porque todas as regiões
+da imagem do carro
+
+54
+00:02:42,701 --> 00:02:45,067
+se parecem com o filtro.
+
+55
+00:02:45,100 --> 00:02:48,868
+Nós temos uma linha vertical
+de pixels escuros à esquerda
+
+56
+00:02:48,901 --> 00:02:51,901
+da linha vertical
+de pixels mais claros.
+
+57
+00:02:51,934 --> 00:02:54,767
+Os limites das imagens
+
+58
+00:02:54,801 --> 00:02:57,367
+aparecem como uma linha
+de pixels mais claros
+
+59
+00:02:57,400 --> 00:03:00,334
+ao lado de uma linha
+com pixels mais escuros.
+
+60
+00:03:00,367 --> 00:03:03,467
+Esta imagem, por exemplo,
+contém muitas regiões
+
+61
+00:03:03,501 --> 00:03:05,601
+que seriam descobertas
+ou detectadas
+
+62
+00:03:05,634 --> 00:03:08,801
+por um dos quatro filtros
+que definimos antes.
+
+63
+00:03:08,834 --> 00:03:13,801
+Filtros que detectam limites
+são muito importantes nas CNNs,
+
+64
+00:03:13,834 --> 00:03:16,367
+e nós veremos isso
+posteriormente.
+
+65
+00:03:16,400 --> 00:03:20,801
+Agora sabemos como entender
+camadas convolucionais
+
+66
+00:03:20,834 --> 00:03:23,434
+que possuem entrada
+de imagens em escala de cinza.
+
+67
+00:03:23,467 --> 00:03:25,767
+E as imagens em cores?
+
+68
+00:03:25,801 --> 00:03:30,133
+Vimos que as imagens em escala
+de cinza são interpretadas
+
+69
+00:03:30,167 --> 00:03:34,734
+como um arranjo 2D
+com altura e largura.
+
+70
+00:03:34,767 --> 00:03:37,267
+Imagens coloridas
+são interpretadas
+
+71
+00:03:37,300 --> 00:03:39,434
+como um arranjo em 3D
+
+72
+00:03:39,467 --> 00:03:42,834
+com altura, largura
+e profundidade.
+
+73
+00:03:42,868 --> 00:03:47,100
+No caso de imagens RGB,
+a profundidade é igual a três.
+
+74
+00:03:47,734 --> 00:03:51,067
+Este arranjo em 3D
+é melhor conceitualizado
+
+75
+00:03:51,100 --> 00:03:55,534
+como o empilhamento de três
+matrizes bidimensionais
+
+76
+00:03:55,567 --> 00:03:58,767
+correspondentes
+aos canais vermelho,
+
+77
+00:03:58,801 --> 00:04:01,167
+verde e azul da imagem.
+
+78
+00:04:01,834 --> 00:04:05,834
+Como fazemos a convolução
+na imagem colorida?
+
+79
+00:04:05,868 --> 00:04:08,501
+Assim como nas imagens
+em escala de cinza,
+
+80
+00:04:08,534 --> 00:04:11,167
+nós movemos o filtro
+horizontalmente
+
+81
+00:04:11,200 --> 00:04:13,701
+e verticalmente
+através da imagem.
+
+82
+00:04:13,734 --> 00:04:17,267
+Mas agora o filtro
+tem três dimensões
+
+83
+00:04:17,300 --> 00:04:19,667
+com um valor
+para cada canal de cor
+
+84
+00:04:19,701 --> 00:04:24,667
+em cada localização horizontal
+e vertical do arranjo da imagem.
+
+85
+00:04:24,701 --> 00:04:27,067
+Como a imagem colorida
+
+86
+00:04:27,100 --> 00:04:30,467
+é o empilhamento de três
+matrizes bidimensionais,
+
+87
+00:04:30,501 --> 00:04:35,400
+você pode pensar em um filtro
+que seja da mesma forma.
+
+88
+00:04:35,434 --> 00:04:38,734
+A cor da imagem e o filtro
+possuem canais vermelho,
+
+89
+00:04:38,767 --> 00:04:40,767
+verde e azul.
+
+90
+00:04:40,801 --> 00:04:44,434
+Para obter os valores dos nós
+do mapa de recurso
+
+91
+00:04:44,467 --> 00:04:46,968
+que correspondem ao filtro,
+
+92
+00:04:47,000 --> 00:04:50,100
+nós fazemos o mesmo
+que fizemos antes.
+
+93
+00:04:50,133 --> 00:04:54,334
+Mas, desta vez, a soma terá
+mais que o triplo de termos.
+
+94
+00:04:54,367 --> 00:04:57,968
+Enfatizamos que aqui
+nós descrevemos o cálculo
+
+95
+00:04:58,000 --> 00:05:02,067
+do valor de um único nó
+em uma camada convolucional
+
+96
+00:05:02,100 --> 00:05:05,334
+para um filtro
+da imagem colorida.
+
+97
+00:05:05,367 --> 00:05:10,067
+Se quisermos retratar uma imagem
+colorida com múltiplos filtros,
+
+98
+00:05:10,100 --> 00:05:13,100
+em vez de termos
+um arranjo 3D único,
+
+99
+00:05:13,133 --> 00:05:15,234
+que corresponde a um filtro,
+
+100
+00:05:15,267 --> 00:05:18,000
+nós definimos
+arranjos 3D múltiplos,
+
+101
+00:05:18,033 --> 00:05:19,834
+cada um definindo
+um filtro.
+
+102
+00:05:20,534 --> 00:05:23,234
+Nós retratamos três filtros,
+
+103
+00:05:23,267 --> 00:05:25,934
+cada um é um arranjo 3D
+que você pode encarar
+
+104
+00:05:25,968 --> 00:05:29,033
+como um empilhamento
+de três arranjos 2D.
+
+105
+00:05:29,067 --> 00:05:32,300
+É aqui que a coisa
+começa a ficar legal.
+
+106
+00:05:32,334 --> 00:05:34,734
+Você pode ver cada um
+dos mapas de recurso
+
+107
+00:05:34,767 --> 00:05:37,534
+em uma camada convolucional
+junto com as mesmas linhas
+
+108
+00:05:37,567 --> 00:05:39,133
+como um canal de imagem
+
+109
+00:05:39,167 --> 00:05:42,167
+e empilhá-los para obter
+um arranjo 3D.
+
+110
+00:05:42,200 --> 00:05:44,701
+Nós podemos utilizar
+este arranjo 3D
+
+111
+00:05:44,734 --> 00:05:48,100
+como entrada em outra
+camada convolucional
+
+112
+00:05:48,701 --> 00:05:50,267
+para descobrir padrões
+
+113
+00:05:50,300 --> 00:05:52,267
+dentro dos padrões
+que descobrimos
+
+114
+00:05:52,300 --> 00:05:54,634
+na primeira
+camada convolucional.
+
+115
+00:05:55,334 --> 00:05:57,267
+Nós podemos fazer
+isto novamente
+
+116
+00:05:57,300 --> 00:06:01,701
+para descobrir padrões
+em padrões de padrões.
+
+117
+00:06:01,734 --> 00:06:04,934
+De alguma forma,
+as camadas convolucionais
+
+118
+00:06:04,968 --> 00:06:07,100
+não são tão diferentes
+das camadas densas
+
+119
+00:06:07,133 --> 00:06:09,167
+vistas na seção anterior.
+
+120
+00:06:10,033 --> 00:06:12,634
+Camadas densas são
+totalmente conectadas.
+
+121
+00:06:12,667 --> 00:06:14,534
+Os nós estão conectados
+
+122
+00:06:14,567 --> 00:06:17,400
+a todos os nós
+da camada anterior.
+
+123
+00:06:17,434 --> 00:06:20,234
+Camada convolucionais
+são conectadas localmente.
+
+124
+00:06:20,267 --> 00:06:23,868
+Os nós estão conectados
+a um pequeno subconjunto
+
+125
+00:06:23,901 --> 00:06:26,000
+dos nós da camada anterior.
+
+126
+00:06:26,033 --> 00:06:29,868
+Camadas convolucionais também têm
+parâmetros de compartilhamento,
+
+127
+00:06:30,534 --> 00:06:32,033
+mas, nos dois casos,
+
+128
+00:06:32,067 --> 00:06:34,300
+nas camadas
+convolucionais e densas,
+
+129
+00:06:34,334 --> 00:06:37,033
+a inferência funciona
+da mesma forma.
+
+130
+00:06:37,067 --> 00:06:39,200
+Ambas possuem pesos e vieses
+
+131
+00:06:39,234 --> 00:06:42,200
+que são gerados
+de forma aleatória.
+
+132
+00:06:42,234 --> 00:06:43,934
+Nos casos das CNNs,
+
+133
+00:06:43,968 --> 00:06:46,801
+nas quais os pesos tomam
+forma de filtros convolucionais,
+
+134
+00:06:46,834 --> 00:06:49,067
+os filtros são gerados
+de forma aleatória,
+
+135
+00:06:49,100 --> 00:06:52,901
+bem como os padrões
+desenvolvidos para detectar.
+
+136
+00:06:53,601 --> 00:06:56,601
+Nas MLPs,
+ao construirmos as CNNs,
+
+137
+00:06:56,634 --> 00:06:59,300
+nós sempre especificaremos
+uma função de perda.
+
+138
+00:06:59,334 --> 00:07:02,434
+No caso da classificação
+multiclasse,
+
+139
+00:07:02,467 --> 00:07:05,801
+ela terá perda
+de entropia cruzada categórica.
+
+140
+00:07:05,834 --> 00:07:09,200
+Ao treinarmos o modelo
+com propagação de retorno,
+
+141
+00:07:09,234 --> 00:07:11,968
+os filtros são atualizados
+sempre atualizados
+
+142
+00:07:12,000 --> 00:07:15,100
+para obter valores que minimizem
+a função de perda.
+
+143
+00:07:15,701 --> 00:07:16,934
+Em outras palavras,
+
+144
+00:07:16,968 --> 00:07:20,834
+a CNN determina os tipos
+de padrões a serem detectados
+
+145
+00:07:20,868 --> 00:07:23,000
+de acordo com a função
+de perda.
+
+146
+00:07:23,033 --> 00:07:25,267
+Nós veremos estes padrões
+mais tarde
+
+147
+00:07:25,300 --> 00:07:27,234
+e veremos que, por exemplo,
+
+148
+00:07:27,267 --> 00:07:29,267
+se o conjunto de dados
+exibe cachorros,
+
+149
+00:07:29,300 --> 00:07:31,934
+a CNN é capaz, por si só,
+
+150
+00:07:31,968 --> 00:07:34,767
+de aprender filtros
+que pareçam com cachorros.
+
+151
+00:07:34,801 --> 00:07:37,868
+Com as CNNs para enfatizar,
+
+152
+00:07:37,901 --> 00:07:40,667
+nós não especificaremos
+os valores dos filtros
+
+153
+00:07:40,701 --> 00:07:42,300
+ou informamos à CNN
+
+154
+00:07:42,334 --> 00:07:44,567
+o tipo de padrão
+a ser detectado.
+
+155
+00:07:44,601 --> 00:07:47,000
+Isso será aprendido
+com os dados.
+

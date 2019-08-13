@@ -1,0 +1,136 @@
+1
+00:00:00,000 --> 00:00:04,815
+We're now ready to introduce you to the second and final type of layer
+
+2
+00:00:04,815 --> 00:00:09,745
+that we'll need to introduce before building our own convolutional neural networks.
+
+3
+00:00:09,745 --> 00:00:15,585
+These so-called pooling layers often take convolutional layers as input.
+
+4
+00:00:15,585 --> 00:00:18,510
+Recall that a convolutional layer is a stack of
+
+5
+00:00:18,510 --> 00:00:22,745
+feature maps where we have one feature map for each filter.
+
+6
+00:00:22,745 --> 00:00:25,020
+A complicated dataset with
+
+7
+00:00:25,020 --> 00:00:29,755
+many different object categories will require a large number of filters,
+
+8
+00:00:29,755 --> 00:00:33,475
+each responsible for finding a pattern in the image.
+
+9
+00:00:33,475 --> 00:00:36,140
+More filters means a bigger stack,
+
+10
+00:00:36,140 --> 00:00:40,835
+which means that the dimensionality of our convolutional layers can get quite large.
+
+11
+00:00:40,835 --> 00:00:44,465
+Higher dimensionality means, we'll need to use more parameters,
+
+12
+00:00:44,465 --> 00:00:46,595
+which can lead to over-fitting.
+
+13
+00:00:46,595 --> 00:00:50,585
+Thus, we need a method for reducing this dimensionality.
+
+14
+00:00:50,585 --> 00:00:55,095
+This is the role of pooling layers within a convolutional neural network.
+
+15
+00:00:55,095 --> 00:00:59,105
+We'll focus on two different types of pooling layers.
+
+16
+00:00:59,105 --> 00:01:02,295
+The first type is a max pooling layer,
+
+17
+00:01:02,295 --> 00:01:06,720
+max pooling layers will take a stack of feature maps as input.
+
+18
+00:01:06,720 --> 00:01:11,435
+Here, we've enlarged and visualized all three of the feature maps.
+
+19
+00:01:11,435 --> 00:01:13,230
+As with convolutional layers,
+
+20
+00:01:13,230 --> 00:01:16,065
+we'll define a window size and stride.
+
+21
+00:01:16,065 --> 00:01:20,800
+In this case, we'll use a window size of two and a stride of two.
+
+22
+00:01:20,800 --> 00:01:23,110
+To construct the max pooling layer,
+
+23
+00:01:23,110 --> 00:01:25,735
+we'll work with each feature map separately.
+
+24
+00:01:25,735 --> 00:01:28,640
+Let's begin with the first feature map,
+
+25
+00:01:28,640 --> 00:01:32,775
+we start with our window in the top left corner of the image.
+
+26
+00:01:32,775 --> 00:01:37,030
+The value of the corresponding node in the max pooling layer is
+
+27
+00:01:37,030 --> 00:01:41,900
+calculated by just taking the maximum of the pixels contained in the window.
+
+28
+00:01:41,900 --> 00:01:45,690
+In this case, we had a one, nine, five,
+
+29
+00:01:45,690 --> 00:01:47,185
+and four in our window,
+
+30
+00:01:47,185 --> 00:01:49,720
+so nine was the maximum.
+
+31
+00:01:49,720 --> 00:01:54,550
+If we continue this process and do it for all of our feature maps,
+
+32
+00:01:54,550 --> 00:01:58,515
+the output is a stack with the same number of feature maps,
+
+33
+00:01:58,515 --> 00:02:02,650
+but each feature map has been reduced in width and height.
+
+34
+00:02:02,650 --> 00:02:08,130
+In this case, the width and height are half of that of the previous convolutional layer.
+

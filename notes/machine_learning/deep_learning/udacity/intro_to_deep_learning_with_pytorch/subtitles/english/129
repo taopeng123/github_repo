@@ -1,0 +1,88 @@
+1
+00:00:00,000 --> 00:00:03,900
+To calculate the style loss between a target and style image,
+
+2
+00:00:03,900 --> 00:00:08,420
+we find the mean squared distance between the style and target image gram matrices,
+
+3
+00:00:08,420 --> 00:00:12,430
+all five pairs that are computed at each layer in our predefined list,
+
+4
+00:00:12,430 --> 00:00:14,965
+conv1_1 up to conv5_1.
+
+5
+00:00:14,965 --> 00:00:18,100
+These lists, I'll call Ss and Ts,
+
+6
+00:00:18,100 --> 00:00:21,790
+and A is a constant that accounts for the number of values in each layer.
+
+7
+00:00:21,790 --> 00:00:27,100
+We'll multiply these five calculated distances by some style weights W that we specify,
+
+8
+00:00:27,100 --> 00:00:28,455
+and then add them up.
+
+9
+00:00:28,455 --> 00:00:31,530
+The style weights are values that will give more or less weight to
+
+10
+00:00:31,530 --> 00:00:34,850
+the calculated style loss at each of the five layers,
+
+11
+00:00:34,850 --> 00:00:36,615
+thereby changing how much effect
+
+12
+00:00:36,615 --> 00:00:40,460
+each layer style representation will have on our final target image.
+
+13
+00:00:40,460 --> 00:00:42,440
+Again, we'll only be changing
+
+14
+00:00:42,440 --> 00:00:45,140
+the target image's style representations as we
+
+15
+00:00:45,140 --> 00:00:48,240
+minimize this loss over some number of iterations.
+
+16
+00:00:48,240 --> 00:00:50,255
+So, now we have the content loss,
+
+17
+00:00:50,255 --> 00:00:54,810
+which tells us how close the content of our target image is to that of our content image,
+
+18
+00:00:54,810 --> 00:00:56,510
+and the style loss,
+
+19
+00:00:56,510 --> 00:01:00,160
+which tells us how close our target is in style to our style image.
+
+20
+00:01:00,160 --> 00:01:03,710
+We can now add these losses together to get the total loss,
+
+21
+00:01:03,710 --> 00:01:08,270
+and then use typical back propagation and optimization to reduce this loss
+
+22
+00:01:08,270 --> 00:01:13,520
+by iteratively changing the target image to match our desired content and style.
+

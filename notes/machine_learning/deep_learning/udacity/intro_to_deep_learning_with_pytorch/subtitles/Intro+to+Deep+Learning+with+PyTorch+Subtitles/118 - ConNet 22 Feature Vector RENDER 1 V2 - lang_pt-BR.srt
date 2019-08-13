@@ -1,0 +1,239 @@
+1
+00:00:00,227 --> 00:00:02,370
+A função de uma rede neural
+convolucional
+
+2
+00:00:02,403 --> 00:00:04,985
+é descobrir padrões
+presentes na imagem.
+
+3
+00:00:05,018 --> 00:00:08,073
+Uma sequência de camadas é
+responsável por essa descoberta.
+
+4
+00:00:08,106 --> 00:00:11,134
+As camadas da CNN convertem
+o array de input de imagem
+
+5
+00:00:11,167 --> 00:00:15,288
+numa representação que codifica
+o conteúdo da imagem.
+
+6
+00:00:15,321 --> 00:00:19,037
+Isso é chamado de "representação
+de características" da imagem,
+
+7
+00:00:19,070 --> 00:00:20,624
+ou "vetor de características".
+
+8
+00:00:20,657 --> 00:00:22,958
+Você pode tentar entendê-lo
+da seguinte forma:
+
+9
+00:00:22,991 --> 00:00:26,215
+pense em duas imagens de input
+que contêm um carro.
+
+10
+00:00:26,248 --> 00:00:28,963
+As duas são diferentes
+e, se eu fosse enquadrá-las,
+
+11
+00:00:28,996 --> 00:00:32,127
+os detalhes são o que as tornam
+esteticamente interessantes.
+
+12
+00:00:32,160 --> 00:00:34,894
+Mas o classificador de imagens
+só quer saber
+
+13
+00:00:34,927 --> 00:00:37,296
+se as duas são
+imagens de carro.
+
+14
+00:00:37,329 --> 00:00:39,612
+Ao vermos como as imagens
+se transformam
+
+15
+00:00:39,645 --> 00:00:42,240
+ao se deslocarem
+pelas camadas da CNN,
+
+16
+00:00:42,273 --> 00:00:45,867
+os valores de pixel exatos
+importam cada vez menos.
+
+17
+00:00:45,900 --> 00:00:47,543
+Os dois outputs transformados
+
+18
+00:00:47,576 --> 00:00:50,341
+deverão ficar bem mais parecidos
+um com o outro,
+
+19
+00:00:50,374 --> 00:00:53,283
+aproximando-se da ideia
+de que ambos são carros
+
+20
+00:00:53,316 --> 00:00:56,398
+e ignorando os detalhes
+sobre as características dos carros.
+
+21
+00:00:56,431 --> 00:00:59,212
+As últimas camadas da CNN
+descartam informações
+
+22
+00:00:59,245 --> 00:01:00,781
+sobre estilo e textura
+
+23
+00:01:00,814 --> 00:01:04,746
+e são levadas a responder
+perguntas sobre a forma geral
+
+24
+00:01:04,779 --> 00:01:06,991
+e sobre a presença
+de padrões específicos,
+
+25
+00:01:07,024 --> 00:01:09,033
+como: "Há rodas na imagem?
+
+26
+00:01:09,066 --> 00:01:12,517
+Há olhos na imagem?
+E patas peludas ou rabos?"
+
+27
+00:01:12,550 --> 00:01:15,512
+Ao chegarmos a uma representação
+em que o conteúdo da imagem
+
+28
+00:01:15,545 --> 00:01:16,956
+foi filtrado dessa forma,
+
+29
+00:01:17,021 --> 00:01:19,626
+podemos reduzir o array
+a um vetor de características
+
+30
+00:01:19,659 --> 00:01:22,515
+e passá-lo para uma ou mais
+camadas totalmente conectadas,
+
+31
+00:01:22,548 --> 00:01:25,659
+para determinar que objeto
+está na imagem.
+
+32
+00:01:25,692 --> 00:01:29,340
+Então, se rodas forem identificadas
+após a última camada max pooling,
+
+33
+00:01:29,373 --> 00:01:31,731
+o vetor de características
+saberá retratar isso,
+
+34
+00:01:31,764 --> 00:01:34,321
+e a camada conectada
+transformará essa informação
+
+35
+00:01:34,354 --> 00:01:38,405
+para prever com maior probabilidade
+que há um carro na imagem.
+
+36
+00:01:38,438 --> 00:01:40,762
+Se houvesse olhos,
+patas peludas e um rabo,
+
+37
+00:01:40,795 --> 00:01:43,394
+a camada de output pegaria
+essas informações
+
+38
+00:01:43,427 --> 00:01:46,790
+e deduziria que provavelmente
+há um cachorro na imagem.
+
+39
+00:01:46,823 --> 00:01:48,581
+Mas é preciso ressaltar
+
+40
+00:01:48,614 --> 00:01:52,711
+que o entendimento do modelo
+não é pré-especificado por nós.
+
+41
+00:01:52,744 --> 00:01:55,214
+Ele é aprendido pelo modelo
+através do treinamento
+
+42
+00:01:55,280 --> 00:01:58,873
+e da retropropagação, que atualiza
+os pesos que definem os filtros
+
+43
+00:01:58,906 --> 00:02:01,410
+e os pesos
+das camadas totalmente conectadas.
+
+44
+00:02:01,443 --> 00:02:03,553
+A arquitetura
+que especificamos aqui
+
+45
+00:02:03,586 --> 00:02:06,983
+só dá ao modelo uma estrutura
+para que ele treine melhor,
+
+46
+00:02:07,016 --> 00:02:10,869
+para que consiga classificar objetos
+com mais precisão.
+
+47
+00:02:10,902 --> 00:02:12,972
+A seguir, mostrarei
+como começar a definir
+
+48
+00:02:13,005 --> 00:02:15,644
+uma arquitetura de CNN
+de classificação de imagens,
+
+49
+00:02:15,677 --> 00:02:18,000
+e você poderá praticar sozinho
+com este código.
+

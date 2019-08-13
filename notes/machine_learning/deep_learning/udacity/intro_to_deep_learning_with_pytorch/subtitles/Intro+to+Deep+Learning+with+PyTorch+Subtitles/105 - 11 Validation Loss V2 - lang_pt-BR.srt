@@ -1,0 +1,535 @@
+1
+00:00:00,190 --> 00:00:03,585
+No último exemplo,
+vimos a precisão de classificação
+
+2
+00:00:03,618 --> 00:00:05,780
+ao observarmos que,
+durante o treinamento,
+
+3
+00:00:05,813 --> 00:00:08,347
+a perda de entropia cruzada
+que media a diferença
+
+4
+00:00:08,380 --> 00:00:11,468
+entre classes previstas
+e verdadeiras foi diminuindo.
+
+5
+00:00:11,501 --> 00:00:14,326
+Estimamos quando seria
+um bom momento de parar -
+
+6
+00:00:14,359 --> 00:00:17,301
+quando a linha de treinamento
+parou de diminuir -,
+
+7
+00:00:17,334 --> 00:00:18,468
+mas, como vimos,
+
+8
+00:00:18,501 --> 00:00:20,557
+podemos usar
+um conjunto de validação
+
+9
+00:00:20,590 --> 00:00:22,980
+para saber
+quando parar o treinamento.
+
+10
+00:00:23,013 --> 00:00:25,446
+Mostrarei como adicionar isso
+ao código.
+
+11
+00:00:25,479 --> 00:00:28,641
+O primeiro passo é criar
+um conjunto de dados de validação,
+
+12
+00:00:28,674 --> 00:00:31,712
+assim como criamos os conjuntos
+de treinamento e de teste.
+
+13
+00:00:31,745 --> 00:00:35,645
+Na verdade, pegarei uma porcentagem
+dos dados de treinamento.
+
+14
+00:00:35,678 --> 00:00:39,397
+Configuro uma variável valid_size
+para pegar 20% dos dados
+
+15
+00:00:39,430 --> 00:00:41,468
+e transformá-los
+em dados de validação.
+
+16
+00:00:41,501 --> 00:00:45,192
+Isso deve ser suficiente, pois
+o conjunto de dados MNIST é grande.
+
+17
+00:00:45,225 --> 00:00:48,270
+Agora usarei algo chamado
+"SubsetRandomSampler"
+
+18
+00:00:48,303 --> 00:00:50,952
+para me ajudar a dividir
+os dados de treinamento.
+
+19
+00:00:50,985 --> 00:00:53,926
+Primeiro eu gravo quantas
+imagens existem
+
+20
+00:00:53,959 --> 00:00:57,197
+e determino quais índices
+serão acessados no conjunto
+
+21
+00:00:57,230 --> 00:01:00,241
+para criar os conjuntos
+de treinamento e de validação.
+
+22
+00:01:00,274 --> 00:01:03,241
+Eu listei os índices
+a partir do comprimento
+
+23
+00:01:03,274 --> 00:01:04,882
+do conjunto de treinamento.
+
+24
+00:01:04,915 --> 00:01:09,378
+Os índices serão os valores que
+apontarão para as 70.000 imagens
+
+25
+00:01:09,411 --> 00:01:10,843
+do conjunto de treinamento.
+
+26
+00:01:10,876 --> 00:01:13,683
+Agora vou misturar os índices,
+para que qualquer índice
+
+27
+00:01:13,716 --> 00:01:15,090
+selecionado desta lista
+
+28
+00:01:15,123 --> 00:01:17,170
+faça referência
+a um dado aleatório.
+
+29
+00:01:17,203 --> 00:01:20,985
+Depois definirei o limite,
+que é a quantidade de exemplos
+
+30
+00:01:21,018 --> 00:01:23,737
+que haverá
+no conjunto de validação.
+
+31
+00:01:23,770 --> 00:01:26,864
+Ele será de 20%
+dos dados de treinamento.
+
+32
+00:01:26,897 --> 00:01:29,693
+Haverá uma divisão de 80/20
+entre dados de treinamento
+
+33
+00:01:29,726 --> 00:01:31,116
+e de validação.
+
+34
+00:01:31,149 --> 00:01:34,781
+Por fim, usamos SubsetRandomSampler
+para criar amostras de dados
+
+35
+00:01:34,814 --> 00:01:37,262
+para os dados de treinamento
+e de validação.
+
+36
+00:01:37,295 --> 00:01:41,533
+Isso adiciona mais um argumento ao
+train_loader e ao validation_loader.
+
+37
+00:01:41,566 --> 00:01:44,679
+Antes eu só tinha os carregadores
+de treinamento e de dados,
+
+38
+00:01:44,712 --> 00:01:47,527
+agora dividi os dados
+de treinamento em dois conjuntos,
+
+39
+00:01:47,560 --> 00:01:50,887
+basicamente misturando
+e selecionando 20% para validação
+
+40
+00:01:50,920 --> 00:01:53,383
+usando um sampler
+de dados específicos.
+
+41
+00:01:53,416 --> 00:01:56,147
+Agora temos um carregador
+do conjunto de validação,
+
+42
+00:01:56,180 --> 00:01:58,232
+e vou descer até o loop
+de treinamento
+
+43
+00:01:58,265 --> 00:02:00,878
+para usar o conjunto
+de validação.
+
+44
+00:02:00,911 --> 00:02:03,423
+Aqui está o loop de treinamento,
+mas, desta vez,
+
+45
+00:02:03,456 --> 00:02:05,523
+além de rastrear
+a perda de treinamento,
+
+46
+00:02:05,556 --> 00:02:08,314
+também rastrearei
+a perda de validação.
+
+47
+00:02:08,347 --> 00:02:12,701
+Pararemos de treinar ao atingirmos
+a epoch da perda de treinamento,
+
+48
+00:02:12,734 --> 00:02:14,708
+mas não a da validação.
+
+49
+00:02:14,741 --> 00:02:17,847
+Rastrearemos a mudança
+na perda de validação.
+
+50
+00:02:17,880 --> 00:02:21,076
+Especificamente, rastrearemos
+a perda de validação mínima,
+
+51
+00:02:21,109 --> 00:02:23,863
+para podermos compará-la
+com a perda da validação atual
+
+52
+00:02:23,896 --> 00:02:28,061
+e ver se ela aumentou ou diminuiu
+do mínimo da epoch.
+
+53
+00:02:28,094 --> 00:02:31,477
+No loop epoch, temos o loop
+do lote de treinamento
+
+54
+00:02:31,510 --> 00:02:33,843
+e o do lote de validação.
+
+55
+00:02:33,876 --> 00:02:37,795
+Isso passa pelos dados
+e rótulos do conjunto de validação,
+
+56
+00:02:37,828 --> 00:02:41,780
+aplica o modelo aos dados
+e grava a perda, como sempre.
+
+57
+00:02:41,813 --> 00:02:44,891
+Não realizamos o passo
+da retropropagação,
+
+58
+00:02:44,924 --> 00:02:47,428
+que é exclusivo
+dos dados de treinamento.
+
+59
+00:02:47,461 --> 00:02:49,843
+Adicionei mais uma coisa
+à instrução print
+
+60
+00:02:49,876 --> 00:02:52,107
+para imprimir a média
+da perda de validação
+
+61
+00:02:52,140 --> 00:02:53,628
+depois de cada epoch.
+
+62
+00:02:53,661 --> 00:02:56,894
+Ao fim de cada epoch,
+confiro a perda de validação
+
+63
+00:02:56,927 --> 00:02:59,741
+para ver se é menor
+do que o mínimo registrado.
+
+64
+00:02:59,774 --> 00:03:01,518
+Se for, salvamos o modelo,
+
+65
+00:03:01,551 --> 00:03:04,404
+pois isso significa
+que o modelo de validação diminuiu,
+
+66
+00:03:04,437 --> 00:03:07,147
+e armazenamos isso
+como o valor mínimo.
+
+67
+00:03:07,180 --> 00:03:10,972
+Perceba que configurei
+o mínimo inicial como infinito.
+
+68
+00:03:11,005 --> 00:03:15,747
+Esse valor alto garante que a perda
+se atualize depois da 1ª epoch.
+
+69
+00:03:15,780 --> 00:03:18,444
+Note esta linha,
+que permite salvar o modelo
+
+70
+00:03:18,477 --> 00:03:22,277
+e os parâmetros atuais
+pelo nome "model.pt".
+
+71
+00:03:22,310 --> 00:03:24,428
+Executamos isto nas 50 epochs
+
+72
+00:03:24,461 --> 00:03:27,466
+e vemos tanto a perda de treinamento
+quanto a de validação
+
+73
+00:03:27,499 --> 00:03:28,894
+depois de cada epoch.
+
+74
+00:03:28,927 --> 00:03:31,799
+Tanto a perda de treinamento
+quanto a de validação
+
+75
+00:03:31,832 --> 00:03:34,885
+estão diminuindo
+nas primeiras 30 epochs.
+
+76
+00:03:34,918 --> 00:03:37,577
+O modelo foi salvo
+após cada um dos pontos
+
+77
+00:03:37,610 --> 00:03:39,900
+nos quais as perdas
+de validação diminuíram.
+
+78
+00:03:39,933 --> 00:03:43,614
+Também notamos a desaceleração
+da diminuição aqui.
+
+79
+00:03:43,647 --> 00:03:47,831
+Na verdade, o último modelo
+foi salvo depois da epoch 37.
+
+80
+00:03:47,864 --> 00:03:51,934
+Salvar o modelo no ponto
+onde as perdas se divergem
+
+81
+00:03:51,967 --> 00:03:55,221
+evita que o modelo sobreajuste
+os dados de treinamento.
+
+82
+00:03:55,254 --> 00:03:57,286
+Esse é um problema
+de eficiência.
+
+83
+00:03:57,319 --> 00:03:59,781
+A perda de validação
+continua a mesma
+
+84
+00:03:59,814 --> 00:04:02,406
+nas 10 ou 15 últimas epochs.
+
+85
+00:04:02,439 --> 00:04:07,591
+A falta de diminuição indica
+que o melhor modelo é alcançado
+
+86
+00:04:07,624 --> 00:04:09,066
+por volta da epoch 30,
+
+87
+00:04:09,099 --> 00:04:11,218
+mas, com certeza, na epoch 37.
+
+88
+00:04:11,251 --> 00:04:13,914
+O próximo passo é ver
+como esse modelo se sai
+
+89
+00:04:13,947 --> 00:04:15,410
+com os dados de teste.
+
+90
+00:04:15,443 --> 00:04:18,420
+Eu estou carregando o modelo
+que salvamos antes pelo nome
+
+91
+00:04:18,453 --> 00:04:20,738
+no modelo instanciado
+
+92
+00:04:20,771 --> 00:04:22,817
+e estou testando como sempre,
+
+93
+00:04:22,850 --> 00:04:24,753
+passando os dados de teste
+no modelo
+
+94
+00:04:24,786 --> 00:04:27,065
+e gravando
+as precisões de classe.
+
+95
+00:04:27,098 --> 00:04:29,855
+Obtemos 97% de precisão.
+
+96
+00:04:29,888 --> 00:04:32,241
+Isso é quase igual
+ao modelo anterior,
+
+97
+00:04:32,274 --> 00:04:33,719
+o modelo sem validação.
+
+98
+00:04:33,752 --> 00:04:36,790
+Mesmo treinando o modelo
+por mais umas 15 epochs,
+
+99
+00:04:36,823 --> 00:04:38,920
+o resultado é quase o mesmo.
+
+100
+00:04:38,953 --> 00:04:42,285
+Isso porque a perda de validação
+não muda muito.
+
+101
+00:04:42,318 --> 00:04:45,575
+Mesmo salvando o modelo
+depois da epoch 37 ou da 50,
+
+102
+00:04:45,608 --> 00:04:47,830
+ele será bem parecido.
+
+103
+00:04:47,863 --> 00:04:51,286
+Esse comportamento ocorre
+porque a maioria das imagens
+
+104
+00:04:51,319 --> 00:04:52,789
+é muito parecida.
+
+105
+00:04:52,822 --> 00:04:56,762
+Elas são processadas
+e os dígitos são parecidos.
+
+106
+00:04:56,795 --> 00:05:01,817
+No caso da não-validação, não fez
+diferença treinar mais o modelo.
+
+107
+00:05:01,850 --> 00:05:04,639
+Mas, em alguns casos,
+veremos o sobreajuste,
+
+108
+00:05:04,672 --> 00:05:07,335
+e escolher um modelo
+a partir da perda de validação
+
+109
+00:05:07,368 --> 00:05:09,274
+será ainda mais importante.
+
+110
+00:05:09,307 --> 00:05:11,991
+A validação do modelo
+pode ser uma maneira útil
+
+111
+00:05:12,024 --> 00:05:13,414
+de selecionar o modelo
+
+112
+00:05:13,447 --> 00:05:15,169
+e de saber a hora de parar.
+

@@ -1,0 +1,208 @@
+1
+00:00:00,000 --> 00:00:04,605
+So last time, we noticed that we had one review with zero length in our dataset.
+
+2
+00:00:04,605 --> 00:00:08,420
+This review will not contribute any meaningful training information.
+
+3
+00:00:08,420 --> 00:00:13,410
+So here, I'm removing any reviews of zero length from our reviews ends list.
+
+4
+00:00:13,410 --> 00:00:16,245
+I'll do the same thing with their corresponding label.
+
+5
+00:00:16,245 --> 00:00:19,350
+The way I went about this task was I thought, "Okay,
+
+6
+00:00:19,350 --> 00:00:22,620
+I'm going to want to find any reviews of zero length and remove
+
+7
+00:00:22,620 --> 00:00:26,885
+that data from my existing reviews ends and encoded labels data."
+
+8
+00:00:26,885 --> 00:00:30,015
+So, I first identified the indices in our data
+
+9
+00:00:30,015 --> 00:00:33,535
+that I want to keep which I'll call my non-zero indices.
+
+10
+00:00:33,535 --> 00:00:37,390
+I'm checking the length of each review in our reviews end data.
+
+11
+00:00:37,390 --> 00:00:39,430
+If the length is not equal to zero,
+
+12
+00:00:39,430 --> 00:00:44,355
+that means I want to keep it and I'm recording its index in our list of non-zero indices.
+
+13
+00:00:44,355 --> 00:00:46,730
+Then I'm just getting those indices from
+
+14
+00:00:46,730 --> 00:00:50,205
+my existing reviews ends list and encoded labels array.
+
+15
+00:00:50,205 --> 00:00:54,525
+I'm just trying the new clean data in these variables of the same name.
+
+16
+00:00:54,525 --> 00:00:56,185
+When I do my length check,
+
+17
+00:00:56,185 --> 00:00:59,510
+I can see that this is effectively removed one review from our data.
+
+18
+00:00:59,510 --> 00:01:03,315
+In this case, there was only one review of zero length, so this looks good.
+
+19
+00:01:03,315 --> 00:01:05,660
+Now, the next thing I want to deal with is
+
+20
+00:01:05,660 --> 00:01:10,625
+very long review text data and standardizing the length of our reviews in general.
+
+21
+00:01:10,625 --> 00:01:13,360
+We saw that the maximum review length was about
+
+22
+00:01:13,360 --> 00:01:17,585
+2,500 words and that's going to be too many steps for our RNN.
+
+23
+00:01:17,585 --> 00:01:19,550
+In cases like this, I want to truncate
+
+24
+00:01:19,550 --> 00:01:22,375
+this data to a reasonable size and number of steps.
+
+25
+00:01:22,375 --> 00:01:24,535
+This brings me to the next exercise.
+
+26
+00:01:24,535 --> 00:01:27,335
+To deal with both short and very long reviews,
+
+27
+00:01:27,335 --> 00:01:32,240
+we'll either pad or truncate all reviews to a specific sequence length.
+
+28
+00:01:32,240 --> 00:01:34,880
+For reviews that are shorter than some sequence length,
+
+29
+00:01:34,880 --> 00:01:37,355
+we'll pad it on the left with zeros.
+
+30
+00:01:37,355 --> 00:01:39,475
+For reviews longer than the sequence length,
+
+31
+00:01:39,475 --> 00:01:43,155
+we can truncate them to the first sequence length worth of words.
+
+32
+00:01:43,155 --> 00:01:45,015
+So, here's a padding example.
+
+33
+00:01:45,015 --> 00:01:47,330
+Say, we have a short sequence of words and we
+
+34
+00:01:47,330 --> 00:01:50,345
+specify that we want a sequence length equal to 10.
+
+35
+00:01:50,345 --> 00:01:53,570
+The resultant padded sequence should be this,
+
+36
+00:01:53,570 --> 00:01:58,385
+padded on the left with seven zeros and the original three-word tokens are at the end.
+
+37
+00:01:58,385 --> 00:02:00,250
+Now in the case of a long review,
+
+38
+00:02:00,250 --> 00:02:02,790
+it would just be cut at the sequence length of 10.
+
+39
+00:02:02,790 --> 00:02:06,530
+This is just a small example and for our movie review data,
+
+40
+00:02:06,530 --> 00:02:09,565
+a good sequence length is going to be around 200.
+
+41
+00:02:09,565 --> 00:02:13,410
+An exercise, I want you to complete this function pad features.
+
+42
+00:02:13,410 --> 00:02:17,045
+This takes in our list of reviews ends and a sequence length
+
+43
+00:02:17,045 --> 00:02:21,205
+and it should either pad or truncate every review in the past end list.
+
+44
+00:02:21,205 --> 00:02:24,665
+It should return an array of transformed reviews which
+
+45
+00:02:24,665 --> 00:02:27,980
+I'll call R features which are our tokenized reviews of
+
+46
+00:02:27,980 --> 00:02:31,640
+the same sequence length and you'll often hear transform data
+
+47
+00:02:31,640 --> 00:02:35,720
+like this referred to as the features or input features for a model.
+
+48
+00:02:35,720 --> 00:02:39,440
+So, at the end, each of the rows in the feature's array will be transformed
+
+49
+00:02:39,440 --> 00:02:44,145
+review of a standard sequence length that we can then feed into a model as input.
+
+50
+00:02:44,145 --> 00:02:47,675
+So, try to solve this and then the next cell I've included some print statements
+
+51
+00:02:47,675 --> 00:02:51,410
+and assertions that act as tests on the shape of your feature's array.
+
+52
+00:02:51,410 --> 00:02:55,200
+This will help you check your work and next I'll go over one solution
+

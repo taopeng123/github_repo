@@ -1,0 +1,60 @@
+1
+00:00:00,000 --> 00:00:03,460
+I'll be teaching this lesson in tandem with Alexis.
+
+2
+00:00:03,460 --> 00:00:06,120
+And as she already mentioned this lesson is all about
+
+3
+00:00:06,120 --> 00:00:10,700
+convolutional neural networks and how they improve our ability to classify images.
+
+4
+00:00:10,700 --> 00:00:14,400
+In general, CNNs can look at images as a whole and learn to
+
+5
+00:00:14,400 --> 00:00:18,060
+identify spatial patterns such as prominent colors and shapes,
+
+6
+00:00:18,060 --> 00:00:21,405
+or whether a texture is fuzzy or smooth and so on.
+
+7
+00:00:21,405 --> 00:00:24,240
+The shapes and colors that define any image and
+
+8
+00:00:24,240 --> 00:00:27,675
+any object in an image are often called features.
+
+9
+00:00:27,675 --> 00:00:30,390
+I'll cover how a CNN can learn to identify
+
+10
+00:00:30,390 --> 00:00:34,380
+these features and how a CNN can be used for image classification.
+
+11
+00:00:34,380 --> 00:00:36,590
+And Alexis will talk about the various layers that
+
+12
+00:00:36,590 --> 00:00:39,345
+make up a complete convolutional neural network.
+
+13
+00:00:39,345 --> 00:00:40,745
+By the end of this lesson,
+
+14
+00:00:40,745 --> 00:00:42,800
+you should have all the skills you need to
+
+15
+00:00:42,800 --> 00:00:45,820
+define and train an image classifier of your own.
+

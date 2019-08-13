@@ -1,0 +1,508 @@
+1
+00:00:00,000 --> 00:00:02,955
+To introduce you to RNNs in PyTorch,
+
+2
+00:00:02,955 --> 00:00:04,920
+I've created a notebook that will show you how to do
+
+3
+00:00:04,920 --> 00:00:07,715
+simple time series prediction with an RNN.
+
+4
+00:00:07,715 --> 00:00:10,770
+Specifically, we'll look at some data and see if we can create
+
+5
+00:00:10,770 --> 00:00:14,850
+an RNN to accurately predict the next data point given a current data point,
+
+6
+00:00:14,850 --> 00:00:17,485
+and this is really easiest to see in an example.
+
+7
+00:00:17,485 --> 00:00:18,765
+So, let's get started.
+
+8
+00:00:18,765 --> 00:00:21,205
+I'm importing our usual resources,
+
+9
+00:00:21,205 --> 00:00:24,960
+and then I'm actually going to create some simple input and target training data.
+
+10
+00:00:24,960 --> 00:00:28,200
+A classic example is to use a sine wave as input
+
+11
+00:00:28,200 --> 00:00:31,470
+because it has enough variance and shape to be an interesting task,
+
+12
+00:00:31,470 --> 00:00:32,730
+but it's also very predictable.
+
+13
+00:00:32,730 --> 00:00:37,040
+So, I want to create a sample input and target sequence of data points of length 20,
+
+14
+00:00:37,040 --> 00:00:39,475
+which I specify here as sequence length.
+
+15
+00:00:39,475 --> 00:00:42,500
+Recall that RNNs are meant to work with sequential data,
+
+16
+00:00:42,500 --> 00:00:44,030
+and so the sequence length is
+
+17
+00:00:44,030 --> 00:00:46,550
+just the length of a sequence that it will look at as input.
+
+18
+00:00:46,550 --> 00:00:49,520
+Often, the sequence length will indicate the number of words in
+
+19
+00:00:49,520 --> 00:00:53,735
+a sentence or just some length of numerical data as is the case here.
+
+20
+00:00:53,735 --> 00:00:55,235
+So, in these two lines,
+
+21
+00:00:55,235 --> 00:00:56,660
+I'm just going to generate the start of
+
+22
+00:00:56,660 --> 00:01:00,035
+a sine wave in a range from zero to Pi time steps.
+
+23
+00:01:00,035 --> 00:01:04,845
+At first, I'm going to create a number of points that sequence length 20 plus 1,
+
+24
+00:01:04,845 --> 00:01:08,960
+then I'm going to reshape my sine wave data to give it one extra dimension,
+
+25
+00:01:08,960 --> 00:01:11,135
+the input size, which is just going to be one.
+
+26
+00:01:11,135 --> 00:01:14,545
+Then, to create an input and target sequence of the length I want,
+
+27
+00:01:14,545 --> 00:01:19,100
+I'm going to say an input X is equal to all but the last point in data,
+
+28
+00:01:19,100 --> 00:01:21,890
+and the target Y is equal to all but the first point.
+
+29
+00:01:21,890 --> 00:01:26,095
+So, X and Y should contain 20 data points and have an input size of one.
+
+30
+00:01:26,095 --> 00:01:29,865
+Finally, I'm going to display this data using the same x-axis.
+
+31
+00:01:29,865 --> 00:01:35,380
+You can see the input X is in red and the target Y is shifted over by one in blue.
+
+32
+00:01:35,380 --> 00:01:39,125
+So, if we look at this point as an example at the same time step,
+
+33
+00:01:39,125 --> 00:01:43,045
+Y is basically X shifted one time step in the future,
+
+34
+00:01:43,045 --> 00:01:44,705
+and that's exactly what we want.
+
+35
+00:01:44,705 --> 00:01:46,490
+So, now we have our training data and
+
+36
+00:01:46,490 --> 00:01:49,800
+the next step is defining an RNN to learn from this data.
+
+37
+00:01:49,800 --> 00:01:52,100
+We can define an RNN as usual,
+
+38
+00:01:52,100 --> 00:01:55,470
+which is to say as a class using PyTorche's NN library.
+
+39
+00:01:55,470 --> 00:01:59,220
+The syntax will look similar to how we've defined CNNs in the past.
+
+40
+00:01:59,220 --> 00:02:01,940
+Let's actually click on the RNN documentation to read
+
+41
+00:02:01,940 --> 00:02:05,170
+about the parameters that our recurrent layer takes in as input.
+
+42
+00:02:05,170 --> 00:02:08,180
+So, here's the documentation for an RNN layer.
+
+43
+00:02:08,180 --> 00:02:10,130
+We can see that this layer is responsible for
+
+44
+00:02:10,130 --> 00:02:12,550
+calculating a hidden state based on its inputs.
+
+45
+00:02:12,550 --> 00:02:14,260
+Now, to define a layer like this,
+
+46
+00:02:14,260 --> 00:02:16,635
+we have these parameters: an input size,
+
+47
+00:02:16,635 --> 00:02:20,040
+a hidden size, a number of layers and a few other arguments.
+
+48
+00:02:20,040 --> 00:02:23,370
+The input size is just the number of input features,
+
+49
+00:02:23,370 --> 00:02:26,600
+and in our specific case we're going to have inputs that are 20 values
+
+50
+00:02:26,600 --> 00:02:29,755
+in sequence and one in input size features.
+
+51
+00:02:29,755 --> 00:02:34,605
+This is like when we thought about the depth of an input image when we made CNN's.
+
+52
+00:02:34,605 --> 00:02:37,220
+Next, we have a hidden size that defines how many
+
+53
+00:02:37,220 --> 00:02:40,440
+features the output of an RNN will have and its hidden state.
+
+54
+00:02:40,440 --> 00:02:41,990
+We also have a number of layers,
+
+55
+00:02:41,990 --> 00:02:43,265
+which if it's greater than one,
+
+56
+00:02:43,265 --> 00:02:46,130
+just means we're going to stack two RNNs on top of each other.
+
+57
+00:02:46,130 --> 00:02:49,430
+Lastly, I want you to pay attention to this batch first parameter.
+
+58
+00:02:49,430 --> 00:02:52,010
+If it is true, that means the input and output tensors that we
+
+59
+00:02:52,010 --> 00:02:55,220
+provide are going to have the batch size as the first dimension,
+
+60
+00:02:55,220 --> 00:02:57,580
+which in most cases that we go through will be true.
+
+61
+00:02:57,580 --> 00:03:00,500
+So, this is how you define an RNN layer,
+
+62
+00:03:00,500 --> 00:03:02,780
+and later in the forward function we'll see that it takes
+
+63
+00:03:02,780 --> 00:03:05,090
+in an input and an initial hidden state,
+
+64
+00:03:05,090 --> 00:03:07,965
+and it produces an output and a new hidden state.
+
+65
+00:03:07,965 --> 00:03:13,495
+Back to our notebook. Here, I'm defining an RNN layer, self- doubt RNN.
+
+66
+00:03:13,495 --> 00:03:16,925
+This RNN is taking in an input size and a hidden dimension
+
+67
+00:03:16,925 --> 00:03:20,410
+that defines how many features the output of this RNN will have.
+
+68
+00:03:20,410 --> 00:03:24,230
+Then it takes in a number of layers which allows you to create a stacked RNN if
+
+69
+00:03:24,230 --> 00:03:28,115
+you want and this is typically a value kept between one and three layers.
+
+70
+00:03:28,115 --> 00:03:30,950
+Finally, I'm setting batch first to true because I'm
+
+71
+00:03:30,950 --> 00:03:34,645
+shaping the input such that the batch size will be the first dimension.
+
+72
+00:03:34,645 --> 00:03:36,830
+Okay. Then to complete this model I have to add
+
+73
+00:03:36,830 --> 00:03:39,675
+one more layer which is a final fully-connected layer.
+
+74
+00:03:39,675 --> 00:03:42,859
+This layer is responsible for producing the number of outputs,
+
+75
+00:03:42,859 --> 00:03:46,345
+output size that I want given the output of the RNN.
+
+76
+00:03:46,345 --> 00:03:51,115
+So, all of these parameters are just going to be passed into our RNN when we create it.
+
+77
+00:03:51,115 --> 00:03:53,120
+You'll also note that I'm storing the value of
+
+78
+00:03:53,120 --> 00:03:56,115
+our hidden dimension so I can use it later in our forward function.
+
+79
+00:03:56,115 --> 00:03:58,985
+In the forward function, I'm going to specify how a batch
+
+80
+00:03:58,985 --> 00:04:01,700
+of input sequences will pass through this model.
+
+81
+00:04:01,700 --> 00:04:05,235
+Note that this forward takes in an input X and the hidden state.
+
+82
+00:04:05,235 --> 00:04:07,040
+The first thing I'm doing is grabbing
+
+83
+00:04:07,040 --> 00:04:10,205
+the batch size of our input calling X dot size of 0.
+
+84
+00:04:10,205 --> 00:04:14,710
+Then I'm passing my initial input and hidden state into the RNN layer.
+
+85
+00:04:14,710 --> 00:04:17,940
+This produces the RNN output and a new hidden state.
+
+86
+00:04:17,940 --> 00:04:22,395
+Then I'm going to call view on the RNN output to shape it into the size I want.
+
+87
+00:04:22,395 --> 00:04:25,230
+In this case that's going to be batch size, times sequence length
+
+88
+00:04:25,230 --> 00:04:28,185
+rows and the hidden dimension number of columns.
+
+89
+00:04:28,185 --> 00:04:30,670
+This is a flattening step where I'm
+
+90
+00:04:30,670 --> 00:04:33,350
+preparing the output to be fed into a fully-connected layer.
+
+91
+00:04:33,350 --> 00:04:37,310
+So, I'll pass this shaped output to the final fully-connected layer,
+
+92
+00:04:37,310 --> 00:04:41,260
+and return my final output here and my hidden state generated from the RNN.
+
+93
+00:04:41,260 --> 00:04:43,365
+Now, as a last step here,
+
+94
+00:04:43,365 --> 00:04:45,560
+I'm going to actually create some text data and to
+
+95
+00:04:45,560 --> 00:04:48,290
+test RNN and see if it's working as I expect.
+
+96
+00:04:48,290 --> 00:04:50,705
+The most common error I get when programming
+
+97
+00:04:50,705 --> 00:04:53,540
+RNNs is that I've messed up the data dimension somewhere.
+
+98
+00:04:53,540 --> 00:04:56,345
+So, I'm just going to check that there as I expect.
+
+99
+00:04:56,345 --> 00:05:00,925
+So, here I'm just creating a test RNN with an input and output size of one,
+
+100
+00:05:00,925 --> 00:05:03,840
+a hidden dimension of 10, and the number of layers equal to two,
+
+101
+00:05:03,840 --> 00:05:06,765
+and you can change the hidden dimension and the number of layers.
+
+102
+00:05:06,765 --> 00:05:10,540
+I basically just want to see that this is making the shape of outputs I expect.
+
+103
+00:05:10,540 --> 00:05:14,240
+So, here I'm creating some test data that are sequence length along.
+
+104
+00:05:14,240 --> 00:05:17,180
+I'm converting that data into a tensor datatype,
+
+105
+00:05:17,180 --> 00:05:19,100
+and I'm squeezing the first dimension to give it
+
+106
+00:05:19,100 --> 00:05:21,620
+a batch size of one as a first dimension.
+
+107
+00:05:21,620 --> 00:05:26,140
+Then I'm going to print out this input size and I'll pass it into our test RNN as input.
+
+108
+00:05:26,140 --> 00:05:28,280
+Recall that this takes an initial hidden state,
+
+109
+00:05:28,280 --> 00:05:30,665
+and an initial one here is just going to be none.
+
+110
+00:05:30,665 --> 00:05:33,530
+Then this should return an output and a hidden state,
+
+111
+00:05:33,530 --> 00:05:35,545
+and I'm going to print out those sizes as well.
+
+112
+00:05:35,545 --> 00:05:39,860
+Okay. So, our input size is a 3D tensor which is exactly what I expect.
+
+113
+00:05:39,860 --> 00:05:42,505
+If first dimension is one our batch size,
+
+114
+00:05:42,505 --> 00:05:44,305
+then 20 our sequence length,
+
+115
+00:05:44,305 --> 00:05:46,370
+and finally our input number of features.
+
+116
+00:05:46,370 --> 00:05:48,575
+Which is just one as we specified here.
+
+117
+00:05:48,575 --> 00:05:50,980
+The output size is a 2D tensor.
+
+118
+00:05:50,980 --> 00:05:54,710
+This is because in the forward function of our model definition actually
+
+119
+00:05:54,710 --> 00:05:58,280
+smooshed the batch size and sequence length into one parameter.
+
+120
+00:05:58,280 --> 00:06:03,530
+So, batch size times sequence length is 20 and then we have an output size of one.
+
+121
+00:06:03,530 --> 00:06:05,020
+Finally we have our hidden state.
+
+122
+00:06:05,020 --> 00:06:07,130
+Now, the first dimension here is our number of
+
+123
+00:06:07,130 --> 00:06:10,250
+layers that I specified in the model definition two.
+
+124
+00:06:10,250 --> 00:06:15,005
+Next we have the value one which is just the batch size of our input here.
+
+125
+00:06:15,005 --> 00:06:19,430
+Finally, the last dimension here is 10 which is just our hidden dimension.
+
+126
+00:06:19,430 --> 00:06:23,390
+So, all of these look pretty good and as I expect and I can proceed.
+
+127
+00:06:23,390 --> 00:06:26,330
+Next I'll show you how to train a model like this.
+
