@@ -1,5 +1,6 @@
 Note:
-- In LeetCode OJ, the best color is monokai, others can be used: blackboard, tomorrow night.
+- Always use LeetCode OJ to write code, because it is easy to make changes and run.
+- In LeetCode OJ, the best color is monokai, still acceptable: blackboard, tomorrow night.
 - For Key, use English. Because Chinese may have weired change of line.
 - In LeetCode OJ, for Python, just select "Python", not "Python3". Note that "Python" still uses Python 3 syntax, but with more familiar format.
 - C++ code uses C++ 2011, Python code uses Python 3 (so in OJ, should select Python 3, not Python).
