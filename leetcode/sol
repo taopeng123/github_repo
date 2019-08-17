@@ -1,7 +1,8 @@
 Note:
+- In LeetCode OJ, the best color is monokai, others can be used: blackboard, tomorrow night.
 - For Key, use English. Because Chinese may have weired change of line.
 - In LeetCode OJ, for Python, just select "Python", not "Python3". Note that "Python" still uses Python 3 syntax, but with more familiar format.
-- C++ code uses C++ 2011, Python code uses Python 3.
+- C++ code uses C++ 2011, Python code uses Python 3 (so in OJ, should select Python 3, not Python).
   So C++ code needs to be compiled using: std=c++11,
   and Python code needs to be run using: python3 filename.py
 - If not specified, all the code in this note were written by Tao.
@@ -27,7 +28,7 @@ Template:
 catxxx
 
 ************************
-pr142. Linked List Cycle II, Medium
+pr83. Remove Duplicates from Sorted List, Easy 
 
 Question:
 
@@ -59,8 +60,8 @@ catlist
 1111 | pr61. Rotate List, Medium. 
 1111 | pr141. Linked List Cycle, Medium
 0111 | pr142. Linked List Cycle II, Medium 
-011 | pr138. Copy List with Random Pointer, Hard. 
-111 | pr83. Remove Duplicates from Sorted List, Easy 
+0111 | pr138. Copy List with Random Pointer, Hard. 
+1111 | pr83. Remove Duplicates from Sorted List, Easy 
 011 | pr82. Remove Duplicates from Sorted List II, Medium 
 011 | pr86. Partition List, Medium 
 011 | pr24. Swap Nodes in Pairs, Medium 
@@ -968,12 +969,12 @@ public:
 ==
 Python code:
 
-class Solution(object):
+class Solution:
 	# Copied from pr 206. Reverse Linked List
     def reverseList(self, head):
 		...
-
-    def reorderList(self, head):
+    
+    def reorderList(self, head: ListNode) -> None:
     	if not head or not head.next: 
     		return
 
@@ -1012,7 +1013,7 @@ class Solution(object):
     			p1_next = p1.next
     		if p2:
     			p2_next = p2.next
-
+        
 ************************
 pr61. Rotate List, Medium. 
 
@@ -1083,8 +1084,8 @@ public:
 ==
 Python code:
 
-class Solution(object):
-    def rotateRight(self, head, k):
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
     	if not head or not head.next or k <= 0: 
     		return head;
 
@@ -1116,6 +1117,7 @@ class Solution(object):
     	tail.next = head
 
     	return new_head
+        
 
 ************************
 pr141. Linked List Cycle, Medium
@@ -1191,6 +1193,7 @@ public:
 ==
 Python code:
 
+# Coded in Python2, no Python3 available for this problem
 class Solution(object):
     def hasCycle(self, head):
     	if not head or not head.next:
@@ -1292,6 +1295,7 @@ public:
 ==
 Python code:
 
+# No Python3 available in OJ. So the following is Python2:
 class Solution(object):
     def detectCycle(self, head):
     	if not head or not head.next:
@@ -1348,14 +1352,159 @@ Note:
 You must return the copy of the given head as a reference to the cloned list.
 
 ==
-Key:
+Key: For the original list, for each node N, make a copy of it (N'). Insert N' into the original list by putting N' right after N. N'->random should be set to N->random->next. Then split the copied list from the original list.
 
 ==
 C++ code:
 
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        if(!head) return NULL;
+
+        Node *p = head;
+
+        //Insert copy nodes
+        
+        while(p) {
+            Node *p_copy = new Node(p->val, NULL, NULL);
+            Node *p_next = p->next;
+            p->next = p_copy;
+            p_copy->next = p_next;
+            p = p_next;
+        }
+
+        Node *q = head;
+
+        while(q && q->next) {
+            q->next->random = (q->random ? q->random->next : NULL);
+            q = q->next->next;
+        }
+
+        //Break the list
+
+        Node *head_copy = head->next;
+        Node *r = head, *r_copy = head_copy;
+
+        while(r_copy->next) {
+            r->next = r_copy->next;
+            r_copy->next = r->next->next;
+
+            r = r->next;
+            r_copy = r_copy->next;
+        }
+
+        r->next = NULL;
+        r_copy->next = NULL;
+
+        return head_copy;
+    }
+};
+
+
 ==
 Python code:
 
+class Solution:
+    def copyRandomList(self, head: 'Node') -> 'Node':
+    	if not head:
+    		return None
+
+    	p = head;
+
+    	while p:
+    		p_copy = Node(p.val, None, None)
+    		p_next = p.next
+    		p.next = p_copy
+    		p_copy.next = p_next
+    		p = p_next
+
+    	q = head
+
+    	while q and q.next:
+    		if q.random:
+    			q.next.random = q.random.next
+    		else:
+    			q.next.random = None
+    		q = q.next.next
+
+    	head_copy = head.next
+    	r = head
+    	r_copy = head_copy
+
+    	while r_copy.next:
+    		r.next = r_copy.next
+    		r_copy.next = r.next.next
+
+    		r = r.next
+    		r_copy = r_copy.next
+
+    	r.next = None
+    	r_copy.next = None
+
+    	return head_copy
+
+************************
+pr83. Remove Duplicates from Sorted List, Easy 
+
+Question:
+
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+Example 1:
+
+Input: 1->1->2
+Output: 1->2
+Example 2:
+
+Input: 1->1->2->3->3
+Output: 1->2->3
+
+==
+Key: Two pointers. Use pointer cur to denote the current node. Use pointer next to intially be the next node of current node. Next keeps jumping to the right, until its value is different from cur. Then remove all the nodes between cur and next.
+
+==
+C++ code:
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head || !head->next) return head;
+
+        ListNode *cur = head;
+        ListNode *next = cur->next;
+
+        while(next) {
+        	while(next && cur->val == next->val) next = next->next;
+        	cur->next = next;
+        	cur = next;
+        	if(next) next = next->next;
+        }
+
+        return head;
+    }
+};
+
+==
+Python code:
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        cur = head
+        next = cur.next
+        
+        while next:
+            while next and cur.val == next.val:
+                next = next.next
+            cur.next = next
+            cur = next
+            if next:
+                next = next.next
+            
+        return head
+        
 =================================================
 cattree
 
@@ -2963,8 +3112,8 @@ public:
 ==
 Python code:
 
-class Solution(object):
-    def strStr(self, haystack, needle):
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
     	n = len(needle)
     	m = len(haystack)
 
