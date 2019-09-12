@@ -29,7 +29,7 @@ Template:
 catxxx
 
 ************************
-pr83. Remove Duplicates from Sorted List, Easy 
+pr82. Remove Duplicates from Sorted List II, Medium 
 
 Question:
 
@@ -63,7 +63,7 @@ catlist
 0111 | pr142. Linked List Cycle II, Medium 
 0111 | pr138. Copy List with Random Pointer, Hard. 
 1111 | pr83. Remove Duplicates from Sorted List, Easy 
-011 | pr82. Remove Duplicates from Sorted List II, Medium 
+0111 | pr82. Remove Duplicates from Sorted List II, Medium 
 011 | pr86. Partition List, Medium 
 011 | pr24. Swap Nodes in Pairs, Medium 
 111 | pr19. Remove Nth Node From End of List, Easy 
@@ -1462,7 +1462,7 @@ Input: 1->1->2->3->3
 Output: 1->2->3
 
 ==
-Key: Two pointers. Use pointer cur to denote the current node. Use pointer next to intially be the next node of current node. Next keeps jumping to the right, until its value is different from cur. Then remove all the nodes between cur and next.
+Key: Two pointers. Use pointer pre to denote the left node. Use pointer cur to intially be the next of pre. cur keeps jumping to the right, until its value is different from pre. Then remove all the nodes between pre and cur.
 
 ==
 C++ code:
@@ -1472,14 +1472,13 @@ public:
     ListNode* deleteDuplicates(ListNode* head) {
         if(!head || !head->next) return head;
 
-        ListNode *cur = head;
-        ListNode *next = cur->next;
+        ListNode *pre = head, *cur = pre->next;
 
-        while(next) {
-        	while(next && cur->val == next->val) next = next->next;
-        	cur->next = next;
-        	cur = next;
-        	if(next) next = next->next;
+        while(cur) {
+        	while(cur && pre->val == cur->val) cur = cur->next;
+        	pre->next = cur;
+        	pre = cur;
+        	if(cur) cur = cur->next;
         }
 
         return head;
@@ -1493,19 +1492,90 @@ class Solution:
     def deleteDuplicates(self, head: ListNode) -> ListNode:
         if not head or not head.next:
             return head
-        cur = head
-        next = cur.next
+        pre = head
+        cur = pre.next
         
-        while next:
-            while next and cur.val == next.val:
-                next = next.next
-            cur.next = next
-            cur = next
-            if next:
-                next = next.next
+        while cur:
+            while cur and pre.val == cur.val:
+                cur = cur.next
+            pre.next = cur
+            pre = cur
+            if cur:
+                cur = cur.next
             
         return head
+
+************************
+pr82. Remove Duplicates from Sorted List II, Medium 
+
+Question:
+
+Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+
+Example 1:
+
+Input: 1->2->3->3->4->4->5
+Output: 1->2->5
+
+Example 2:
+
+Input: 1->1->1->2->3
+Output: 2->3
+
+==
+Key: 
+
+==
+C++ code:
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head || !head->next) return head;
+        ListNode *fake_head = new ListNode(0);
+        fake_head->next = head;
+        ListNode *pre = fake_head, *cur = fake_head->next;
         
+        while(cur && cur->next) {
+            if(cur->val != cur->next->val) {
+                pre = cur;    
+            } else {
+                while(cur && cur->next && cur->val == cur->next->val) cur = cur->next;
+                pre->next = cur->next;
+            }
+            
+            cur = cur->next;
+        }
+        
+        return fake_head->next;
+    }
+};
+
+==
+Python code:
+
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        
+        fake_head = ListNode(0)
+        fake_head.next = head
+        pre = fake_head
+        cur = fake_head.next
+    
+        while cur and cur.next:
+            if cur.val != cur.next.val:
+                pre = cur
+            else:
+                while cur and cur.next and cur.val == cur.next.val:
+                    cur = cur.next
+                pre.next = cur.next
+                
+            cur = cur.next
+            
+        return fake_head.next
+
 =================================================
 cattree
 
