@@ -2413,6 +2413,11 @@ for (const auto &entry : people) { // for each entry in people
 (findpow)
 Math operators:
 
+Absolute value:
+#include <cmath>
+abs(-10.6) //Tao: yes we can use abs for double, no need to use fabs.
+
+--
 power:
 
 #include <cmath>

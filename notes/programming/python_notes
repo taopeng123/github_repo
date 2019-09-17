@@ -359,7 +359,18 @@ str2 = "exam";
 
 print str1.find(str2) # Returns: 15 <- the index of 'e' in str1
 
-** 
+** Starts with **
+
+'helo'.startswith('he') # Returns: true
+
+** Ends with **
+
+'helo'.endswith('lo') # Returns: true
+
+** Contains substring **
+
+'el' in 'helo' # Returns: true
+
 
 --
 (findsplit)
@@ -582,6 +593,11 @@ Math functions
 import math 
 math.exp(-45.17) # The method exp() returns returns exponential of x: e^x.
 math.sqrt(100)
+
+# No need to import anything for abs
+abs(-23.56)
+abs(-46)
+
 
 ==
 (findprint)
