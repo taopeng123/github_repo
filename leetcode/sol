@@ -29,7 +29,7 @@ Template:
 catxxx
 
 ************************
-pr160. Intersection of Two Linked Lists, Easy 
+pr237. Delete Node in a Linked List, Easy 
 
 Question:
 
@@ -67,8 +67,8 @@ catlist
 0111 | pr86. Partition List, Medium 
 0111 | pr24. Swap Nodes in Pairs, Medium 
 1111 | pr19. Remove Nth Node From End of List, Easy 
-111 | pr160. Intersection of Two Linked Lists, Easy 
-111 | pr203. Remove Linked List Elements, Easy 
+1111 | pr160. Intersection of Two Linked Lists, Easy 
+1111 | pr203. Remove Linked List Elements, Easy 
 011 | pr237. Delete Node in a Linked List, Easy 
 011 | pr23. Merge k Sorted Lists, Hard 
  
@@ -1830,14 +1830,146 @@ Notes:
 - Your code should preferably run in O(n) time and use only O(1) memory.
 
 ==
-Key:
+Key: First calculate the lengths of two lists. Then calculate the diff of lengths. The pointer at the head of the long list first moves diff steps. Then the pointers in both lists move together until they meet.
 
 ==
 C++ code:
 
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(!headA || !headB) return NULL;
+        
+        int length_a = 0, length_b = 0;
+        ListNode *a = headA, *b = headB;
+        
+        while(a) {
+            a = a->next;
+            ++length_a;
+        }
+        
+        while(b) {
+            b = b->next;
+            ++length_b;
+        }
+        
+        int diff = length_a - length_b;
+        
+        a = diff > 0 ? headA : headB; // a points to the head of the longer list
+        b = diff > 0 ? headB : headA; // b points to the head of the shorter list
+        
+        for(int i = 0; i < abs(diff); ++i) a = a->next;
+        
+        while(a != b) {
+            if(!a || !b) return NULL;
+            a = a->next;
+            b = b->next;
+        }
+        
+        return a;
+    }
+};
+
 ==
 Python code:
 
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        if not headA or not headB:
+            return None
+        
+        length_a = 0
+        length_b = 0
+        a = headA
+        b = headB
+        
+        while a:
+            a = a.next
+            length_a += 1
+            
+        while b:
+            b = b.next
+            length_b += 1
+            
+        diff = length_a - length_b
+        
+        if diff > 0:
+            a = headA
+            b = headB
+        else:
+            a = headB
+            b = headA
+        
+        for i in range(0, abs(diff)):
+            a = a.next
+        
+        while a != b:
+            if not a or not b:
+                return None
+            a = a.next
+            b = b.next
+        
+        return a
+
+************************
+pr203. Remove Linked List Elements, Easy
+
+Question:
+
+Remove all elements from a linked list of integers that have value val.
+
+Example:
+
+Input:  1->2->6->3->4->5->6, val = 6
+Output: 1->2->3->4->5
+
+==
+Key: Use a pointer cur. If cur->next equals val, then delete cur->next. Need to use a fake_head. Note the case when the nodes with val values are next to each other.
+
+==
+C++ code:
+
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if(!head) return head;
+        
+        ListNode* fake_head = new ListNode(0);
+        fake_head->next = head;
+        
+        ListNode* cur = fake_head;
+        
+        while(cur && cur->next) {
+            if(cur->next->val == val) cur->next = cur->next->next;
+            else cur = cur->next;
+        }
+        
+        
+        return fake_head->next;
+    }
+};
+
+==
+Python code:
+
+class Solution:
+    def removeElements(self, head: ListNode, val: int) -> ListNode:
+        if not head:
+            return head
+        
+        fake_head = ListNode(0)
+        fake_head.next = head
+        
+        cur = fake_head
+        
+        while cur and cur.next:
+            if cur.next.val == val:
+                cur.next = cur.next.next
+            else:
+                cur = cur.next
+        
+        return fake_head.next
+        
 =================================================
 cattree
 
