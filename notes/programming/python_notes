@@ -688,7 +688,6 @@ print myfile
 ==
 (findwhile)
 (findif)
-(findcast)
 (findbreak)
 (findcontinue)
 (findtrue)
@@ -721,6 +720,11 @@ The continue statement is used to tell Python to skip the rest of the statements
 The break statement is used to break out of a loop statement i.e. stop the execution of a looping statement, even if the loop condition has not become False or the sequence of items has been completely iterated over.
 
 An important note is that if you break out of a for or while loop, any corresponding loop else block is not executed.
+
+==
+(findcast)
+int(x)
+float(x)
 
 --
 (findround)
