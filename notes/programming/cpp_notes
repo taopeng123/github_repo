@@ -8230,6 +8230,13 @@ int fact(int val) {
 The statements after the return statement will not be executed (tao's practice).
 
 --
+void function example (from Leetcode OJ):
+
+    void deleteNode(ListNode* node) {
+      ...    
+    }
+
+--
 For compatibility with C, we also can use the keyword void to indicate that there are no parameters:
 
 int f1(){ /* ... */ } // implicit void parameter list
