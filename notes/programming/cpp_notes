@@ -2818,6 +2818,8 @@ Dynamic memory
 
 Tao: dynmaic memory is allocated by "new" operator, and freed by "delete" operator.
 
+Tao: destroying an object of a class means calling the destructor, the destructor may do extra things. Freeing memory means invalidating the memory in RAM. For example, int* p is a pointer to an int in memory, it reads 16 bits starting at the address p points to. After freeing this memory, the system no longer knows how many bits to read at that address, and part or all of this memory can be re-used to store other things like a char value.
+
 The programs we’ve written so far have used objects that have well-defined lifetimes. Global objects are allocated at program start-up and destroyed when the program ends. Local, automatic objects are created and destroyed when the block in which they are defined is entered and exited. Local static objects are allocated before their first use and are destroyed when the program ends.
 
 In addition to supporting automatic and static objects, C++ lets us allocate objects dynamically. Dynamically allocated objects have a lifetime that is independent of where they are created; they exist until they are explicitly freed (tao: note explicitly freed).
