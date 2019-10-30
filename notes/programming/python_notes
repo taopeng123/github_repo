@@ -1238,6 +1238,11 @@ shoplist = ['apple', 'mango', 'orange']
 a = shoplist[0]
 b = len(shoplist)
 
+Check if a list is empty (this is also what all people do online, it looks like there is no isEmpty function for list):
+
+if len(my_list) == 0:
+    pass
+
 shoplist.append('banana')
 shoplist.sort()
 print(shoplist)
@@ -1254,11 +1259,11 @@ stack.pop()
 
 stackNew = stack + [40] <- This returns a new list
 
-# using lists as queues (from online):
+# using lists as queues (from online, many people do this):
 from collections import deque
 queue = deque(["Eric", "John", "Michael"])
 queue.append("Terry") #相當於offer
-queue.popleft() #相當於poll
+left = queue.popleft() #相當於poll
 
 list1 = [3, 4, 6]
 a = sum(list1)

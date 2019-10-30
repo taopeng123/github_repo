@@ -6380,7 +6380,7 @@ q.pop(): Removes, but does not return, the front element or highest-priority ele
 
 q.front(), q.back(): Returns, but does not remove, the front or back element of q. Valid only for queue.
 
-q.top(): Returns, but does not remove, the highest-priority element. Valid only for priority_queue.
+q.top(): Valid only for priority_queue. Returns, but does not remove, the highest-priority element. 
 
 The queue and priority_queue adaptors are defined in the queue header.
 
@@ -6390,6 +6390,34 @@ A priority_queue lets us establish a priority among the elements held in the que
 
 By default queue uses deque and priority_queue uses vector; queue can use a list or vector as well, priority_queue cna use a deque.
 
+Example:
+
+// queue::push/pop
+#include <iostream>       // std::cin, std::cout
+#include <queue>          // std::queue
+
+int main ()
+{
+  std::queue<int> myqueue;
+  int myint;
+
+  std::cout << "Please enter some integers (enter 0 to end):\n";
+
+  do {
+    std::cin >> myint;
+    myqueue.push (myint);
+  } while (myint);
+
+  std::cout << "myqueue contains: ";
+  while (!myqueue.empty())
+  {
+    std::cout << ' ' << myqueue.front();
+    myqueue.pop();
+  }
+  std::cout << '\n';
+
+  return 0;
+}
 ==
 (finddeque)
 (finddequeue)
