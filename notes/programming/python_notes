@@ -1987,6 +1987,1469 @@ if not os.path.exists(today): #t oday is a string defined earlier.
 (findnumpy)
 NumPy
 
+Notes from the following site (double checked and confirmed it does not miss anything from the site)
+
+https://www.datacamp.com/community/tutorials/python-numpy-tutorial?utm_source=adwords_ppc&utm_campaignid=1565261270&utm_adgroupid=67750485268&utm_device=c&utm_keyword=&utm_matchtype=b&utm_network=g&utm_adpostion=1t1&utm_creative=332661264371&utm_targetid=aud-299261629574:dsa-473406585115&utm_loc_interest_ms=&utm_loc_physical_ms=1016367&gclid=Cj0KCQiAn8nuBRCzARIsAJcdIfNaldds0HRvuMY0tIWi-Cx2HTJNxH6C9Isjr1criuRR-7s0TIGKfDIaAuOcEALw_wcB
+
+Python Numpy Array Tutorial
+
+A NumPy tutorial for beginners in which you'll learn how to create a NumPy array, use broadcasting, access values, manipulate arrays, and much more.
+
+NumPy is, just like SciPy, Scikit-Learn, Pandas, etc. one of the packages that you just can’t miss when you’re learning data science, mainly because this library provides you with an array data structure that holds some benefits over Python lists, such as: being more compact, faster access in reading and writing items, being more convenient and more efficient.
+
+Today’s post will focus precisely on this. This NumPy tutorial will not only show you what NumPy arrays actually are and how you can install Python, but you’ll also learn how to make arrays (even when your data comes from files!), how broadcasting works, how you can ask for help, how to manipulate your arrays and how to visualize them.
+
+Content
+What Is A Python Numpy Array?
+How To Install Numpy
+How To Make NumPy Arrays
+How NumPy Broadcasting Works
+How Do Array Mathematics Work?
+How To Subset, Slice, And Index Arrays
+How To Ask For Help
+How To Manipulate Arrays
+How To Visualize NumPy Arrays
+Beyond Data Analysis with NumPy
+
+What Is A Python Numpy Array?
+
+You already read in the introduction that NumPy arrays are a bit like Python lists, but still very much different at the same time. For those of you who are new to the topic, let’s clarify what it exactly is and what it’s good for.
+
+As the name gives away, a NumPy array is a central data structure of the numpy library. The library’s name is short for “Numeric Python” or “Numerical Python”.
+
+This already gives an idea of what you’re dealing with, right?
+
+In other words, NumPy is a Python library that is the core library for scientific computing in Python. It contains a collection of tools and techniques that can be used to solve on a computer mathematical models of problems in Science and Engineering. One of these tools is a high-performance multidimensional array object that is a powerful data structure for efficient computation of arrays and matrices. To work with these arrays, there’s a vast amount of high-level mathematical functions operate on these matrices and arrays.
+
+Then, what is an array?
+
+When you look at the print of a couple of arrays, you could see it as a grid that contains values of the same type:
+
+# Print the array
+print(my_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+# Print the 2d array
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+# Print the 3d array
+print(my_3d_array)
+
+[[[ 1  2  3  4]
+  [ 5  6  7  8]]
+
+ [[ 1  2  3  4]
+  [ 9 10 11 12]]]
+
+You see that, in the example above, the data are integers. The array holds and represents any regular data in a structured way.
+
+However, you should know that, on a structural level, an array is basically nothing but pointers. It’s a combination of a memory address, a data type, a shape, and strides:
+
+- The data pointer indicates the memory address of the first byte in the array,
+
+- The data type or dtype pointer describes the kind of elements that are contained within the array,
+
+- The shape indicates the shape of the array, and
+
+- The strides are the number of bytes that should be skipped in memory to go to the next element. If your strides are (10,1), you need to proceed one byte to get to the next column and 10 bytes to locate the next row.
+
+Or, in other words, an array contains information about the raw data, how to locate an element and how to interpret an element.
+
+Enough of the theory. Let’s check this out ourselves:
+
+You can easily test this by exploring the numpy array attributes:
+
+# Print out memory address
+print(my_2d_array.data)
+
+<memory at 0x7f58cb57fa68>
+
+# Print out the shape of `my_array`
+print(my_2d_array.shape)
+
+(2, 4)
+
+# Print out the data type of `my_array`
+print(my_2d_array.dtype)
+
+int64
+
+# Print out the stride of `my_array`
+print(my_2d_array.strides)
+
+(32, 8)
+
+You see that now, you get a lot more information: for example, the data type that is printed out is ‘int64’ or signed 32-bit integer type; This is a lot more detailed! That also means that the array is stored in memory as 64 bytes (as each integer takes up 8 bytes and you have an array of 8 integers). The strides of the array tell us that you have to skip 8 bytes (one value) to move to the next column, but 32 bytes (4 values) to get to the same position in the next row. As such, the strides for the array will be (32,8).
+
+Note that if you set the data type to int32, the strides tuple that you get back will be (16, 4), as you will still need to move one value to the next column and 4 values to get the same position. The only thing that will have changed is the fact that each integer will take up 4 bytes instead of 8.
+
+(A picture)
+
+The array that you see above is, as its name already suggested, a 2-dimensional array: you have rows and columns. The rows are indicated as the “axis 0”, while the columns are the “axis 1”. The number of the axis goes up accordingly with the number of the dimensions: in 3-D arrays, of which you have also seen an example in the previous code chunk, you’ll have an additional “axis 2”. Note that these axes are only valid for arrays that have at least 2 dimensions, as there is no point in having this for 1-D arrays;
+
+These axes will come in handy later when you’re manipulating the shape of your NumPy arrays.
+
+How To Install Numpy
+
+Before you can start to try out these NumPy arrays for yourself, you first have to make sure that you have it installed locally (assuming that you’re working on your pc). If you have the Python library already available, go ahead and skip this section :)
+
+If you still need to set up your environment, you must be aware that there are two major ways of installing NumPy on your pc: with the help of Python wheels or the Anaconda Python distribution.
+
+… With Python Wheels
+
+Make sure firstly that you have Python installed. You can go here if you still need to do this :)
+
+If you’re working on Windows, make sure that you have added Python to the PATH environment variable. Then, don’t forget to install a package manager, such as pip, which will ensure that you’re able to use Python’s open-source libraries.
+
+Note that recent versions of Python 3 come with pip, so double check if you have it and if you do, upgrade it before you install NumPy:
+
+pip install pip --upgrade
+pip --version
+
+Next, you can go here or here to get your NumPy wheel. After you have downloaded it, navigate to the folder on your pc that stores it through the terminal and install it:
+
+install "numpy-1.9.2rc1+mkl-cp34-none-win_amd64.whl"
+import numpy
+numpy.__version__
+
+The two last lines allow you to verify that you have installed NumPy and check the version of the package.
+
+After these steps, you’re ready to start using NumPy!
+
+… With The Anaconda Python Distribution
+
+To get NumPy, you could also download the Anaconda Python distribution. This is easy and will allow you to get started quickly! If you haven’t downloaded it already, go here to get it. Follow the instructions to install, and you're ready to start!
+
+Do you wonder why this might actually be easier?
+
+The good thing about getting this Python distribution is the fact that you don’t need to worry too much about separately installing NumPy or any of the major packages that you’ll be using for your data analyses, such as pandas, scikit-learn, etc.
+
+Because, especially if you’re very new to Python, programming or terminals, it can really come as a relief that Anaconda already includes 100 of the most popular Python, R and Scala packages for data science. But also for more seasoned data scientists, Anaconda is the way to go if you want to get started quickly on tackling data science problems.
+
+What’s more, Anaconda also includes several open source development environments such as Jupyter and Spyder. If you’d like to start working with Jupyter Notebook after this tutorial, go to this page.
+
+In short, consider downloading Anaconda to get started on working with numpy and other packages that are relevant to data science!
+
+How To Make NumPy Arrays
+
+So, now that you have set up your environment, it’s time for the real work. Admittedly, you have already tried out some stuff with arrays in the above DataCamp Light chunks. However, you haven’t really gotten any real hands-on practice with them, because you first needed to install NumPy on your own pc. Now that you have done this, it’s time to see what you need to do in order to run the above code chunks on your own.
+
+Some exercises have been included below so that you can already practice how it’s done before you start on your own!
+
+To make a numpy array, you can just use the np.array() function. All you need to do is pass a list to it, and optionally, you can also specify the data type of the data. If you want to know more about the possible data types that you can pick, go here or consider taking a brief look at DataCamp’s NumPy cheat sheet.
+
+There’s no need to go and memorize these NumPy data types if you’re a new user; But you do have to know and care what data you’re dealing with. The data types are there when you need more control over how your data is stored in memory and on disk. Especially in cases where you’re working with extensive data, it’s good that you know to control the storage type.
+
+Don’t forget that, in order to work with the np.array() function, you need to make sure that the numpy library is present in your environment. The NumPy library follows an import convention: when you import this library, you have to make sure that you import it as np. By doing this, you’ll make sure that other Pythonistas understand your code more easily.
+
+In the following example you’ll create the my_array array that you have already played around with above:
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Make the array `my_array`
+my_array = np.array([[1,2,3,4], [5,6,7,8]], dtype=np.int64)
+
+# Print `my_array`
+print(my_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+If you would like to know more about how to make lists, go here.
+
+However, sometimes you don’t know what data you want to put in your array, or you want to import data into a numpy array from another source. In those cases, you’ll make use of initial placeholders or functions to load data from text into arrays, respectively.
+
+The following sections will show you how to do this.
+
+How To Make An “Empty” NumPy Array
+What people often mean when they say that they are creating “empty” arrays is that they want to make use of initial placeholders, which you can fill up afterward. You can initialize arrays with ones or zeros, but you can also create arrays that get filled up with evenly spaced values, constant or random values.
+
+However, you can still make a totally empty array, too.
+
+Luckily for us, there are quite a lot of functions to make
+
+Try it all out below!
+
+# Create an array of ones
+print(np.ones((3,4)))
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+# Create an array of zeros
+print(np.zeros((2,3,4),dtype=np.int16))
+
+[[[0 0 0 0]
+  [0 0 0 0]
+  [0 0 0 0]]
+
+ [[0 0 0 0]
+  [0 0 0 0]
+  [0 0 0 0]]]
+
+# Create an array with random values
+print(np.random.random((2,2)))
+
+[[ 0.4809319   0.39211752]
+ [ 0.34317802  0.72904971]]
+
+# Create an empty array
+print(np.empty((3,2)))
+
+[[ 0.  0.]
+ [ 0.  0.]
+ [ 0.  0.]]
+
+# Create a full array
+print(np.full((2,2),7))
+
+[[ 7.  7.]
+ [ 7.  7.]]
+
+# Create an array of evenly-spaced values
+print(np.arange(10,25,5))
+
+[10 15 20]
+
+# Create an array of evenly-spaced values
+print(np.linspace(0,2,9))
+
+[ 0.    0.25  0.5   0.75  1.    1.25  1.5   1.75  2.  ]
+
+Tip: play around with the above functions so that you understand how they work!
+
+- For some, such as np.ones(), np.random.random(), np.empty(), np.full() or np.zeros() the only thing that you need to do in order to make arrays with ones or zeros is pass the shape of the array that you want to make. As an option to np.ones() and np.zeros(), you can also specify the data type. In the case of np.full(), you also have to specify the constant value that you want to insert into the array.
+
+- With np.linspace() and np.arange() you can make arrays of evenly spaced values. The difference between these two functions is that the last value of the three that are passed in the code chunk above designates either the step value for np.linspace() or a number of samples for np.arange(). What happens in the first is that you want, for example, an array of 9 values that lie between 0 and 2. For the latter, you specify that you want an array to start at 10 and per steps of 5, generate values for the array that you’re creating.
+
+Remember that NumPy also allows you to create an identity array or matrix with np.eye() and np.identity(). An identity matrix is a square matrix of which all elements in the principal diagonal are ones, and all other elements are zeros. When you multiply a matrix with an identity matrix, the given matrix is left unchanged.
+
+In other words, if you multiply a matrix by an identity matrix, the resulting product will be the same matrix again by the standard conventions of matrix multiplication.
+
+Even though the focus of this tutorial is not on demonstrating how identity matrices work, it suffices to say that identity matrices are useful when you’re starting to do matrix calculations: they can simplify mathematical equations, which makes your computations more efficient and robust.
+
+How To Load NumPy Arrays From Text
+
+Creating arrays with the help of initial placeholders or with some example data is an excellent way of getting started with numpy. But when you want to get started with data analysis, you’ll need to load data from text files.
+
+With that what you have seen up until now, you won’t really be able to do much. Make use of some specific functions to load data from your files, such as loadtxt() or genfromtxt().
+
+Let’s say you have the following text files with data:
+
+# This is your data in the text file
+# Value1  Value2  Value3
+# 0.2536  0.1008  0.3857
+# 0.4839  0.4536  0.3561
+# 0.1292  0.6875  0.5929
+# 0.1781  0.3049  0.8928
+# 0.6253  0.3486  0.8791
+
+# Import your data
+x, y, z = np.loadtxt('data.txt',
+                    skiprows=1,
+                    unpack=True)
+
+In the code above, you use loadtxt() to load the data in your environment. You see that the first argument that both functions take is the text file data.txt. Next, there are some specific arguments for each: in the first statement, you skip the first row, and you return the columns as separate arrays with unpack=TRUE. This means that the values in column Value1 will be put in x, and so on.
+
+Note that, in case you have comma-delimited data or if you want to specify the data type, there are also the arguments delimiter and dtype that you can add to the loadtxt() arguments.
+
+That’s easy and straightforward, right?
+
+Let’s take a look at your second file with data:
+
+# Your data in the text file
+# Value1  Value2  Value3
+# 0.4839  0.4536  0.3561
+# 0.1292  0.6875  MISSING
+# 0.1781  0.3049  0.8928
+# MISSING 0.5801  0.2038
+# 0.5993  0.4357  0.7410
+
+my_array2 = np.genfromtxt('data2.txt',
+                      skip_header=1,
+                      filling_values=-999)
+
+You see that here, you resort to genfromtxt() to load the data. In this case, you have to handle some missing values that are indicated by the 'MISSING' strings. Since the genfromtxt() function converts character strings in numeric columns to nan, you can convert these values to other ones by specifying the filling_values argument. In this case, you choose to set the value of these missing values to -999.
+
+If by any chance, you have values that don’t get converted to nan by genfromtxt(), there’s always the missing_values argument that allows you to specify what the missing values of your data exactly are.
+
+But this is not all.
+
+Tip: check out this page to see what other arguments you can add to import your data successfully.
+
+You now might wonder what the difference between these two functions really is.
+
+The examples indicated this maybe implicitly, but, in general, genfromtxt() gives you a little bit more flexibility; It’s more robust than loadtxt().
+
+Let’s make this difference a little bit more practical: the latter, loadtxt(), only works when each row in the text file has the same number of values; So when you want to handle missing values easily, you’ll typically find it easier to use genfromtxt().
+
+But this is definitely not the only reason.
+
+A brief look on the number of arguments that genfromtxt() has to offer will teach you that there is really a lot more things that you can specify in your import, such as the maximum number of rows to read or the option to automatically strip white spaces from variables.
+
+How To Save NumPy Arrays
+
+Once you have done everything that you need to do with your arrays, you can also save them to a file. If you want to save the array to a text file, you can use the savetxt() function to do this:
+
+import numpy as np
+x = np.arange(0.0,5.0,1.0)
+np.savetxt('test.out', x, delimiter=',')
+
+Remember that np.arange() creates a NumPy array of evenly-spaced values. The third value that you pass to this function is the step value.
+
+There are, of course, other ways to save your NumPy arrays to text files. Check out the functions in the table below if you want to get your data to binary files or archives:
+
+save(): Save an array to a binary file in NumPy .npy format
+
+savez(): Save several arrays into an uncompressed .npz archive
+
+savez_compressed(): Save several arrays into a compressed .npz archive
+
+For more information or examples of how you can use the above functions to save your data, go here or make use of one of the help functions that NumPy has to offer to get to know more instantly!
+
+Are you not sure what these NumPy help functions are?
+
+No worries! You’ll learn more about them in one of the next sections!
+
+How To Inspect Your NumPy Arrays
+
+Besides the array attributes that have been mentioned above, namely, data, shape, dtype and strides, there are some more that you can use to easily get to know more about your arrays. The ones that you might find interesting to use when you’re just starting out are the following:
+
+# Print the number of `my_array`'s dimensions
+print(my_array.ndim)
+
+2
+
+# Print the number of `my_array`'s elements
+print(my_array.size)
+
+8
+
+# Print information about `my_array`'s memory layout
+print(my_array.flags)
+
+C_CONTIGUOUS : True
+F_CONTIGUOUS : False
+OWNDATA : True
+WRITEABLE : True
+ALIGNED : True
+UPDATEIFCOPY : False
+
+# Print the length of one array element in bytes
+print(my_array.itemsize)
+
+8
+
+# Print the total consumed bytes by `my_array`'s elements
+print(my_array.nbytes)
+
+64
+
+These are almost all the attributes that an array can have.
+
+Don’t worry if you don’t feel that all of them are useful for you at this point; This is fairly normal, because, just like you read in the previous section, you’ll only get to worry about memory when you’re working with large data sets.
+
+Also note that, besides the attributes, you also have some other ways of gaining more information on and even tweaking your array slightly:
+
+# Print the length of `my_array`
+print(len(my_array))
+
+2
+
+# Change the data type of `my_array`
+print(my_array.astype(float))
+
+[[ 1.  2.  3.  4.]
+ [ 5.  6.  7.  8.]]
+
+Now that you have made your array, either by making one yourself with the np.array() or one of the initial placeholder functions, or by loading in your data through the loadtxt() or genfromtxt() functions, it’s time to look more closely into the second key element that really defines the NumPy library: scientific computing.
+
+How NumPy Broadcasting Works
+
+Before you go deeper into scientific computing, it might be a good idea to first go over what broadcasting exactly is: it’s a mechanism that allows NumPy to work with arrays of different shapes when you’re performing arithmetic operations.
+
+To put it in a more practical context, you often have an array that’s somewhat larger and another one that’s slightly smaller. Ideally, you want to use the smaller array multiple times to perform an operation (such as a sum, multiplication, etc.) on the larger array.
+
+To do this, you use the broadcasting mechanism.
+
+However, there are some rules if you want to use it. And, before you already sigh, you’ll see that these “rules” are very simple and kind of straightforward!
+
+- First off, to make sure that the broadcasting is successful, the dimensions of your arrays need to be compatible. Two dimensions are compatible when they are equal. Consider the following example:
+
+# Initialize `x`
+x = np.ones((3,4))
+
+print(x)
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+# Check shape of `x`
+print(x.shape)
+
+(3, 4)
+
+# Initialize `y`
+y = np.random.random((3,4))
+
+print(y)
+
+[[ 0.69646919  0.28613933  0.22685145  0.55131477]
+ [ 0.71946897  0.42310646  0.9807642   0.68482974]
+ [ 0.4809319   0.39211752  0.34317802  0.72904971]]
+
+# Check shape of `y`
+print(y.shape)
+
+(3, 4)
+
+# Add `x` and `y`
+print(x + y)
+
+[[ 1.69646919  1.28613933  1.22685145  1.55131477]
+ [ 1.71946897  1.42310646  1.9807642   1.68482974]
+ [ 1.4809319   1.39211752  1.34317802  1.72904971]]
+
+- Two dimensions are also compatible when one of them is 1:
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Initialize `x`
+x = np.ones((3,4))
+
+print(x)
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+# Check shape of `x`
+print(x.shape)
+
+(3, 4)
+
+# Initialize `y`
+y = np.arange(4)
+
+print(y)
+
+[0 1 2 3]
+
+# Check shape of `y`
+print(y.shape)
+
+(4,)
+
+# Subtract `x` and `y`
+print(x - y)
+
+[[ 1.  0. -1. -2.]
+ [ 1.  0. -1. -2.]
+ [ 1.  0. -1. -2.]]
+
+Note that if the dimensions are not compatible, you will get a ValueError.
+
+Tip: also test what the size of the resulting array is after you have done the computations! You’ll see that the size is actually the maximum size along each dimension of the input arrays.
+
+In other words, you see that the result of x-y gives an array with shape (3,4): y had a shape of (4,) and x had a shape of (3,4). The maximum size along each dimension of x and y is taken to make up the shape of the new, resulting array.
+
+-Lastly, the arrays can only be broadcast together if they are compatible in all dimensions. Consider the following example:
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Initialize `x` and `y`
+x = np.ones((3,4))
+print(x)
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+y = np.random.random((5,1,4))
+print(y)
+
+[[[ 0.63440096  0.84943179  0.72445532  0.61102351]]
+
+ [[ 0.72244338  0.32295891  0.36178866  0.22826323]]
+
+ [[ 0.29371405  0.63097612  0.09210494  0.43370117]]
+
+ [[ 0.43086276  0.4936851   0.42583029  0.31226122]]
+
+ [[ 0.42635131  0.89338916  0.94416002  0.50183668]]]
+
+# Add `x` and `y`
+print(x + y)
+
+[[[ 1.63440096  1.84943179  1.72445532  1.61102351]
+  [ 1.63440096  1.84943179  1.72445532  1.61102351]
+  [ 1.63440096  1.84943179  1.72445532  1.61102351]]
+
+ [[ 1.72244338  1.32295891  1.36178866  1.22826323]
+  [ 1.72244338  1.32295891  1.36178866  1.22826323]
+  [ 1.72244338  1.32295891  1.36178866  1.22826323]]
+
+ [[ 1.29371405  1.63097612  1.09210494  1.43370117]
+  [ 1.29371405  1.63097612  1.09210494  1.43370117]
+  [ 1.29371405  1.63097612  1.09210494  1.43370117]]
+
+ [[ 1.43086276  1.4936851   1.42583029  1.31226122]
+  [ 1.43086276  1.4936851   1.42583029  1.31226122]
+  [ 1.43086276  1.4936851   1.42583029  1.31226122]]
+
+ [[ 1.42635131  1.89338916  1.94416002  1.50183668]
+  [ 1.42635131  1.89338916  1.94416002  1.50183668]
+  [ 1.42635131  1.89338916  1.94416002  1.50183668]]]
+
+You see that, even though x and y seem to have somewhat different dimensions, the two can be added together.
+
+That is because they are compatible in all dimensions:
+
+- Array x has dimensions 3 X 4,
+- Array y has dimensions 5 X 1 X 4
+
+Since you have seen above that dimensions are also compatible if one of them is equal to 1, you see that these two arrays are indeed a good candidate for broadcasting!
+
+What you will notice is that in the dimension where y has size 1, and the other array has a size greater than 1 (that is, 3), the first array behaves as if it were copied along that dimension.
+
+Note that the shape of the resulting array will again be the maximum size along each dimension of x and y: the dimension of the result will be (5,3,4)
+
+In short, if you want to make use of broadcasting, you will rely a lot on the shape and dimensions of the arrays with which you’re working.
+
+But what if the dimensions are not compatible?
+
+What if they are not equal or if one of them is not equal to 1?
+
+You’ll have to fix this by manipulating your array! You’ll see how to do this in one of the next sections.
+
+How Do Array Mathematics Work?
+
+You’ve seen that broadcasting is handy when you’re doing arithmetic operations. In this section, you’ll discover some of the functions that you can use to do mathematics with arrays.
+
+As such, it probably won’t surprise you that you can just use +, -, *, / or % to add, subtract, multiply, divide or calculate the remainder of two (or more) arrays. However, a big part of why NumPy is so handy, is because it also has functions to do this. The equivalent functions of the operations that you have seen just now are, respectively, np.add(), np.subtract(), np.multiply(), np.divide() and np.remainder().
+
+You can also easily do exponentiation and taking the square root of your arrays with np.exp() and np.sqrt(), or calculate the sines or cosines of your array with np.sin() and np.cos(). Lastly, its’ also useful to mention that there’s also a way for you to calculate the natural logarithm with np.log() or calculate the dot product by applying the dot() to your array.
+
+Try it all out in the DataCamp Light chunk below.
+
+Just a tip: make sure to check out first the arrays that have been loaded for this exercise!
+
+print(x)
+
+[[1 2 3]
+ [3 4 5]]
+
+print(y)
+
+[6 7 8]
+
+# Add `x` and `y`
+print(np.add(x,y))
+
+[[ 7  9 11]
+ [ 9 11 13]]
+
+# Subtract `x` and `y`
+print(np.subtract(x,y))
+
+[[-5 -5 -5]
+ [-3 -3 -3]]
+
+# Multiply `x` and `y`
+print(np.multiply(x,y))
+
+[[ 6 14 24]
+ [18 28 40]]
+
+# Divide `x` and `y`
+print(np.divide(x,y))
+
+[[ 0.16666667  0.28571429  0.375     ]
+ [ 0.5         0.57142857  0.625     ]]
+
+# Calculate the remainder of `x` and `y`
+print(np.remainder(x,y))
+
+[[1 2 3]
+ [3 4 5]]
+
+
+Remember how broadcasting works? Check out the dimensions and the shapes of both x and y in your IPython shell. Are the rules of broadcasting respected?
+
+But there is more.
+
+Check out this small list of aggregate functions:
+
+a.sum(): Array-wise sum
+a.min(): Array-wise minimum value
+b.max(axis=0): Maximum value of an array row
+b.cumsum(axis=1): Cumulative sum of the elements
+a.mean(): Mean
+b.median(): Median
+a.corrcoef(): Correlation coefficient
+np.std(b): Standard deviation
+
+Besides all of these functions, you might also find it useful to know that there are mechanisms that allow you to compare array elements. For example, if you want to check whether the elements of two arrays are the same, you might use the == operator. To check whether the array elements are smaller or bigger, you use the < or > operators.
+
+This all seems quite straightforward, yes?
+
+However, you can also compare entire arrays with each other! In this case, you use the np.array_equal() function. Just pass in the two arrays that you want to compare with each other, and you’re done.
+
+Note that, besides comparing, you can also perform logical operations on your arrays. You can start with np.logical_or(), np.logical_not() and np.logical_and(). This basically works like your typical OR, NOT and AND logical operations;
+
+In the simplest example, you use OR to see whether your elements are the same (for example, 1), or if one of the two array elements is 1. If both of them are 0, you’ll return FALSE. You would use AND to see whether your second element is also 1 and NOT to see if the second element differs from 1.
+
+Test this out in the code chunk below:
+
+print(a)
+
+[ True  True False False]
+
+print(b)
+
+[ True False  True False]
+
+# `a` AND `b` 
+print(np.logical_and(a, b))
+
+[ True False False False]
+
+# `a` OR `b`
+print(np.logical_or(a, b))
+
+[ True  True  True False]
+
+# `a` NOT `b`
+print(np.logical_not(a,b))
+
+[False False  True  True]
+
+How To Subset, Slice, And Index Arrays
+
+Besides mathematical operations, you might also consider taking just a part of the original array (or the resulting array) or just some array elements to use in further analysis or other operations. In such case, you will need to subset, slice and/or index your arrays.
+
+These operations are very similar to when you perform them on Python lists. If you want to check out the similarities for yourself, or if you want a more elaborate explanation, you might consider checking out DataCamp’s Python list tutorial.
+
+If you have no clue at all on how these operations work, it suffices for now to know these two basic things:
+
+- You use square brackets [] as the index operator, and
+
+- Generally, you pass integers to these square brackets, but you can also put a colon : or a combination of the colon with integers in it to designate the elements/rows/columns you want to select.
+
+Besides from these two points, the easiest way to see how this all fits together is by looking at some examples of subsetting:
+
+# Select the element at the 1st index
+print(my_array[1])
+
+2
+
+# Select the element at row 1 column 2
+print(my_2d_array[1][2])
+
+7
+
+# Select the element at row 1 column 2
+print(my_2d_array[1,2])
+
+7
+
+# Select the element at row 1, column 2 and
+print(my_3d_array[1,1,2])
+
+11
+
+Something a little bit more advanced than subsetting, if you will, is slicing. Here, you consider not just particular values of your arrays, but you go to the level of rows and columns. You’re basically working with “regions” of data instead of pure “locations”.
+
+You can see what is meant with this analogy in these code examples:
+
+# Select items at index 0 and 1
+print(my_array[0:2])
+
+[1 2]
+
+# Select items at row 0 and 1, column 1
+print(my_2d_array[0:2,1])
+
+[2 6]
+
+# Select items at row 1
+# This is the same as saying `my_3d_array[1,:,:]
+print(my_3d_array[1,...])
+
+[[ 1  2  3  4]
+ [ 9 10 11 12]]
+
+You’ll see that, in essence, the following holds:
+
+a[start:end] # items start through the end (but the end is not included!)
+a[start:]    # items start through the rest of the array
+a[:end]      # items from the beginning through the end (but the end is not included!)
+
+Lastly, there’s also indexing. When it comes to NumPy, there are boolean indexing and advanced or “fancy” indexing.
+
+(In case you’re wondering, this is true NumPy jargon, I didn’t make the last one up!)
+
+First up is boolean indexing. Here, instead of selecting elements, rows or columns based on index number, you select those values from your array that fulfill a certain condition.
+
+Putting this into code can be pretty easy:
+
+print(my_array)
+
+[1 2 3 4]
+
+# Try out a simple example
+print(my_array[my_array<2])
+
+[1]
+
+print(my_3d_array)
+
+[[[ 1  2  3  4]
+  [ 5  6  7  8]]
+
+ [[ 1  2  3  4]
+  [ 9 10 11 12]]]
+
+# Specify a condition
+bigger_than_3 = (my_3d_array >= 3)
+
+# Use the condition to index our 3d array
+print(my_3d_array[bigger_than_3])
+
+[ 3  4  5  6  7  8  3  4  9 10 11 12]
+
+Note that, to specify a condition, you can also make use of the logical operators | (OR) and & (AND). If you would want to rewrite the condition above in such a way (which would be inefficient, but I demonstrate it here for educational purposes :)), you would get bigger_than_3 = (my_3d_array > 3) | (my_3d_array == 3).
+
+With the arrays that have been loaded in, there aren’t too many possibilities, but with arrays that contain for example, names or capitals, the possibilities could be endless!
+
+When it comes to fancy indexing, that what you basically do with it is the following: you pass a list or an array of integers to specify the order of the subset of rows you want to select out of the original array.
+
+Does this sound a little bit abstract to you?
+
+No worries, just try it out in the code chunk below:
+
+# Select elements at (1,0), (0,1), (1,2) and (0,0)
+print(my_2d_array[[1, 0, 1, 0],[0, 1, 2, 0]])
+
+[5 2 7 1]
+
+# Select a subset of the rows and columns
+print(my_2d_array[[1, 0, 1, 0]][:,[0,1,2,0]])
+
+[[5 6 7 5]
+ [1 2 3 1]
+ [5 6 7 5]
+ [1 2 3 1]]
+
+Now, the second statement might seem to make less sense to you at first sight. This is normal. It might make more sense if you break it down:
+
+- If you just execute my_2d_array[[1,0,1,0]], the result is the following:
+
+array([[5, 6, 7, 8],
+   [1, 2, 3, 4],
+   [5, 6, 7, 8],
+   [1, 2, 3, 4]])
+
+- What the second part, namely, [:,[0,1,2,0]], is tell you that you want to keep all the rows of this result, but that you want to change the order of the columns around a bit. You want to display the columns 0, 1, and 2 as they are right now, but you want to repeat column 0 as the last column instead of displaying column number 3. This will give you the following result:
+
+array([[5, 6, 7, 5],
+   [1, 2, 3, 1],
+   [5, 6, 7, 5],
+   [1, 2, 3, 1]])
+
+Advanced indexing clearly holds no secrets for you any more!
+
+How To Ask For Help
+
+As a short intermezzo, you should know that you can always ask for more information about the modules, functions or classes that you’re working with, especially becauseNumPy can be quite something when you first get started on working with it.
+
+Asking for help is fairly easy.
+
+You just make use of the specific help functions that numpy offers to set you on your way:
+
+- Use lookfor() to do a keyword search on docstrings. This is specifically handy if you’re just starting out, as the ‘theory’ behind it all might fade in your memory. The one downside is that you have to go through all of the search results if your query is not that specific, as is the case in the code example below. This might make it even less overviewable for you.
+
+- Use info() for quick explanations and code examples of functions, classes, or modules. If you’re a person that learns by doing, this is the way to go! The only downside about using this function is probably that you need to be aware of the module in which certain attributes or functions are in. If you don’t know immediately what is meant by that, check out the code example below.
+
+You see, both functions have their advantages and disadvantages, but you’ll see for yourself why both of them can be useful: try them out for yourself in the DataCamp Light code chunk below!
+
+# Look up info on `mean` with `np.lookfor()`
+print(np.lookfor("mean"))
+
+Search results for 'mean'
+-------------------------
+numpy.mean
+    Compute the arithmetic mean along the specified axis.
+numpy.nanmean
+    Compute the arithmetic mean along the specified axis, ignoring NaNs.
+numpy.ma.mean
+    Returns the average of the array elements along given axis.
+numpy.matrix.mean
+    Returns the average of the matrix elements along the given axis.
+numpy.array_equiv
+    Returns True if input arrays are shape consistent and all elements equal.
+numpy.ma.anom
+    Compute the anomalies (deviations from the arithmetic mean)
+numpy.chararray.mean
+    Returns the average of the array elements along given axis.
+numpy.ma.fix_invalid
+    Return input with invalid data masked and replaced by a fill value.
+numpy.ma.MaskedArray.anom
+    Compute the anomalies (deviations from the arithmetic mean)
+numpy.polynomial.polyutils.trimcoef
+    Remove "small" "trailing" coefficients from a polynomial.
+numpy.exp
+    Calculate the exponential of all elements in the input array.
+numpy.pad
+    Pads an array.
+numpy.put
+    Replaces specified elements of an array with given values.
+numpy.std
+    Compute the standard deviation along the specified axis.
+numpy.sum
+    Sum of array elements over a given axis.
+numpy.var
+    Compute the variance along the specified axis.
+numpy.copy
+    Return an array copy of the given object.
+numpy.prod
+    Return the product of array elements over a given axis.
+numpy.take
+    Take elements from an array along an axis.
+numpy.isnan
+    Test element-wise for NaN and return result as a boolean array.
+numpy.ravel
+    Return a contiguous flattened array.
+numpy.copyto
+    Copies values from one array to another, broadcasting as necessary.
+numpy.einsum
+    Evaluates the Einstein summation convention on the operands.
+numpy.kaiser
+    Return the Kaiser window.
+numpy.median
+    Compute the median along the specified axis.
+numpy.nanmax
+    Return the maximum of an array or maximum along an axis, ignoring any
+numpy.nanmin
+    Return minimum of an array or minimum along an axis, ignoring any NaNs.
+numpy.nanstd
+    Compute the standard deviation along the specified axis, while
+numpy.nansum
+    Return the sum of array elements over a given axis treating Not a
+numpy.nanvar
+    Compute the variance along the specified axis, while ignoring NaNs.
+numpy.nditer
+    Efficient multi-dimensional iterator object to iterate over arrays.
+numpy.average
+    Compute the weighted average along the specified axis.
+numpy.hamming
+    Return the Hamming window.
+numpy.hanning
+    Return the Hanning window.
+numpy.polyfit
+    Least squares polynomial fit.
+numpy.reshape
+    Gives a new shape to an array without changing its data.
+numpy.bartlett
+    Return the Bartlett window.
+numpy.blackman
+    Return the Blackman window.
+numpy.can_cast
+    Returns True if cast between data types can occur according to the
+numpy.digitize
+    Return the indices of the bins to which each value in input array belongs.
+numpy.fromfile
+    Construct an array from data in a text or binary file.
+numpy.fromiter
+    Create a new 1-dimensional array from an iterable object.
+numpy.isfinite
+    Test element-wise for finiteness (not infinity or not Not a Number).
+numpy.full_like
+    Return a full array with the same shape and type as a given array.
+numpy.histogram
+    Compute the histogram of a set of data.
+numpy.nanmedian
+    Compute the median along the specified axis, while ignoring NaNs.
+numpy.ones_like
+    Return an array of ones with the same shape and type as a given array.
+numpy.empty_like
+    Return a new array with the same shape and type as a given array.
+numpy.frombuffer
+    Interpret a buffer as a 1-dimensional array.
+numpy.nan_to_num
+    Replace nan with zero and inf with finite numbers.
+numpy.percentile
+    Compute the qth percentile of the data along the specified axis.
+numpy.recfromcsv
+    Load ASCII data stored in a comma-separated file.
+numpy.recfromtxt
+    Load ASCII data from a file and return it in a record array.
+numpy.trim_zeros
+    Trim the leading and/or trailing zeros from a 1-D array or sequence.
+numpy.zeros_like
+    Return an array of zeros with the same shape and type as a given array.
+numpy.ma.dot
+    Return the dot product of two arrays.
+numpy.ma.exp
+    Calculate the exponential of all elements in the input array.
+numpy.ma.var
+    Compute the variance along the specified axis.
+numpy.ma.copy
+    a.copy(order='C')
+numpy.fft.fft2
+    Compute the 2-dimensional discrete Fourier Transform
+numpy.fft.fftn
+    Compute the N-dimensional discrete Fourier Transform.
+numpy.fft.rfft
+    Compute the one-dimensional discrete Fourier Transform for real input.
+numpy.busday_offset
+    First adjusts the date to fall on a valid day according to
+numpy.ma.ravel
+    Returns a 1D version of self, as a view.
+numpy.fft.ifft2
+    Compute the 2-dimensional inverse discrete Fourier Transform.
+numpy.fft.ifftn
+    Compute the N-dimensional inverse discrete Fourier Transform.
+numpy.fft.rfftn
+    Compute the N-dimensional discrete Fourier Transform for real input.
+numpy.nanpercentile
+    Compute the qth percentile of the data along the specified axis,
+numpy.ma.median
+    Compute the median along the specified axis.
+numpy.fft.irfftn
+    Compute the inverse of the N-dimensional FFT of real input.
+numpy.linalg.svd
+    Singular Value Decomposition.
+numpy.ma.polyfit
+    Least squares polynomial fit.
+numpy.bytes0.split
+    Return a list of the sections in the bytes, using sep as the delimiter.
+numpy.linalg.cond
+    Compute the condition number of a matrix.
+numpy.linalg.norm
+    Matrix or vector norm.
+numpy.may_share_memory
+    Determine if two arrays might share memory
+numpy.bytes0.decode
+    Decode the bytes using the codec registered for encoding.
+numpy.bytes0.rsplit
+    Return a list of the sections in the bytes, using sep as the delimiter.
+numpy.str0.encode
+    Encode S using the codec registered for encoding. Default encoding
+numpy.matlib.randn
+    Return a random matrix with data from the "standard normal" distribution.
+numpy.matrix.ravel
+    Return a flattened matrix.
+numpy.bytes0.replace
+    Return a copy with all occurrences of substring old replaced by new.
+numpy.chararray.copy
+    Return a copy of the array.
+numpy.chararray.sort
+    Sort an array, in-place.
+numpy.chararray.view
+    New view of array with the same data.
+numpy.ma.empty_like
+    Return a new array with the same shape and type as a given array.
+numpy.ma.frombuffer
+    Interpret a buffer as a 1-dimensional array.
+numpy.matrix.flatten
+    Return a flattened copy of the matrix.
+numpy.chararray.astype
+    Copy of the array, cast to a specified type.
+numpy.testing.Tester
+    Nose test runner.
+numpy.chararray.flatten
+    Return a copy of the array collapsed into one dimension.
+numpy.chararray.tobytes
+    Construct Python bytes containing the raw data bytes in the array.
+numpy.matrix.partition
+    Rearranges the elements in the array in such a way that value of the
+numpy.chararray.tostring
+    Construct Python bytes containing the raw data bytes in the array.
+numpy.chararray.transpose
+    a.transpose(*axes)
+numpy.ma.MaskedArray.mean
+    Returns the average of the array elements along given axis.
+numpy.testing.noseclasses.NumpyDocTestCase._formatMessage
+    Honour the longMessage attribute when generating failure messages.
+numpy.ma.MaskedArray.dot
+    Masked dot product of two arrays. Note that `out` and `strict` are
+numpy.ma.MaskedArray.var
+    Compute the variance along the specified axis.
+numpy.ma.MaskedArray.copy
+    Return a copy of the array.
+numpy.ma.MaskedArray.view
+    New view of array with the same data.
+numpy.core.multiarray.scalar
+    Return a new scalar array of the given type initialized with obj.
+numpy.ma.MaskedArray.ravel
+    Returns a 1D version of self, as a view.
+numpy.ma.MaskedArray.filled
+    Return a copy of self, with masked values filled with a given value.
+numpy.lib.format.open_memmap
+    Open a .npy file as a memory-mapped array.
+numpy.lib.format.write_array
+    Write an array to an NPY file, including a header.
+numpy.ma.MaskedArray.flatten
+    Return a copy of the array collapsed into one dimension.
+numpy.polynomial.Hermite._fit
+    Least squares fit of Hermite series to data.
+numpy.ma.MaskedArray.transpose
+    a.transpose(*axes)
+numpy.polynomial.HermiteE._fit
+    Least squares fit of Hermite series to data.
+numpy.polynomial.Laguerre._fit
+    Least squares fit of Laguerre series to data.
+numpy.polynomial.Legendre._fit
+    Least squares fit of Legendre series to data.
+numpy.polynomial.Chebyshev._fit
+    Least squares fit of Chebyshev series to data.
+numpy.polynomial.Polynomial._fit
+    Least-squares fit of a polynomial to data.
+numpy.distutils.command.bdist_rpm.bdist_rpm.set_undefined_options
+    Set the values of any "undefined" options from corresponding
+numpy.lib.format._write_array_header
+    Write the header for an array and returns the version used
+numpy.distutils.numpy_distribution.NumpyDistribution._set_command_options
+    Set the options for 'command_obj' from 'option_dict'.  Basically
+numpy.testing.Tester._get_custom_doctester
+    Return instantiated plugin for doctests
+numpy.distutils.fcompiler.FCompiler.link
+    Link a bunch of stuff together to create an executable or
+numpy.distutils.msvccompiler.MSVCCompiler.link
+    Link a bunch of stuff together to create an executable or
+numpy.distutils.intelccompiler.IntelCCompiler.link
+    Link a bunch of stuff together to create an executable orNone
+
+# Get info on data types with `np.info()`
+print(np.info(np.ndarray.dtype))
+
+None
+
+np.info(np.ndarray.dtype)
+
+(Did not print anything)
+
+Note that you indeed need to know that dtype is an attribute of ndarray. Also, make sure that you don’t forget to put np in front of the modules, classes or terms you’re asking information about, otherwise you will get an error message like this:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'ndarray' is not defined
+You now know how to ask for help, and that’s a good thing. The next topic that this NumPy tutorial covers is array manipulation.
+
+Not that you can not overcome this topic on your own, quite the contrary!
+
+But some of the functions might raise questions, because, what is the difference between resizing and reshaping?
+
+And what is the difference between stacking your arrays horizontally and vertically?
+
+The next section is all about answering these questions, but if you ever feel in doubt, feel free to use the help functions that you have just seen to quickly get up to speed.
+
+How To Manipulate Arrays
+
+Performing mathematical operations on your arrays is one of the things that you’ll be doing, but probably most importantly to make this and the broadcasting work is to know how to manipulate your arrays.
+
+Below are some of the most common manipulations that you’ll be doing.
+
+How To Transpose Your Arrays
+
+What transposing your arrays actually does is permuting the dimensions of it. Or, in other words, you switch around the shape of the array. Let’s take a small example to show you the effect of transposition:
+
+# Print `my_2d_array`
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+# Transpose `my_2d_array`
+print(np.transpose(my_2d_array))
+
+[[1 5]
+ [2 6]
+ [3 7]
+ [4 8]]
+
+# Or use `T` to transpose `my_2d_array`
+print(my_2d_array.T)
+
+[[1 5]
+ [2 6]
+ [3 7]
+ [4 8]]
+
+Tip: if the visual comparison between the array and its transposed version is not entirely clear, inspect the shape of the two arrays to make sure that you understand why the dimensions are permuted.
+
+Note that there are two transpose functions. Both do the same; There isn’t too much difference. You do have to take into account that T seems more of a convenience function and that you have a lot more flexibility with np.transpose(). That’s why it’s recommended to make use of this function if you want to more arguments.
+
+All is well when you transpose arrays that are bigger than one dimension, but what happens when you just have a 1-D array? Will there be any effect, you think?
+
+Try it out for yourself in the code chunk below. Your 1-D array has already been loaded in:
+
+# Print `my_2d_array`
+print(my_array)
+
+[1 2 3 4]
+
+# Transpose `my_2d_array`
+print(np.transpose(my_array))
+
+[1 2 3 4]
+
+# Or use `T` to transpose `my_2d_array`
+print(my_array.T)
+
+[1 2 3 4]
+
+You’re absolutely right! There is no effect when you transpose a 1-D array!
+
+Reshaping Versus Resizing Your Arrays
+
+You might have read in the broadcasting section that the dimensions of your arrays need to be compatible if you want them to be good candidates for arithmetic operations. But the question of what you should do when that is not the case, was not answered yet.
+
+Well, this is where you get the answer!
+
+What you can do if the arrays don’t have the same dimensions, is resize your array. You will then return a new array that has the shape that you passed to the np.resize() function. If you pass your original array together with the new dimensions, and if that new array is larger than the one that you originally had, the new array will be filled with copies of the original array that are repeated as many times as is needed.
+
+However, if you just apply np.resize() to the array and you pass the new shape to it, the new array will be filled with zeros.
+
+Let’s try this out with an example:
+
+print(x)
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+# Print the shape of `x`
+print(x.shape)
+
+(3, 4)
+
+# Resize `x` to ((6,4))
+print(np.resize(x, (6,4)))
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+# Try out this as well
+print(x.resize((6,4)))
+
+None
+
+# Print out `x`
+print(x)
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 0.  0.  0.  0.]
+ [ 0.  0.  0.  0.]
+ [ 0.  0.  0.  0.]]
+
+Besides resizing, you can also reshape your array. This means that you give a new shape to an array without changing its data. The key to reshaping is to make sure that the total size of the new array is unchanged. If you take the example of array x that was used above, which has a size of 3 X 4 or 12, you have to make sure that the new array also has a size of 12.
+
+Psst… If you want to calculate the size of an array with code, make sure to use the size attribute: x.size or x.reshape((2,6)).size:
+
+print(x)
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+# Print the size of `x` to see what's possible
+print(x.size)
+
+12
+
+# Reshape `x` to (2,6)
+print(x.reshape((2,6)))
+
+[[ 1.  1.  1.  1.  1.  1.]
+ [ 1.  1.  1.  1.  1.  1.]]
+
+print(x) # tao: x did not change
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]]
+
+# Flatten `x`
+z = x.ravel()
+
+# Print `z`
+print(z)
+
+[ 1.  1.  1.  1.  1.  1.  1.  1.  1.  1.  1.  1.]
+
+If all else fails, you can also append an array to your original one or insert or delete array elements to make sure that your dimensions fit with the other array that you want to use for your computations.
+
+Another operation that you might keep handy when you’re changing the shape of arrays is ravel(). This function allows you to flatten your arrays. This means that if you ever have 2D, 3D or n-D arrays, you can just use this function to flatten it all out to a 1-D array.
+
+Pretty handy, isn’t it?
+
+How To Append Arrays
+
+When you append arrays to your original array, they are “glued” to the end of that original array. If you want to make sure that what you append does not come at the end of the array, you might consider inserting it. Go to the next section if you want to know more.
+
+Appending is a pretty easy thing to do thanks to the NumPy library; You can just make use of the np.append().
+
+Check how it’s done in the code chunk below. Don’t forget that you can always check which arrays are loaded in by typing, for example, my_array in the IPython shell and pressing ENTER.
+
+print(my_array)
+
+[1 2 3 4]
+
+# Append a 1D array to your `my_array`
+new_array = np.append(my_array, [7, 8, 9, 10])
+
+[ 1  2  3  4  7  8  9 10]
+
+# Print `new_array`
+print(new_array)
+
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+# Append an extra column to your `my_2d_array`
+new_2d_array = np.append(my_2d_array, [[7], [8]], axis=1)
+
+# Print `new_2d_array`
+print(new_2d_array)
+
+[[1 2 3 4 7]
+ [5 6 7 8 8]]
+
+Note how, when you append an extra column to my_2d_array, the axis is specified. Remember that axis 1 indicates the columns, while axis 0 indicates the rows in 2-D arrays.
+
+How To Insert And Delete Array Elements
+
+Next to appending, you can also insert and delete array elements. As you might have guessed by now, the functions that will allow you to do these operations are np.insert() and np.delete():
+
+print(my_array)
+
+[1 2 3 4]
+
+# Insert `5` at index 1
+print(np.insert(my_array, 1, 5))
+
+[1 5 2 3 4]
+
+print(my_array) # tao: my_array did not change
+
+[1 2 3 4]
+
+# Delete the value at index 1
+print(np.delete(my_array,[1]))
+
+[1 3 4]
+
+print(my_array) # tao: my_array did not change
+
+[1 2 3 4]
+
+How To Join And Split Arrays
+
+You can also ‘merge’ or join your arrays. There are a bunch of functions that you can use for that purpose and most of them are listed below.
+
+Try them out, but also make sure to test out what the shape of the arrays is in the IPython shell. The arrays that have been loaded are x, my_array, my_resized_array and my_2d_array.
+
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+print(x)
+
+[ 1.  1.  1.  1.]
+
+# Concatentate `my_array` and `x`
+print(np.concatenate((my_array,x)))
+
+[ 1.  2.  3.  4.  1.  1.  1.  1.]
+
+# Stack arrays row-wise
+print(np.vstack((my_array, my_2d_array)))
+
+[[1 2 3 4]
+ [1 2 3 4]
+ [5 6 7 8]]
+
+print(my_resized_array)
+
+[[1 2 3 4]
+ [1 2 3 4]]
+
+# Stack arrays row-wise
+print(np.r_[my_resized_array, my_2d_array])
+
+[[1 2 3 4]
+ [1 2 3 4]
+ [1 2 3 4]
+ [5 6 7 8]]
+
+# Stack arrays horizontally
+print(np.hstack((my_resized_array, my_2d_array)))
+
+[[1 2 3 4 1 2 3 4]
+ [1 2 3 4 5 6 7 8]]
+
+# Stack arrays column-wise
+print(np.column_stack((my_resized_array, my_2d_array)))
+
+[[1 2 3 4 1 2 3 4]
+ [1 2 3 4 5 6 7 8]]
+
+# Stack arrays column-wise
+print(np.c_[my_resized_array, my_2d_array])
+
+[[1 2 3 4 1 2 3 4]
+ [1 2 3 4 5 6 7 8]]
+
+You’ll note a few things as you go through the functions:
+
+- The number of dimensions needs to be the same if you want to concatenate two arrays with np.concatenate(). As such, if you want to concatenate an array with my_array, which is 1-D, you’ll need to make sure that the second array that you have, is also 1-D.
+
+- With np.vstack(), you effortlessly combine my_array with my_2d_array. You just have to make sure that, as you’re stacking the arrays row-wise, that the number of columns in both arrays is the same. As such, you could also add an array with shape (2,4) or (3,4) to my_2d_array, as long as the number of columns matches. Stated differently, the arrays must have the same shape along all but the first axis. The same holds also for when you want to use np.r[].
+
+- For np.hstack(), you have to make sure that the number of dimensions is the same and that the number of rows in both arrays is the same. That means that you could stack arrays such as (2,3) or (2,4) to my_2d_array, which itself as a shape of (2,4). Anything is possible as long as you make sure that the number of rows matches. This function is still supported by NumPy, but you should prefer np.concatenate() or np.stack().
+
+- With np.column_stack(), you have to make sure that the arrays that you input have the same first dimension. In this case, both shapes are the same, but if my_resized_array were to be (2,1) or (2,), the arrays still would have been stacked.
+
+- np.c_[] is another way to concatenate. Here also, the first dimension of both arrays needs to match.
+
+When you have joined arrays, you might also want to split them at some point. Just like you can stack them horizontally, you can also do the same but then vertically. You use np.hsplit() and np.vsplit(), respectively:
+
+print(my_stacked_array)
+
+[[1 2 3 4 1 2 3 4]
+ [1 2 3 4 5 6 7 8]]
+
+# Split `my_stacked_array` horizontally at the 2nd index
+print(np.hsplit(my_stacked_array, 2))
+
+[array([[1, 2, 3, 4],
+       [1, 2, 3, 4]]), array([[1, 2, 3, 4],
+       [5, 6, 7, 8]])]
+
+# Split `my_stacked_array` vertically at the 2nd index
+print(np.vsplit(my_stacked_array, 2))
+
+[array([[1, 2, 3, 4, 1, 2, 3, 4]]), array([[1, 2, 3, 4, 5, 6, 7, 8]])]
+
+What you need to keep in mind when you’re using both of these split functions is probably the shape of your array. Let’s take the above case as an example: my_stacked_array has a shape of (2,8). If you want to select the index at which you want the split to occur, you have to keep the shape in mind.
+
+How To Visualize NumPy Arrays
+
+Lastly, something that will definitely come in handy is to know how you can plot your arrays. This can especially be handy in data exploration, but also in later stages of the data science workflow, when you want to visualize your arrays.
+
+With np.histogram()
+
+Contrary to what the function might suggest, the np.histogram() function doesn’t draw the histogram but it does compute the occurrences of the array that fall within each bin; This will determine the area that each bar of your histogram takes up.
+
+What you pass to the np.histogram() function then is first the input data or the array that you’re working with. The array will be flattened when the histogram is computed.
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Initialize your array
+my_3d_array = np.array([[[1,2,3,4], [5,6,7,8]], [[1,2,3,4], [9,10,11,12]]], dtype=np.int64)
+
+# Pass the array to `np.histogram()`
+print(np.histogram(my_3d_array))
+
+(array([4, 2, 2, 1, 1, 1, 1, 1, 1, 2]), array([  1. ,   2.1,   3.2,   4.3,   5.4,   6.5,   7.6,   8.7,   9.8,
+        10.9,  12. ]))
+
+# Specify the number of bins
+print(np.histogram(my_3d_array, bins=range(0,13)))
+
+(array([0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2]), array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12]))
+
+You’ll see that as a result, the histogram will be computed: the first array lists the frequencies for all the elements of your array, while the second array lists the bins that would be used if you don’t specify any bins.
+
+If you do specify a number of bins, the result of the computation will be different: the floats will be gone and you’ll see all integers for the bins.
+
+There are still some other arguments that you can specify that can influence the histogram that is computed. You can find all of them here.
+
+But what is the point of computing such a histogram if you can’t visualize it?
+
+Visualization is a piece of cake with the help of Matplotlib, but you don’t need np.histogram() to compute the histogram. plt.hist() does this for itself when you pass it the (flattened) data and the bins:
+
+# Import numpy and matplotlib
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Construct the histogram with a flattened 3d array and a range of bins
+plt.hist(my_3d_array.ravel(), bins=range(0,13))
+
+# Add a title to the plot
+plt.title('Frequency of My 3D Array Elements')
+
+# Show the plot
+plt.show()
+
+The above code will then give you the following (basic) histogram:
+
+(A picture)
+
+Using np.meshgrid()
+
+Another way to (indirectly) visualize your array is by using np.meshgrid(). The problem that you face with arrays is that you need 2-D arrays of x and y coordinate values. With the above function, you can create a rectangular grid out of an array of x values and an array of y values: the np.meshgrid() function takes two 1D arrays and produces two 2D matrices corresponding to all pairs of (x, y) in the two arrays. Then, you can use these matrices to make all sorts of plots.
+
+np.meshgrid() is particularly useful if you want to evaluate functions on a grid, as the code below demonstrates:
+
+# Import NumPy and Matplotlib
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create an array
+points = np.arange(-5, 5, 0.01)
+
+# Make a meshgrid
+xs, ys = np.meshgrid(points, points)
+z = np.sqrt(xs ** 2 + ys ** 2)
+
+# Display the image on the axes
+plt.imshow(z, cmap=plt.cm.gray)
+
+# Draw a color bar
+plt.colorbar()
+
+# Show the plot
+plt.show()
+The code above gives the following result:
+
+(A picture)
+
+Beyond Data Analysis with NumPy
+
+Congratulations, you have reached the end of the NumPy tutorial!
+
+You have covered a lot of ground, so now you have to make sure to retain the knowledge that you have gained. Don’t forget to get your copy of DataCamp’s NumPy cheat sheet to support you in doing this!
+
+After all this theory, it’s also time to get some more practice with the concepts and techniques that you have learned in this tutorial. One way to do this is to go back to the scikit-learn tutorial and start experimenting with further with the data arrays that are used to build machine learning models.
+
+If this is not your cup of tea, check again whether you have downloaded Anaconda. Then, get started with NumPy arrays in Jupyter with this Definitive Guide to Jupyter Notebook. Also make sure to check out this Jupyter Notebook, which also guides you through data analysis in Python with NumPy and some other libraries in the interactive data science environment of the Jupyter Notebook.
+
+Lastly, consider checking out DataCamp’s courses on data manipulation and visualization. Especially our latest courses in collaboration with Continuum Analytics will definitely interest you! Take a look at the Manipulating DataFrames with Pandas or the Pandas Foundations courses.
+
+==
 From https://www.hackerearth.com/practice/machine-learning/data-manipulation-visualisation-r-python/tutorial-data-manipulation-numpy-pandas-python/tutorial/
 
 Practical Tutorial on Data Manipulation with Numpy and Pandas in Python
@@ -2408,6 +3871,2358 @@ np.random.random() # Returns a random number, not sure about the range.
 (findpandas)
 Pandas
 
+Notes from the following site (double checked and confirmed it does not miss anything from the site)
+
+https://www.datacamp.com/community/tutorials/pandas-tutorial-dataframe-python
+
+Pandas Tutorial: DataFrames in Python
+
+Explore data analysis with Python. Pandas DataFrames make manipulating your data easy, from selecting or replacing columns and indices to reshaping your data.
+
+Pandas is a popular Python package for data science, and with good reason: it offers powerful, expressive and flexible data structures that make data manipulation and analysis easy, among many other things. The DataFrame is one of these structures.
+
+This tutorial covers Pandas DataFrames, from basic manipulations to advanced operations, by tackling 11 of the most popular questions so that you understand -and avoid- the doubts of the Pythonistas who have gone before you.
+
+Content
+How To Create a Pandas DataFrame
+How To Select an Index or Column From a DataFrame
+How To Add an Index, Row or Column to a DataFrame
+How To Delete Indices, Rows or Columns From a DataFrame
+How To Rename the Columns or Indices of a DataFrame
+How To Format the Data in Your DataFrame
+How To Create an Empty DataFrame
+Does Pandas Recognize Dates When Importing Data?
+When, Why and How You Should Reshape Your DataFrame
+How To Iterate Over a DataFrame
+How To Write a DataFrame to a File
+
+(For more practice, try the first chapter of this Pandas DataFrames course for free!)
+
+What Are Pandas Data Frames?
+
+Before you start, let’s have a brief recap of what DataFrames are.
+
+Those who are familiar with R know the data frame as a way to store data in rectangular grids that can easily be overviewed. Each row of these grids corresponds to measurements or values of an instance, while each column is a vector containing data for a specific variable. This means that a data frame’s rows do not need to contain, but can contain, the same type of values: they can be numeric, character, logical, etc.
+
+Now, DataFrames in Python are very similar: they come with the Pandas library, and they are defined as two-dimensional labeled data structures with columns of potentially different types.
+
+In general, you could say that the Pandas DataFrame consists of three main components: the data, the index, and the columns.
+
+Firstly, the DataFrame can contain data that is:
+
+- a Pandas DataFrame
+
+- a Pandas Series: a one-dimensional labeled array capable of holding any data type with axis labels or index. An example of a Series object is one column from a DataFrame.
+
+- a NumPy ndarray, which can be a record or structured
+
+- a two-dimensional ndarray
+
+- dictionaries of one-dimensional ndarray’s, lists, dictionaries or Series.
+
+Note the difference between np.ndarray and np.array() . The former is an actual data type, while the latter is a function to make arrays from other data structures.
+
+Structured arrays allow users to manipulate the data by named fields: in the example below, a structured array of three tuples is created. The first element of each tuple will be called foo and will be of type int, while the second element will be named bar and will be a float.
+
+Record arrays, on the other hand, expand the properties of structured arrays. They allow users to access fields of structured arrays by attribute rather than by index. You see below that the foo values are accessed in the r2 record array.
+
+An example:
+
+# A structured array
+my_array = np.ones(3, dtype=([('foo', int), ('bar', float)]))
+print(my_array['foo'])
+
+[1 1 1]
+
+# A record array
+my_array2 = my_array.view(np.recarray)
+print(my_array2.foo)
+
+[1 1 1]
+
+Besides data, you can also specify the index and column names for your DataFrame. The index, on the one hand, indicates the difference in rows, while the column names indicate the difference in columns. You will see later that these two components of the DataFrame will come in handy when you’re manipulating your data.
+
+If you’re still in doubt about Pandas DataFrames and how they differ from other data structures such as a NumPy array or a Series, you can watch the small presentation below:
+
+(A video)
+
+Note that in this post, most of the times, the libraries that you need have already been loaded in. The Pandas library is usually imported under the alias pd, while the NumPy library is loaded as np. Remember that when you code in your own data science environment, you shouldn’t forget this import step, which you write just like this:
+
+import numpy as np
+import pandas as pd
+
+Now that there is no doubt in your mind about what DataFrames are, what they can do and how they differ from other structures, it’s time to tackle the most common questions that users have about working with them!
+
+1. How To Create a Pandas DataFrame
+
+Obviously, making your DataFrames is your first step in almost anything that you want to do when it comes to data munging in Python. Sometimes, you will want to start from scratch, but you can also convert other data structures, such as lists or NumPy arrays, to Pandas DataFrames. In this section, you’ll only cover the latter. However, if you want to read more on making empty DataFrames that you can fill up with data later, go to question 7.
+
+Among the many things that can serve as input to make a ‘DataFrame’, a NumPy ndarray is one of them. To make a data frame from a NumPy array, you can just pass it to the DataFrame() function in the data argument.
+
+data = np.array([['','Col1','Col2'],
+                ['Row1',1,2],
+                ['Row2',3,4]])
+
+print(data)
+
+[['' 'Col1' 'Col2']
+ ['Row1' '1' '2']
+ ['Row2' '3' '4']]
+
+print(pd.DataFrame(data=data[1:,1:],
+                  index=data[1:,0],
+                  columns=data[0,1:]))
+
+     Col1 Col2
+Row1    1    2
+Row2    3    4
+
+Pay attention to how the code chunks above select elements from the NumPy array to construct the DataFrame: you first select the values that are contained in the lists that start with Row1 and Row2, then you select the index or row numbers Row1 and Row2 and then the column names Col1 and Col2.
+
+Next, you also see that, in the DataCamp Light chunk above, you printed out a small selection of the data. This works the same as subsetting 2D NumPy arrays: you first indicate the row that you want to look in for your data, then the column. Don’t forget that the indices start at 0! For data in the example above, you go and look in the rows at index 1 to end, and you select all elements that come after index 1. As a result, you end up selecting 1, 2, 3 and 4.
+
+This approach to making DataFrames will be the same for all the structures that DataFrame() can take on as input.
+
+Try it out in the code chunk below:
+
+Remember that the Pandas library has already been imported for you as pd.
+
+# Take a 2D array as input to your DataFrame 
+my_2darray = np.array([[1, 2, 3], [4, 5, 6]])
+print(pd.DataFrame(my_2darray))
+
+   0  1  2
+0  1  2  3
+1  4  5  6
+
+# Take a dictionary as input to your DataFrame 
+my_dict = {1: ['1', '3'], 2: ['1', '2'], 3: ['2', '4']}
+print(pd.DataFrame(my_dict))
+
+   1  2  3
+0  1  1  2
+1  3  2  4
+
+# Take a DataFrame as input to your DataFrame 
+my_df = pd.DataFrame(data=[4,5,6,7], index=range(0,4), columns=['A'])
+print(pd.DataFrame(my_df))
+
+   A
+0  4
+1  5
+2  6
+3  7
+
+# Take a Series as input to your DataFrame
+my_series = pd.Series({"United Kingdom":"London", "India":"New Delhi", "United States":"Washington", "Belgium":"Brussels"})
+print(pd.DataFrame(my_series))
+
+                         0
+Belgium           Brussels
+India            New Delhi
+United Kingdom      London
+United States   Washington
+
+Note that the index of your Series (and DataFrame) contains the keys of the original dictionary, but that they are sorted: Belgium will be the index at 0, while the United States will be the index at 3.
+
+After you have created your DataFrame, you might want to know a little bit more about it. You can use the shape property or the len() function in combination with the .index property:
+
+df = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6]]))
+
+# Use the `shape` property
+print(df.shape)
+
+(2, 3)
+
+# Or use the `len()` function with the `index` property
+print(len(df.index))
+
+2
+
+These two options give you slightly different information on your DataFrame: the shape property will provide you with the dimensions of your DataFrame. That means that you will get to know the width and the height of your DataFrame. On the other hand, the len() function, in combination with the index property, will only give you information on the height of your DataFrame.
+
+This all is totally not extraordinary, though, as you explicitly give in the index property.
+
+You could also use df[0].count() to get to know more about the height of your DataFrame, but this will exclude the NaN values (if there are any). That is why calling .count() on your DataFrame is not always the better option.
+
+If you want more information on your DataFrame columns, you can always execute list(my_dataframe.columns.values). Try this out for yourself in the DataCamp Light block above!
+
+Fundamental DataFrame Operations
+
+Now that you have put your data in a more convenient Pandas DataFrame structure, it’s time to get to the real work!
+
+This first section will guide you through the first steps of working with DataFrames in Python. It will cover the basic operations that you can do on your newly created DataFrame: adding, selecting, deleting, renaming, … You name it!
+
+2. How To Select an Index or Column From a Pandas DataFrame
+
+Before you start with adding, deleting and renaming the components of your DataFrame, you first need to know how you can select these elements. So, how do you do this?
+
+Even though you might still remember how to do it from the previous section: selecting an index, column or value from your DataFrame isn’t that hard, quite the contrary. It’s similar to what you see in other languages (or packages!) that are used for data analysis. If you aren’t convinced, consider the following:
+
+In R, you use the [,] notation to access the data frame’s values.
+
+Now, let’s say you have a DataFrame like this one:
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+And you want to access the value that is at index 0, in column ‘A’.
+
+Various options exist to get your value 1 back:
+
+# Using `iloc[]`
+print(df.iloc[0][0])
+
+1
+
+# Using `loc[]`
+print(df.loc[0]['A'])
+
+1
+
+# Using `at[]`
+print(df.at[0,'A'])
+
+1
+
+# Using `iat[]`
+print(df.iat[0,0])
+
+1
+
+The most important ones to remember are, without a doubt, .loc[] and .iloc[]. The subtle differences between these two will be discussed in the next sections.
+
+Enough for now about selecting values from your DataFrame. What about selecting rows and columns? In that case, you would use:
+
+# Use `iloc[]` to select a row
+print(df.iloc[0])
+
+A    1
+B    2
+C    3
+Name: 0, dtype: int64
+
+# Use `loc[]` to select a column
+print(df.loc[:,'A'])
+
+0    1
+1    4
+2    7
+Name: A, dtype: int64
+
+For now, it’s enough to know that you can either access the values by calling them by their label or by their position in the index or column. If you don’t see this, look again at the slight differences in the commands: one time, you see [0][0], the other time, you see [0,'A'] to retrieve your value 1.
+
+3. How To Add an Index, Row or Column to a Pandas DataFrame
+
+Now that you have learned how to select a value from a DataFrame, it’s time to get to the real work and add an index, row or column to it!
+
+Adding an Index to a DataFrame
+
+When you create a DataFrame, you have the option to add input to the ‘index’ argument to make sure that you have the index that you desire. When you don’t specify this, your DataFrame will have, by default, a numerically valued index that starts with 0 and continues until the last row of your DataFrame.
+
+However, even when your index is specified for you automatically, you still have the power to re-use one of your columns and make it your index. You can easily do this by calling set_index() on your DataFrame. Try this out below!
+
+# Print out your DataFrame `df` to check it out
+print(df)
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+
+# Set 'C' as the index of your DataFrame
+df.set_index('C')
+
+   A  B
+C      
+3  1  2
+6  4  5
+
+Adding Rows to a DataFrame
+
+Before you can get to the solution, it’s first a good idea to grasp the concept of loc and how it differs from other indexing attributes such as .iloc[] and .ix[]:
+
+- .loc[] works on labels of your index. This means that if you give in loc[2], you look for the values of your DataFrame that have an index labeled 2.
+
+- .iloc[] works on the positions in your index. This means that if you give in iloc[2], you look for the values of your DataFrame that are at index ’2`.
+
+- .ix[] is a more complex case: when the index is integer-based, you pass a label to .ix[]. ix[2] then means that you’re looking in your DataFrame for values that have an index labeled 2. This is just like .loc[]! However, if your index is not solely integer-based, ix will work with positions, just like .iloc[].
+
+This all might seem very complicated. Let’s illustrate all of this with a small example:
+
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), index= [2, 'A', 4], columns=[48, 49, 50])
+
+# Pass `2` to `loc`
+print(df.loc[2])
+
+48    1
+49    2
+50    3
+Name: 2, dtype: int64
+
+# Pass `2` to `iloc`
+print(df.iloc[2])
+
+48    7
+49    8
+50    9
+Name: 4, dtype: int64
+
+# Pass `2` to `ix`
+print(df.ix[2])
+
+48    7
+49    8
+50    9
+Name: 4, dtype: int64
+
+Note that in this case, you used an example of a DataFrame that is not solely integer-based as to make it easier for you to understand the differences. You clearly see that passing 2 to .loc[] or .iloc[]/.ix[] does not give back the same result!
+
+- You know that .loc[] will go and look at the values that are at label 2. The result that you get back will be
+
+48    1
+49    2
+50    3
+
+- You also know that .iloc[] will go and look at the positions in the index. When you pass 2, you will get back:
+
+48    7
+49    8
+50    9
+
+- Since the index doesn’t only contain integers, .ix[] will have the same behavior as iloc and look at the positions in the index. You will get back the same result as .iloc[].
+
+Now that the difference between .iloc[], .loc[] and .ix[] is clear, you are ready to give adding rows to your DataFrame a go!
+
+Tip: as a consequence of what you have just read, you understand now also that the general recommendation is that you use .loc to insert rows in your DataFrame. That is because if you would use df.ix[], you might try to reference a numerically valued index with the index value and accidentally overwrite an existing row of your DataFrame. You better avoid this!
+
+Check out the difference once more in the DataFrame below:
+
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), index= [2.5, 12.6, 4.8], columns=[48, 49, 50])
+
+# There's no index labeled `2`, so you will change the index at position `2`
+df.ix[2] = [60, 50, 40]
+print(df)
+
+      48  49  50
+2.5    1   2   3
+12.6   4   5   6
+4.8   60  50  40
+
+# This will make an index labeled `2` and add the new values
+df.loc[2] = [11, 12, 13]
+print(df)
+
+      48  49  50
+2.5    1   2   3
+12.6   4   5   6
+4.8   60  50  40
+2.0   11  12  13
+
+You can see why all of this can be confusing, right?
+
+Adding a Column to Your DataFrame
+
+In some cases, you want to make your index part of your DataFrame. You can easily do this by taking a column from your DataFrame or by referring to a column that you haven’t made yet and assigning it to the .index property, just like this:
+
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
+
+print(df)
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+
+# Use `.index`
+df['D'] = df.index
+
+# Print `df`
+print(df)
+
+   A  B  C  D
+0  1  2  3  0
+1  4  5  6  1
+2  7  8  9  2
+
+In other words, you tell your DataFrame that it should take column A as its index.
+
+However, if you want to append columns to your DataFrame, you could also follow the same approach as when you would add an index to your DataFrame: you use .loc[] or .iloc[]. In this case, you add a Series to an existing DataFrame with the help of .loc[]:
+
+# Study the DataFrame `df`
+print(df)
+
+   1  2  3
+0  1  1  2
+1  3  2  4
+
+# Append a column to `df`
+df.loc[:, 4] = pd.Series(['5', '6'], index=df.index)
+
+# Print out `df` again to see the changes
+print(df)
+
+   1  2  3  4
+0  1  1  2  5
+1  3  2  4  6
+
+Remember a Series object is much like a column of a DataFrame. That explains why you can easily add a Series to an existing DataFrame. Note also that the observation that was made earlier about .loc[] still stays valid, even when you’re adding columns to your DataFrame!
+
+Resetting the Index of Your DataFrame
+
+When your index doesn’t look entirely the way you want it to, you can opt to reset it. You can easily do this with .reset_index(). However, you should still watch out, as you can pass several arguments that can make or break the success of your reset:
+
+# Check out the weird index of your dataframe
+print(df)
+
+      48  49  50
+2.5    1   2   3
+12.6   4   5   6
+4.8    7   8   9
+
+# Use `reset_index()` to reset the values
+df_reset = df.reset_index(level=0, drop=True)
+
+# Print `df_reset`
+print(df_reset)
+
+   48  49  50
+0   1   2   3
+1   4   5   6
+2   7   8   9
+
+Now try replacing the drop argument by inplace in the code chunk above and see what happens!
+
+Note how you use the drop argument to indicate that you want to get rid of the index that was there. If you would have used inplace, the original index with floats is added as an extra column to your DataFrame.
+
+4. How to Delete Indices, Rows or Columns From a Pandas Data Frame
+
+Now that you have seen how to select and add indices, rows, and columns to your DataFrame, it’s time to consider another use case: removing these three from your data structure.
+
+Deleting an Index from Your DataFrame
+
+If you want to remove the index from your DataFrame, you should reconsider because DataFrames and Series always have an index.
+
+However, what you *can* do is, for example:
+
+- resetting the index of your DataFrame (go back to the previous section to see how it is done) or
+
+- remove the index name, if there is any, by executing del df.index.name,
+
+- remove duplicate index values by resetting the index, dropping the duplicates of the index column that has been added to your DataFrame and reinstating that duplicateless column again as the index:
+
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [40, 50, 60], [23, 35, 37]]), 
+                  index= [2.5, 12.6, 4.8, 4.8, 2.5], 
+                  columns=[48, 49, 50])
+
+print(df)
+
+      48  49  50
+2.5    1   2   3
+12.6   4   5   6
+4.8    7   8   9
+4.8   40  50  60
+2.5   23  35  37
+
+print(df.reset_index().drop_duplicates(subset='index', keep='last').set_index('index'))
+
+       48  49  50
+index            
+12.6    4   5   6
+4.8    40  50  60
+2.5    23  35  37
+
+- and lastly, remove an index, and with it a row. This is elaborated further on in this tutorial.
+
+Now that you know how to remove an index from your DataFrame, you can go on to removing columns and rows!
+
+Deleting a Column from Your DataFrame
+
+To get rid of (a selection of) columns from your DataFrame, you can use the drop() method:
+
+# Check out the DataFrame `df`
+print(df)
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+
+# Drop the column with label 'A'                  
+df.drop('A', axis=1, inplace=True)
+
+print(df)
+
+   B  C
+0  2  3
+1  5  6
+2  8  9
+
+# Drop the column at position 1
+print(df.drop(df.columns[[1]], axis=1))
+
+   B
+0  2
+1  5
+2  8
+
+print(df)
+
+   B  C
+0  2  3
+1  5  6
+2  8  9
+
+You might think now: well, this is not so straightforward; There are some extra arguments that are passed to the drop() method!
+
+- The axis argument is either 0 when it indicates rows and 1 when it is used to drop columns.
+
+- You can set inplace to True to delete the column without having to reassign the DataFrame.
+
+Removing a Row from Your DataFrame
+
+You can remove duplicate rows from your DataFrame by executing df.drop_duplicates(). You can also remove rows from your DataFrame, taking into account only the duplicate values that exist in one column.
+
+Check out this example:
+
+# Check out your DataFrame `df`
+print(df)
+
+      48  49  50  50
+2.5    1   2   3   4
+12.6   4   5   6   5
+4.8    7   8   9   6
+4.8   23  50  60   7
+2.5   23  35  37  23
+
+# Drop the duplicates in `df`
+print(df.drop_duplicates([48], keep='last'))
+
+      48  49  50  50
+2.5    1   2   3   4
+12.6   4   5   6   5
+4.8    7   8   9   6
+2.5   23  35  37  23
+
+If there is no uniqueness criterion to the deletion that you want to perform, you can use the drop() method, where you use the index property to specify the index of which rows you want to remove from your DataFrame:
+
+# Check out the DataFrame `df`
+print(df)
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+
+# Drop the index at position 1
+print(df.drop(df.index[1]))
+
+   A  B  C
+0  1  2  3
+2  7  8  9
+
+After this command, you might want to reset the index again.
+
+Tip: try resetting the index of the resulting DataFrame for yourself! Don’t forget to use the drop argument if you deem it necessary.
+
+5. How to Rename the Index or Columns of a Pandas DataFrame
+
+To give the columns or your index values of your dataframe a different value, it’s best to use the .rename() method.
+
+# Check out your DataFrame `df`
+print(df)
+
+       A  B  C
+    0  1  2  3
+    1  4  5  6
+    2  7  8  9
+
+# Define the new names of your columns
+newcols = {
+    'A': 'new_column_1', 
+    'B': 'new_column_2', 
+    'C': 'new_column_3'
+}
+
+# Use `rename()` to rename your columns
+print(df.rename(columns=newcols, inplace=True))
+
+None
+
+print(df)
+
+   new_column_1  new_column_2  new_column_3
+0             1             2             3
+1             4             5             6
+2             7             8             9
+
+# Rename your index
+print(df.rename(index={1: 'a'}))
+
+   new_column_1  new_column_2  new_column_3
+0             1             2             3
+a             4             5             6
+2             7             8             9
+
+Tip: try changing the inplace argument in the first task (renaming your columns) to False and see what the script now renders as a result. You see that now the DataFrame hasn’t been reassigned when renaming the columns. As a result, the second task takes the original DataFrame as input and not the one that you just got back from the first rename() operation.
+
+Beyond The Pandas DataFrame Basics
+
+Now that you have gone through a first set of questions about Pandas’ DataFrames, it’s time to go beyond the basics and get your hands dirty for real because there is far more to DataFrames than what you have seen in the first section.
+
+6. How To Format The Data in Your Pandas DataFrame
+
+Most of the times, you will also want to be able to do some operations on the actual values that are contained within your DataFrame. In the following sections, you’ll cover several ways in which you can format your DataFrame’s values
+
+Replacing All Occurrences of a String in a DataFrame
+To replace certain strings in your DataFrame, you can easily use replace(): pass the values that you would like to change, followed by the values you want to replace them by.
+
+Just like this:
+
+# Study the DataFrame `df` first
+print(df)
+
+     Student1 Student2    Student3
+0          OK  Perfect  Acceptable
+1       Awful    Awful     Perfect
+2  Acceptable       OK        Poor
+
+# Replace the strings by numerical values (0-4)
+print(df.replace(['Awful', 'Poor', 'OK', 'Acceptable', 'Perfect'], [0, 1, 2, 3, 4]))
+
+   Student1  Student2  Student3
+0         2         4         3
+1         0         0         4
+2         3         2         1
+
+Note that there is also a regex argument that can help you out tremendously when you’re faced with strange string combinations:
+
+# Check out your DataFrame `df`
+print(df)
+
+     0    1    2
+0  1\n    2  3\n
+1    4    5  6\n
+2    7  8\n    9
+
+# Replace strings by others with `regex`
+print(df.replace({'\n': '<br>'}, regex=True))
+
+       0      1      2
+0  1<br>      2  3<br>
+1      4      5  6<br>
+2      7  8<br>      9
+
+In short, replace() is mostly what you need to deal with when you want to replace values or strings in your DataFrame by others!
+
+Removing Parts From Strings in the Cells of Your DataFrame
+Removing unwanted parts of strings is cumbersome work. Luckily, there is an easy solution to this problem!
+
+# Check out your DataFrame
+print(df)
+
+  class test result
+0     1    2    +3b
+1     4    5    -6B
+2     7    8    +9A
+
+# Delete unwanted parts from the strings in the `result` column
+df['result'] = df['result'].map(lambda x: x.lstrip('+-').rstrip('aAbBcC'))
+
+# Check out the result again
+print(df)
+
+  class test result
+0     1    2      3
+1     4    5      6
+2     7    8      9
+
+You use map() on the column result to apply the lambda function over each element or element-wise of the column. The function in itself takes the string value and strips the + or - that’s located on the left, and also strips away any of the six aAbBcC on the right.
+
+Splitting Text in a Column into Multiple Rows in a DataFrame
+This is somewhat a more difficult formatting task. However, the next code chunk will walk you through the steps:
+
+# Inspect your DataFrame `df`
+print(df)
+
+  Age PlusOne             Ticket
+0  34       0           23:44:55
+1  22       0           66:77:88
+2  19       1  43:68:05 56:34:12
+
+# Split out the two values in the third row
+# Make it a Series
+# Stack the values
+ticket_series = df['Ticket'].str.split(' ').apply(pd.Series, 1).stack()
+
+# Get rid of the stack:
+# Drop the level to line up with the DataFrame
+ticket_series.index = ticket_series.index.droplevel(-1)
+
+# Make your series a dataframe 
+ticketdf = pd.DataFrame(ticket_series)
+
+print(ticketdf)
+
+          0
+0  23:44:55
+1  66:77:88
+2  43:68:05
+2  56:34:12
+
+# Delete the `Ticket` column from your DataFrame
+del df['Ticket']
+
+# Join the ticket DataFrame to `df`
+df.join(ticketdf)
+
+# Check out the new `df`
+print(df)
+
+  Age PlusOne
+0  34       0
+1  22       0
+2  19       1
+
+In short, what you do is:
+
+- First, you inspect the DataFrame at hand. You see that the values in the last row and in the last column are a bit too long. It appears there are two tickets because a guest has taken a plus-one to the concert.
+
+- You take the Ticket column from the DataFrame df and strings on a space. This will make sure that the two tickets will end up in two separate rows in the end. Next, you take these four values (the four ticket numbers) and put them into a Series object:
+
+      0         1
+0  23:44:55       NaN
+1  66:77:88       NaN
+2  43:68:05  56:34:12
+
+That still doesn’t seem quite right. You have NaN values in there! You have to stack the Series to make sure you don’t have any NaN values in the resulting Series.
+
+- Next, you see that your Series is stacked.
+
+0  0    23:44:55
+1  0    66:77:88
+2  0    43:68:05
+   1    56:34:12
+
+That is not ideal either. That is why you drop the level to line up with the DataFrame:
+
+0    23:44:55
+1    66:77:88
+2    43:68:05
+2    56:34:12
+dtype: object
+
+That is what you’re looking for.
+
+- Transform your Series to a DataFrame to make sure you can join it back to your initial DataFrame. However, to avoid having any duplicates in your DataFrame, you can delete the original Ticket column.
+
+Applying A Function to Your Pandas DataFrame’s Columns or Rows
+
+You might want to adjust the data in your DataFrame by applying a function to it. Let’s begin answering this question by making your own lambda function:
+
+doubler = lambda x: x*2
+
+Tip: if you want to know more about functions in Python, consider taking this Python functions tutorial.
+
+# Study the `df` DataFrame
+print(df)
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+
+# Apply the `doubler` function to the `A` DataFrame column
+print(df['A'].apply(doubler))
+
+0     2
+1     8
+2    14
+Name: A, dtype: int64
+
+Note that you can also select the row of your DataFrame and apply the doubler lambda function to it. Remember that you can easily select a row from your DataFrame by using .loc[] or .iloc[].
+
+Then, you would execute something like this, depending on whether you want to select your index based on its position or based on its label:
+
+df.loc[0].apply(doubler)
+
+Note that the apply() function only applies the doubler function along the axis of your DataFrame. That means that you target either the index or the columns. Or, in other words, either a row or a column.
+
+However, if you want to apply it to each element or element-wise, you can make use of the map() function. You can just replace the apply() function in the code chunk above with map(). Don’t forget to still pass the doubler function to it to make sure you multiply the values by 2.
+
+Let’s say you want to apply this doubling function not only to the A column of your DataFrame but to the whole of it. In this case, you can use applymap() to apply the doubler function to every single element in the entire DataFrame:
+
+doubled_df = df.applymap(doubler)
+print(doubled_df)
+
+    A   B   C
+0   2   4   6
+1   8  10  12
+2  14  16  18
+
+Note that in these cases, we have been working with lambda functions or anonymous functions that get created at runtime. However, you can also write your own function. For example:
+
+def doubler(x):
+    if x % 2 == 0:
+        return x
+    else:
+        return x * 2
+
+# Use `applymap()` to apply `doubler()` to your DataFrame
+doubled_df = df.applymap(doubler)
+
+# Check the DataFrame
+print(doubled_df)
+
+    A   B   C
+0   2   2   6
+1   4  10   6
+2  14   8  18
+
+If you want more information on the flow of control in Python, you can always read up on it here.
+
+7. How To Create an Empty DataFrame
+
+The function that you will use is the Pandas Dataframe() function: it requires you to pass the data that you want to put in, the indices and the columns.
+
+Remember that the data that is contained within the data frame doesn’t have to be homogenous. It can be of different data types!
+
+There are several ways in which you can use this function to make an empty DataFrame. Firstly, you can use numpy.nan to initialize your data frame with NaNs. Note that numpy.nan has type float.
+
+df = pd.DataFrame(np.nan, index=[0,1,2,3], columns=['A'])
+print(df)
+
+    A
+0 NaN
+1 NaN
+2 NaN
+3 NaN
+
+Right now, the data type of the data frame is inferred by default: because numpy.nan has type float, the data frame will also contain values of type float. You can, however, also force the DataFrame to be of a particular type by adding the attribute dtype and filling in the desired type. Just like in this example:
+
+df = pd.DataFrame(index=range(0,4),columns=['A'], dtype='float')
+print(df)
+
+    A
+0 NaN
+1 NaN
+2 NaN
+3 NaN
+
+Note that if you don’t specify the axis labels or index, they will be constructed from the input data based on common sense rules.
+
+8. Does Pandas Recognize Dates When Importing Data?
+
+Pandas can recognize it, but you need to help it a tiny bit: add the argument parse_dates when you’reading in data from, let’s say, a comma-separated value (CSV) file:
+
+import pandas as pd
+pd.read_csv('yourFile', parse_dates=True)
+
+# or this option:
+pd.read_csv('yourFile', parse_dates=['columnName'])
+
+There are, however, always weird date-time formats.
+
+No worries! In such cases, you can construct your own parser to deal with this. You could, for example, make a lambda function that takes your DateTime and controls it with a format string.
+
+import pandas as pd
+dateparser = lambda x: pd.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
+
+# Which makes your read command:
+pd.read_csv(infile, parse_dates=['columnName'], date_parser=dateparse)
+
+# Or combine two columns into a single DateTime column
+pd.read_csv(infile, parse_dates={'datetime': ['date', 'time']}, date_parser=dateparse)
+
+9. When, Why And How You Should Reshape Your Pandas DataFrame
+
+Reshaping your DataFrame is transforming it so that the resulting structure makes it more suitable for your data analysis. In other words, reshaping is not so much concerned with formatting the values that are contained within the DataFrame, but more about transforming the shape of it.
+
+This answers the when and why. But how would you reshape your DataFrame?
+
+There are three ways of reshaping that frequently raise questions with users: pivoting, stacking and unstacking and melting.
+
+Pivotting Your DataFrame
+
+You can use the pivot() function to create a new derived table out of your original one. When you use the function, you can pass three arguments:
+
+values: this argument allows you to specify which values of your original DataFrame you want to see in your pivot table.
+
+columns: whatever you pass to this argument will become a column in your resulting table.
+
+index: whatever you pass to this argument will become an index in your resulting table.
+
+# Import pandas
+import pandas as pd
+
+# Create your DataFrame
+products = pd.DataFrame({'category': ['Cleaning', 'Cleaning', 'Entertainment', 'Entertainment', 'Tech', 'Tech'],
+        'store': ['Walmart', 'Dia', 'Walmart', 'Fnac', 'Dia','Walmart'],
+        'price':[11.42, 23.50, 19.99, 15.95, 55.75, 111.55],
+        'testscore': [4, 3, 5, 7, 5, 8]})
+
+print(products)
+
+        category   price    store  testscore
+0       Cleaning   11.42  Walmart          4
+1       Cleaning   23.50      Dia          3
+2  Entertainment   19.99  Walmart          5
+3  Entertainment   15.95     Fnac          7
+4           Tech   55.75      Dia          5
+5           Tech  111.55  Walmart          8
+
+# Use `pivot()` to pivot the DataFrame
+pivot_products = products.pivot(index='category', columns='store', values='price')
+
+# Check out the result
+print(pivot_products)
+
+store            Dia   Fnac  Walmart
+category                            
+Cleaning       23.50    NaN    11.42
+Entertainment    NaN  15.95    19.99
+Tech           55.75    NaN   111.55
+
+When you don’t specifically fill in what values you expect to be present in your resulting table, you will pivot by multiple columns:
+
+# Import the Pandas library
+import pandas as pd
+
+# Construct the DataFrame
+products = pd.DataFrame({'category': ['Cleaning', 'Cleaning', 'Entertainment', 'Entertainment', 'Tech', 'Tech'],
+                        'store': ['Walmart', 'Dia', 'Walmart', 'Fnac', 'Dia','Walmart'],
+                        'price':[11.42, 23.50, 19.99, 15.95, 55.75, 111.55],
+                        'testscore': [4, 3, 5, 7, 5, 8]})
+
+print(products)
+
+            category   price    store  testscore
+    0       Cleaning   11.42  Walmart          4
+    1       Cleaning   23.50      Dia          3
+    2  Entertainment   19.99  Walmart          5
+    3  Entertainment   15.95     Fnac          7
+    4           Tech   55.75      Dia          5
+    5           Tech  111.55  Walmart          8
+
+# Use `pivot()` to pivot your DataFrame
+pivot_products = products.pivot(index='category', columns='store')
+
+# Check out the results
+print(pivot_products)
+
+                   price                testscore             
+    store            Dia   Fnac Walmart       Dia Fnac Walmart
+    category                                                  
+    Cleaning       23.50    NaN   11.42       3.0  NaN     4.0
+    Entertainment    NaN  15.95   19.99       NaN  7.0     5.0
+    Tech           55.75    NaN  111.55       5.0  NaN     8.0
+
+Note that your data can not have rows with duplicate values for the columns that you specify. If this is not the case, you will get an error message. If you can’t ensure the uniqueness of your data, you will want to use the pivot_table method instead:
+
+# Import the Pandas library
+import pandas as pd
+
+# Your DataFrame
+products = pd.DataFrame({'category': ['Cleaning', 'Cleaning', 'Entertainment', 'Entertainment', 'Tech', 'Tech'],
+                        'store': ['Walmart', 'Dia', 'Walmart', 'Fnac', 'Dia','Walmart'],
+                        'price':[11.42, 23.50, 19.99, 15.95, 19.99, 111.55],
+                        'testscore': [4, 3, 5, 7, 5, 8]})
+
+print(products)
+
+        category   price    store  testscore
+0       Cleaning   11.42  Walmart          4
+1       Cleaning   23.50      Dia          3
+2  Entertainment   19.99  Walmart          5
+3  Entertainment   15.95     Fnac          7
+4           Tech   19.99      Dia          5
+5           Tech  111.55  Walmart          8
+
+# Pivot your `products` DataFrame with `pivot_table()`
+pivot_products = products.pivot_table(index='category', columns='store', values='price', aggfunc='mean')
+
+# Check out the results
+print(pivot_products) 
+
+store            Dia   Fnac  Walmart
+category                            
+Cleaning       23.50    NaN    11.42
+Entertainment    NaN  15.95    19.99
+Tech           19.99    NaN   111.55
+
+Note the additional argument aggfunc that gets passed to the pivot_table method. This argument indicates that you use an aggregation function used to combine multiple values. In this example, you can clearly see that the mean function is used.
+
+Using stack() and unstack() to Reshape Your Pandas DataFrame
+
+You have already seen an example of stacking in the answer to question 5! In essence, you might still remember that, when you stack a DataFrame, you make it taller. You move the innermost column index to become the innermost row index. You return a DataFrame with an index with a new inner-most level of row labels.
+
+Go back to the full walk-through of the answer to question 5 if you’re unsure of the workings of stack().
+The inverse of stacking is called unstacking. Much like stack(), you use unstack() to move the innermost row index to become the innermost column index.
+
+For a good explanation of pivoting, stacking and unstacking, go to this page.
+
+Reshape Your DataFrame With melt()
+
+Melting is considered useful in cases where you have data that has one or more columns that are identifier variables, while all other columns are considered measured variables.
+
+These measured variables are all “unpivoted” to the row axis. That is, while the measured variables that were spread out over the width of the DataFrame, the melt will make sure that they will be placed in the height of it. Or, yet in other words, your DataFrame will now become longer instead of wider.
+
+As a result, you have two non-identifier columns, namely, ‘variable’ and ‘value’.
+
+Let’s illustrate this with an example:
+
+# The `people` DataFrame
+people = pd.DataFrame({'FirstName' : ['John', 'Jane'],
+                       'LastName' : ['Doe', 'Austen'],
+                       'BloodType' : ['A-', 'B+'],
+                       'Weight' : [90, 64]})
+
+print(people)
+
+  BloodType FirstName LastName  Weight
+0        A-      John      Doe      90
+1        B+      Jane   Austen      64
+
+# Use `melt()` on the `people` DataFrame
+print(pd.melt(people, id_vars=['FirstName', 'LastName'], var_name='measurements'))  
+
+  FirstName LastName measurements value
+0      John      Doe    BloodType    A-
+1      Jane   Austen    BloodType    B+
+2      John      Doe       Weight    90
+3      Jane   Austen       Weight    64
+
+If you’re looking for more ways to reshape your data, check out the documentation.
+
+10. How To Iterate Over a Pandas DataFrame
+
+You can iterate over the rows of your DataFrame with the help of a for loop in combination with an iterrows() call on your DataFrame:
+
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
+
+print(df)
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+
+for index, row in df.iterrows() :
+    print(row['A'], row['B'])
+
+1 2
+4 5
+7 8
+
+iterrows() allows you to efficiently loop over your DataFrame rows as (index, Series) pairs. In other words, it gives you (index, row) tuples as a result.
+
+11. How To Write a Pandas DataFrame to a File
+
+When you have done your data munging and manipulation with Pandas, you might want to export the DataFrame to another format. This section will cover two ways of outputting your DataFrame: to a CSV or to an Excel file.
+
+Output a DataFrame to CSV
+
+To write a DataFrame as a CSV file, you can use to_csv():
+
+import pandas as pd
+df.to_csv('myDataFrame.csv')
+
+That piece of code seems quite simple, but this is just where the difficulties begin for most people because you will have specific requirements for the output of your data. Maybe you don’t want a comma as a delimiter, or you want to specify a specific encoding, …
+
+Don’t worry! You can pass some additional arguments to to_csv() to make sure that your data is outputted the way you want it to be!
+
+- To delimit by a tab, use the sep argument:
+
+import pandas as pd
+df.to_csv('myDataFrame.csv', sep='\t')
+
+- To use a specific character encoding, you can use the encoding argument:
+
+import pandas as pd
+df.to_csv('myDataFrame.csv', sep='\t', encoding='utf-8')
+
+- Furthermore, you can specify how you want your NaN or missing values to be represented, whether or not you want to output the header, whether or not you want to write out the row names, whether you want compression, … Read up on the options here.
+
+Writing a DataFrame to Excel
+
+Similarly to what you did to output your DataFrame to CSV, you can use to_excel() to write your table to Excel. However, it is a bit more complicated:
+
+import pandas as pd
+writer = pd.ExcelWriter('myDataFrame.xlsx')
+df.to_excel(writer, 'DataFrame')
+writer.save()
+
+Note, however, that, just like with to_csv(), you have a lot of extra arguments such as startcol, startrow, and so on, to make sure output your data correctly. Go to this page to read up on them.
+
+If, however, you want more information on IO tools in Pandas, you check out this page.
+
+Python For Data Science Is More Than DataFrames
+
+That’s it! You've successfully completed the Pandas DataFrame tutorial!
+
+The answers to the 11 frequently asked Pandas questions represent essential functions that you will need to import, clean and manipulate your data for your data science work. Are you not sure that you have gone deep enough into this matter? Our Importing Data In Python course will help you out! If you’ve got the hang out of this, you might want to see Pandas at work in a real-life project. The Importance of Preprocessing in Data Science and the Machine Learning Pipeline tutorial series is a must-read, and the open course Introduction to Python & Machine Learning is a must-complete.
+
+==
+Good:
+
+https://www.datacamp.com/community/tutorials/pandas-tutorial-dataframe-python
+
+Python Numpy Array Tutorial
+A NumPy tutorial for beginners in which you'll learn how to create a NumPy array, use broadcasting, access values, manipulate arrays, and much more.
+NumPy is, just like SciPy, Scikit-Learn, Pandas, etc. one of the packages that you just can’t miss when you’re learning data science, mainly because this library provides you with an array data structure that holds some benefits over Python lists, such as: being more compact, faster access in reading and writing items, being more convenient and more efficient.
+
+Today’s post will focus precisely on this. This NumPy tutorial will not only show you what NumPy arrays actually are and how you can install Python, but you’ll also learn how to make arrays (even when your data comes from files!), how broadcasting works, how you can ask for help, how to manipulate your arrays and how to visualize them.
+
+Content
+What Is A Python Numpy Array?
+How To Install Numpy
+How To Make NumPy Arrays
+How NumPy Broadcasting Works
+How Do Array Mathematics Work?
+How To Subset, Slice, And Index Arrays
+How To Ask For Help
+How To Manipulate Arrays
+How To Visualize NumPy Arrays
+Beyond Data Analysis with NumPy
+
+What Is A Python Numpy Array?
+You already read in the introduction that NumPy arrays are a bit like Python lists, but still very much different at the same time. For those of you who are new to the topic, let’s clarify what it exactly is and what it’s good for.
+
+As the name gives away, a NumPy array is a central data structure of the numpy library. The library’s name is short for “Numeric Python” or “Numerical Python”.
+
+This already gives an idea of what you’re dealing with, right?
+
+In other words, NumPy is a Python library that is the core library for scientific computing in Python. It contains a collection of tools and techniques that can be used to solve on a computer mathematical models of problems in Science and Engineering. One of these tools is a high-performance multidimensional array object that is a powerful data structure for efficient computation of arrays and matrices. To work with these arrays, there’s a vast amount of high-level mathematical functions operate on these matrices and arrays.
+
+Then, what is an array?
+
+When you look at the print of a couple of arrays, you could see it as a grid that contains values of the same type:
+
+
+# Print the array
+print(my_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+# Print the 2d array
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+# Print the 3d array
+print(my_3d_array)
+
+[[[ 1  2  3  4]
+  [ 5  6  7  8]]
+
+ [[ 1  2  3  4]
+  [ 9 10 11 12]]]
+
+You see that, in the example above, the data are integers. The array holds and represents any regular data in a structured way.
+
+However, you should know that, on a structural level, an array is basically nothing but pointers. It’s a combination of a memory address, a data type, a shape, and strides:
+
+The data pointer indicates the memory address of the first byte in the array,
+The data type or dtype pointer describes the kind of elements that are contained within the array,
+The shape indicates the shape of the array, and
+The strides are the number of bytes that should be skipped in memory to go to the next element. If your strides are (10,1), you need to proceed one byte to get to the next column and 10 bytes to locate the next row.
+
+Or, in other words, an array contains information about the raw data, how to locate an element and how to interpret an element.
+
+Enough of the theory. Let’s check this out ourselves:
+
+You can easily test this by exploring the numpy array attributes:
+
+# Print out memory address
+print(my_2d_array.data)
+
+<memory at 0x7f58cb57fa68>
+
+# Print out the shape of `my_array`
+print(my_2d_array.shape)
+
+(2, 4)
+
+# Print out the data type of `my_array`
+print(my_2d_array.dtype)
+
+int64
+
+# Print out the stride of `my_array`
+print(my_2d_array.strides)
+
+(32, 8)
+
+You see that now, you get a lot more information: for example, the data type that is printed out is ‘int64’ or signed 32-bit integer type; This is a lot more detailed! That also means that the array is stored in memory as 64 bytes (as each integer takes up 8 bytes and you have an array of 8 integers). The strides of the array tell us that you have to skip 8 bytes (one value) to move to the next column, but 32 bytes (4 values) to get to the same position in the next row. As such, the strides for the array will be (32,8).
+
+Note that if you set the data type to int32, the strides tuple that you get back will be (16, 4), as you will still need to move one value to the next column and 4 values to get the same position. The only thing that will have changed is the fact that each integer will take up 4 bytes instead of 8.
+
+(A picture)
+
+The array that you see above is, as its name already suggested, a 2-dimensional array: you have rows and columns. The rows are indicated as the “axis 0”, while the columns are the “axis 1”. The number of the axis goes up accordingly with the number of the dimensions: in 3-D arrays, of which you have also seen an example in the previous code chunk, you’ll have an additional “axis 2”. Note that these axes are only valid for arrays that have at least 2 dimensions, as there is no point in having this for 1-D arrays;
+
+These axes will come in handy later when you’re manipulating the shape of your NumPy arrays.
+
+How To Install Numpy
+Before you can start to try out these NumPy arrays for yourself, you first have to make sure that you have it installed locally (assuming that you’re working on your pc). If you have the Python library already available, go ahead and skip this section :)
+
+If you still need to set up your environment, you must be aware that there are two major ways of installing NumPy on your pc: with the help of Python wheels or the Anaconda Python distribution.
+
+… With Python Wheels
+Make sure firstly that you have Python installed. You can go here if you still need to do this :)
+
+If you’re working on Windows, make sure that you have added Python to the PATH environment variable. Then, don’t forget to install a package manager, such as pip, which will ensure that you’re able to use Python’s open-source libraries.
+
+Note that recent versions of Python 3 come with pip, so double check if you have it and if you do, upgrade it before you install NumPy:
+
+pip install pip --upgrade
+pip --version
+
+Next, you can go here or here to get your NumPy wheel. After you have downloaded it, navigate to the folder on your pc that stores it through the terminal and install it:
+
+install "numpy-1.9.2rc1+mkl-cp34-none-win_amd64.whl"
+import numpy
+numpy.__version__
+
+The two last lines allow you to verify that you have installed NumPy and check the version of the package.
+
+After these steps, you’re ready to start using NumPy!
+
+… With The Anaconda Python Distribution
+
+To get NumPy, you could also download the Anaconda Python distribution. This is easy and will allow you to get started quickly! If you haven’t downloaded it already, go here to get it. Follow the instructions to install, and you're ready to start!
+
+Do you wonder why this might actually be easier?
+
+The good thing about getting this Python distribution is the fact that you don’t need to worry too much about separately installing NumPy or any of the major packages that you’ll be using for your data analyses, such as pandas, scikit-learn, etc.
+
+Because, especially if you’re very new to Python, programming or terminals, it can really come as a relief that Anaconda already includes 100 of the most popular Python, R and Scala packages for data science. But also for more seasoned data scientists, Anaconda is the way to go if you want to get started quickly on tackling data science problems.
+
+What’s more, Anaconda also includes several open source development environments such as Jupyter and Spyder. If you’d like to start working with Jupyter Notebook after this tutorial, go to this page.
+
+In short, consider downloading Anaconda to get started on working with numpy and other packages that are relevant to data science!
+
+How To Make NumPy Arrays
+
+So, now that you have set up your environment, it’s time for the real work. Admittedly, you have already tried out some stuff with arrays in the above DataCamp Light chunks. However, you haven’t really gotten any real hands-on practice with them, because you first needed to install NumPy on your own pc. Now that you have done this, it’s time to see what you need to do in order to run the above code chunks on your own.
+
+Some exercises have been included below so that you can already practice how it’s done before you start on your own!
+
+To make a numpy array, you can just use the np.array() function. All you need to do is pass a list to it, and optionally, you can also specify the data type of the data. If you want to know more about the possible data types that you can pick, go here or consider taking a brief look at DataCamp’s NumPy cheat sheet.
+
+There’s no need to go and memorize these NumPy data types if you’re a new user; But you do have to know and care what data you’re dealing with. The data types are there when you need more control over how your data is stored in memory and on disk. Especially in cases where you’re working with extensive data, it’s good that you know to control the storage type.
+
+Don’t forget that, in order to work with the np.array() function, you need to make sure that the numpy library is present in your environment. The NumPy library follows an import convention: when you import this library, you have to make sure that you import it as np. By doing this, you’ll make sure that other Pythonistas understand your code more easily.
+
+In the following example you’ll create the my_array array that you have already played around with above:
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Make the array `my_array`
+my_array = np.array([[1,2,3,4], [5,6,7,8]], dtype=np.int64)
+
+# Print `my_array`
+print(my_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+If you would like to know more about how to make lists, go here.
+
+However, sometimes you don’t know what data you want to put in your array, or you want to import data into a numpy array from another source. In those cases, you’ll make use of initial placeholders or functions to load data from text into arrays, respectively.
+
+The following sections will show you how to do this.
+
+How To Make An “Empty” NumPy Array
+
+What people often mean when they say that they are creating “empty” arrays is that they want to make use of initial placeholders, which you can fill up afterward. You can initialize arrays with ones or zeros, but you can also create arrays that get filled up with evenly spaced values, constant or random values.
+
+However, you can still make a totally empty array, too.
+
+Luckily for us, there are quite a lot of functions to make
+
+Try it all out below!
+
+# Create an array of ones
+np.ones((3,4))
+
+# Create an array of zeros
+np.zeros((2,3,4),dtype=np.int16)
+
+# Create an array with random values
+np.random.random((2,2))
+
+# Create an empty array
+np.empty((3,2))
+
+# Create a full array
+np.full((2,2),7)
+
+# Create an array of evenly-spaced values
+np.arange(10,25,5)
+
+# Create an array of evenly-spaced values
+np.linspace(0,2,9)
+
+Tip: play around with the above functions so that you understand how they work!
+
+- For some, such as np.ones(), np.random.random(), np.empty(), np.full() or np.zeros() the only thing that you need to do in order to make arrays with ones or zeros is pass the shape of the array that you want to make. As an option to np.ones() and np.zeros(), you can also specify the data type. In the case of np.full(), you also have to specify the constant value that you want to insert into the array.
+
+- With np.linspace() and np.arange() you can make arrays of evenly spaced values. The difference between these two functions is that the last value of the three that are passed in the code chunk above designates either the step value for np.linspace() or a number of samples for np.arange(). What happens in the first is that you want, for example, an array of 9 values that lie between 0 and 2. For the latter, you specify that you want an array to start at 10 and per steps of 5, generate values for the array that you’re creating.
+
+Remember that NumPy also allows you to create an identity array or matrix with np.eye() and np.identity(). An identity matrix is a square matrix of which all elements in the principal diagonal are ones, and all other elements are zeros. When you multiply a matrix with an identity matrix, the given matrix is left unchanged.
+
+In other words, if you multiply a matrix by an identity matrix, the resulting product will be the same matrix again by the standard conventions of matrix multiplication.
+
+Even though the focus of this tutorial is not on demonstrating how identity matrices work, it suffices to say that identity matrices are useful when you’re starting to do matrix calculations: they can simplify mathematical equations, which makes your computations more efficient and robust.
+
+How To Load NumPy Arrays From Text
+
+Creating arrays with the help of initial placeholders or with some example data is an excellent way of getting started with numpy. But when you want to get started with data analysis, you’ll need to load data from text files.
+
+With that what you have seen up until now, you won’t really be able to do much. Make use of some specific functions to load data from your files, such as loadtxt() or genfromtxt().
+
+Let’s say you have the following text files with data:
+
+# This is your data in the text file
+# Value1  Value2  Value3
+# 0.2536  0.1008  0.3857
+# 0.4839  0.4536  0.3561
+# 0.1292  0.6875  0.5929
+# 0.1781  0.3049  0.8928
+# 0.6253  0.3486  0.8791
+
+# Import your data
+x, y, z = np.loadtxt('data.txt',
+                    skiprows=1,
+                    unpack=True)
+
+In the code above, you use loadtxt() to load the data in your environment. You see that the first argument that both functions take is the text file data.txt. Next, there are some specific arguments for each: in the first statement, you skip the first row, and you return the columns as separate arrays with unpack=TRUE. This means that the values in column Value1 will be put in x, and so on.
+
+Note that, in case you have comma-delimited data or if you want to specify the data type, there are also the arguments delimiter and dtype that you can add to the loadtxt() arguments.
+
+That’s easy and straightforward, right?
+
+Let’s take a look at your second file with data:
+
+# Your data in the text file
+# Value1  Value2  Value3
+# 0.4839  0.4536  0.3561
+# 0.1292  0.6875  MISSING
+# 0.1781  0.3049  0.8928
+# MISSING 0.5801  0.2038
+# 0.5993  0.4357  0.7410
+
+my_array2 = np.genfromtxt('data2.txt',
+                      skip_header=1,
+                      filling_values=-999)
+
+You see that here, you resort to genfromtxt() to load the data. In this case, you have to handle some missing values that are indicated by the 'MISSING' strings. Since the genfromtxt() function converts character strings in numeric columns to nan, you can convert these values to other ones by specifying the filling_values argument. In this case, you choose to set the value of these missing values to -999.
+
+If by any chance, you have values that don’t get converted to nan by genfromtxt(), there’s always the missing_values argument that allows you to specify what the missing values of your data exactly are.
+
+But this is not all.
+
+Tip: check out this page to see what other arguments you can add to import your data successfully.
+
+You now might wonder what the difference between these two functions really is.
+
+The examples indicated this maybe implicitly, but, in general, genfromtxt() gives you a little bit more flexibility; It’s more robust than loadtxt().
+
+Let’s make this difference a little bit more practical: the latter, loadtxt(), only works when each row in the text file has the same number of values; So when you want to handle missing values easily, you’ll typically find it easier to use genfromtxt().
+
+But this is definitely not the only reason.
+
+A brief look on the number of arguments that genfromtxt() has to offer will teach you that there is really a lot more things that you can specify in your import, such as the maximum number of rows to read or the option to automatically strip white spaces from variables.
+
+How To Save NumPy Arrays
+
+Once you have done everything that you need to do with your arrays, you can also save them to a file. If you want to save the array to a text file, you can use the savetxt() function to do this:
+
+import numpy as np
+x = np.arange(0.0,5.0,1.0)
+np.savetxt('test.out', x, delimiter=',')
+
+Remember that np.arange() creates a NumPy array of evenly-spaced values. The third value that you pass to this function is the step value.
+
+There are, of course, other ways to save your NumPy arrays to text files. Check out the functions in the table below if you want to get your data to binary files or archives:
+
+save(): Save an array to a binary file in NumPy .npy format
+
+savez(): Save several arrays into an uncompressed .npz archive
+
+savez_compressed(): Save several arrays into a compressed .npz archive
+
+For more information or examples of how you can use the above functions to save your data, go here or make use of one of the help functions that NumPy has to offer to get to know more instantly!
+
+Are you not sure what these NumPy help functions are?
+
+No worries! You’ll learn more about them in one of the next sections!
+
+How To Inspect Your NumPy Arrays
+
+Besides the array attributes that have been mentioned above, namely, data, shape, dtype and strides, there are some more that you can use to easily get to know more about your arrays. The ones that you might find interesting to use when you’re just starting out are the following:
+
+# Print the number of `my_array`'s dimensions
+print(my_array.ndim)
+
+2
+
+# Print the number of `my_array`'s elements
+print(my_array.size)
+
+8
+
+# Print information about `my_array`'s memory layout
+print(my_array.flags)
+
+C_CONTIGUOUS : True
+F_CONTIGUOUS : False
+OWNDATA : True
+WRITEABLE : True
+ALIGNED : True
+UPDATEIFCOPY : False
+
+# Print the length of one array element in bytes
+print(my_array.itemsize)
+
+8
+
+# Print the total consumed bytes by `my_array`'s elements
+print(my_array.nbytes)
+
+64
+
+These are almost all the attributes that an array can have.
+
+Don’t worry if you don’t feel that all of them are useful for you at this point; This is fairly normal, because, just like you read in the previous section, you’ll only get to worry about memory when you’re working with large data sets.
+
+Also note that, besides the attributes, you also have some other ways of gaining more information on and even tweaking your array slightly:
+
+# Print the length of `my_array`
+print(len(my_array))
+
+2
+
+# Change the data type of `my_array`
+my_array.astype(float)
+
+array([[ 1.,  2.,  3.,  4.],
+       [ 5.,  6.,  7.,  8.]])
+
+Now that you have made your array, either by making one yourself with the np.array() or one of the initial placeholder functions, or by loading in your data through the loadtxt() or genfromtxt() functions, it’s time to look more closely into the second key element that really defines the NumPy library: scientific computing.
+
+How NumPy Broadcasting Works
+
+Before you go deeper into scientific computing, it might be a good idea to first go over what broadcasting exactly is: it’s a mechanism that allows NumPy to work with arrays of different shapes when you’re performing arithmetic operations.
+
+To put it in a more practical context, you often have an array that’s somewhat larger and another one that’s slightly smaller. Ideally, you want to use the smaller array multiple times to perform an operation (such as a sum, multiplication, etc.) on the larger array.
+
+To do this, you use the broadcasting mechanism.
+
+However, there are some rules if you want to use it. And, before you already sigh, you’ll see that these “rules” are very simple and kind of straightforward!
+
+- First off, to make sure that the broadcasting is successful, the dimensions of your arrays need to be compatible. Two dimensions are compatible when they are equal. Consider the following example:
+
+# Initialize `x`
+x = np.ones((3,4))
+
+# Check shape of `x`
+print(x.shape)
+
+(3, 4)
+
+# Initialize `y`
+y = np.random.random((3,4))
+
+# Check shape of `y`
+print(y.shape)
+
+(3, 4)
+
+# Add `x` and `y`
+x + y
+
+array([[ 1.69646919,  1.28613933,  1.22685145,  1.55131477],
+       [ 1.71946897,  1.42310646,  1.9807642 ,  1.68482974],
+       [ 1.4809319 ,  1.39211752,  1.34317802,  1.72904971]])
+
+- Two dimensions are also compatible when one of them is 1:
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Initialize `x`
+x = np.ones((3,4))
+
+# Check shape of `x`
+print(x.shape)
+
+(3, 4)
+
+# Initialize `y`
+y = np.arange(4)
+
+# Check shape of `y`
+print(y.shape)
+
+(4,)
+
+# Subtract `x` and `y`
+x - y 
+
+array([[ 1.,  0., -1., -2.],
+       [ 1.,  0., -1., -2.],
+       [ 1.,  0., -1., -2.]])
+
+Note that if the dimensions are not compatible, you will get a ValueError.
+
+Tip: also test what the size of the resulting array is after you have done the computations! You’ll see that the size is actually the maximum size along each dimension of the input arrays.
+
+In other words, you see that the result of x-y gives an array with shape (3,4): y had a shape of (4,) and x had a shape of (3,4). The maximum size along each dimension of x and y is taken to make up the shape of the new, resulting array.
+
+- Lastly, the arrays can only be broadcast together if they are compatible in all dimensions. Consider the following example:
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Initialize `x` and `y`
+x = np.ones((3,4))
+y = np.random.random((5,1,4))
+
+# Add `x` and `y`
+x + y
+
+array([[[ 1.69646919,  1.28613933,  1.22685145,  1.55131477],
+        [ 1.69646919,  1.28613933,  1.22685145,  1.55131477],
+        [ 1.69646919,  1.28613933,  1.22685145,  1.55131477]],
+
+       [[ 1.71946897,  1.42310646,  1.9807642 ,  1.68482974],
+        [ 1.71946897,  1.42310646,  1.9807642 ,  1.68482974],
+        [ 1.71946897,  1.42310646,  1.9807642 ,  1.68482974]],
+
+       [[ 1.4809319 ,  1.39211752,  1.34317802,  1.72904971],
+        [ 1.4809319 ,  1.39211752,  1.34317802,  1.72904971],
+        [ 1.4809319 ,  1.39211752,  1.34317802,  1.72904971]],
+
+       [[ 1.43857224,  1.0596779 ,  1.39804426,  1.73799541],
+        [ 1.43857224,  1.0596779 ,  1.39804426,  1.73799541],
+        [ 1.43857224,  1.0596779 ,  1.39804426,  1.73799541]],
+
+       [[ 1.18249173,  1.17545176,  1.53155137,  1.53182759],
+        [ 1.18249173,  1.17545176,  1.53155137,  1.53182759],
+        [ 1.18249173,  1.17545176,  1.53155137,  1.53182759]]])
+
+You see that, even though x and y seem to have somewhat different dimensions, the two can be added together.
+
+That is because they are compatible in all dimensions:
+
+- Array x has dimensions 3 X 4,
+- Array y has dimensions 5 X 1 X 4
+
+Since you have seen above that dimensions are also compatible if one of them is equal to 1, you see that these two arrays are indeed a good candidate for broadcasting!
+
+What you will notice is that in the dimension where y has size 1, and the other array has a size greater than 1 (that is, 3), the first array behaves as if it were copied along that dimension.
+
+Note that the shape of the resulting array will again be the maximum size along each dimension of x and y: the dimension of the result will be (5,3,4)
+
+In short, if you want to make use of broadcasting, you will rely a lot on the shape and dimensions of the arrays with which you’re working.
+
+But what if the dimensions are not compatible?
+
+What if they are not equal or if one of them is not equal to 1?
+
+You’ll have to fix this by manipulating your array! You’ll see how to do this in one of the next sections.
+
+How Do Array Mathematics Work?
+
+You’ve seen that broadcasting is handy when you’re doing arithmetic operations. In this section, you’ll discover some of the functions that you can use to do mathematics with arrays.
+
+As such, it probably won’t surprise you that you can just use +, -, *, / or % to add, subtract, multiply, divide or calculate the remainder of two (or more) arrays. However, a big part of why NumPy is so handy, is because it also has functions to do this. The equivalent functions of the operations that you have seen just now are, respectively, np.add(), np.subtract(), np.multiply(), np.divide() and np.remainder().
+
+You can also easily do exponentiation and taking the square root of your arrays with np.exp() and np.sqrt(), or calculate the sines or cosines of your array with np.sin() and np.cos(). Lastly, its’ also useful to mention that there’s also a way for you to calculate the natural logarithm with np.log() or calculate the dot product by applying the dot() to your array.
+
+Try it all out in the DataCamp Light chunk below.
+
+Just a tip: make sure to check out first the arrays that have been loaded for this exercise!
+
+# Add `x` and `y`
+np.add(x,y)
+
+# Subtract `x` and `y`
+np.subtract(x,y)
+
+# Multiply `x` and `y`
+np.multiply(x,y)
+
+# Divide `x` and `y`
+np.divide(x,y)
+
+# Calculate the remainder of `x` and `y`
+np.remainder(x,y)
+
+
+Remember how broadcasting works? Check out the dimensions and the shapes of both x and y in your IPython shell. Are the rules of broadcasting respected?
+
+But there is more.
+
+Check out this small list of aggregate functions:
+
+a.sum(): Array-wise sum
+a.min(): Array-wise minimum value
+b.max(axis=0): Maximum value of an array row
+b.cumsum(axis=1): Cumulative sum of the elements
+a.mean(): Mean
+b.median(): Median
+a.corrcoef(): Correlation coefficient
+np.std(b): Standard deviation
+
+Besides all of these functions, you might also find it useful to know that there are mechanisms that allow you to compare array elements. For example, if you want to check whether the elements of two arrays are the same, you might use the == operator. To check whether the array elements are smaller or bigger, you use the < or > operators.
+
+This all seems quite straightforward, yes?
+
+However, you can also compare entire arrays with each other! In this case, you use the np.array_equal() function. Just pass in the two arrays that you want to compare with each other, and you’re done.
+
+Note that, besides comparing, you can also perform logical operations on your arrays. You can start with np.logical_or(), np.logical_not() and np.logical_and(). This basically works like your typical OR, NOT and AND logical operations;
+
+In the simplest example, you use OR to see whether your elements are the same (for example, 1), or if one of the two array elements is 1. If both of them are 0, you’ll return FALSE. You would use AND to see whether your second element is also 1 and NOT to see if the second element differs from 1.
+
+Test this out in the code chunk below:
+
+# `a` AND `b` 
+np.logical_and(a, b)
+
+# `a` OR `b`
+np.logical_or(a, b)
+
+# `a` NOT `b`
+np.logical_not(a,b)
+
+How To Subset, Slice, And Index Arrays
+
+Besides mathematical operations, you might also consider taking just a part of the original array (or the resulting array) or just some array elements to use in further analysis or other operations. In such case, you will need to subset, slice and/or index your arrays.
+
+These operations are very similar to when you perform them on Python lists. If you want to check out the similarities for yourself, or if you want a more elaborate explanation, you might consider checking out DataCamp’s Python list tutorial.
+
+If you have no clue at all on how these operations work, it suffices for now to know these two basic things:
+
+- You use square brackets [] as the index operator, and
+
+- Generally, you pass integers to these square brackets, but you can also put a colon : or a combination of the colon with integers in it to designate the elements/rows/columns you want to select.
+
+Besides from these two points, the easiest way to see how this all fits together is by looking at some examples of subsetting:
+
+# Select the element at the 1st index
+print(my_array[1])
+
+2
+
+# Select the element at row 1 column 2
+print(my_2d_array[1][2])
+
+7
+
+# Select the element at row 1 column 2
+print(my_2d_array[1,2])
+
+7
+
+# Select the element at row 1, column 2 and 
+print(my_3d_array[1,1,2])
+
+11
+
+Something a little bit more advanced than subsetting, if you will, is slicing. Here, you consider not just particular values of your arrays, but you go to the level of rows and columns. You’re basically working with “regions” of data instead of pure “locations”.
+
+You can see what is meant with this analogy in these code examples:
+
+# Select items at index 0 and 1
+print(my_array[0:2])
+
+[1 2]
+
+# Select items at row 0 and 1, column 1
+print(my_2d_array[0:2,1])
+
+[2 6]
+
+# Select items at row 1
+# This is the same as saying `my_3d_array[1,:,:]
+print(my_3d_array[1,...])
+
+[[ 1  2  3  4]
+ [ 9 10 11 12]]
+
+You’ll see that, in essence, the following holds:
+
+a[start:end] # items start through the end (but the end is not included!)
+a[start:]    # items start through the rest of the array
+a[:end]      # items from the beginning through the end (but the end is not included!)
+
+Lastly, there’s also indexing. When it comes to NumPy, there are boolean indexing and advanced or “fancy” indexing.
+
+(In case you’re wondering, this is true NumPy jargon, I didn’t make the last one up!)
+
+First up is boolean indexing. Here, instead of selecting elements, rows or columns based on index number, you select those values from your array that fulfill a certain condition.
+
+Putting this into code can be pretty easy:
+
+# Try out a simple example
+print(my_array[my_array<2])
+
+[1]
+
+# Specify a condition
+bigger_than_3 = (my_3d_array >= 3)
+
+# Use the condition to index our 3d array
+print(my_3d_array[bigger_than_3])
+
+[ 3  4  5  6  7  8  3  4  9 10 11 12]
+
+Note that, to specify a condition, you can also make use of the logical operators | (OR) and & (AND). If you would want to rewrite the condition above in such a way (which would be inefficient, but I demonstrate it here for educational purposes :)), you would get 
+
+bigger_than_3 = (my_3d_array > 3) | (my_3d_array == 3).
+
+With the arrays that have been loaded in, there aren’t too many possibilities, but with arrays that contain for example, names or capitals, the possibilities could be endless!
+
+When it comes to fancy indexing, that what you basically do with it is the following: you pass a list or an array of integers to specify the order of the subset of rows you want to select out of the original array.
+
+Does this sound a little bit abstract to you?
+
+No worries, just try it out in the code chunk below:
+
+# Select elements at (1,0), (0,1), (1,2) and (0,0)
+print(my_2d_array[[1, 0, 1, 0],[0, 1, 2, 0]])
+
+[5 2 7 1]
+
+# Select a subset of the rows and columns
+print(my_2d_array[[1, 0, 1, 0]][:,[0,1,2,0]])
+
+[[5 6 7 5]
+ [1 2 3 1]
+ [5 6 7 5]
+ [1 2 3 1]]
+
+Now, the second statement might seem to make less sense to you at first sight. This is normal. It might make more sense if you break it down:
+
+- If you just execute my_2d_array[[1,0,1,0]], the result is the following:
+
+array([[5, 6, 7, 8],
+   [1, 2, 3, 4],
+   [5, 6, 7, 8],
+   [1, 2, 3, 4]])
+
+- What the second part, namely, [:,[0,1,2,0]], is tell you that you want to keep all the rows of this result, but that you want to change the order of the columns around a bit. You want to display the columns 0, 1, and 2 as they are right now, but you want to repeat column 0 as the last column instead of displaying column number 3. This will give you the following result:
+
+array([[5, 6, 7, 5],
+   [1, 2, 3, 1],
+   [5, 6, 7, 5],
+   [1, 2, 3, 1]])
+
+Advanced indexing clearly holds no secrets for you any more!
+
+How To Ask For Help
+
+As a short intermezzo, you should know that you can always ask for more information about the modules, functions or classes that you’re working with, especially becauseNumPy can be quite something when you first get started on working with it.
+
+Asking for help is fairly easy.
+
+You just make use of the specific help functions that numpy offers to set you on your way:
+
+- Use lookfor() to do a keyword search on docstrings. This is specifically handy if you’re just starting out, as the ‘theory’ behind it all might fade in your memory. The one downside is that you have to go through all of the search results if your query is not that specific, as is the case in the code example below. This might make it even less overviewable for you.
+
+- Use info() for quick explanations and code examples of functions, classes, or modules. If you’re a person that learns by doing, this is the way to go! The only downside about using this function is probably that you need to be aware of the module in which certain attributes or functions are in. If you don’t know immediately what is meant by that, check out the code example below.
+
+You see, both functions have their advantages and disadvantages, but you’ll see for yourself why both of them can be useful: try them out for yourself in the DataCamp Light code chunk below!
+
+# Look up info on `mean` with `np.lookfor()` 
+print(np.lookfor("mean"))
+
+Search results for 'mean'
+-------------------------
+numpy.mean
+    Compute the arithmetic mean along the specified axis.
+numpy.nanmean
+    Compute the arithmetic mean along the specified axis, ignoring NaNs.
+numpy.ma.mean
+    Returns the average of the array elements along given axis.
+numpy.matrix.mean
+    Returns the average of the matrix elements along the given axis.
+numpy.array_equiv
+    Returns True if input arrays are shape consistent and all elements equal.
+numpy.ma.anom
+    Compute the anomalies (deviations from the arithmetic mean)
+numpy.chararray.mean
+    Returns the average of the array elements along given axis.
+numpy.ma.fix_invalid
+    Return input with invalid data masked and replaced by a fill value.
+numpy.ma.MaskedArray.anom
+    Compute the anomalies (deviations from the arithmetic mean)
+numpy.polynomial.polyutils.trimcoef
+    Remove "small" "trailing" coefficients from a polynomial.
+numpy.exp
+    Calculate the exponential of all elements in the input array.
+numpy.pad
+    Pads an array.
+numpy.put
+    Replaces specified elements of an array with given values.
+numpy.std
+    Compute the standard deviation along the specified axis.
+numpy.sum
+    Sum of array elements over a given axis.
+numpy.var
+    Compute the variance along the specified axis.
+numpy.copy
+    Return an array copy of the given object.
+numpy.prod
+    Return the product of array elements over a given axis.
+numpy.take
+    Take elements from an array along an axis.
+numpy.isnan
+    Test element-wise for NaN and return result as a boolean array.
+numpy.ravel
+    Return a contiguous flattened array.
+numpy.copyto
+    Copies values from one array to another, broadcasting as necessary.
+numpy.einsum
+    Evaluates the Einstein summation convention on the operands.
+numpy.kaiser
+    Return the Kaiser window.
+numpy.median
+    Compute the median along the specified axis.
+numpy.nanmax
+    Return the maximum of an array or maximum along an axis, ignoring any
+numpy.nanmin
+    Return minimum of an array or minimum along an axis, ignoring any NaNs.
+numpy.nanstd
+    Compute the standard deviation along the specified axis, while
+numpy.nansum
+    Return the sum of array elements over a given axis treating Not a
+numpy.nanvar
+    Compute the variance along the specified axis, while ignoring NaNs.
+numpy.nditer
+    Efficient multi-dimensional iterator object to iterate over arrays.
+numpy.average
+    Compute the weighted average along the specified axis.
+numpy.hamming
+    Return the Hamming window.
+numpy.hanning
+    Return the Hanning window.
+numpy.polyfit
+    Least squares polynomial fit.
+numpy.reshape
+    Gives a new shape to an array without changing its data.
+numpy.bartlett
+    Return the Bartlett window.
+numpy.blackman
+    Return the Blackman window.
+numpy.can_cast
+    Returns True if cast between data types can occur according to the
+numpy.digitize
+    Return the indices of the bins to which each value in input array belongs.
+numpy.fromfile
+    Construct an array from data in a text or binary file.
+numpy.fromiter
+    Create a new 1-dimensional array from an iterable object.
+numpy.isfinite
+    Test element-wise for finiteness (not infinity or not Not a Number).
+numpy.full_like
+    Return a full array with the same shape and type as a given array.
+numpy.histogram
+    Compute the histogram of a set of data.
+numpy.nanmedian
+    Compute the median along the specified axis, while ignoring NaNs.
+numpy.ones_like
+    Return an array of ones with the same shape and type as a given array.
+numpy.empty_like
+    Return a new array with the same shape and type as a given array.
+numpy.frombuffer
+    Interpret a buffer as a 1-dimensional array.
+numpy.nan_to_num
+    Replace nan with zero and inf with finite numbers.
+numpy.percentile
+    Compute the qth percentile of the data along the specified axis.
+numpy.recfromcsv
+    Load ASCII data stored in a comma-separated file.
+numpy.recfromtxt
+    Load ASCII data from a file and return it in a record array.
+numpy.trim_zeros
+    Trim the leading and/or trailing zeros from a 1-D array or sequence.
+numpy.zeros_like
+    Return an array of zeros with the same shape and type as a given array.
+numpy.ma.dot
+    Return the dot product of two arrays.
+numpy.ma.exp
+    Calculate the exponential of all elements in the input array.
+numpy.ma.var
+    Compute the variance along the specified axis.
+numpy.ma.copy
+    a.copy(order='C')
+numpy.fft.fft2
+    Compute the 2-dimensional discrete Fourier Transform
+numpy.fft.fftn
+    Compute the N-dimensional discrete Fourier Transform.
+numpy.fft.rfft
+    Compute the one-dimensional discrete Fourier Transform for real input.
+numpy.busday_offset
+    First adjusts the date to fall on a valid day according to
+numpy.ma.ravel
+    Returns a 1D version of self, as a view.
+numpy.fft.ifft2
+    Compute the 2-dimensional inverse discrete Fourier Transform.
+numpy.fft.ifftn
+    Compute the N-dimensional inverse discrete Fourier Transform.
+numpy.fft.rfftn
+    Compute the N-dimensional discrete Fourier Transform for real input.
+numpy.nanpercentile
+    Compute the qth percentile of the data along the specified axis,
+numpy.ma.median
+    Compute the median along the specified axis.
+numpy.fft.irfftn
+    Compute the inverse of the N-dimensional FFT of real input.
+numpy.linalg.svd
+    Singular Value Decomposition.
+numpy.ma.polyfit
+    Least squares polynomial fit.
+numpy.bytes0.split
+    Return a list of the sections in the bytes, using sep as the delimiter.
+numpy.linalg.cond
+    Compute the condition number of a matrix.
+numpy.linalg.norm
+    Matrix or vector norm.
+numpy.may_share_memory
+    Determine if two arrays might share memory
+numpy.bytes0.decode
+    Decode the bytes using the codec registered for encoding.
+numpy.bytes0.rsplit
+    Return a list of the sections in the bytes, using sep as the delimiter.
+numpy.str0.encode
+    Encode S using the codec registered for encoding. Default encoding
+numpy.matlib.randn
+    Return a random matrix with data from the "standard normal" distribution.
+numpy.matrix.ravel
+    Return a flattened matrix.
+numpy.bytes0.replace
+    Return a copy with all occurrences of substring old replaced by new.
+numpy.chararray.copy
+    Return a copy of the array.
+numpy.chararray.sort
+    Sort an array, in-place.
+numpy.chararray.view
+    New view of array with the same data.
+numpy.ma.empty_like
+    Return a new array with the same shape and type as a given array.
+numpy.ma.frombuffer
+    Interpret a buffer as a 1-dimensional array.
+numpy.matrix.flatten
+    Return a flattened copy of the matrix.
+numpy.chararray.astype
+    Copy of the array, cast to a specified type.
+numpy.testing.Tester
+    Nose test runner.
+numpy.chararray.flatten
+    Return a copy of the array collapsed into one dimension.
+numpy.chararray.tobytes
+    Construct Python bytes containing the raw data bytes in the array.
+numpy.matrix.partition
+    Rearranges the elements in the array in such a way that value of the
+numpy.chararray.tostring
+    Construct Python bytes containing the raw data bytes in the array.
+numpy.chararray.transpose
+    a.transpose(*axes)
+numpy.ma.MaskedArray.mean
+    Returns the average of the array elements along given axis.
+numpy.testing.noseclasses.NumpyDocTestCase._formatMessage
+    Honour the longMessage attribute when generating failure messages.
+numpy.ma.MaskedArray.dot
+    Masked dot product of two arrays. Note that `out` and `strict` are
+numpy.ma.MaskedArray.var
+    Compute the variance along the specified axis.
+numpy.ma.MaskedArray.copy
+    Return a copy of the array.
+numpy.ma.MaskedArray.view
+    New view of array with the same data.
+numpy.core.multiarray.scalar
+    Return a new scalar array of the given type initialized with obj.
+numpy.ma.MaskedArray.ravel
+    Returns a 1D version of self, as a view.
+numpy.ma.MaskedArray.filled
+    Return a copy of self, with masked values filled with a given value.
+numpy.lib.format.open_memmap
+    Open a .npy file as a memory-mapped array.
+numpy.lib.format.write_array
+    Write an array to an NPY file, including a header.
+numpy.ma.MaskedArray.flatten
+    Return a copy of the array collapsed into one dimension.
+numpy.polynomial.Hermite._fit
+    Least squares fit of Hermite series to data.
+numpy.ma.MaskedArray.transpose
+    a.transpose(*axes)
+numpy.polynomial.HermiteE._fit
+    Least squares fit of Hermite series to data.
+numpy.polynomial.Laguerre._fit
+    Least squares fit of Laguerre series to data.
+numpy.polynomial.Legendre._fit
+    Least squares fit of Legendre series to data.
+numpy.polynomial.Chebyshev._fit
+    Least squares fit of Chebyshev series to data.
+numpy.polynomial.Polynomial._fit
+    Least-squares fit of a polynomial to data.
+numpy.distutils.command.bdist_rpm.bdist_rpm.set_undefined_options
+    Set the values of any "undefined" options from corresponding
+numpy.lib.format._write_array_header
+    Write the header for an array and returns the version used
+numpy.distutils.numpy_distribution.NumpyDistribution._set_command_options
+    Set the options for 'command_obj' from 'option_dict'.  Basically
+numpy.testing.Tester._get_custom_doctester
+    Return instantiated plugin for doctests
+numpy.distutils.fcompiler.FCompiler.link
+    Link a bunch of stuff together to create an executable or
+numpy.distutils.msvccompiler.MSVCCompiler.link
+    Link a bunch of stuff together to create an executable or
+numpy.distutils.intelccompiler.IntelCCompiler.link
+    Link a bunch of stuff together to create an executable orNone
+
+# Get info on data types with `np.info()`
+np.info(np.ndarray.dtype)
+
+(Tao tried print(np.info(np.ndarray.dtype)), but it did not print anything)
+
+Note that you indeed need to know that dtype is an attribute of ndarray. Also, make sure that you don’t forget to put np in front of the modules, classes or terms you’re asking information about, otherwise you will get an error message like this:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'ndarray' is not defined
+
+You now know how to ask for help, and that’s a good thing. The next topic that this NumPy tutorial covers is array manipulation.
+
+Not that you can not overcome this topic on your own, quite the contrary!
+
+But some of the functions might raise questions, because, what is the difference between resizing and reshaping?
+
+And what is the difference between stacking your arrays horizontally and vertically?
+
+The next section is all about answering these questions, but if you ever feel in doubt, feel free to use the help functions that you have just seen to quickly get up to speed.
+
+How To Manipulate Arrays
+
+Performing mathematical operations on your arrays is one of the things that you’ll be doing, but probably most importantly to make this and the broadcasting work is to know how to manipulate your arrays.
+
+Below are some of the most common manipulations that you’ll be doing.
+
+How To Transpose Your Arrays
+
+What transposing your arrays actually does is permuting the dimensions of it. Or, in other words, you switch around the shape of the array. Let’s take a small example to show you the effect of transposition:
+
+# Print `my_2d_array`
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
+# Transpose `my_2d_array`
+print(np.transpose(my_2d_array))
+
+[[1 5]
+ [2 6]
+ [3 7]
+ [4 8]]
+
+# Or use `T` to transpose `my_2d_array`
+print(my_2d_array.T)
+
+[[1 5]
+ [2 6]
+ [3 7]
+ [4 8]]
+
+Tip: if the visual comparison between the array and its transposed version is not entirely clear, inspect the shape of the two arrays to make sure that you understand why the dimensions are permuted.
+
+Note that there are two transpose functions. Both do the same; There isn’t too much difference. You do have to take into account that T seems more of a convenience function and that you have a lot more flexibility with np.transpose(). That’s why it’s recommended to make use of this function if you want to more arguments.
+
+All is well when you transpose arrays that are bigger than one dimension, but what happens when you just have a 1-D array? Will there be any effect, you think?
+
+Try it out for yourself in the code chunk below. Your 1-D array has already been loaded in:
+
+# Print `my_2d_array`
+print(my_array)
+
+[1 2 3 4]
+
+# Transpose `my_2d_array`
+print(np.transpose(my_array))
+
+[1 2 3 4]
+
+# Or use `T` to transpose `my_2d_array`
+print(my_array.T)
+
+[1 2 3 4]
+
+You’re absolutely right! There is no effect when you transpose a 1-D array!
+
+Reshaping Versus Resizing Your Arrays
+
+You might have read in the broadcasting section that the dimensions of your arrays need to be compatible if you want them to be good candidates for arithmetic operations. But the question of what you should do when that is not the case, was not answered yet.
+
+Well, this is where you get the answer!
+
+What you can do if the arrays don’t have the same dimensions, is resize your array. You will then return a new array that has the shape that you passed to the np.resize() function. If you pass your original array together with the new dimensions, and if that new array is larger than the one that you originally had, the new array will be filled with copies of the original array that are repeated as many times as is needed.
+
+However, if you just apply np.resize() to the array and you pass the new shape to it, the new array will be filled with zeros.
+
+Let’s try this out with an example:
+
+# Print the shape of `x`
+print(x.shape)
+
+(3, 4)
+
+# Resize `x` to ((6,4))
+np.resize(x, (6,4))
+
+# Try out this as well
+x.resize((6,4))
+
+# Print out `x`
+print(x)
+
+[[ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 1.  1.  1.  1.]
+ [ 0.  0.  0.  0.]
+ [ 0.  0.  0.  0.]
+ [ 0.  0.  0.  0.]]
+
+Besides resizing, you can also reshape your array. This means that you give a new shape to an array without changing its data. The key to reshaping is to make sure that the total size of the new array is unchanged. If you take the example of array x that was used above, which has a size of 3 X 4 or 12, you have to make sure that the new array also has a size of 12.
+
+Psst… If you want to calculate the size of an array with code, make sure to use the size attribute: x.size or x.reshape((2,6)).size:
+
+# Print the size of `x` to see what's possible
+print(x.size)
+
+12
+
+# Reshape `x` to (2,6)
+print(x.reshape((2,6)))
+
+[[ 1.  1.  1.  1.  1.  1.]
+ [ 1.  1.  1.  1.  1.  1.]]
+
+# Flatten `x`
+z = x.ravel()
+
+# Print `z`
+print(z)
+
+[ 1.  1.  1.  1.  1.  1.  1.  1.  1.  1.  1.  1.]
+
+If all else fails, you can also append an array to your original one or insert or delete array elements to make sure that your dimensions fit with the other array that you want to use for your computations.
+
+Another operation that you might keep handy when you’re changing the shape of arrays is ravel(). This function allows you to flatten your arrays. This means that if you ever have 2D, 3D or n-D arrays, you can just use this function to flatten it all out to a 1-D array.
+
+Pretty handy, isn’t it?
+
+How To Append Arrays
+
+When you append arrays to your original array, they are “glued” to the end of that original array. If you want to make sure that what you append does not come at the end of the array, you might consider inserting it. Go to the next section if you want to know more.
+
+Appending is a pretty easy thing to do thanks to the NumPy library; You can just make use of the np.append().
+
+Check how it’s done in the code chunk below. Don’t forget that you can always check which arrays are loaded in by typing, for example, my_array in the IPython shell and pressing ENTER.
+
+# Append a 1D array to your `my_array`
+new_array = np.append(my_array, [7, 8, 9, 10])
+
+# Print `new_array`
+print(new_array)
+
+# Append an extra column to your `my_2d_array`
+new_2d_array = np.append(my_2d_array, [[7], [8]], axis=1)
+
+# Print `new_2d_array`
+print(new_2d_array)
+
+Note how, when you append an extra column to my_2d_array, the axis is specified. Remember that axis 1 indicates the columns, while axis 0 indicates the rows in 2-D arrays.
+
+How To Insert And Delete Array Elements
+
+Next to appending, you can also insert and delete array elements. As you might have guessed by now, the functions that will allow you to do these operations are np.insert() and np.delete():
+
+# Insert `5` at index 1
+np.insert(my_array, 1, 5)
+
+# Delete the value at index 1
+np.delete(my_array,[1])
+
+How To Join And Split Arrays
+
+You can also ‘merge’ or join your arrays. There are a bunch of functions that you can use for that purpose and most of them are listed below.
+
+Try them out, but also make sure to test out what the shape of the arrays is in the IPython shell. The arrays that have been loaded are x, my_array, my_resized_array and my_2d_array.
+
+# Concatentate `my_array` and `x`
+print(np.concatenate((my_array,x)))
+
+[ 1.  2.  3.  4.  1.  1.  1.  1.]
+
+# Stack arrays row-wise
+print(np.vstack((my_array, my_2d_array)))
+
+[[1 2 3 4]
+ [1 2 3 4]
+ [5 6 7 8]]
+
+# Stack arrays row-wise
+print(np.r_[my_resized_array, my_2d_array])
+
+[[1 2 3 4]
+ [1 2 3 4]
+ [1 2 3 4]
+ [5 6 7 8]]
+
+# Stack arrays horizontally
+print(np.hstack((my_resized_array, my_2d_array)))
+
+[[1 2 3 4 1 2 3 4]
+ [1 2 3 4 5 6 7 8]]
+
+# Stack arrays column-wise
+print(np.column_stack((my_resized_array, my_2d_array)))
+
+[[1 2 3 4 1 2 3 4]
+ [1 2 3 4 5 6 7 8]]
+
+# Stack arrays column-wise
+print(np.c_[my_resized_array, my_2d_array])
+
+[[1 2 3 4 1 2 3 4]
+ [1 2 3 4 5 6 7 8]]
+
+You’ll note a few things as you go through the functions:
+
+- The number of dimensions needs to be the same if you want to concatenate two arrays with np.concatenate(). As such, if you want to concatenate an array with my_array, which is 1-D, you’ll need to make sure that the second array that you have, is also 1-D.
+
+- With np.vstack(), you effortlessly combine my_array with my_2d_array. You just have to make sure that, as you’re stacking the arrays row-wise, that the number of columns in both arrays is the same. As such, you could also add an array with shape (2,4) or (3,4) to my_2d_array, as long as the number of columns matches. Stated differently, the arrays must have the same shape along all but the first axis. The same holds also for when you want to use np.r[].
+
+- For np.hstack(), you have to make sure that the number of dimensions is the same and that the number of rows in both arrays is the same. That means that you could stack arrays such as (2,3) or (2,4) to my_2d_array, which itself as a shape of (2,4). Anything is possible as long as you make sure that the number of rows matches. This function is still supported by NumPy, but you should prefer np.concatenate() or np.stack().
+
+- With np.column_stack(), you have to make sure that the arrays that you input have the same first dimension. In this case, both shapes are the same, but if my_resized_array were to be (2,1) or (2,), the arrays still would have been stacked.
+
+- np.c_[] is another way to concatenate. Here also, the first dimension of both arrays needs to match.
+
+When you have joined arrays, you might also want to split them at some point. Just like you can stack them horizontally, you can also do the same but then vertically. You use np.hsplit() and np.vsplit(), respectively:
+
+# Split `my_stacked_array` horizontally at the 2nd index
+print(np.hsplit(my_stacked_array, 2))
+
+# Split `my_stacked_array` vertically at the 2nd index
+print(np.vsplit(my_stacked_array, 2))
+
+What you need to keep in mind when you’re using both of these split functions is probably the shape of your array. Let’s take the above case as an example: my_stacked_array has a shape of (2,8). If you want to select the index at which you want the split to occur, you have to keep the shape in mind.
+
+How To Visualize NumPy Arrays
+
+Lastly, something that will definitely come in handy is to know how you can plot your arrays. This can especially be handy in data exploration, but also in later stages of the data science workflow, when you want to visualize your arrays.
+
+With np.histogram()
+
+Contrary to what the function might suggest, the np.histogram() function doesn’t draw the histogram but it does compute the occurrences of the array that fall within each bin; This will determine the area that each bar of your histogram takes up.
+
+What you pass to the np.histogram() function then is first the input data or the array that you’re working with. The array will be flattened when the histogram is computed.
+
+# Import `numpy` as `np`
+import numpy as np
+
+# Initialize your array
+my_3d_array = np.array([[[1,2,3,4], [5,6,7,8]], [[1,2,3,4], [9,10,11,12]]], dtype=np.int64)
+
+# Pass the array to `np.histogram()`
+print(np.histogram(my_3d_array))
+
+(array([4, 2, 2, 1, 1, 1, 1, 1, 1, 2]), array([  1. ,   2.1,   3.2,   4.3,   5.4,   6.5,   7.6,   8.7,   9.8,
+        10.9,  12. ]))
+
+# Specify the number of bins
+print(np.histogram(my_3d_array, bins=range(0,13)))
+
+(array([0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2]), array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12]))
+
+You’ll see that as a result, the histogram will be computed: the first array lists the frequencies for all the elements of your array, while the second array lists the bins that would be used if you don’t specify any bins.
+
+If you do specify a number of bins, the result of the computation will be different: the floats will be gone and you’ll see all integers for the bins.
+
+There are still some other arguments that you can specify that can influence the histogram that is computed. You can find all of them here.
+
+But what is the point of computing such a histogram if you can’t visualize it?
+
+Visualization is a piece of cake with the help of Matplotlib, but you don’t need np.histogram() to compute the histogram. plt.hist() does this for itself when you pass it the (flattened) data and the bins:
+
+# Import numpy and matplotlib
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Construct the histogram with a flattened 3d array and a range of bins
+plt.hist(my_3d_array.ravel(), bins=range(0,13))
+
+# Add a title to the plot
+plt.title('Frequency of My 3D Array Elements')
+
+# Show the plot
+plt.show()
+
+The above code will then give you the following (basic) histogram:
+
+(A picture)
+
+Using np.meshgrid()
+
+Another way to (indirectly) visualize your array is by using np.meshgrid(). The problem that you face with arrays is that you need 2-D arrays of x and y coordinate values. With the above function, you can create a rectangular grid out of an array of x values and an array of y values: the np.meshgrid() function takes two 1D arrays and produces two 2D matrices corresponding to all pairs of (x, y) in the two arrays. Then, you can use these matrices to make all sorts of plots.
+
+np.meshgrid() is particularly useful if you want to evaluate functions on a grid, as the code below demonstrates:
+
+# Import NumPy and Matplotlib
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create an array
+points = np.arange(-5, 5, 0.01)
+
+# Make a meshgrid
+xs, ys = np.meshgrid(points, points)
+z = np.sqrt(xs ** 2 + ys ** 2)
+
+# Display the image on the axes
+plt.imshow(z, cmap=plt.cm.gray)
+
+# Draw a color bar
+plt.colorbar()
+
+# Show the plot
+plt.show()
+
+The code above gives the following result:
+
+(A picture)
+
+Beyond Data Analysis with NumPy
+
+Congratulations, you have reached the end of the NumPy tutorial!
+
+You have covered a lot of ground, so now you have to make sure to retain the knowledge that you have gained. Don’t forget to get your copy of DataCamp’s NumPy cheat sheet to support you in doing this!
+
+After all this theory, it’s also time to get some more practice with the concepts and techniques that you have learned in this tutorial. One way to do this is to go back to the scikit-learn tutorial and start experimenting with further with the data arrays that are used to build machine learning models.
+
+If this is not your cup of tea, check again whether you have downloaded Anaconda. Then, get started with NumPy arrays in Jupyter with this Definitive Guide to Jupyter Notebook. Also make sure to check out this Jupyter Notebook, which also guides you through data analysis in Python with NumPy and some other libraries in the interactive data science environment of the Jupyter Notebook.
+
+Lastly, consider checking out DataCamp’s courses on data manipulation and visualization. Especially our latest courses in collaboration with Continuum Analytics will definitely interest you! Take a look at the Manipulating DataFrames with Pandas or the Pandas Foundations courses.
+
+==
 From 
 https://www.hackerearth.com/practice/machine-learning/data-manipulation-visualisation-r-python/tutorial-data-manipulation-numpy-pandas-python/tutorial/
 
