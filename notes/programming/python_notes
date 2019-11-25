@@ -7439,5 +7439,1234 @@ print df2.head(5)
 
 Scikit-Learn
 
+Notes from the following site (double checked and confirmed it does not miss anything from the site)
+
 https://www.datacamp.com/community/tutorials/machine-learning-python
 
+Python Machine Learning: Scikit-Learn Tutorial
+
+An easy-to-follow scikit-learn tutorial that will help you get started with Python machine learning.
+
+Machine Learning with Python
+
+Machine learning is a branch in computer science that studies the design of algorithms that can learn.
+
+Typical tasks are concept learning, function learning or “predictive modeling”, clustering and finding predictive patterns. These tasks are learned through available data that were observed through experiences or instructions, for example.
+
+The hope that comes with this discipline is that including the experience into its tasks will eventually improve the learning. But this improvement needs to happen in such a way that the learning itself becomes automatic so that humans like ourselves don’t need to interfere anymore is the ultimate goal.
+
+Today’s scikit-learn tutorial will introduce you to the basics of Python machine learning:
+
+- You'll learn how to use Python and its libraries to explore your data with the help of matplotlib and Principal Component Analysis (PCA),
+
+- And you'll preprocess your data with normalization, and you'll split your data into training and test sets.
+
+- Next, you'll work with the well-known KMeans algorithm to construct an unsupervised model, fit this model to your data, predict values, and validate the model that you have built.
+
+- As an extra, you'll also see how you can also use Support Vector Machines (SVM) to construct another model to classify your data.
+
+If you’re more interested in an R tutorial, take a look at our Machine Learning with R for Beginners tutorial.
+
+Alternatively, check out DataCamp's Supervised Learning with scikit-learn and Unsupervised Learning in Python courses!
+
+Loading Your Data Set
+
+The first step to about anything in data science is loading your data. This is also the starting point of this scikit-learn tutorial.
+
+This discipline typically works with observed data. This data might be collected by yourself, or you can browse through other sources to find data sets. But if you’re not a researcher or otherwise involved in experiments, you’ll probably do the latter.
+
+If you’re new to this and you want to start problems on your own, finding these data sets might prove to be a challenge. However, you can typically find good data sets at the UCI Machine Learning Repository or on the Kaggle website. Also, check out this KD Nuggets list with resources.
+
+For now, you should warm up, not worry about finding any data by yourself and just load in the digits data set that comes with a Python library, called scikit-learn.
+
+Fun fact: did you know the name originates from the fact that this library is a scientific toolbox built around SciPy? By the way, there is more than just one scikit out there. This scikit contains modules specifically for machine learning and data mining, which explains the second component of the library name. :)
+
+To load in the data, you import the module datasets from sklearn. Then, you can use the load_digits() method from datasets to load in the data:
+
+# Import `datasets` from `sklearn`
+from sklearn import datasets
+
+# Load in the `digits` data
+digits = datasets.load_digits()
+
+# Print the `digits` data 
+print(digits)
+
+{'images': array([[[  0.,   0.,   5., ...,   1.,   0.,   0.],
+        [  0.,   0.,  13., ...,  15.,   5.,   0.],
+        [  0.,   3.,  15., ...,  11.,   8.,   0.],
+        ..., 
+        [  0.,   4.,  11., ...,  12.,   7.,   0.],
+        [  0.,   2.,  14., ...,  12.,   0.,   0.],
+        [  0.,   0.,   6., ...,   0.,   0.,   0.]],
+
+       [[  0.,   0.,   0., ...,   5.,   0.,   0.],
+        [  0.,   0.,   0., ...,   9.,   0.,   0.],
+        [  0.,   0.,   3., ...,   6.,   0.,   0.],
+        ..., 
+        [  0.,   0.,   1., ...,   6.,   0.,   0.],
+        [  0.,   0.,   1., ...,   6.,   0.,   0.],
+        [  0.,   0.,   0., ...,  10.,   0.,   0.]],
+
+       [[  0.,   0.,   0., ...,  12.,   0.,   0.],
+        [  0.,   0.,   3., ...,  14.,   0.,   0.],
+        [  0.,   0.,   8., ...,  16.,   0.,   0.],
+        ..., 
+        [  0.,   9.,  16., ...,   0.,   0.,   0.],
+        [  0.,   3.,  13., ...,  11.,   5.,   0.],
+        [  0.,   0.,   0., ...,  16.,   9.,   0.]],
+
+       ..., 
+       [[  0.,   0.,   1., ...,   1.,   0.,   0.],
+        [  0.,   0.,  13., ...,   2.,   1.,   0.],
+        [  0.,   0.,  16., ...,  16.,   5.,   0.],
+        ..., 
+        [  0.,   0.,  16., ...,  15.,   0.,   0.],
+        [  0.,   0.,  15., ...,  16.,   0.,   0.],
+        [  0.,   0.,   2., ...,   6.,   0.,   0.]],
+
+       [[  0.,   0.,   2., ...,   0.,   0.,   0.],
+        [  0.,   0.,  14., ...,  15.,   1.,   0.],
+        [  0.,   4.,  16., ...,  16.,   7.,   0.],
+        ..., 
+        [  0.,   0.,   0., ...,  16.,   2.,   0.],
+        [  0.,   0.,   4., ...,  16.,   2.,   0.],
+        [  0.,   0.,   5., ...,  12.,   0.,   0.]],
+
+       [[  0.,   0.,  10., ...,   1.,   0.,   0.],
+        [  0.,   2.,  16., ...,   1.,   0.,   0.],
+        [  0.,   0.,  15., ...,  15.,   0.,   0.],
+        ..., 
+        [  0.,   4.,  16., ...,  16.,   6.,   0.],
+        [  0.,   8.,  16., ...,  16.,   8.,   0.],
+        [  0.,   1.,   8., ...,  12.,   1.,   0.]]]), 'target_names': array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), 'data': array([[  0.,   0.,   5., ...,   0.,   0.,   0.],
+       [  0.,   0.,   0., ...,  10.,   0.,   0.],
+       [  0.,   0.,   0., ...,  16.,   9.,   0.],
+       ..., 
+       [  0.,   0.,   1., ...,   6.,   0.,   0.],
+       [  0.,   0.,   2., ...,  12.,   0.,   0.],
+       [  0.,   0.,  10., ...,  12.,   1.,   0.]]), 'target': array([0, 1, 2, ..., 8, 9, 8]), 'DESCR': "Optical Recognition of Handwritten Digits Data Set\n===================================================\n\nNotes\n-----\nData Set Characteristics:\n    :Number of Instances: 5620\n    :Number of Attributes: 64\n    :Attribute Information: 8x8 image of integer pixels in the range 0..16.\n    :Missing Attribute Values: None\n    :Creator: E. Alpaydin (alpaydin '@' boun.edu.tr)\n    :Date: July; 1998\n\nThis is a copy of the test set of the UCI ML hand-written digits datasets\nhttp://archive.ics.uci.edu/ml/datasets/Optical+Recognition+of+Handwritten+Digits\n\nThe data set contains images of hand-written digits: 10 classes where\neach class refers to a digit.\n\nPreprocessing programs made available by NIST were used to extract\nnormalized bitmaps of handwritten digits from a preprinted form. From a\ntotal of 43 people, 30 contributed to the training set and different 13\nto the test set. 32x32 bitmaps are divided into nonoverlapping blocks of\n4x4 and the number of on pixels are counted in each block. This generates\nan input matrix of 8x8 where each element is an integer in the range\n0..16. This reduces dimensionality and gives invariance to small\ndistortions.\n\nFor info on NIST preprocessing routines, see M. D. Garris, J. L. Blue, G.\nT. Candela, D. L. Dimmick, J. Geist, P. J. Grother, S. A. Janet, and C.\nL. Wilson, NIST Form-Based Handprint Recognition System, NISTIR 5469,\n1994.\n\nReferences\n----------\n  - C. Kaynak (1995) Methods of Combining Multiple Classifiers and Their\n    Applications to Handwritten Digit Recognition, MSc Thesis, Institute of\n    Graduate Studies in Science and Engineering, Bogazici University.\n  - E. Alpaydin, C. Kaynak (1998) Cascading Classifiers, Kybernetika.\n  - Ken Tang and Ponnuthurai N. Suganthan and Xi Yao and A. Kai Qin.\n    Linear dimensionalityreduction using relevance weighted LDA. School of\n    Electrical and Electronic Engineering Nanyang Technological University.\n    2005.\n  - Claudio Gentile. A New Approximate Maximal Margin Classification\n    Algorithm. NIPS. 2000.\n"}
+
+Note that the datasets module contains other methods to load and fetch popular reference datasets, and you can also count on this module in case you need artificial data generators. Also, this data set is also available through the UCI Repository that was mentioned above: you can find the data here.
+
+If you had decided to pull the data from the latter page, your data import would’ve looked like this:
+
+# Import the `pandas` library as `pd`
+import pandas as pd
+
+# Load in the data with `read_csv()`
+digits = pd.read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra", header=None)
+
+# Print out `digits`
+print(digits)
+
+      0   1   2   3   4   5   6   7   8   9  ...  55  56  57  58  59  60  61  \
+0      0   1   6  15  12   1   0   0   0   7 ...   0   0   0   6  14   7   1   
+1      0   0  10  16   6   0   0   0   0   7 ...   0   0   0  10  16  15   3   
+2      0   0   8  15  16  13   0   0   0   1 ...   0   0   0   9  14   0   0   
+3      0   0   0   3  11  16   0   0   0   0 ...   0   0   0   0   1  15   2   
+4      0   0   5  14   4   0   0   0   0   0 ...   0   0   0   4  12  14   7   
+5      0   0  11  16  10   1   0   0   0   4 ...   3   0   0  10  16  16  16   
+6      0   0   1  11  13  11   7   0   0   0 ...   0   0   0   1  13   5   0   
+7      0   0   8  10   8   7   2   0   0   1 ...   0   0   0   4  13   8   0   
+8      0   0  15   2  14  13   2   0   0   0 ...   0   0   0  10  12   5   0   
+9      0   0   3  13  13   2   0   0   0   6 ...   0   0   0   3  15  11   6   
+10     0   0   6  14  14  16  16   8   0   0 ...   0   0   0  10  12   0   0   
+11     0   0   0   3  16  11   1   0   0   0 ...   0   0   0   0   2  14  14   
+12     0   0   0   4  13  16  16   3   0   0 ...   0   0   0   0   5  15   4   
+13     0   0   7  12   6   2   0   0   0   0 ...   0   0   0   5  16   9   0   
+14     0   0   7  11  11   6   0   0   0   9 ...   0   0   0  14  16  12  10   
+15     0   1  10  15   8   0   0   0   0   6 ...   0   0   0   9  15   8   0   
+16     0   0   0   1  11   7   0   0   0   0 ...   0   0   0   0   3  15   0   
+17     0   0   5  12  16  16   3   0   0   0 ...   0   0   0   8  12   0   0   
+18     0   0   1   8  13  13   2   0   0   4 ...   0   0   0   1  13  12   4   
+19     0   0   0   2  13  12   4   0   0   0 ...   0   0   0   0   0  15   3   
+20     0   0   4  11  15  16  15   0   0   0 ...   0   0   0   6  14   2   0   
+21     0   0   4  10  13  11   1   0   0   2 ...   0   0   0   6  13  11   1   
+22     0   0   3  11  13  14   6   0   0   0 ...   0   0   0   3  13  10   0   
+23     0   0   1   4  11  13   7   0   0   2 ...   0   0   0   0   1  14   3   
+24     0   0   9  13   1   0   0   0   0   0 ...   5   0   0   4  15  16  16   
+25     0   0   9  16  11   0   0   0   0   4 ...   1   0   0  10  16   9   9   
+26     0   0   2  13   9   0   0   0   0   0 ...   0   0   0   3  16  14   4   
+27     0   0   0  10  12   0   0   0   0   0 ...   0   0   0   1  11  14  12   
+28     0   0   0   0  10  13   0   0   0   0 ...   0   0   0   0   0   8  15   
+29     0   0   7   9  13  11   2   0   0   6 ...   0   0   0  13  12   8   1   
+...   ..  ..  ..  ..  ..  ..  ..  ..  ..  .. ...  ..  ..  ..  ..  ..  ..  ..   
+3793   0   0  15  15  16  14   1   0   0   3 ...   0   0   0  15  16  12   0   
+3794   0   0   2  13  16  15   4   0   0   0 ...   0   0   0   3  14   1   0   
+3795   0   0  12  16   7   0   0   0   0   2 ...   0   0   0  11  16  16  16   
+3796   0   0   0   3  13   0   0   0   0   0 ...   0   0   0   0   6  12   0   
+3797   0   0   0  12   8   0   0   0   0   0 ...   0   0   0   0  14   6   0   
+3798   0   0   0   9  12   0   0   0   0   0 ...   0   0   0   0  10  11   0   
+3799   0   0   5  16  13   1   0   0   0   0 ...   0   0   1   6  10  12  12   
+3800   0   0   6  16   8   0   0   0   0   2 ...   0   0   0   7  13  16  13   
+3801   0   0   5  16  11   0   0   0   0   1 ...   0   0   0   4  14  12   2   
+3802   0   1  12  16  14   4   0   0   0   8 ...   0   0   0  13  15  15  10   
+3803   0   0   3  14  13   3   0   0   0   0 ...   0   0   0   3  13  13   6   
+3804   0   0  12  16  16  10   1   0   0   0 ...   0   0   1  10  16  16  16   
+3805   0   0   0   8  11   0   0   0   0   0 ...   0   0   0   0   7  12   0   
+3806   0   1   9  16  14   6   0   0   0   5 ...   0   0   0  11  16   7   0   
+3807   0   0   4  14  15   3   0   0   0   0 ...   0   0   0   3  14  14   6   
+3808   0   2  15  16  15   1   0   0   0   3 ...   0   0   0  14  13  16  11   
+3809   0   0   5  15  16   6   0   0   0   0 ...   0   0   0   5  15  16  15   
+3810   0   0   4  16  11   1   0   0   0   0 ...   0   0   0   2  12  16  11   
+3811   0   0   0   0   7  11   1   0   0   0 ...   0   0   0   2   0   7  11   
+3812   0   0   0   6  13   0   0   0   0   0 ...   0   0   0   0   6   9   0   
+3813   0   0   0   6   8   0   0   0   0   0 ...   0   0   1   4   9   8   0   
+3814   0   0   9  16   6   0   0   0   0   2 ...   0   0   0  10  13   1   0   
+3815   0   0   9  16  12   1   0   0   0   3 ...   0   0   0   8  16  16  16   
+3816   0   1  10  16  16   4   0   0   0   8 ...   0   0   2  13  16  12   5   
+3817   0   0   6  16  11   0   0   0   0   1 ...   0   0   1   7  14  16  12   
+3818   0   0   5  13  11   2   0   0   0   2 ...   0   0   0   8  13  15  10   
+3819   0   0   0   1  12   1   0   0   0   0 ...   0   0   0   0   4   9   0   
+3820   0   0   3  15   0   0   0   0   0   0 ...   0   0   0   4  14  16   9   
+3821   0   0   6  16   2   0   0   0   0   0 ...   0   0   0   5  16  16  16   
+3822   0   0   2  15  16  13   1   0   0   0 ...   0   0   0   4  14   1   0   
+
+      62  63  64  
+0      0   0   0  
+1      0   0   0  
+2      0   0   7  
+3      0   0   4  
+4      0   0   6  
+5     16   6   2  
+6      0   0   5  
+7      0   0   5  
+8      0   0   0  
+9      0   0   8  
+10     0   0   7  
+11     1   0   1  
+12     0   0   9  
+13     0   0   5  
+14     1   0   3  
+15     0   0   0  
+16     0   0   4  
+17     0   0   7  
+18     0   0   8  
+19     0   0   4  
+20     0   0   7  
+21     0   0   8  
+22     0   0   5  
+23     0   0   9  
+24    16  16   1  
+25    13   6   2  
+26     0   0   0  
+27     1   0   6  
+28     2   0   1  
+29     0   0   8  
+...   ..  ..  ..  
+3793   0   0   5  
+3794   0   0   7  
+3795  16   8   2  
+3796   0   0   4  
+3797   0   0   4  
+3798   0   0   4  
+3799   2   0   9  
+3800   9   0   9  
+3801   0   0   0  
+3802   2   0   3  
+3803   0   0   0  
+3804   7   0   3  
+3805   0   0   4  
+3806   0   0   8  
+3807   0   0   0  
+3808   1   0   3  
+3809   1   0   0  
+3810   1   0   1  
+3811   0   0   1  
+3812   0   0   4  
+3813   0   0   4  
+3814   0   0   8  
+3815   8   0   9  
+3816   0   0   3  
+3817   1   0   9  
+3818   1   0   9  
+3819   0   0   4  
+3820   0   0   6  
+3821   5   0   6  
+3822   0   0   7  
+
+[3823 rows x 65 columns]
+
+Note that if you download the data like this, the data is already split up in a training and a test set, indicated by the extensions .tra and .tes. You’ll need to load in both files to elaborate your project. With the command above, you only load in the training set.
+
+Tip: if you want to know more about importing data with the Python data manipulation library Pandas, consider taking DataCamp’s Importing Data in Python course.
+
+Explore Your Data
+
+When first starting out with a data set, it’s always a good idea to go through the data description and see what you can already learn. When it comes to scikit-learn, you don’t immediately have this information readily available, but in the case where you import data from another source, there's usually a data description present, which will already be a sufficient amount of information to gather some insights into your data.
+
+However, these insights are not merely deep enough for the analysis that you are going to perform. You really need to have a good working knowledge about the data set.
+
+Performing an exploratory data analysis (EDA) on a data set like the one that this tutorial now has might seem difficult.
+
+Where do you start exploring these handwritten digits?
+
+Gathering Basic Information on Your Data
+
+Let’s say that you haven’t checked any data description folder (or maybe you want to double-check the information that has been given to you).
+
+Then you should start by gathering the necessary information.
+
+When you printed out the digits data after having loaded it with the help of the scikit-learn datasets module, you will have noticed that there is already a lot of information available. You already know things such as the target values and the description of your data. You can access the digits data through the attribute data. Similarly, you can also access the target values or labels through the target attribute and the description through the DESCR attribute.
+
+To see which keys you have available to already get to know your data, you can just run digits.keys().
+
+Try this all out in the following DataCamp Light blocks:
+
+# Get the keys of the `digits` data
+print(digits.keys())
+
+dict_keys(['images', 'target_names', 'data', 'target', 'DESCR'])
+
+# Print out the data
+print(digits.data)
+
+[[  0.   0.   5. ...,   0.   0.   0.]
+ [  0.   0.   0. ...,  10.   0.   0.]
+ [  0.   0.   0. ...,  16.   9.   0.]
+ ..., 
+ [  0.   0.   1. ...,   6.   0.   0.]
+ [  0.   0.   2. ...,  12.   0.   0.]
+ [  0.   0.  10. ...,  12.   1.   0.]]
+
+# Print out the target values
+print(digits.target)
+
+[0 1 2 ..., 8 9 8]
+
+# Print out the description of the `digits` data
+print(digits.DESCR)
+
+Optical Recognition of Handwritten Digits Data Set
+===================================================
+
+Notes
+-----
+Data Set Characteristics:
+    :Number of Instances: 5620
+    :Number of Attributes: 64
+    :Attribute Information: 8x8 image of integer pixels in the range 0..16.
+    :Missing Attribute Values: None
+    :Creator: E. Alpaydin (alpaydin '@' boun.edu.tr)
+    :Date: July; 1998
+
+This is a copy of the test set of the UCI ML hand-written digits datasets
+http://archive.ics.uci.edu/ml/datasets/Optical+Recognition+of+Handwritten+Digits
+
+The data set contains images of hand-written digits: 10 classes where
+each class refers to a digit.
+
+Preprocessing programs made available by NIST were used to extract
+normalized bitmaps of handwritten digits from a preprinted form. From a
+total of 43 people, 30 contributed to the training set and different 13
+to the test set. 32x32 bitmaps are divided into nonoverlapping blocks of
+4x4 and the number of on pixels are counted in each block. This generates
+an input matrix of 8x8 where each element is an integer in the range
+0..16. This reduces dimensionality and gives invariance to small
+distortions.
+
+For info on NIST preprocessing routines, see M. D. Garris, J. L. Blue, G.
+T. Candela, D. L. Dimmick, J. Geist, P. J. Grother, S. A. Janet, and C.
+L. Wilson, NIST Form-Based Handprint Recognition System, NISTIR 5469,
+1994.
+
+References
+----------
+  - C. Kaynak (1995) Methods of Combining Multiple Classifiers and Their
+    Applications to Handwritten Digit Recognition, MSc Thesis, Institute of
+    Graduate Studies in Science and Engineering, Bogazici University.
+  - E. Alpaydin, C. Kaynak (1998) Cascading Classifiers, Kybernetika.
+  - Ken Tang and Ponnuthurai N. Suganthan and Xi Yao and A. Kai Qin.
+    Linear dimensionalityreduction using relevance weighted LDA. School of
+    Electrical and Electronic Engineering Nanyang Technological University.
+    2005.
+  - Claudio Gentile. A New Approximate Maximal Margin Classification
+    Algorithm. NIPS. 2000.
+
+The next thing that you can (double)check is the type of your data.
+
+If you used read_csv() to import the data, you would have had a data frame that contains just the data. There wouldn’t be any description component, but you would be able to resort to, for example, head() or tail() to inspect your data. In these cases, it’s always wise to read up on the data description folder!
+
+However, this tutorial assumes that you make use of the library's data and the type of the digits variable is not that straightforward if you’re not familiar with the library. Look at the print out in the first code chunk. You’ll see that digits actually contains numpy arrays!
+
+This is already quite vital information. But how do you access these arrays?
+
+It’s straightforward, actually: you use attributes to access the relevant arrays.
+
+Remember that you have already seen which attributes are available when you printed digits.keys(). For instance, you have the data attribute to isolate the data, target to see the target values and the DESCR for the description, …
+
+But what then?
+
+The first thing that you should know of an array is its shape. That is the number of dimensions and items that are contained within an array. The array’s shape is a tuple of integers that specify the sizes of each dimension. In other words, if you have a 3d array like this y = np.zeros((2, 3, 4)), the shape of your array will be (2,3,4).
+
+Now let’s try to see what the shape is of these three arrays that you have distinguished (the data, target and DESCR arrays).
+
+Use first the data attribute to isolate the numpy array from the digits data and then use the shape attribute to find out more. You can do the same for the target and DESCR. There’s also the images attribute, which is basically the data in images. You’re also going to test this out.
+
+Check up on this statement by using the shape attribute on the array:
+
+# Isolate the `digits` data
+digits_data = digits.data
+
+# Inspect the shape
+print(digits_data.shape)
+
+(1797, 64)
+
+# Isolate the target values with `target`
+digits_target = digits.target
+
+# Inspect the shape
+print(digits_target.shape)
+
+(1797,)
+
+# Print the number of unique labels
+number_digits = len(np.unique(digits.target))
+
+print(number_digits)
+
+10
+
+# Isolate the `images`
+digits_images = digits.images
+
+# Inspect the shape
+print(digits_images.shape)
+
+(1797, 8, 8)
+
+print(digits_images)
+
+[[[  0.   0.   5. ...,   1.   0.   0.]
+  [  0.   0.  13. ...,  15.   5.   0.]
+  [  0.   3.  15. ...,  11.   8.   0.]
+  ..., 
+  [  0.   4.  11. ...,  12.   7.   0.]
+  [  0.   2.  14. ...,  12.   0.   0.]
+  [  0.   0.   6. ...,   0.   0.   0.]]
+
+ [[  0.   0.   0. ...,   5.   0.   0.]
+  [  0.   0.   0. ...,   9.   0.   0.]
+  [  0.   0.   3. ...,   6.   0.   0.]
+  ..., 
+  [  0.   0.   1. ...,   6.   0.   0.]
+  [  0.   0.   1. ...,   6.   0.   0.]
+  [  0.   0.   0. ...,  10.   0.   0.]]
+
+ [[  0.   0.   0. ...,  12.   0.   0.]
+  [  0.   0.   3. ...,  14.   0.   0.]
+  [  0.   0.   8. ...,  16.   0.   0.]
+  ..., 
+  [  0.   9.  16. ...,   0.   0.   0.]
+  [  0.   3.  13. ...,  11.   5.   0.]
+  [  0.   0.   0. ...,  16.   9.   0.]]
+
+ ..., 
+ [[  0.   0.   1. ...,   1.   0.   0.]
+  [  0.   0.  13. ...,   2.   1.   0.]
+  [  0.   0.  16. ...,  16.   5.   0.]
+  ..., 
+  [  0.   0.  16. ...,  15.   0.   0.]
+  [  0.   0.  15. ...,  16.   0.   0.]
+  [  0.   0.   2. ...,   6.   0.   0.]]
+
+ [[  0.   0.   2. ...,   0.   0.   0.]
+  [  0.   0.  14. ...,  15.   1.   0.]
+  [  0.   4.  16. ...,  16.   7.   0.]
+  ..., 
+  [  0.   0.   0. ...,  16.   2.   0.]
+  [  0.   0.   4. ...,  16.   2.   0.]
+  [  0.   0.   5. ...,  12.   0.   0.]]
+
+ [[  0.   0.  10. ...,   1.   0.   0.]
+  [  0.   2.  16. ...,   1.   0.   0.]
+  [  0.   0.  15. ...,  15.   0.   0.]
+  ..., 
+  [  0.   4.  16. ...,  16.   6.   0.]
+  [  0.   8.  16. ...,  16.   8.   0.]
+  [  0.   1.   8. ...,  12.   1.   0.]]]
+
+To recap: by inspecting digits.data, you see that there are 1797 samples and that there are 64 features. Because you have 1797 samples, you also have 1797 target values.
+
+But all those target values contain 10 unique values, namely, from 0 to 9. In other words, all 1797 target values are made up of numbers that lie between 0 and 9. This means that the digits that your model will need to recognize are numbers from 0 to 9.
+
+Lastly, you see that the images data contains three dimensions: there are 1797 instances that are 8 by 8 pixels big. You can visually check that the images and the data are related by reshaping the images array to two dimensions: digits.images.reshape((1797, 64)).
+
+But if you want to be entirely sure, better to check with
+
+print(np.all(digits.images.reshape((1797,64)) == digits.data))
+
+With the numpy method all(), you test whether all array elements along a given axis evaluate to True. In this case, you evaluate if it’s true that the reshaped images array equals digits.data. You’ll see that the result will be True in this case.
+
+Visualize Your Data Images With matplotlib
+
+Then, you can take your exploration up a notch by visualizing the images that you’ll be working with. You can use one of Python’s data visualization libraries, such as matplotlib, for this purpose:
+
+# Import matplotlib
+import matplotlib.pyplot as plt
+
+# Figure size (width, height) in inches
+fig = plt.figure(figsize=(6, 6))
+
+# Adjust the subplots 
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
+
+# For each of the 64 images
+for i in range(64):
+    # Initialize the subplots: add a subplot in the grid of 8 by 8, at the i+1-th position
+    ax = fig.add_subplot(8, 8, i + 1, xticks=[], yticks=[])
+    # Display an image at the i-th position
+    ax.imshow(digits.images[i], cmap=plt.cm.binary, interpolation='nearest')
+    # label the image with the target value
+    ax.text(0, 7, str(digits.target[i]))
+
+# Show the plot
+plt.show()
+
+The code chunk seems quite lengthy at first sight, and this might be overwhelming. But, what happens in the code chunk above is actually pretty easy once you break it down into parts:
+
+-You import matplotlib.pyplot.
+
+- Next, you set up a figure with a figure size of 6 inches wide and 6 inches long. This is your blank canvas where all the subplots with the images will appear.
+
+- Then you go to the level of the subplots to adjust some parameters: you set the left side of the suplots of the figure to 0, the right side of the suplots of the figure to 1, the bottom to 0 and the top to 1. The height of the blank space between the suplots is set at 0.005 and the width is set at 0.05. These are merely layout adjustments.
+
+- After that, you start filling up the figure that you have made with the help of a for loop.
+
+- You initialize the suplots one by one, adding one at each position in the grid that is 8 by 8 images big.
+
+- You display each time one of the images at each position in the grid. As a color map, you take binary colors, which in this case will result in black, gray values and white colors. The interpolation method that you use is 'nearest', which means that your data is interpolated in such a way that it isn’t smooth. You can see the effect of the different interpolation methods here.
+
+- The cherry on the pie is the addition of text to your subplots. The target labels are printed at coordinates (0,7) of each subplot, which in practice means that they will appear in the bottom-left of each of the subplots.
+
+- Don’t forget to show the plot with plt.show()!
+
+In the end, you’ll get to see the following:
+
+(A picture of many digits and their blurry images)
+
+On a more simple note, you can also visualize the target labels with an image, just like this:
+
+# Import matplotlib
+import matplotlib.pyplot as plt 
+
+# Join the images and target labels in a list
+images_and_labels = list(zip(digits.images, digits.target))
+
+# for every element in the list
+for index, (image, label) in enumerate(images_and_labels[:8]):
+    # initialize a subplot of 2X4 at the i+1-th position
+    plt.subplot(2, 4, index + 1)
+    # Don't plot any axes
+    plt.axis('off')
+    # Display images in all subplots 
+    plt.imshow(image, cmap=plt.cm.gray_r,interpolation='nearest')
+    # Add a title to each subplot
+    plt.title('Training: ' + str(label))
+
+# Show the plot
+plt.show()
+
+Which will render the following visualization:
+
+(A picture of digits 0 - 7 and their blurry images)
+
+Note that in this case, after you have imported matplotlib.pyplot, you zip the two numpy arrays together and save it into a variable called images_and_labels. You’ll see now that this list contains suples of each time an instance of digits.images and a corresponding digits.target value.
+
+Then, you say that for the first eight elements of images_and_labels -note that the index starts at 0!-, you initialize subplots in a grid of 2 by 4 at each position. You turn of the plotting of the axes and you display images in all the subplots with a color map plt.cm.gray_r (which returns all grey colors) and the interpolation method used is nearest. You give a title to each subplot, and you show it.
+
+Not too hard, huh?
+
+And now you have an excellent idea of the data that you’ll be working with!
+
+Visualizing Your Data: Principal Component Analysis (PCA)
+
+But is there no other way to visualize the data?
+
+As the digits data set contains 64 features, this might prove to be a challenging task. You can imagine that it’s tough to understand the structure and keep the overview of the digits data. In such cases, it is said that you’re working with a high dimensional data set.
+
+High dimensionality of data is a direct result of trying to describe the objects via a collection of features. Other examples of high dimensional data are, for example, financial data, climate data, neuroimaging, …
+
+But, as you might have gathered already, this is not always easy. In some cases, high dimensionality can be problematic, as your algorithms will need to take into account too many features. In such cases, you speak of the curse of dimensionality. Because having a lot of dimensions can also mean that your data points are far away from virtually every other point, which makes the distances between the data points uninformative.
+
+Don’t worry, though, because the curse of dimensionality is not merely a matter of counting the number of features. There are also cases in which the effective dimensionality might be much smaller than the number of the features, such as in data sets where some features are irrelevant.
+
+In addition, you can also understand that data with only two or three dimensions are easier to grasp and can also be visualized easily.
+
+That all explains why you’re going to visualize the data with the help of one of the Dimensionality Reduction techniques, namely Principal Component Analysis (PCA). The idea in PCA is to find a linear combination of the two variables that contains most of the information. This new variable or “principal component” can replace the two original variables.
+
+In short, it’s a linear transformation method that yields the directions (principal components) that maximize the variance of the data. Remember that the variance indicates how far a set of data points lie apart. If you want to know more, go to this page.
+
+You can easily apply PCA do your data with the help of scikit-learn:
+
+# Create a Randomized PCA model that takes two components
+randomized_pca = RandomizedPCA(n_components=2)
+
+# Fit and transform the data to the model
+reduced_data_rpca = randomized_pca.fit_transform(digits.data)
+
+# Create a regular PCA model 
+pca = PCA(n_components=2)
+
+# Fit and transform the data to the model
+reduced_data_pca = pca.fit_transform(digits.data)
+
+# Inspect the shape
+reduced_data_pca.shape
+
+# Print out the data
+print(reduced_data_rpca)
+
+[[ -1.22879838  21.26221767]
+ [  7.92652923 -20.77510207]
+ [  7.02035409  -9.99139534]
+ ..., 
+ [ 10.7899558   -6.96832698]
+ [ -4.87957222  12.4545091 ]
+ [ -0.33091545   6.3564161 ]]
+
+print(reduced_data_pca)
+
+[[ -1.25946509  21.27488229]
+ [  7.95761152 -20.76869648]
+ [  6.99192152  -9.95598685]
+ ..., 
+ [ 10.80128499  -6.96025203]
+ [ -4.87210304  12.42394965]
+ [ -0.34438868   6.36554785]]
+
+Tip: you have used the RandomizedPCA() here because it performs better when there’s a high number of dimensions. Try replacing the randomized PCA model or estimator object with a regular PCA model and see what the difference is.
+
+Note how you explicitly tell the model only to keep two components. This is to make sure that you have two-dimensional data to plot. Also, note that you don’t pass the target class with the labels to the PCA transformation because you want to investigate if the PCA reveals the distribution of the different labels and if you can clearly separate the instances from each other.
+
+You can now build a scatterplot to visualize the data:
+
+colors = ['black', 'blue', 'purple', 'yellow', 'white', 'red', 'lime', 'cyan', 'orange', 'gray']
+for i in range(len(colors)):
+    x = reduced_data_rpca[:, 0][digits.target == i]
+    y = reduced_data_rpca[:, 1][digits.target == i]
+    plt.scatter(x, y, c=colors[i])
+plt.legend(digits.target_names, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.xlabel('First Principal Component')
+plt.ylabel('Second Principal Component')
+plt.title("PCA Scatter Plot")
+plt.show()
+
+Which looks like this:
+
+(A picutre of scatter plot)
+
+Again you use matplotlib to visualize the data. It’s useful for a quick visualization of what you’re working with, but you might have to consider something a little bit fancier if you’re working on making this part of your data science portfolio.
+
+Also note that the last call to show the plot (plt.show()) is not necessary if you’re working in Jupyter Notebook, as you’ll want to put the images inline. When in doubt, you can always check out our Definitive Guide to Jupyter Notebook.
+
+What happens in the code chunk above is the following:
+
+- You put your colors together in a list. Note that you list ten colors, which is equal to the number of labels that you have. This way, you make sure that your data points can be colored in according to the labels. Then, you set up a range that goes from 0 to 10. Mind you that this range is not inclusive! Remember that this is the same for indices of a list, for example.
+
+- You set up your x and y coordinates. You take the first or the second column of reduced_data_rpca, and you select only those data points for which the label equals the index that you’re considering. That means that in the first run, you’ll consider the data points with label 0, then label 1, … and so on.
+
+- You construct the scatter plot. Fill in the x and y coordinates and assign a color to the batch that you’re processing. The first run, you’ll give the color black to all data points, the next run blue, … and so on.
+
+- You add a legend to your scatter plot. Use the target_names key to get the right labels for your data points.
+
+- Add labels to your x and y axes that are meaningful.
+
+- Reveal the resulting plot.
+
+Where To Go Now?
+
+Now that you have even more information about your data and you have a visualization ready, it does seem a bit like the data points sort of group together, but you also see there is quite some overlap.
+
+This might be interesting to investigate further.
+
+Do you think that, in a case where you knew that there are 10 possible digits labels to assign to the data points, but you have no access to the labels, the observations would group or “cluster” together by some criterion in such a way that you could infer the labels?
+
+Now, this is a research question!
+
+In general, when you have acquired a good understanding of your data, you have to decide on the use cases that would be relevant to your data set. In other words, you think about what your data set might teach you or what you think you can learn from your data.
+
+From there on, you can think about what kind of algorithms you would be able to apply to your data set in order to get the results that you think you can obtain.
+
+Tip: the more familiar you are with your data, the easier it will be to assess the use cases for your specific data set. The same also holds for finding the appropriate machine algorithm.
+
+However, when you’re first getting started with scikit-learn, you’ll see that the amount of algorithms that the library contains is pretty vast and that you might still want additional help when you’re assessing your data set. That’s why this scikit-learn machine learning map will come in handy.
+
+Note that this map does require you to have some knowledge about the algorithms that are included in the scikit-learn library. This, by the way, also holds some truth for taking this next step in your project: if you have no idea what is possible, it will be tough to decide on what your use case will be for the data.
+
+As your use case was one for clustering, you can follow the path on the map towards “KMeans”. You’ll see the use case that you have just thought about requires you to have more than 50 samples (“check!”), to have labeled data (“check!”), to know the number of categories that you want to predict (“check!”) and to have less than 10K samples (“check!”).
+
+But what exactly is the K-Means algorithm?
+
+It is one of the simplest and widely used unsupervised learning algorithms to solve clustering problems. The procedure follows a simple and easy way to classify a given data set through a certain number of clusters that you have configured before you run the algorithm. This number of clusters is called k, and you select this number at random.
+
+Then, the k-means algorithm will find the nearest cluster center for each data point and assign the data point closest to that cluster.
+
+Once all data points have been assigned to clusters, the cluster centers will be recomputed. In other words, new cluster centers will emerge from the average of the values of the cluster data points. This process is repeated until most data points stick to the same cluster. The cluster membership should stabilize.
+
+You can already see that, because the k-means algorithm works the way it does, the initial set of cluster centers that you give up can have a significant effect on the clusters that are eventually found. You can, of course, deal with this effect, as you will see further on.
+
+However, before you can go into making a model for your data, you should definitely take a look into preparing your data for this purpose.
+
+Preprocessing Your Data
+
+As you have read in the previous section, before modeling your data, you’ll do well by preparing it first. This preparation step is called “preprocessing”.
+
+Data Normalization
+
+The first thing that we’re going to do is preprocessing the data. You can standardize the digits data by, for example, making use of the scale() method:
+
+# Import
+from sklearn.preprocessing import scale
+
+print(digits.data)
+
+[[  0.   0.   5. ...,   0.   0.   0.]
+ [  0.   0.   0. ...,  10.   0.   0.]
+ [  0.   0.   0. ...,  16.   9.   0.]
+ ..., 
+ [  0.   0.   1. ...,   6.   0.   0.]
+ [  0.   0.   2. ...,  12.   0.   0.]
+ [  0.   0.  10. ...,  12.   1.   0.]]
+
+# Apply `scale()` to the `digits` data
+data = scale(digits.data)
+
+print(data)
+
+[[ 0.         -0.33501649 -0.04308102 ..., -1.14664746 -0.5056698
+  -0.19600752]
+ [ 0.         -0.33501649 -1.09493684 ...,  0.54856067 -0.5056698
+  -0.19600752]
+ [ 0.         -0.33501649 -1.09493684 ...,  1.56568555  1.6951369
+  -0.19600752]
+ ..., 
+ [ 0.         -0.33501649 -0.88456568 ..., -0.12952258 -0.5056698
+  -0.19600752]
+ [ 0.         -0.33501649 -0.67419451 ...,  0.8876023  -0.5056698
+  -0.19600752]
+ [ 0.         -0.33501649  1.00877481 ...,  0.8876023  -0.26113572
+  -0.19600752]]
+
+By scaling the data, you shift the distribution of each attribute to have a mean of zero and a standard deviation of one (unit variance).
+
+Splitting Your Data Into Training And Test Sets
+
+To assess your model’s performance later, you will also need to divide the data set into two parts: a training set and a test set. The first is used to train the system, while the second is used to evaluate the learned or trained system.
+
+In practice, the division of your data set into a test and a training sets are disjoint: the most common splitting choice is to take 2/3 of your original data set as the training set, while the 1/3 that remains will compose the test set.
+
+You will try to do this also here. You see in the code chunk below that this ‘traditional’ splitting choice is respected: in the arguments of the train_test_split() method, you clearly see that the test_size is set to 0.25.
+
+You’ll also note that the argument random_state has the value 42 assigned to it. With this argument, you can guarantee that your split will always be the same. That is particularly handy if you want reproducible results.
+
+# Import `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Split the `digits` data into training and test sets
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+
+After you have split up your data set into train and test sets, you can quickly inspect the numbers before you go and model the data:
+
+# Number of training features
+n_samples, n_features = X_train.shape
+
+# Print out `n_samples`
+print(n_samples)
+
+1347
+
+# Print out `n_features`
+print(n_features)
+
+64
+
+# Number of Training labels
+n_digits = len(np.unique(y_train))
+
+print(n_digits)
+
+10
+
+# Inspect `y_train`
+print(len(y_train))
+
+1347
+
+You’ll see that the training set X_train now contains 1347 samples, which is precisely 2/3d of the samples that the original data set contained, and 64 features, which hasn’t changed. The y_train training set also contains 2/3d of the labels of the original data set. This means that the test sets X_test and y_test contains 450 samples.
+
+Clustering The digits Data
+
+After all these preparation steps, you have made sure that all your known (training) data is stored. No actual model or learning was performed up until this moment.
+
+Now, it’s finally time to find those clusters of your training set. Use KMeans() from the cluster module to set up your model. You’ll see that there are three arguments that are passed to this method: init, n_clusters and the random_state.
+
+You might still remember this last argument from before when you split the data into training and test sets. This argument basically guaranteed that you got reproducible results.
+
+# Import the `cluster` module
+from sklearn import cluster
+
+# Create the KMeans model
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+
+# Fit the training data to the model
+clf.fit(X_train)
+
+The init indicates the method for initialization and even though it defaults to ‘k-means++’, you see it explicitly coming back in the code. That means that you can leave it out if you want. Try it out in the DataCamp Light chunk above!
+
+Next, you also see that the n_clusters argument is set to 10. This number not only indicates the number of clusters or groups you want your data to form, but also the number of centroids to generate. Remember that a cluster centroid is the middle of a cluster.
+
+Do you also still remember how the previous section described this as one of the possible disadvantages of the K-Means algorithm?
+
+That is that the initial set of cluster centers that you give up can have a significant effect on the clusters that are eventually found?
+
+Usually, you try to deal with this effect by trying several initial sets in multiple runs and by selecting the set of clusters with the minimum sum of the squared errors (SSE). In other words, you want to minimize the distance of each point in the cluster to the mean or centroid of that cluster.
+
+By adding the n-init argument to KMeans(), you can determine how many different centroid configurations the algorithm will try.
+
+Note again that you don’t want to insert the test labels when you fit the model to your data: these will be used to see if your model is good at predicting the actual classes of your instances!
+
+You can also visualize the images that make up the cluster centers as follows:
+
+# Import matplotlib
+import matplotlib.pyplot as plt
+
+# Figure size in inches
+fig = plt.figure(figsize=(8, 3))
+
+# Add title
+fig.suptitle('Cluster Center Images', fontsize=14, fontweight='bold')
+
+# For all labels (0-9)
+for i in range(10):
+    # Initialize subplots in a grid of 2X5, at i+1th position
+    ax = fig.add_subplot(2, 5, 1 + i)
+    # Display images
+    ax.imshow(clf.cluster_centers_[i].reshape((8, 8)), cmap=plt.cm.binary)
+    # Don't show the axes
+    plt.axis('off')
+
+# Show the plot
+plt.show()
+
+(A picture of cluster center images)
+
+If you want to see another example that visualizes the data clusters and their centers, go here.
+
+The next step is to predict the labels of the test set:
+
+# Predict the labels for `X_test`
+y_pred=clf.predict(X_test)
+
+# Print out the first 100 instances of `y_pred`
+print(y_pred[:100])
+
+[4 8 8 9 3 3 5 8 5 3 0 7 1 2 1 3 8 6 8 8 1 5 8 6 5 4 8 5 4 8 1 8 3 1 1 4 8
+ 1 6 4 4 8 0 8 4 7 8 2 4 5 5 0 8 5 4 2 8 2 2 7 2 1 5 3 1 5 6 2 6 8 8 8 8 6
+ 6 2 1 5 8 8 8 2 3 8 8 2 4 1 1 8 0 3 7 8 8 3 8 2 1 1]
+
+# Print out the first 100 instances of `y_test`
+print(y_test[:100])
+
+[6 9 3 7 2 1 5 2 5 2 1 9 4 0 4 2 3 7 8 8 4 3 9 7 5 6 3 5 6 3 4 9 1 4 4 6 9
+ 4 7 6 6 9 1 3 6 1 3 0 6 5 5 1 9 5 6 0 9 0 0 1 0 4 5 2 4 5 7 0 7 5 9 5 5 4
+ 7 0 4 5 5 9 9 0 2 3 8 0 6 4 4 9 1 2 8 3 5 2 9 0 4 4]
+
+# Study the shape of the cluster centers
+print(clf.cluster_centers_.shape)
+
+(10, 64)
+
+In the code chunk above, you predict the values for the test set, which contains 450 samples. You store the result in y_pred. You also print out the first 100 instances of y_pred and y_test, and you immediately see some results.
+
+In addition, you can study the shape of the cluster centers: you immediately see that there are 10 clusters with each 64 features.
+
+But this doesn’t tell you much because we set the number of clusters to 10 and you already knew that there were 64 features.
+
+Maybe a visualization would be more helpful.
+
+Let’s visualize the predicted labels:
+
+# Import `Isomap()`
+from sklearn.manifold import Isomap
+
+# Create an isomap and fit the `digits` data to it
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+clusters = clf.fit_predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Show the plots
+plt.show()
+
+You use Isomap() as a way to reduce the dimensions of your high-dimensional data set digits. The difference with the PCA method is that the Isomap is a non-linear reduction method.
+
+(A picture of predicted versus training labels)
+
+Tip: run the code from above again, but use the PCA reduction method instead of the Isomap to study the effect of reduction methods yourself.
+
+You will find the solution here:
+
+# Import `PCA()`
+from sklearn.decomposition import PCA
+
+# Model and fit the `digits` data to the PCA model
+X_pca = PCA(n_components=2).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+clusters = clf.fit_predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_pca[:, 0], X_pca[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_pca[:, 0], X_pca[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Show the plots
+plt.show()
+
+(A picture of predicted versus training labels)
+
+At first sight, the visualization doesn’t seem to indicate that the model works well.
+
+But this needs some further investigation.
+
+Evaluation of Your Clustering Model
+
+And this need for further investigation brings you to the next essential step, which is the evaluation of your model’s performance. In other words, you want to analyze the degree of correctness of the model’s predictions.
+
+Let’s print out a confusion matrix:
+
+# Import `metrics` from `sklearn`
+from sklearn import metrics
+
+# Print out the confusion matrix with `confusion_matrix()`
+print(metrics.confusion_matrix(y_test, y_pred))
+
+[[ 0  0 43  0  0  0  0  0  0  0]
+ [20  0  0  7  0  0  0 10  0  0]
+ [ 5  0  0 31  0  0  0  1  1  0]
+ [ 1  0  0  1  0  1  4  0 39  0]
+ [ 1 50  0  0  0  0  1  2  0  1]
+ [ 1  0  0  0  1 41  0  0 16  0]
+ [ 0  0  1  0 44  0  0  0  0  0]
+ [ 0  0  0  0  0  1 34  1  0  5]
+ [21  0  0  0  0  3  1  2 11  0]
+ [ 0  0  0  0  0  2  3  3 40  0]]
+
+At first sight, the results seem to confirm our first thoughts that you gathered from the visualizations. Only the digit 5 was classified correctly in 41 cases. Also, the digit 8 was classified correctly in 11 instances. But this is not really a success.
+
+You might need to know a bit more about the results than just the confusion matrix.
+
+Let’s try to figure out something more about the quality of the clusters by applying different cluster quality metrics. That way, you can judge the goodness of fit of the cluster labels to the correct labels.
+
+from sklearn.metrics import homogeneity_score, completeness_score, v_measure_score, adjusted_rand_score, adjusted_mutual_info_score, silhouette_score
+
+print('% 9s' % 'inertia    homo   compl  v-meas     ARI AMI  silhouette')
+
+inertia    homo   compl  v-meas     ARI AMI  silhouette
+
+print('%i   %.3f   %.3f   %.3f   %.3f   %.3f    %.3f'
+          %(clf.inertia_,
+      homogeneity_score(y_test, y_pred),
+      completeness_score(y_test, y_pred),
+      v_measure_score(y_test, y_pred),
+      adjusted_rand_score(y_test, y_pred),
+      adjusted_mutual_info_score(y_test, y_pred),
+      silhouette_score(X_test, y_pred, metric='euclidean')))
+
+54276   0.688   0.733   0.710   0.567   0.674    0.146
+
+You’ll see that there are quite some metrics to consider:
+
+- The homogeneity score tells you to what extent all of the clusters contain only data points which are members of a single class.
+
+- The completeness score measures the extent to which all of the data points that are members of a given class are also elements of the same cluster.
+
+- The V-measure score is the harmonic mean between homogeneity and completeness.
+
+- The adjusted Rand score measures the similarity between two clusterings and considers all pairs of samples and counting pairs that are assigned in the same or different clusters in the predicted and true clusterings.
+
+- The Adjusted Mutual Info (AMI) score is used to compare clusters. It measures the similarity between the data points that are in the clusterings, accounting for chance groupings and takes a maximum value of 1 when clusterings are equivalent.
+
+- The silhouette score measures how similar an object is to its own cluster compared to other clusters. The silhouette scores range from -1 to 1, where a higher value indicates that the object is better matched to its own cluster and worse matched to neighboring clusters. If many points have a high value, the clustering configuration is good.
+
+You clearly see that these scores aren’t fantastic: for example, you see that the value for the silhouette score is close to 0, which indicates that the sample is on or very close to the decision boundary between two neighboring clusters. This could indicate that the samples could have been assigned to the wrong cluster.
+
+Also, the ARI measure seems to indicate that not all data points in a given cluster are similar and the completeness score tells you that there are definitely data points that weren’t put in the right cluster.
+
+Clearly, you should consider another estimator to predict the labels for the digits data.
+
+Trying Out Another Model: Support Vector Machines
+
+When you recapped all of the information that you gathered out of the data exploration, you saw that you could build a model to predict which group a digit belongs to without you knowing the labels. And indeed, you just used the training data and not the target values to build your KMeans model.
+
+Let’s assume that you depart from the case where you use both the digits training data and the corresponding target values to build your model.
+
+If you follow the algorithm map, you’ll see that the first model that you meet is the linear SVC. Let’s apply this now to the digits data:
+
+# Import `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Split the data into training and test sets 
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+
+# Import the `svm` model
+from sklearn import svm
+
+# Create the SVC model 
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+
+# Fit the data to the SVC model
+svc_model.fit(X_train, y_train)
+
+You see here that you make use of X_train and y_train to fit the data to the SVC model. This is clearly different from clustering. Note also that in this example, you set the value of gamma manually. It is possible to automatically find good values for the parameters by using tools such as grid search and cross-validation.
+
+Even though this is not the focus of this tutorial, you will see how you could have gone about this if you would have made use of grid search to adjust your parameters. You would have done something like the following:
+
+# Split the `digits` data into two equal sets
+X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.5, random_state=0)
+
+# Import GridSearchCV
+from sklearn.grid_search import GridSearchCV
+
+# Set the parameter candidates
+parameter_candidates = [
+  {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+  {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+]
+
+# Create a classifier with the parameter candidates
+clf = GridSearchCV(estimator=svm.SVC(), param_grid=parameter_candidates, n_jobs=-1)
+
+# Train the classifier on training data
+clf.fit(X_train, y_train)
+
+# Print out the results 
+print('Best score for training data:', clf.best_score_)
+
+Best score for training data: 0.9844097995545658
+
+print('Best `C`:',clf.best_estimator_.C)
+
+Best `C`: 10
+
+print('Best kernel:',clf.best_estimator_.kernel)
+
+Best kernel: rbf
+
+print('Best `gamma`:',clf.best_estimator_.gamma)
+
+Best `gamma`: 0.001
+
+Next, you use the classifier with the classifier and parameter candidates that you have just created to apply it to the second part of your data set. Next, you also train a new classifier using the best parameters found by the grid search. You score the result to see if the best parameters that were found in the grid search are actually working.
+
+# Apply the classifier to the test data, and view the accuracy score
+print(clf.score(X_test, y_test))
+
+0.99110122358175756
+
+# Train and score a new classifier with the grid search parameters
+svm.SVC(C=10, kernel='rbf', gamma=0.001).fit(X_train, y_train).score(X_test, y_test)
+
+The parameters indeed work well!
+
+Now, what does this new knowledge tell you about the SVC classifier that you had modeled before you had done the grid search?
+
+Let’s back up to the model that you had made before.
+
+You see that in the SVM classifier, the penalty parameter C of the error term is specified at 100.. Lastly, you see that the kernel has been explicitly specified as a linear one. The kernelargument specifies the kernel type that you’re going to use in the algorithm and by default, this is rbf. In other cases, you can specify others such as linear, poly, …
+
+But what is a kernel exactly?
+
+A kernel is a similarity function, which is used to compute the similarity between the training data points. When you provide a kernel to an algorithm, together with the training data and the labels, you will get a classifier, as is the case here. You will have trained a model that assigns new unseen objects into a particular category. For the SVM, you will typically try to divide your data points linearly.
+
+However, the grid search tells you that an rbf kernel would’ve worked better. The penalty parameter and the gamma were specified correctly.
+
+Tip: try out the classifier with an rbf kernel.
+
+For now, let’s say you continue with a linear kernel and predict the values for the test set:
+
+# Predict the label of `X_test`
+print(svc_model.predict(X_test))
+
+[6 9 3 7 2 1 5 2 5 2 1 9 4 0 4 2 3 7 8 8 4 3 9 7 5 6 3 5 6 3 4 9 1 4 4 6 9
+ 4 7 6 6 9 1 3 6 1 3 0 6 5 5 1 3 5 6 0 9 0 0 1 0 4 5 2 4 5 7 0 7 5 9 5 5 4
+ 7 0 4 5 5 9 9 0 2 3 8 0 6 4 4 9 1 2 8 3 5 2 9 0 4 4 4 3 5 3 1 3 5 9 4 2 7
+ 7 4 4 1 9 2 7 8 7 2 6 9 4 0 7 2 7 5 8 7 5 7 9 0 6 6 4 2 8 0 9 4 6 9 9 6 9
+ 0 5 5 6 6 0 6 4 3 9 3 7 7 2 9 0 4 5 3 6 5 9 9 8 4 2 1 3 7 7 2 2 3 9 8 0 3
+ 2 2 5 6 9 9 4 1 5 4 2 3 6 4 8 5 9 5 7 8 9 4 8 1 5 4 4 9 6 1 8 6 0 4 5 2 7
+ 1 6 4 5 6 0 3 2 3 6 7 1 5 1 4 7 6 5 8 5 5 1 6 2 8 8 9 9 7 6 2 2 2 3 4 8 8
+ 3 6 0 9 7 7 0 1 0 4 5 1 5 3 6 0 4 1 0 0 3 6 5 9 7 3 5 5 9 9 8 5 3 3 2 0 5
+ 8 3 4 0 2 4 6 4 3 4 5 0 5 2 1 3 1 4 1 1 7 0 1 5 2 1 2 8 7 0 6 4 8 8 5 1 8
+ 4 5 8 7 9 8 5 0 6 2 0 7 9 8 9 5 2 7 7 1 8 7 4 3 8 9 5 6 0 0 3 0 5 0 0 4 1
+ 2 8 4 5 9 6 3 1 8 8 4 2 3 8 9 8 8 5 0 6 3 3 7 1 6 4 1 2 1 1 6 4 7 4 8 3 4
+ 0 5 1 9 4 5 7 6 3 7 0 5 9 7 5 9 7 4 2 1 9 0 7 5 2 3 6 3 9 6 9 5 0 1 5 5 8
+ 3 3 6 2 6 5]
+
+# Print `y_test` to check the results
+print(y_test)
+
+[6 9 3 7 2 1 5 2 5 2 1 9 4 0 4 2 3 7 8 8 4 3 9 7 5 6 3 5 6 3 4 9 1 4 4 6 9
+ 4 7 6 6 9 1 3 6 1 3 0 6 5 5 1 9 5 6 0 9 0 0 1 0 4 5 2 4 5 7 0 7 5 9 5 5 4
+ 7 0 4 5 5 9 9 0 2 3 8 0 6 4 4 9 1 2 8 3 5 2 9 0 4 4 4 3 5 3 1 3 5 9 4 2 7
+ 7 4 4 1 9 2 7 8 7 2 6 9 4 0 7 2 7 5 8 7 5 7 7 0 6 6 4 2 8 0 9 4 6 9 9 6 9
+ 0 3 5 6 6 0 6 4 3 9 3 9 7 2 9 0 4 5 3 6 5 9 9 8 4 2 1 3 7 7 2 2 3 9 8 0 3
+ 2 2 5 6 9 9 4 1 5 4 2 3 6 4 8 5 9 5 7 8 9 4 8 1 5 4 4 9 6 1 8 6 0 4 5 2 7
+ 4 6 4 5 6 0 3 2 3 6 7 1 5 1 4 7 6 8 8 5 5 1 6 2 8 8 9 9 7 6 2 2 2 3 4 8 8
+ 3 6 0 9 7 7 0 1 0 4 5 1 5 3 6 0 4 1 0 0 3 6 5 9 7 3 5 5 9 9 8 5 3 3 2 0 5
+ 8 3 4 0 2 4 6 4 3 4 5 0 5 2 1 3 1 4 1 1 7 0 1 5 2 1 2 8 7 0 6 4 8 8 5 1 8
+ 4 5 8 7 9 8 5 0 6 2 0 7 9 8 9 5 2 7 7 1 8 7 4 3 8 3 5 6 0 0 3 0 5 0 0 4 1
+ 2 8 4 5 9 6 3 1 8 8 4 2 3 8 9 8 8 5 0 6 3 3 7 1 6 4 1 2 1 1 6 4 7 4 8 3 4
+ 0 5 1 9 4 5 7 6 3 7 0 5 9 7 5 9 7 4 2 1 9 0 7 5 3 3 6 3 9 6 9 5 0 1 5 5 8
+ 3 3 6 2 6 5]
+
+You can also visualize the images and their predicted labels:
+
+# Import matplotlib
+import matplotlib.pyplot as plt
+
+# Assign the predicted values to `predicted`
+predicted = svc_model.predict(X_test)
+
+# Zip together the `images_test` and `predicted` values in `images_and_predictions`
+images_and_predictions = list(zip(images_test, predicted))
+
+# For the first 4 elements in `images_and_predictions`
+for index, (image, prediction) in enumerate(images_and_predictions[:4]):
+    # Initialize subplots in a grid of 1 by 4 at positions i+1
+    plt.subplot(1, 4, index + 1)
+    # Don't show axes
+    plt.axis('off')
+    # Display images in all subplots in the grid
+    plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
+    # Add a title to the plot
+    plt.title('Predicted: ' + str(prediction))
+
+# Show the plot
+plt.show()
+
+This plot is very similar to the plot that you made when you were exploring the data:
+
+(A picture of digits 6, 9, 3, 7 and their blurry images)
+
+Only this time, you zip together the images and the predicted values, and you only take the first 4 elements of images_and_predictions.
+
+But now the biggest question: how does this model perform?
+
+# Import `metrics`
+from sklearn import metrics
+
+# Print the classification report of `y_test` and `predicted`
+print(metrics.classification_report(y_test, predicted))
+
+             precision    recall  f1-score   support
+
+          0       1.00      1.00      1.00        43
+          1       0.97      1.00      0.99        37
+          2       0.97      1.00      0.99        38
+          3       0.98      0.93      0.96        46
+          4       1.00      0.98      0.99        55
+          5       0.97      1.00      0.98        59
+          6       1.00      1.00      1.00        45
+          7       0.98      0.98      0.98        41
+          8       1.00      0.97      0.99        38
+          9       0.96      0.96      0.96        48
+
+avg / total       0.98      0.98      0.98       450
+
+# Print the confusion matrix
+print(metrics.confusion_matrix(y_test, predicted))
+    
+[[43  0  0  0  0  0  0  0  0  0]
+ [ 0 37  0  0  0  0  0  0  0  0]
+ [ 0  0 38  0  0  0  0  0  0  0]
+ [ 0  0  1 43  0  1  0  0  0  1]
+ [ 0  1  0  0 54  0  0  0  0  0]
+ [ 0  0  0  0  0 59  0  0  0  0]
+ [ 0  0  0  0  0  0 45  0  0  0]
+ [ 0  0  0  0  0  0  0 40  0  1]
+ [ 0  0  0  0  0  1  0  0 37  0]
+ [ 0  0  0  1  0  0  0  1  0 46]]
+
+You clearly see that this model performs a whole lot better than the clustering model that you used earlier.
+
+You can also see it when you visualize the predicted and the actual labels with the help of Isomap():
+
+# Import `Isomap()`
+from sklearn.manifold import Isomap
+
+# Create an isomap and fit the `digits` data to it
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+predicted = svc_model.predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust the layout
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=predicted)
+ax[0].set_title('Predicted labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Labels')
+
+
+# Add title
+fig.suptitle('Predicted versus actual labels', fontsize=14, fontweight='bold')
+
+# Show the plot
+plt.show()
+
+This will give you the following scatterplots:
+
+(A picture of predicted versus actual labels)
+
+You’ll see that this visualization confirms your classification report, which is excellent news. :)
+
+What's Next?
+
+Digit Recognition in Natural Images
+
+Congratulations, you have reached the end of this scikit-learn tutorial, which was meant to introduce you to Python machine learning! Now it's your turn.
+
+Firstly, make sure you get a hold of DataCamp's scikit-learn cheat sheet.
+
+Next, start your own digit recognition project with different data. One dataset that you can already use is the MNIST data, which you can download here.
+
+The steps that you can take are very similar to the ones that you have gone through with this tutorial, but if you still feel that you can use some help, you should check out this page, which works with the MNIST data and applies the KMeans algorithm.
+
+Working with the digits dataset was the first step in classifying characters with scikit-learn. If you’re done with this, you might consider trying out an even more challenging problem, namely, classifying alphanumeric characters in natural images.
+
+A well-known dataset that you can use for this problem is the Chars74K dataset, which contains more than 74,000 images of digits from 0 to 9 and both lowercase and higher case letters of the English alphabet. You can download the dataset here.
+
+Data Visualization and pandas
+
+Whether you're going to start with the projects that have been mentioned above or not, this is definitely not the end of your journey of data science with Python. If you choose not to widen your view just yet, consider deepening your data visualization and data manipulation knowledge.
+
+Don't miss out on our Interactive Data Visualization with Bokeh course to make sure you can impress your peers with a stunning data science portfolio or our pandas Foundation course, to learn more about working with data frames in Python.
