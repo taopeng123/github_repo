@@ -62,9 +62,62 @@ findsetter                         Getters and setters
 findexception                      Exceptions
 findsleep                          sleep
 findtime                           Output current local time
+
+** numpy **
+
 findnumpy                          NumPy
-findrandomnumber                   Random number
+findcreatendarraynumpy             Create numpy array / ndarray
+findcreatenumpyarraynumpy          Create numpy array / ndarray
+findonesnumpy                      Create numpy array of ones
+findzerosnumpy                     Create numpy array of zeros
+findrandomnumpy                    Create numpy array of random numbers
+findrandnumpy                      Create numpy array of random numbers
+findemptynumpy                     Create an empty numpy array
+findemptyarraynumpy                Create an empty numpy array
+findsamevaluesnumpy                Create numpy array of same values
+findrangenumpy                     Create an array of evenly-spaced values (with step)
+findarangenumpy                    Create an array of evenly-spaced values (with step)
+findlinspacenumpy                  Create an array of evenly-spaced values (with number of values)
+findeyenumpy                       np.eye(), ie, identity matrix
+findidentitynumpy                  np.identity(), ie, identity matrix
+findloaddatanumpy                  Load data from file
+findloadnumpy                      Load data from file
+findreaddatanumpy                  Load data from file
+findimportdatanumpy                Load data from file
+findsavenumpy                      Save NumPy Arrays
+(indsavedatanumpy                  Save NumPy Arrays
+findsavearraynumpy                 Save NumPy Arrays
+findsizenumpy                      Size (number of elements) of any array
+findmathsnumpy                     Maths in numpy add, substract, etc
+findmathnumpy                      Maths in numpy add, substract, etc
+findindexingnumpy                  Indexing (select an element) of array
+findindexnumpy                     Indexing (select an element) of array
+findslicenumpy                     slice
+findtransposenumpy                 transpose
+findresizenumpy                    resize
+findreshapenumpy                   reshape
+findflattennumpy                   flatten
+findravelnumpy                     flatten
+findappendnumpy                    append
+findinsertnumpy                    insert
+findeletenumpy                     delete
+findconcatenatenumpy               concatenate
+findconcatnumpy                    concatenate
+findvstacknumpy                    vstack
+findhstacknumpy                    hstack
+findvsplitnumpy                    vsplit
+findhsplitnumpy                    hsplit
+findhistogramnumpy                 histogram
+findplotnumpy                      Plot in numpy
+findmatplotlibnumpy                matplotlib
+findmeshgridnumpy                  meshgrid
+
+** scipy **
+
 findscipy                          Scipy
+
+** pandas **
+
 findpandas                         Pandas
 findreadcsv                        Read csv file to a dataframe
 finddataframe                      DataFrame
@@ -99,6 +152,9 @@ findmissingvalues                  isnull or missing values
 findnormalize                      Normalize
 findsumcolumns                     Sum of all columns 
 findmeancolumns                    Mean of all columns 
+
+** scikitlearn **
+
 findscikitlearn                    Scikit-Learn
 findsklearn                        Scikit-Learn
 
@@ -2143,7 +2199,7 @@ So, now that you have set up your environment, it’s time for the real work. Ad
 
 Some exercises have been included below so that you can already practice how it’s done before you start on your own!
 
-To make a numpy array, you can just use the np.array() function. All you need to do is pass a list to it, and optionally, you can also specify the data type of the data. If you want to know more about the possible data types that you can pick, go here or consider taking a brief look at DataCamp’s NumPy cheat sheet.
+To make a numpy array, you can just use the np.array() function (see example below, tao). All you need to do is pass a list to it, and optionally, you can also specify the data type of the data. If you want to know more about the possible data types that you can pick, go here or consider taking a brief look at DataCamp’s NumPy cheat sheet.
 
 There’s no need to go and memorize these NumPy data types if you’re a new user; But you do have to know and care what data you’re dealing with. The data types are there when you need more control over how your data is stored in memory and on disk. Especially in cases where you’re working with extensive data, it’s good that you know to control the storage type.
 
@@ -2154,7 +2210,10 @@ In the following example you’ll create the my_array array that you have alread
 # Import `numpy` as `np`
 import numpy as np
 
+(findcreatendarraynumpy)
+(findcreatenumpyarraynumpy)
 # Make the array `my_array`
+# Tao: the parameter dtype is optinal 
 my_array = np.array([[1,2,3,4], [5,6,7,8]], dtype=np.int64)
 
 # Print `my_array`
@@ -2170,6 +2229,7 @@ However, sometimes you don’t know what data you want to put in your array, or 
 The following sections will show you how to do this.
 
 How To Make An “Empty” NumPy Array
+
 What people often mean when they say that they are creating “empty” arrays is that they want to make use of initial placeholders, which you can fill up afterward. You can initialize arrays with ones or zeros, but you can also create arrays that get filled up with evenly spaced values, constant or random values.
 
 However, you can still make a totally empty array, too.
@@ -2178,6 +2238,7 @@ Luckily for us, there are quite a lot of functions to make
 
 Try it all out below!
 
+(findonesnumpy)
 # Create an array of ones
 print(np.ones((3,4)))
 
@@ -2185,6 +2246,7 @@ print(np.ones((3,4)))
  [ 1.  1.  1.  1.]
  [ 1.  1.  1.  1.]]
 
+(findzerosnumpy)
 # Create an array of zeros
 print(np.zeros((2,3,4),dtype=np.int16))
 
@@ -2196,12 +2258,16 @@ print(np.zeros((2,3,4),dtype=np.int16))
   [0 0 0 0]
   [0 0 0 0]]]
 
+(findrandomnumpy)
+(findrandnumpy)
 # Create an array with random values
 print(np.random.random((2,2)))
 
 [[ 0.4809319   0.39211752]
  [ 0.34317802  0.72904971]]
 
+(findemptynumpy)
+(findemptyarraynumpy)
 # Create an empty array
 print(np.empty((3,2)))
 
@@ -2209,18 +2275,22 @@ print(np.empty((3,2)))
  [ 0.  0.]
  [ 0.  0.]]
 
+(findsamevaluesnumpy)
 # Create a full array
 print(np.full((2,2),7))
 
 [[ 7.  7.]
  [ 7.  7.]]
 
-# Create an array of evenly-spaced values
+(findrangenumpy)
+(findarangenumpy)
+# Create an array of evenly-spaced values (with step, tao)
 print(np.arange(10,25,5))
 
 [10 15 20]
 
-# Create an array of evenly-spaced values
+(findlinspacenumpy)
+# Create an array of evenly-spaced values (with number of values, tao)
 print(np.linspace(0,2,9))
 
 [ 0.    0.25  0.5   0.75  1.    1.25  1.5   1.75  2.  ]
@@ -2229,8 +2299,10 @@ Tip: play around with the above functions so that you understand how they work!
 
 - For some, such as np.ones(), np.random.random(), np.empty(), np.full() or np.zeros() the only thing that you need to do in order to make arrays with ones or zeros is pass the shape of the array that you want to make. As an option to np.ones() and np.zeros(), you can also specify the data type. In the case of np.full(), you also have to specify the constant value that you want to insert into the array.
 
-- With np.linspace() and np.arange() you can make arrays of evenly spaced values. The difference between these two functions is that the last value of the three that are passed in the code chunk above designates either the step value for np.linspace() or a number of samples for np.arange(). What happens in the first is that you want, for example, an array of 9 values that lie between 0 and 2. For the latter, you specify that you want an array to start at 10 and per steps of 5, generate values for the array that you’re creating.
+- With np.linspace() and np.arange() you can make arrays of evenly spaced values. The difference between these two functions is that the last value of the three that are passed in the code chunk above designates either the step value for np.linspace() or a number of samples for np.arange() (tao: swapped). What happens in the first is that you want, for example, an array of 9 values that lie between 0 and 2. For the latter, you specify that you want an array to start at 10 and per steps of 5, generate values for the array that you’re creating.
 
+(findeyenumpy)
+(findidentitynumpy)
 Remember that NumPy also allows you to create an identity array or matrix with np.eye() and np.identity(). An identity matrix is a square matrix of which all elements in the principal diagonal are ones, and all other elements are zeros. When you multiply a matrix with an identity matrix, the given matrix is left unchanged.
 
 In other words, if you multiply a matrix by an identity matrix, the resulting product will be the same matrix again by the standard conventions of matrix multiplication.
@@ -2253,10 +2325,13 @@ Let’s say you have the following text files with data:
 # 0.1781  0.3049  0.8928
 # 0.6253  0.3486  0.8791
 
+(findloaddatanumpy)
+(findloadnumpy)
+(findreaddatanumpy)
+(findimportdatanumpy)
+
 # Import your data
-x, y, z = np.loadtxt('data.txt',
-                    skiprows=1,
-                    unpack=True)
+x, y, z = np.loadtxt('data.txt', skiprows=1, unpack=True)
 
 In the code above, you use loadtxt() to load the data in your environment. You see that the first argument that both functions take is the text file data.txt. Next, there are some specific arguments for each: in the first statement, you skip the first row, and you return the columns as separate arrays with unpack=TRUE. This means that the values in column Value1 will be put in x, and so on.
 
@@ -2274,9 +2349,7 @@ Let’s take a look at your second file with data:
 # MISSING 0.5801  0.2038
 # 0.5993  0.4357  0.7410
 
-my_array2 = np.genfromtxt('data2.txt',
-                      skip_header=1,
-                      filling_values=-999)
+my_array2 = np.genfromtxt('data2.txt', skip_header=1, filling_values=-999)
 
 You see that here, you resort to genfromtxt() to load the data. In this case, you have to handle some missing values that are indicated by the 'MISSING' strings. Since the genfromtxt() function converts character strings in numeric columns to nan, you can convert these values to other ones by specifying the filling_values argument. In this case, you choose to set the value of these missing values to -999.
 
@@ -2296,6 +2369,10 @@ But this is definitely not the only reason.
 
 A brief look on the number of arguments that genfromtxt() has to offer will teach you that there is really a lot more things that you can specify in your import, such as the maximum number of rows to read or the option to automatically strip white spaces from variables.
 
+
+(findsavenumpy)
+(findsavedatanumpy)
+(findsavearraynumpy)
 How To Save NumPy Arrays
 
 Once you have done everything that you need to do with your arrays, you can also save them to a file. If you want to save the array to a text file, you can use the savetxt() function to do this:
@@ -2329,6 +2406,7 @@ print(my_array.ndim)
 
 2
 
+(findsizenumpy)
 # Print the number of `my_array`'s elements
 print(my_array.size)
 
@@ -2464,7 +2542,7 @@ Tip: also test what the size of the resulting array is after you have done the c
 
 In other words, you see that the result of x-y gives an array with shape (3,4): y had a shape of (4,) and x had a shape of (3,4). The maximum size along each dimension of x and y is taken to make up the shape of the new, resulting array.
 
--Lastly, the arrays can only be broadcast together if they are compatible in all dimensions. Consider the following example:
+- Lastly, the arrays can only be broadcast together if they are compatible in all dimensions. Consider the following example:
 
 # Import `numpy` as `np`
 import numpy as np
@@ -2538,6 +2616,8 @@ How Do Array Mathematics Work?
 
 You’ve seen that broadcasting is handy when you’re doing arithmetic operations. In this section, you’ll discover some of the functions that you can use to do mathematics with arrays.
 
+(findmathsnumpy)
+(findmathnumpy)
 As such, it probably won’t surprise you that you can just use +, -, *, / or % to add, subtract, multiply, divide or calculate the remainder of two (or more) arrays. However, a big part of why NumPy is so handy, is because it also has functions to do this. The equivalent functions of the operations that you have seen just now are, respectively, np.add(), np.subtract(), np.multiply(), np.divide() and np.remainder().
 
 You can also easily do exponentiation and taking the square root of your arrays with np.exp() and np.sqrt(), or calculate the sines or cosines of your array with np.sin() and np.cos(). Lastly, its’ also useful to mention that there’s also a way for you to calculate the natural logarithm with np.log() or calculate the dot product by applying the dot() to your array.
@@ -2650,6 +2730,8 @@ If you have no clue at all on how these operations work, it suffices for now to 
 
 Besides from these two points, the easiest way to see how this all fits together is by looking at some examples of subsetting:
 
+(findindexingnumpy)
+(findindexnumpy)
 # Select the element at the 1st index
 print(my_array[1])
 
@@ -2670,6 +2752,7 @@ print(my_3d_array[1,1,2])
 
 11
 
+(findslicenumpy)
 Something a little bit more advanced than subsetting, if you will, is slicing. Here, you consider not just particular values of your arrays, but you go to the level of rows and columns. You’re basically working with “regions” of data instead of pure “locations”.
 
 You can see what is meant with this analogy in these code examples:
@@ -2740,6 +2823,11 @@ Does this sound a little bit abstract to you?
 
 No worries, just try it out in the code chunk below:
 
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
 # Select elements at (1,0), (0,1), (1,2) and (0,0)
 print(my_2d_array[[1, 0, 1, 0],[0, 1, 2, 0]])
 
@@ -2773,7 +2861,7 @@ Advanced indexing clearly holds no secrets for you any more!
 
 How To Ask For Help
 
-As a short intermezzo, you should know that you can always ask for more information about the modules, functions or classes that you’re working with, especially becauseNumPy can be quite something when you first get started on working with it.
+As a short intermezzo, you should know that you can always ask for more information about the modules, functions or classes that you’re working with, especially because NumPy can be quite something when you first get started on working with it.
 
 Asking for help is fairly easy.
 
@@ -3047,6 +3135,7 @@ Note that you indeed need to know that dtype is an attribute of ndarray. Also, m
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 NameError: name 'ndarray' is not defined
+
 You now know how to ask for help, and that’s a good thing. The next topic that this NumPy tutorial covers is array manipulation.
 
 Not that you can not overcome this topic on your own, quite the contrary!
@@ -3073,6 +3162,7 @@ print(my_2d_array)
 [[1 2 3 4]
  [5 6 7 8]]
 
+(findtransposenumpy)
 # Transpose `my_2d_array`
 print(np.transpose(my_2d_array))
 
@@ -3122,6 +3212,7 @@ Well, this is where you get the answer!
 
 What you can do if the arrays don’t have the same dimensions, is resize your array. You will then return a new array that has the shape that you passed to the np.resize() function. If you pass your original array together with the new dimensions, and if that new array is larger than the one that you originally had, the new array will be filled with copies of the original array that are repeated as many times as is needed.
 
+(findresizenumpy)
 However, if you just apply np.resize() to the array and you pass the new shape to it, the new array will be filled with zeros.
 
 Let’s try this out with an example:
@@ -3162,6 +3253,7 @@ print(x)
  [ 0.  0.  0.  0.]
  [ 0.  0.  0.  0.]]
 
+(findreshapenumpy)
 Besides resizing, you can also reshape your array. This means that you give a new shape to an array without changing its data. The key to reshaping is to make sure that the total size of the new array is unchanged. If you take the example of array x that was used above, which has a size of 3 X 4 or 12, you have to make sure that the new array also has a size of 12.
 
 Psst… If you want to calculate the size of an array with code, make sure to use the size attribute: x.size or x.reshape((2,6)).size:
@@ -3189,6 +3281,8 @@ print(x) # tao: x did not change
  [ 1.  1.  1.  1.]
  [ 1.  1.  1.  1.]]
 
+(findflattennumpy)
+(findravelnumpy)
 # Flatten `x`
 z = x.ravel()
 
@@ -3211,6 +3305,7 @@ Appending is a pretty easy thing to do thanks to the NumPy library; You can just
 
 Check how it’s done in the code chunk below. Don’t forget that you can always check which arrays are loaded in by typing, for example, my_array in the IPython shell and pressing ENTER.
 
+(findappendnumpy)
 print(my_array)
 
 [1 2 3 4]
@@ -3243,6 +3338,7 @@ How To Insert And Delete Array Elements
 
 Next to appending, you can also insert and delete array elements. As you might have guessed by now, the functions that will allow you to do these operations are np.insert() and np.delete():
 
+(findinsertnumpy)
 print(my_array)
 
 [1 2 3 4]
@@ -3256,6 +3352,7 @@ print(my_array) # tao: my_array did not change
 
 [1 2 3 4]
 
+(findeletenumpy)
 # Delete the value at index 1
 print(np.delete(my_array,[1]))
 
@@ -3271,6 +3368,9 @@ You can also ‘merge’ or join your arrays. There are a bunch of functions tha
 
 Try them out, but also make sure to test out what the shape of the arrays is in the IPython shell. The arrays that have been loaded are x, my_array, my_resized_array and my_2d_array.
 
+print(my_array)
+[1 2 3 4]
+
 print(my_2d_array)
 
 [[1 2 3 4]
@@ -3280,11 +3380,14 @@ print(x)
 
 [ 1.  1.  1.  1.]
 
+(findconcatenatenumpy)
+(findconcatnumpy)
 # Concatentate `my_array` and `x`
 print(np.concatenate((my_array,x)))
 
 [ 1.  2.  3.  4.  1.  1.  1.  1.]
 
+(findvstacknumpy)
 # Stack arrays row-wise
 print(np.vstack((my_array, my_2d_array)))
 
@@ -3305,6 +3408,7 @@ print(np.r_[my_resized_array, my_2d_array])
  [1 2 3 4]
  [5 6 7 8]]
 
+(findhstacknumpy)
 # Stack arrays horizontally
 print(np.hstack((my_resized_array, my_2d_array)))
 
@@ -3342,6 +3446,7 @@ print(my_stacked_array)
 [[1 2 3 4 1 2 3 4]
  [1 2 3 4 5 6 7 8]]
 
+(findhsplitnumpy)
 # Split `my_stacked_array` horizontally at the 2nd index
 print(np.hsplit(my_stacked_array, 2))
 
@@ -3349,6 +3454,7 @@ print(np.hsplit(my_stacked_array, 2))
        [1, 2, 3, 4]]), array([[1, 2, 3, 4],
        [5, 6, 7, 8]])]
 
+(findvsplitnumpy)
 # Split `my_stacked_array` vertically at the 2nd index
 print(np.vsplit(my_stacked_array, 2))
 
@@ -3360,6 +3466,7 @@ How To Visualize NumPy Arrays
 
 Lastly, something that will definitely come in handy is to know how you can plot your arrays. This can especially be handy in data exploration, but also in later stages of the data science workflow, when you want to visualize your arrays.
 
+(findhistogramnumpy)
 With np.histogram()
 
 Contrary to what the function might suggest, the np.histogram() function doesn’t draw the histogram but it does compute the occurrences of the array that fall within each bin; This will determine the area that each bar of your histogram takes up.
@@ -3393,6 +3500,8 @@ But what is the point of computing such a histogram if you can’t visualize it?
 
 Visualization is a piece of cake with the help of Matplotlib, but you don’t need np.histogram() to compute the histogram. plt.hist() does this for itself when you pass it the (flattened) data and the bins:
 
+(findplotnumpy)
+(findmatplotlibnumpy)
 # Import numpy and matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
@@ -3410,6 +3519,7 @@ The above code will then give you the following (basic) histogram:
 
 (A picture)
 
+(findmeshgridnumpy)
 Using np.meshgrid()
 
 Another way to (indirectly) visualize your array is by using np.meshgrid(). The problem that you face with arrays is that you need 2-D arrays of x and y coordinate values. With the above function, you can create a rectangular grid out of an array of x values and an array of y values: the np.meshgrid() function takes two 1D arrays and produces two 2D matrices corresponding to all pairs of (x, y) in the two arrays. Then, you can use these matrices to make all sorts of plots.
@@ -3863,16 +3973,11 @@ a * b # Normal matrix multiplication (as in Linear Algebra).
 
 What about matrix multiplication?  How do you achieve that?  Like, for everything, Num Pi has a function.  It has function called dot, which performs matrix multiplication.  
 
---
-(findrandomnumber)                   
-Random number
-
-import numpy as np  
-np.random.random() # Returns a random number, not sure about the range.
-
 ==
 (findscipy)
 Scipy
+
+stopa
 
 Notes from the following site (double checked and confirmed it does not miss anything from the site)
 
