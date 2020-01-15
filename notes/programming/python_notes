@@ -30,7 +30,7 @@ findparameter                      Function parameters
 findreturn                         The return Statement
 findpass                           Pass statement
 finddocstring                      DocStrings
-findlocal                          Local variables
+findlocalvariables                 Local variables
 findglobal                         Global statement
 findnonlocal                       Nonlocal statement
 finddefaultargument                Default Argument Values
@@ -51,7 +51,7 @@ findsplit                          Split a string
 findprefix                         Whether a string start with a prefix
 findstrip                          Strip a string (remove charaters at beginning and end)
 findtrim                           Strip a string (remove charaters at beginning and end)
-findjoinlisttostring               Join list to string
+findjoinpandaslisttostring               Join list to string
 findargs                           Parse command line arguments  
 findargv                           Parse command line arguments 
 findclass                          class
@@ -87,78 +87,118 @@ findimportdatanumpy                Load data from file
 findsavenumpy                      Save NumPy Arrays
 (indsavedatanumpy                  Save NumPy Arrays
 findsavearraynumpy                 Save NumPy Arrays
-findsizenumpy                      Size (number of elements) of any array
+findsizepandasnumpy                      Size (number of elements) of any array
 findmathsnumpy                     Maths in numpy add, substract, etc
 findmathnumpy                      Maths in numpy add, substract, etc
 findindexingnumpy                  Indexing (select an element) of array
 findindexnumpy                     Indexing (select an element) of array
-findslicenumpy                     slice
+findslicepandasnumpy                     slice
 findtransposenumpy                 transpose
 findresizenumpy                    resize
-findreshapenumpy                   reshape
+findreshapepandasnumpy                   reshape
 findflattennumpy                   flatten
 findravelnumpy                     flatten
 findappendnumpy                    append
 findinsertnumpy                    insert
 findeletenumpy                     delete
-findconcatenatenumpy               concatenate
-findconcatnumpy                    concatenate
+findconcatpandasenatenumpy               concatenate
+findconcatpandasnumpy                    concatenate
 findvstacknumpy                    vstack
 findhstacknumpy                    hstack
 findvsplitnumpy                    vsplit
 findhsplitnumpy                    hsplit
 findhistogramnumpy                 histogram
-findplotnumpy                      Plot in numpy
+findplotpandasnumpy                      Plot in numpy
 findmatplotlibnumpy                matplotlib
 findmeshgridnumpy                  meshgrid
+
 
 ** scipy **
 
 findscipy                          Scipy
+findvectorizescipy                 vectorize
+findmatrixscipy                    Matrix
 
 ** pandas **
 
 findpandas                         Pandas
-findreadcsv                        Read csv file to a dataframe
-finddataframe                      DataFrame
-findcreatedataframe                Create DataFrame
-findrank                           Rank
-findcorrelation                    Correlation
-findaddcolumn                      Add a column
-findplot                           Plot in Python, using matplotlib
-finddates                          Dates in pandas
-findjoin                           Join
-findmerge                          Join, merge, concat
-findconcat                         Join, merge, concat
-finddropnan                        Drop the rows with NaN
-findrenamecolumn                   Rename colum
-findhead                           head
-findtail                           tail
-findslice                          Slice dataframe             
-findselect                         Select rows and columns
-findiloc                           iloc, loc, ix
-findloc                            iloc, loc, ix
-findix                             iloc, loc, ix
-findmax                            Max
-findstatistics                     Statistics functions
-findlinearregression               Linear Regression
-findpolyfit                        Polyfit
-findsort                           Sort
-findgroupby                        group by
-findlen                            Number of rows in dataframe df
-findsize                           Number of rows in dataframe df
-findisnull                         isnull or missing values
-findmissingvalues                  isnull or missing values
-findnormalize                      Normalize
-findsumcolumns                     Sum of all columns 
-findmeancolumns                    Mean of all columns 
+findcreatedataframefromnumpyarray  Create DataFrame from NumPy array
+findcreatedataframefromdictionary  Create DataFrame from dictionary
+findshapepandas                    shape
+findlenpandas                      Number of rows in dataframe
+findcountpandas                    count
+findindexpandas                    index
+findsetindexpandas                 set_index
+findresetindexpandas               reset_index
+findaddrowpandas                   Add a row
+findaddcolumnpandas                Add a column
+finddroppandas                     Drop column or row
+finddropcolumnpandas               Drop column
+finddroprowpandas                  Drop row
+finddropduplicatespandas           Drop duplicate rows
+findaxispandas                     axis
+findrenamecolumnpandas             Rename column
+findreplacepandas                  Replace all occurrences of string 
+findremovecolumnpandas             Delete column
+finddeletecolumnpandas             Delete column
+findlambdapandas                   map each element using lambda function
+findudfpandas                      udf
+findapplypandas                    Apply udf on a column
+findmappandas                      Apply udf on a all elements
+findapplymappandas                 Apply udf on a all elements
+finddatecsvpandas                  Read dates from csv file
+findpivotpandas                    pivot
+findreshapepandas                  reshape
+findlongtowidepandas               Long to wide
+findmeltpandas                     melt
+findwidetolongpandas               Wide to long
+finditeraterowspandas              Iterate rows
+finditerrowspandas                 Iterate rows
+findsavecsvpandas                  Save DataFrame to csv file
+findtocsvpandas                    Save DataFrame to csv file
+findreadcsvpandas                  Read csv file to DataFrame
+findcreatedataframepandas          Create DataFrame
+findrankpandas                     Rank
+findcorrelationpandas              Correlation
+findplotpandas                     Plot in Python, using matplotlib
+finddatespandas                    Dates in pandas
+findjoinpandas                     Join
+findmergepandas                    Join, merge, concat
+findconcatpandas                   Join, merge, concat
+finddropnanpandas                  Drop the rows with NaN
+findheadpandas                     head
+findtailpandas                     tail
+findslicepandas                    Slice dataframe             
+findselectpandas                   Select rows and columns
+findilocpandas                     iloc, loc, ix
+findlocpandas                      iloc, loc, ix
+findixpandas                       iloc, loc, ix
+findmaxpandas                      Max
+findstatisticspandas               Statistics functions
+findlinearregressionpandas         Linear Regression
+findpolyfitpandas                  Polyfit
+findsortpandas                     Sort
+findgroupbypandas                  group by
+findisnullpandas                   isnull or missing values
+findmissingvaluespandas            isnull or missing values
+findnormalizepandas                Normalize
+findsumcolumnspandas               Sum of all columns 
+findmeancolumnspandas              Mean of all columns 
 
 ** scikitlearn **
 
 findscikitlearn                    Scikit-Learn
 findsklearn                        Scikit-Learn
-
-
+findpcasklearn                     PCA
+findscalesklearn                   Scale data
+findstandardizesklearn             Standardize data
+findsplitsklearn                   Train test split
+findtraintestsplitsklearn          Train test split
+findkmeanssklearn                  K-means clustering
+findclustersklearn                 K-means clustering
+findconfusionmatrixsklearn         Confusion matrix
+finsvmsklearn                      SVM
+findcrossvalidationsklearn         Cross validation
 
 (endfind)
 
@@ -468,7 +508,7 @@ str = "this is string example"
 str.startswith('this') # Returns True
 
 --
-(findjoinlisttostring)
+(findjoinpandaslisttostring)
 Join list to string
 
 delimiter = '_*_'
@@ -945,7 +985,7 @@ Prints the maximum of two numbers.
 We can use docstrings for classes as well as methods. We can access the class docstring at runtime using Robot.__doc__ and the method docstring as Robot.sayHi.__doc__
 
 --
-(findlocal)
+(findlocalvariables)
 Local variables
 
 When you declare variables inside a function definition, they are not related in any way to other variables with the same names used outside the function i.e. variable names are local to the function. This is called the scope of the variable. All variables have the scope of the block they are declared in starting from the point of definition of the name.
@@ -2122,6 +2162,11 @@ Enough of the theory. Let’s check this out ourselves:
 
 You can easily test this by exploring the numpy array attributes:
 
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
 # Print out memory address
 print(my_2d_array.data)
 
@@ -2406,7 +2451,7 @@ print(my_array.ndim)
 
 2
 
-(findsizenumpy)
+(findsizepandasnumpy)
 # Print the number of `my_array`'s elements
 print(my_array.size)
 
@@ -2665,7 +2710,6 @@ print(np.remainder(x,y))
 [[1 2 3]
  [3 4 5]]
 
-
 Remember how broadcasting works? Check out the dimensions and the shapes of both x and y in your IPython shell. Are the rules of broadcasting respected?
 
 But there is more.
@@ -2732,6 +2776,16 @@ Besides from these two points, the easiest way to see how this all fits together
 
 (findindexingnumpy)
 (findindexnumpy)
+
+print(my_array)
+
+[1 2 3 4]
+
+print(my_2d_array)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
 # Select the element at the 1st index
 print(my_array[1])
 
@@ -2747,12 +2801,20 @@ print(my_2d_array[1,2])
 
 7
 
+print(my_3d_array)
+
+[[[ 1  2  3  4]
+  [ 5  6  7  8]]
+
+ [[ 1  2  3  4]
+  [ 9 10 11 12]]]
+
 # Select the element at row 1, column 2 and
 print(my_3d_array[1,1,2])
 
 11
 
-(findslicenumpy)
+(findslicepandasnumpy)
 Something a little bit more advanced than subsetting, if you will, is slicing. Here, you consider not just particular values of your arrays, but you go to the level of rows and columns. You’re basically working with “regions” of data instead of pure “locations”.
 
 You can see what is meant with this analogy in these code examples:
@@ -3253,7 +3315,7 @@ print(x)
  [ 0.  0.  0.  0.]
  [ 0.  0.  0.  0.]]
 
-(findreshapenumpy)
+(findreshapepandasnumpy)
 Besides resizing, you can also reshape your array. This means that you give a new shape to an array without changing its data. The key to reshaping is to make sure that the total size of the new array is unchanged. If you take the example of array x that was used above, which has a size of 3 X 4 or 12, you have to make sure that the new array also has a size of 12.
 
 Psst… If you want to calculate the size of an array with code, make sure to use the size attribute: x.size or x.reshape((2,6)).size:
@@ -3313,10 +3375,10 @@ print(my_array)
 # Append a 1D array to your `my_array`
 new_array = np.append(my_array, [7, 8, 9, 10])
 
-[ 1  2  3  4  7  8  9 10]
-
 # Print `new_array`
 print(new_array)
+
+[ 1  2  3  4  7  8  9 10]
 
 print(my_2d_array)
 
@@ -3380,8 +3442,8 @@ print(x)
 
 [ 1.  1.  1.  1.]
 
-(findconcatenatenumpy)
-(findconcatnumpy)
+(findconcatpandasenatenumpy)
+(findconcatpandasnumpy)
 # Concatentate `my_array` and `x`
 print(np.concatenate((my_array,x)))
 
@@ -3500,7 +3562,7 @@ But what is the point of computing such a histogram if you can’t visualize it?
 
 Visualization is a piece of cake with the help of Matplotlib, but you don’t need np.histogram() to compute the histogram. plt.hist() does this for itself when you pass it the (flattened) data and the bins:
 
-(findplotnumpy)
+(findplotpandasnumpy)
 (findmatplotlibnumpy)
 # Import numpy and matplotlib
 import numpy as np
@@ -3977,7 +4039,7 @@ What about matrix multiplication?  How do you achieve that?  Like, for everythin
 (findscipy)
 Scipy
 
-stopa
+Tao: before reading this scipy note, no need to review numpy because the beginning of this scipy note will provide a review on numpy.
 
 Notes from the following site (double checked and confirmed it does not miss anything from the site)
 
@@ -4066,7 +4128,6 @@ You’ll see in the results of the code that is included in the code chunk above
 
 Nevertheless, when you’re using SciPy and NumPy together, you might also find the following type handling NumPy functions very useful, especially when you’re working with complex numbers:
 
-
 print(myArray)
 
 [[ 1.+5.j  2.+0.j  3.+6.j]
@@ -4104,7 +4165,7 @@ The only thing that really stands out in difficulty in the above code chunk is t
 
 Array Creation
 
-You have now seen how to inspect your array and to make adjustments in the data type of it, but you haven’t explicitly seen hwo to create arrays. You should already know that you can use np.array() to to this, but there are other routines for array creation that you should know about: np.eye() and np.identity().
+You have now seen how to inspect your array and to make adjustments in the data type of it, but you haven’t explicitly seen how to create arrays. You should already know that you can use np.array() to to this, but there are other routines for array creation that you should know about: np.eye() and np.identity().
 
 The np.eye() funcion allows you to create a square matrix with dimensions that are equal to the positive integer that you give as an argument to the function. The entries are generally filled with zeros, only the matrix diagonal is filled with ones. The np.identity() function works and does the same and also returns an identity array.
 
@@ -4292,6 +4353,11 @@ Like np.hstack() to horizontally stack your arrays or np.vstack() to vertically 
 
 Prove it in the following code chunk:
 
+print(my_2dArray)
+
+[[1 2 3 4]
+ [5 6 7 8]]
+
 #Stack arrays horizontally (column-wise)
 print(np.hstack((np.eye(2), my_2dArray)))
 
@@ -4301,11 +4367,6 @@ print(np.hstack((np.eye(2), my_2dArray)))
 print(myArray)
 
 [1 2 3 4]
-
-print(my_2dArray)
-
-[[1 2 3 4]
- [5 6 7 8]]
 
 # Stack arrays vertically (row-wise)
 print(np.vstack((myArray, my_2dArray)))
@@ -4387,6 +4448,9 @@ Besides the splitting and stacking routines and the functions that allow you to 
 
 But, when you define functions by yourself, as you will most likely do when you’re getting into scientific computing, you might also want to vectorize them. In those cases, you can call np.vectorize():
 
+(findvectorizescipy)
+vectorize
+
 # Define a function `myfunc`
 def myfunc(a,b):
   if a > b:
@@ -4458,6 +4522,9 @@ myVector = np.array([1,2,3,4])
 print(myVector)
 
 [1 2 3 4]
+
+(findmatrixscipy)
+Matrix
 
 # Create a matrix
 myMatrix = np.matrix(np.random.random((5,5)))
@@ -4730,7 +4797,7 @@ print(kronProduct)
 
 Tip: add print statements to the code chunk above to see the individual product results.
 
-Besides these, it might also be useful to consider some functions of thelinalg module: the matrix exponential functions linalg.expm(), linalg.expm2() and linalg.expm3(). The difference between these three lies in the ways that the exponential is calculated. Stick to the first one for a general matrix exponential, but definitely try the three of them out to see the difference in results!
+Besides these, it might also be useful to consider some functions of the linalg module: the matrix exponential functions linalg.expm(), linalg.expm2() and linalg.expm3(). The difference between these three lies in the ways that the exponential is calculated. Stick to the first one for a general matrix exponential, but definitely try the three of them out to see the difference in results!
 
 Also trigonometric functions such as linalg.cosm(), linalg.sinm() and linalg.tanm(), hyperbolic trigonometric functions such as linalg.coshm(), linalg.sinhm() and linalg.tanhm(), the sign function linalg.signm(), the matrix logarithm linalg.logm(), and the matrix square root linalg.sqrtm().
 
@@ -5029,7 +5096,7 @@ Consider also the following examples where SVD is used:
 
 - SVD is closely linked to Principal Component Analysis (PCA), which is used for dimensionality reduction: both result in a set of “new axes” that are constructed from linear combinations of the the feature space axes of your data. These “new axes” break down the variance in the data points based on each direction’s contribution to the variance in the data. To see a concrete example of how PCA works on data, go to our Scikit-Learn Tutorial.
 
-- Another link is one with data mining and natural language processing (NLP): Latent Semantic Indexing (LSI). It s a technique that is used in document retrieval and word similarity. Latent semantic indexing uses SVD to group documents to the concepts that could consist of different words found in those documents. Various words can be grouped into a concept. Also here, SVD reduces the noisy correlation between words and their documents, and it decreases the number of dimensions that the original data has.
+- Another link is one with data mining and natural language processing (NLP): Latent Semantic Indexing (LSI). It is a technique that is used in document retrieval and word similarity. Latent semantic indexing uses SVD to group documents to the concepts that could consist of different words found in those documents. Various words can be grouped into a concept. Also here, SVD reduces the noisy correlation between words and their documents, and it decreases the number of dimensions that the original data has.
 
 You see, SVD is an important concept in your data science journey that you must cover. That’s why you should consider going deeper into SVD than what this tutorial covers: for example, go to this page to read more about this matrix decomposition.
 
@@ -5046,6 +5113,8 @@ Of course, also consider taking DataCamp’s Machine Learning tutorial, which wi
 ==
 (findpandas)
 Pandas
+
+Tao: all the example code in this note (the note from the following link in datacamp.com) have been tested and works in Tao's Jupyter Notebook with Python 3.
 
 Notes from the following site (double checked and confirmed it does not miss anything from the site)
 
@@ -5096,7 +5165,7 @@ Firstly, the DataFrame can contain data that is:
 
 - dictionaries of one-dimensional ndarray’s, lists, dictionaries or Series.
 
-Note the difference between np.ndarray and np.array() . The former is an actual data type, while the latter is a function to make arrays from other data structures.
+Note the difference between np.ndarray and np.array(). The former is an actual data type, while the latter is a function to make arrays from other data structures.
 
 Structured arrays allow users to manipulate the data by named fields: in the example below, a structured array of three tuples is created. The first element of each tuple will be called foo and will be of type int, while the second element will be named bar and will be a float.
 
@@ -5104,17 +5173,31 @@ Record arrays, on the other hand, expand the properties of structured arrays. Th
 
 An example:
 
+Tao: import pandas and numpy:
+import numpy as np
+import pandas as pd
+
 # A structured array
 my_array = np.ones(3, dtype=([('foo', int), ('bar', float)]))
+
 print(my_array['foo'])
 
 [1 1 1]
 
+print(my_array['bar'])
+
+[1. 1. 1.]
+
 # A record array
 my_array2 = my_array.view(np.recarray)
+
 print(my_array2.foo)
 
 [1 1 1]
+
+print(my_array2.bar)
+
+[1. 1. 1.]
 
 Besides data, you can also specify the index and column names for your DataFrame. The index, on the one hand, indicates the difference in rows, while the column names indicate the difference in columns. You will see later that these two components of the DataFrame will come in handy when you’re manipulating your data.
 
@@ -5134,6 +5217,8 @@ Now that there is no doubt in your mind about what DataFrames are, what they can
 Obviously, making your DataFrames is your first step in almost anything that you want to do when it comes to data munging in Python. Sometimes, you will want to start from scratch, but you can also convert other data structures, such as lists or NumPy arrays, to Pandas DataFrames. In this section, you’ll only cover the latter. However, if you want to read more on making empty DataFrames that you can fill up with data later, go to question 7.
 
 Among the many things that can serve as input to make a ‘DataFrame’, a NumPy ndarray is one of them. To make a data frame from a NumPy array, you can just pass it to the DataFrame() function in the data argument.
+
+(findcreatedataframefromnumpyarray)
 
 data = np.array([['','Col1','Col2'],
                 ['Row1',1,2],
@@ -5163,6 +5248,7 @@ Try it out in the code chunk below:
 
 Remember that the Pandas library has already been imported for you as pd.
 
+# Tao: the following my_2darray is never used
 # Take a 2D array as input to your DataFrame 
 my_2darray = np.array([[1, 2, 3], [4, 5, 6]])
 print(pd.DataFrame(my_2darray))
@@ -5170,6 +5256,8 @@ print(pd.DataFrame(my_2darray))
    0  1  2
 0  1  2  3
 1  4  5  6
+
+(findcreatedataframefromdictionary)
 
 # Take a dictionary as input to your DataFrame 
 my_dict = {1: ['1', '3'], 2: ['1', '2'], 3: ['2', '4']}
@@ -5205,13 +5293,25 @@ After you have created your DataFrame, you might want to know a little bit more 
 
 df = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6]]))
 
+df
+
+	0	1	2
+0	1	2	3
+1	4	5	6
+
+(findshapepandas)
 # Use the `shape` property
-print(df.shape)
+df.shape
 
 (2, 3)
 
+(findlenpandas)
 # Or use the `len()` function with the `index` property
-print(len(df.index))
+len(df.index)
+
+2
+
+len(df)
 
 2
 
@@ -5219,7 +5319,17 @@ These two options give you slightly different information on your DataFrame: the
 
 This all is totally not extraordinary, though, as you explicitly give in the index property.
 
+(findcountpandas)
+
+df[0].count()
+
+2
+
 You could also use df[0].count() to get to know more about the height of your DataFrame, but this will exclude the NaN values (if there are any). That is why calling .count() on your DataFrame is not always the better option.
+
+list(df.columns.values)
+
+[0, 1, 2]
 
 If you want more information on your DataFrame columns, you can always execute list(my_dataframe.columns.values). Try this out for yourself in the DataCamp Light block above!
 
@@ -5239,31 +5349,38 @@ In R, you use the [,] notation to access the data frame’s values.
 
 Now, let’s say you have a DataFrame like this one:
 
-   A  B  C
-0  1  2  3
-1  4  5  6
-2  7  8  9
+df_dict = {'A': [1, 4, 7], 'B': [2, 5, 8], 'C': [3, 6, 9]}
+df = pd.DataFrame(df_dict)
+df
+
+	A	B	C
+0	1	2	3
+1	4	5	6
+2	7	8	9
+
 And you want to access the value that is at index 0, in column ‘A’.
 
 Various options exist to get your value 1 back:
 
+# Tao: I have more detailed and compact notes for iloc elsewhere, search for "find ilocpandas"
 # Using `iloc[]`
-print(df.iloc[0][0])
+df.iloc[0][0]
 
 1
 
+# Tao: I have more detailed and compact notes for loc elsewhere, search for "find locpandas"
 # Using `loc[]`
-print(df.loc[0]['A'])
+df.loc[0]['A']
 
 1
 
 # Using `at[]`
-print(df.at[0,'A'])
+df.at[0,'A']
 
 1
 
 # Using `iat[]`
-print(df.iat[0,0])
+df.iat[0,0]
 
 1
 
@@ -5272,7 +5389,7 @@ The most important ones to remember are, without a doubt, .loc[] and .iloc[]. Th
 Enough for now about selecting values from your DataFrame. What about selecting rows and columns? In that case, you would use:
 
 # Use `iloc[]` to select a row
-print(df.iloc[0])
+df.iloc[0]
 
 A    1
 B    2
@@ -5280,7 +5397,7 @@ C    3
 Name: 0, dtype: int64
 
 # Use `loc[]` to select a column
-print(df.loc[:,'A'])
+df.loc[:,'A']
 
 0    1
 1    4
@@ -5295,8 +5412,10 @@ Now that you have learned how to select a value from a DataFrame, it’s time to
 
 Adding an Index to a DataFrame
 
+(findindexpandas)
 When you create a DataFrame, you have the option to add input to the ‘index’ argument to make sure that you have the index that you desire. When you don’t specify this, your DataFrame will have, by default, a numerically valued index that starts with 0 and continues until the last row of your DataFrame.
 
+(findsetindexpandas)
 However, even when your index is specified for you automatically, you still have the power to re-use one of your columns and make it your index. You can easily do this by calling set_index() on your DataFrame. Try this out below!
 
 # Print out your DataFrame `df` to check it out
@@ -5328,8 +5447,15 @@ This all might seem very complicated. Let’s illustrate all of this with a smal
 
 df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), index= [2, 'A', 4], columns=[48, 49, 50])
 
+df:
+
+   48  49  50
+2   1   2   3
+A   4   5   6
+4   7   8   9
+
 # Pass `2` to `loc`
-print(df.loc[2])
+df.loc[2]
 
 48    1
 49    2
@@ -5337,7 +5463,7 @@ print(df.loc[2])
 Name: 2, dtype: int64
 
 # Pass `2` to `iloc`
-print(df.iloc[2])
+df.iloc[2]
 
 48    7
 49    8
@@ -5376,6 +5502,13 @@ Check out the difference once more in the DataFrame below:
 
 df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), index= [2.5, 12.6, 4.8], columns=[48, 49, 50])
 
+df
+
+	  48 49	50
+2.5	   1  2	 3
+12.6   4  5	 6
+4.8	   7  8	 9
+
 # There's no index labeled `2`, so you will change the index at position `2`
 df.ix[2] = [60, 50, 40]
 print(df)
@@ -5385,6 +5518,7 @@ print(df)
 12.6   4   5   6
 4.8   60  50  40
 
+(findaddrowpandas)   
 # This will make an index labeled `2` and add the new values
 df.loc[2] = [11, 12, 13]
 print(df)
@@ -5397,13 +5531,14 @@ print(df)
 
 You can see why all of this can be confusing, right?
 
+(findaddcolumnpandas)
 Adding a Column to Your DataFrame
 
 In some cases, you want to make your index part of your DataFrame. You can easily do this by taking a column from your DataFrame or by referring to a column that you haven’t made yet and assigning it to the .index property, just like this:
 
 df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
 
-print(df)
+df
 
    A  B  C
 0  1  2  3
@@ -5414,7 +5549,7 @@ print(df)
 df['D'] = df.index
 
 # Print `df`
-print(df)
+df
 
    A  B  C  D
 0  1  2  3  0
@@ -5426,7 +5561,9 @@ In other words, you tell your DataFrame that it should take column A as its inde
 However, if you want to append columns to your DataFrame, you could also follow the same approach as when you would add an index to your DataFrame: you use .loc[] or .iloc[]. In this case, you add a Series to an existing DataFrame with the help of .loc[]:
 
 # Study the DataFrame `df`
-print(df)
+dic = {1: [1, 3], 2: [1, 2], 3: [2, 4]}
+df = pd.DataFrame(dic)
+df
 
    1  2  3
 0  1  1  2
@@ -5436,7 +5573,7 @@ print(df)
 df.loc[:, 4] = pd.Series(['5', '6'], index=df.index)
 
 # Print out `df` again to see the changes
-print(df)
+df
 
    1  2  3  4
 0  1  1  2  5
@@ -5444,12 +5581,15 @@ print(df)
 
 Remember a Series object is much like a column of a DataFrame. That explains why you can easily add a Series to an existing DataFrame. Note also that the observation that was made earlier about .loc[] still stays valid, even when you’re adding columns to your DataFrame!
 
+(findresetindexpandas)
 Resetting the Index of Your DataFrame
 
 When your index doesn’t look entirely the way you want it to, you can opt to reset it. You can easily do this with .reset_index(). However, you should still watch out, as you can pass several arguments that can make or break the success of your reset:
 
 # Check out the weird index of your dataframe
-print(df)
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), index= [2.5, 12.6, 4.8], columns=[48, 49, 50])
+
+df
 
       48  49  50
 2.5    1   2   3
@@ -5460,7 +5600,7 @@ print(df)
 df_reset = df.reset_index(level=0, drop=True)
 
 # Print `df_reset`
-print(df_reset)
+df_reset
 
    48  49  50
 0   1   2   3
@@ -5468,6 +5608,24 @@ print(df_reset)
 2   7   8   9
 
 Now try replacing the drop argument by inplace in the code chunk above and see what happens!
+
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), index= [2.5, 12.6, 4.8], columns=[48, 49, 50])
+
+df
+
+      48  49  50
+2.5    1   2   3
+12.6   4   5   6
+4.8    7   8   9
+
+df.reset_index(level=0, inplace=True)
+
+df
+
+   level_0  index  48  49  50
+0        0    2.5   1   2   3
+1        1   12.6   4   5   6
+2        2    4.8   7   8   9
 
 Note how you use the drop argument to indicate that you want to get rid of the index that was there. If you would have used inplace, the original index with floats is added as an extra column to your DataFrame.
 
@@ -5485,26 +5643,36 @@ However, what you *can* do is, for example:
 
 - remove the index name, if there is any, by executing del df.index.name,
 
+(finddropduplicatespandas)
 - remove duplicate index values by resetting the index, dropping the duplicates of the index column that has been added to your DataFrame and reinstating that duplicateless column again as the index:
 
-df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [40, 50, 60], [23, 35, 37]]), 
+df = pd.DataFrame(data=np.array([[1, 2, 3], [1, 5, 6], [7, 8, 9], [40, 50, 60], [23, 35, 37]]), 
                   index= [2.5, 12.6, 4.8, 4.8, 2.5], 
                   columns=[48, 49, 50])
 
-print(df)
+df
 
       48  49  50
 2.5    1   2   3
-12.6   4   5   6
+12.6   1   5   6
 4.8    7   8   9
 4.8   40  50  60
 2.5   23  35  37
 
-print(df.reset_index().drop_duplicates(subset='index', keep='last').set_index('index'))
+df.reset_index().drop_duplicates(subset='index', keep='last').set_index('index')
 
        48  49  50
 index            
-12.6    4   5   6
+12.6    1   5   6
+4.8    40  50  60
+2.5    23  35  37
+
+df.reset_index().drop_duplicates(subset=48, keep='last').set_index('index')
+
+       48  49  50
+index            
+12.6    1   5   6
+4.8     7   8   9
 4.8    40  50  60
 2.5    23  35  37
 
@@ -5516,18 +5684,28 @@ Deleting a Column from Your DataFrame
 
 To get rid of (a selection of) columns from your DataFrame, you can use the drop() method:
 
+
 # Check out the DataFrame `df`
-print(df)
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
+
+df
 
    A  B  C
 0  1  2  3
 1  4  5  6
 2  7  8  9
 
+(finddroppandas)
+(finddropcolumnpandas)
+(finddroprowpandas)
+
+(findaxispandas)
+Tao: from below, we see that axis=0 means row, axis=1 means column.
+
 # Drop the column with label 'A'                  
 df.drop('A', axis=1, inplace=True)
 
-print(df)
+df
 
    B  C
 0  2  3
@@ -5548,6 +5726,22 @@ print(df)
 0  2  3
 1  5  6
 2  8  9
+
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
+
+df
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+
+df.drop(2, axis=0, inplace=True)
+df
+
+   A  B  C
+0  1  2  3
+1  4  5  6
 
 You might think now: well, this is not so straightforward; There are some extra arguments that are passed to the drop() method!
 
@@ -5583,7 +5777,9 @@ print(df.drop_duplicates([48], keep='last'))
 If there is no uniqueness criterion to the deletion that you want to perform, you can use the drop() method, where you use the index property to specify the index of which rows you want to remove from your DataFrame:
 
 # Check out the DataFrame `df`
-print(df)
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
+
+df
 
    A  B  C
 0  1  2  3
@@ -5591,7 +5787,7 @@ print(df)
 2  7  8  9
 
 # Drop the index at position 1
-print(df.drop(df.index[1]))
+df.drop(df.index[1])
 
    A  B  C
 0  1  2  3
@@ -5606,12 +5802,16 @@ Tip: try resetting the index of the resulting DataFrame for yourself! Don’t fo
 To give the columns or your index values of your dataframe a different value, it’s best to use the .rename() method.
 
 # Check out your DataFrame `df`
-print(df)
+df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
 
-       A  B  C
-    0  1  2  3
-    1  4  5  6
-    2  7  8  9
+df
+
+   A  B  C
+0  1  2  3
+1  4  5  6
+2  7  8  9
+
+(findrenamecolumnpandas)
 
 # Define the new names of your columns
 newcols = {
@@ -5621,11 +5821,9 @@ newcols = {
 }
 
 # Use `rename()` to rename your columns
-print(df.rename(columns=newcols, inplace=True))
+df.rename(columns=newcols, inplace=True)
 
-None
-
-print(df)
+df
 
    new_column_1  new_column_2  new_column_3
 0             1             2             3
@@ -5633,7 +5831,7 @@ print(df)
 2             7             8             9
 
 # Rename your index
-print(df.rename(index={1: 'a'}))
+df.rename(index={1: 'a'})
 
    new_column_1  new_column_2  new_column_3
 0             1             2             3
@@ -5656,15 +5854,22 @@ To replace certain strings in your DataFrame, you can easily use replace(): pass
 Just like this:
 
 # Study the DataFrame `df` first
-print(df)
+
+dic = {'Student1': ['OK', 'Awful', 'Acceptable'], 'Student2': ['Perfect', 'Awful', 'OK'], 'Student3': ['Acceptable', 'Perfect', 'Poor']}
+
+df = pd.DataFrame(dic)
+
+df
 
      Student1 Student2    Student3
 0          OK  Perfect  Acceptable
 1       Awful    Awful     Perfect
 2  Acceptable       OK        Poor
 
+(findreplacepandas)
+
 # Replace the strings by numerical values (0-4)
-print(df.replace(['Awful', 'Poor', 'OK', 'Acceptable', 'Perfect'], [0, 1, 2, 3, 4]))
+df.replace(['Awful', 'Poor', 'OK', 'Acceptable', 'Perfect'], [0, 1, 2, 3, 4])
 
    Student1  Student2  Student3
 0         2         4         3
@@ -5695,18 +5900,23 @@ Removing Parts From Strings in the Cells of Your DataFrame
 Removing unwanted parts of strings is cumbersome work. Luckily, there is an easy solution to this problem!
 
 # Check out your DataFrame
-print(df)
+dic = {'class': [1, 4, 7], 'test': [2, 5, 8], 'result': ['+3b', '-6B', '+9A']}
+
+df = pd.DataFrame(dic)
+
+df
 
   class test result
 0     1    2    +3b
 1     4    5    -6B
 2     7    8    +9A
 
+# Tao: the udf or lambda or map below is recorded elsewhere
 # Delete unwanted parts from the strings in the `result` column
 df['result'] = df['result'].map(lambda x: x.lstrip('+-').rstrip('aAbBcC'))
 
 # Check out the result again
-print(df)
+df
 
   class test result
 0     1    2      3
@@ -5716,10 +5926,11 @@ print(df)
 You use map() on the column result to apply the lambda function over each element or element-wise of the column. The function in itself takes the string value and strips the + or - that’s located on the left, and also strips away any of the six aAbBcC on the right.
 
 Splitting Text in a Column into Multiple Rows in a DataFrame
+
 This is somewhat a more difficult formatting task. However, the next code chunk will walk you through the steps:
 
 # Inspect your DataFrame `df`
-print(df)
+df
 
   Age PlusOne             Ticket
 0  34       0           23:44:55
@@ -5729,13 +5940,22 @@ print(df)
 # Split out the two values in the third row
 # Make it a Series
 # Stack the values
+
+# Tao: see explanation of this line below
 ticket_series = df['Ticket'].str.split(' ').apply(pd.Series, 1).stack()
+ticketdf = pd.DataFrame(ticket_series)
+
+ticketdf
+
+            0
+0 0  23:44:55
+1 0  66:77:88
+2 0  43:68:05
+  1  56:34:12
 
 # Get rid of the stack:
 # Drop the level to line up with the DataFrame
 ticket_series.index = ticket_series.index.droplevel(-1)
-
-# Make your series a dataframe 
 ticketdf = pd.DataFrame(ticket_series)
 
 print(ticketdf)
@@ -5746,19 +5966,26 @@ print(ticketdf)
 2  43:68:05
 2  56:34:12
 
+(findremovecolumnpandas)
+(finddeletecolumnpandas)
 # Delete the `Ticket` column from your DataFrame
 del df['Ticket']
+
+df
+
+   Age  PlusOne
+0   34        0
+1   22        0
+2   19        1
 
 # Join the ticket DataFrame to `df`
 df.join(ticketdf)
 
-# Check out the new `df`
-print(df)
-
-  Age PlusOne
-0  34       0
-1  22       0
-2  19       1
+   Age  PlusOne         0
+0   34        0  23:44:55
+1   22        0  66:77:88
+2   19        1  43:68:05
+2   19        1  56:34:12
 
 In short, what you do is:
 
@@ -5766,7 +5993,7 @@ In short, what you do is:
 
 - You take the Ticket column from the DataFrame df and strings on a space. This will make sure that the two tickets will end up in two separate rows in the end. Next, you take these four values (the four ticket numbers) and put them into a Series object:
 
-      0         1
+      0            1
 0  23:44:55       NaN
 1  66:77:88       NaN
 2  43:68:05  56:34:12
@@ -5796,12 +6023,16 @@ Applying A Function to Your Pandas DataFrame’s Columns or Rows
 
 You might want to adjust the data in your DataFrame by applying a function to it. Let’s begin answering this question by making your own lambda function:
 
+(findudfpandas)
+(findlambdapandas)
+(findapplypandas)
+
 doubler = lambda x: x*2
 
 Tip: if you want to know more about functions in Python, consider taking this Python functions tutorial.
 
 # Study the `df` DataFrame
-print(df)
+df
 
    A  B  C
 0  1  2  3
@@ -5824,12 +6055,14 @@ df.loc[0].apply(doubler)
 
 Note that the apply() function only applies the doubler function along the axis of your DataFrame. That means that you target either the index or the columns. Or, in other words, either a row or a column.
 
+(findmappandas)
 However, if you want to apply it to each element or element-wise, you can make use of the map() function. You can just replace the apply() function in the code chunk above with map(). Don’t forget to still pass the doubler function to it to make sure you multiply the values by 2.
 
+(findapplymappandas)
 Let’s say you want to apply this doubling function not only to the A column of your DataFrame but to the whole of it. In this case, you can use applymap() to apply the doubler function to every single element in the entire DataFrame:
 
 doubled_df = df.applymap(doubler)
-print(doubled_df)
+doubled_df
 
     A   B   C
 0   2   4   6
@@ -5848,7 +6081,7 @@ def doubler(x):
 doubled_df = df.applymap(doubler)
 
 # Check the DataFrame
-print(doubled_df)
+doubled_df
 
     A   B   C
 0   2   2   6
@@ -5887,6 +6120,7 @@ print(df)
 
 Note that if you don’t specify the axis labels or index, they will be constructed from the input data based on common sense rules.
 
+(finddatecsvpandas)
 8. Does Pandas Recognize Dates When Importing Data?
 
 Pandas can recognize it, but you need to help it a tiny bit: add the argument parse_dates when you’reading in data from, let’s say, a comma-separated value (CSV) file:
@@ -5937,7 +6171,7 @@ products = pd.DataFrame({'category': ['Cleaning', 'Cleaning', 'Entertainment', '
         'price':[11.42, 23.50, 19.99, 15.95, 55.75, 111.55],
         'testscore': [4, 3, 5, 7, 5, 8]})
 
-print(products)
+products
 
         category   price    store  testscore
 0       Cleaning   11.42  Walmart          4
@@ -5947,17 +6181,21 @@ print(products)
 4           Tech   55.75      Dia          5
 5           Tech  111.55  Walmart          8
 
+(findpivotpandas)
+(findreshapepandas)
+(findlongtowidepandas)
 # Use `pivot()` to pivot the DataFrame
+# Tao: what does the following line do? First it discards the column testscore. Then it transforms from long to wide. category becomes rows and store becomes columns. price is the values.
 pivot_products = products.pivot(index='category', columns='store', values='price')
 
 # Check out the result
-print(pivot_products)
+pivot_products
 
-store            Dia   Fnac  Walmart
-category                            
-Cleaning       23.50    NaN    11.42
-Entertainment    NaN  15.95    19.99
-Tech           55.75    NaN   111.55
+          store  Dia     Fnac   Walmart
+     category                            
+     Cleaning    23.50   NaN    11.42
+Entertainment    NaN     15.95  19.99
+         Tech    55.75   NaN    111.55
 
 When you don’t specifically fill in what values you expect to be present in your resulting table, you will pivot by multiple columns:
 
@@ -5970,7 +6208,7 @@ products = pd.DataFrame({'category': ['Cleaning', 'Cleaning', 'Entertainment', '
                         'price':[11.42, 23.50, 19.99, 15.95, 55.75, 111.55],
                         'testscore': [4, 3, 5, 7, 5, 8]})
 
-print(products)
+products
 
             category   price    store  testscore
     0       Cleaning   11.42  Walmart          4
@@ -5981,17 +6219,18 @@ print(products)
     5           Tech  111.55  Walmart          8
 
 # Use `pivot()` to pivot your DataFrame
+# Tao: in the following result, the long table is reshpaed to wide table for price, which is the left half of the result table. The long table is also reshpaed to wide table for testscore, which is the right half of the result table.
 pivot_products = products.pivot(index='category', columns='store')
 
 # Check out the results
-print(pivot_products)
+pivot_products
 
-                   price                testscore             
-    store            Dia   Fnac Walmart       Dia Fnac Walmart
-    category                                                  
-    Cleaning       23.50    NaN   11.42       3.0  NaN     4.0
-    Entertainment    NaN  15.95   19.99       NaN  7.0     5.0
-    Tech           55.75    NaN  111.55       5.0  NaN     8.0
+                 price                    testscore             
+store            Dia   Fnac Walmart       Dia Fnac Walmart
+category                                                  
+Cleaning       23.50    NaN   11.42       3.0  NaN     4.0
+Entertainment    NaN  15.95   19.99       NaN  7.0     5.0
+Tech           55.75    NaN  111.55       5.0  NaN     8.0
 
 Note that your data can not have rows with duplicate values for the columns that you specify. If this is not the case, you will get an error message. If you can’t ensure the uniqueness of your data, you will want to use the pivot_table method instead:
 
@@ -6004,7 +6243,7 @@ products = pd.DataFrame({'category': ['Cleaning', 'Cleaning', 'Entertainment', '
                         'price':[11.42, 23.50, 19.99, 15.95, 19.99, 111.55],
                         'testscore': [4, 3, 5, 7, 5, 8]})
 
-print(products)
+products
 
         category   price    store  testscore
 0       Cleaning   11.42  Walmart          4
@@ -6018,7 +6257,7 @@ print(products)
 pivot_products = products.pivot_table(index='category', columns='store', values='price', aggfunc='mean')
 
 # Check out the results
-print(pivot_products) 
+pivot_products
 
 store            Dia   Fnac  Walmart
 category                            
@@ -6047,17 +6286,20 @@ As a result, you have two non-identifier columns, namely, ‘variable’ and ‘
 
 Let’s illustrate this with an example:
 
+(findmeltpandas)
+(findwidetolongpandas)
+# Tao: in the following example, melt does the opposite of pivot: wide to long.
 # The `people` DataFrame
 people = pd.DataFrame({'FirstName' : ['John', 'Jane'],
                        'LastName' : ['Doe', 'Austen'],
                        'BloodType' : ['A-', 'B+'],
                        'Weight' : [90, 64]})
 
-print(people)
+people
 
-  BloodType FirstName LastName  Weight
-0        A-      John      Doe      90
-1        B+      Jane   Austen      64
+  FirstName LastName BloodType  Weight
+0      John      Doe        A-      90
+1      Jane   Austen        B+      64
 
 # Use `melt()` on the `people` DataFrame
 print(pd.melt(people, id_vars=['FirstName', 'LastName'], var_name='measurements'))  
@@ -6070,13 +6312,15 @@ print(pd.melt(people, id_vars=['FirstName', 'LastName'], var_name='measurements'
 
 If you’re looking for more ways to reshape your data, check out the documentation.
 
+(finditeraterowspandas)
+(finditerrowspandas)
 10. How To Iterate Over a Pandas DataFrame
 
 You can iterate over the rows of your DataFrame with the help of a for loop in combination with an iterrows() call on your DataFrame:
 
 df = pd.DataFrame(data=np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=['A', 'B', 'C'])
 
-print(df)
+df
 
    A  B  C
 0  1  2  3
@@ -6100,6 +6344,8 @@ Output a DataFrame to CSV
 
 To write a DataFrame as a CSV file, you can use to_csv():
 
+(findsavecsvpandas)
+(findtocsvpandas)
 import pandas as pd
 df.to_csv('myDataFrame.csv')
 
@@ -6864,7 +7110,7 @@ source activate homework1
 python file_name.py
 
 --
-(findreadcsv)
+(findreadcsvpandas)
 Read csv file to a dataframe:
 
 df = pd.read_csv("data/AAPL.csv")
@@ -6891,15 +7137,14 @@ dfSPY = pd.read_csv("data.csv", index_col = "date", parse_dates = True)
 We make the date column in the csv file as index. We do this by using the index_col parameter. We also want the dates present in the DataFrame to be converted into date time index objects. This can be done by setting the value for the parse_dates parameter to True.
 
 --
-(finddropnan)
+(finddropnanpandas)
 Drop the rows with NaN:
 
 df2 = df1.dropna()
 df2 = df1.dropna(subset = ["col1"]) # Drop only the rows which have col1 equals NaN.
 
 --
-(finddataframe)
-(findcreatedataframe)
+(findcreatedataframepandas)
 # Create DataFrame:
 
 # Tao: practice shows that d below is just a normal dictionary. The key is string type, and value is a list.
@@ -6922,8 +7167,8 @@ Add a new column from computation:
 df['col_c'] = 2 * df['col_a'] + df['col_a'] * df['col_b']
 
 --
-(findhead)
-(findtail)
+(findheadpandas)
+(findtailpandas)
 head & tail
 
 df.head() # Top 5 rows 
@@ -6933,16 +7178,7 @@ df.head(5)
 df.tail(3)
 
 --
-(findaddcolumn)
-Add a column
-
-In the same way as adding to dictionary:
-
-# Tao: the new df contains all the old columns and the new column
-df['new_column'] = 2 * df['col_a'] + df['col_b']
-
---
-(findrank)
+(findrankpandas)
 Rank
 
 df:
@@ -6969,15 +7205,15 @@ Maricopa	62	     Jake	2	     2014  3
 Yuma	    70	     Amy	3	     2014  4
 
 --
-(findcorrelation)
+(findcorrelationpandas)
 Correlation
 
 df['A'].corr(df['B'])
 
 --
-(findiloc)
-(findloc)
-(findix)
+(findilocpandas)
+(findlocpandas)
+(findixpandas)
 iloc, loc, ix:
 
 Abstract from https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
@@ -7089,8 +7325,8 @@ idx = data['company_name'].apply(lambda x: len(x.split(' ')) == 4)
 data.loc[idx, ['email', 'first_name', 'company']]
 
 --
-(findslice)
-(findselect)
+(findslicepandas)
+(findselectpandas)
 Slice dataframe
 Select rows and columns
 
@@ -7126,8 +7362,8 @@ df[df.A > 0]
 a_df[a_df.label == 100]
 
 --
-(findmax)
-(findstatistics)
+(findmaxpandas)
+(findstatisticspandas)
 Max
 Statistics functions
 
@@ -7155,8 +7391,8 @@ df_sqrt = np.sqrt(df['col_a'])
 df_square = np.power(df['col_a'], 2)
 
 --
-(findlinearregression)
-(findpolyfit)
+(findlinearregressionpandas)
+(findpolyfitpandas)
 Linear Regression
 Polyfit
 
@@ -7169,7 +7405,7 @@ beta, alpha = np.polyfit(df['col1'], df['col2'], 1)
 So the line is y = beta * x + alpha
 
 --
-(findsort)
+(findsortpandas)
 Sort
 
 df.sort_index(axis=1, ascending=False)
@@ -7195,8 +7431,8 @@ df.sort_values(by='B')
 
 
 --
-(findisnull)
-(findmissingvalues)
+(findisnullpandas)
+(findmissingvaluespandas)
 isnull or missing values
 
 df['A'].isnull().sum(): returns number of missing values in column A.
@@ -7212,14 +7448,7 @@ df.fillna(method = 'bfill') # Backward fill.
 df.fillna(method="ffill", inplace=True)
 
 --
-(findlen)
-(findsize)
-Number of rows in dataframe df:
-
-len(df)
-
---
-(findgroupby)
+(findgroupbypandas)
 group by
 
 # Now a new df:
@@ -7289,7 +7518,7 @@ Sort the PVE score within each job_id:
 score_df['rank'] = score_df.groupby(['job_id'])['score'].rank(ascending = True)
 
 --
-(findplot)
+(findplotpandas)
 Plot in Python, using matplotlib
 
 Tao's standard way:
@@ -7395,7 +7624,7 @@ ax.set_ylabel("price")
 plot.show()
 
 --
-(finddates)
+(finddatespandas)
 Dates in pandas
 
 import pandas as pd
@@ -7415,7 +7644,7 @@ This is the first element of the list which a date/time index object. The traili
 Next we define an empty dataframe df1 with these dates as index. We use the parameter index to supply the dates. Note that without this parameter the dataframe will have an index of integers 0,1,2 as seen before. So here's your DataFrame, DF1. It's an empty DataFrame with no columns. However, as we pass the index parameter, we have an index as dates. And you can see that it's a date time index object.
 
 --
-(findjoin)
+(findjoinpandas)
 Join
 
 df_join = df1.join(df2) <- Left join, avadoles!
@@ -7425,8 +7654,8 @@ Avadoles! Different from Hive, Spark, SQL:
 DataFrame.join does a left join by default. So if we write a.join b, it will read in all the rows from a, but only those rows from b whose index values are present in a's index.
 
 --
-(findmerge)
-(findconcat)
+(findmergepandas)
+(findconcatpandas)
 
 Join, merge, concat:
 
@@ -7500,13 +7729,7 @@ h  NaN  NaN  2.0  30.0
 i  NaN  NaN  3.0  40.0
 
 --
-(findrenamecolumn)
-Rename colum
-
-df_new = df.rename(columns = {'old_name' : 'new_name'})
-
---
-(findnormalize)
+(findnormalizepandas)
 Normalize
 
 df1 = df1 / df1[0] # Divide the entire dataframe by its first row. It is equivalent as below, but it is more elegant and much FASTER.
@@ -7520,8 +7743,8 @@ for date in df1.index:
         df1[date, s] = df1[date, s] / df1[0, s]
 
 --
-(findsumcolumns)
-(findmeancolumns)
+(findsumcolumnspandas)
+(findmeancolumnspandas)
 Sum (or mean) of all columns into a new column
 
 df2 = pd.DataFrame(data = dic2)
@@ -7592,6 +7815,7 @@ To load in the data, you import the module datasets from sklearn. Then, you can 
 from sklearn import datasets
 
 # Load in the `digits` data
+# Tao: note that load_digits() only loads a particular dataset
 digits = datasets.load_digits()
 
 # Print the `digits` data 
@@ -8106,6 +8330,8 @@ In short, it’s a linear transformation method that yields the directions (prin
 
 You can easily apply PCA do your data with the help of scikit-learn:
 
+(findpcasklearn)
+
 # Create a Randomized PCA model that takes two components
 randomized_pca = RandomizedPCA(n_components=2)
 
@@ -8223,6 +8449,9 @@ Data Normalization
 
 The first thing that we’re going to do is preprocessing the data. You can standardize the digits data by, for example, making use of the scale() method:
 
+(findscalesklearn)
+(findstandardizesklearn)
+
 # Import
 from sklearn.preprocessing import scale
 
@@ -8267,6 +8496,9 @@ You will try to do this also here. You see in the code chunk below that this ‘
 
 You’ll also note that the argument random_state has the value 42 assigned to it. With this argument, you can guarantee that your split will always be the same. That is particularly handy if you want reproducible results.
 
+(findsplitsklearn)
+(findtraintestsplitsklearn)
+
 # Import `train_test_split`
 from sklearn.cross_validation import train_test_split
 
@@ -8309,6 +8541,9 @@ After all these preparation steps, you have made sure that all your known (train
 Now, it’s finally time to find those clusters of your training set. Use KMeans() from the cluster module to set up your model. You’ll see that there are three arguments that are passed to this method: init, n_clusters and the random_state.
 
 You might still remember this last argument from before when you split the data into training and test sets. This argument basically guaranteed that you got reproducible results.
+
+(findkmeanssklearn)
+(findclustersklearn)
 
 # Import the `cluster` module
 from sklearn import cluster
@@ -8464,6 +8699,8 @@ And this need for further investigation brings you to the next essential step, w
 
 Let’s print out a confusion matrix:
 
+(findconfusionmatrixsklearn)
+
 # Import `metrics` from `sklearn`
 from sklearn import metrics
 
@@ -8538,6 +8775,8 @@ from sklearn.cross_validation import train_test_split
 # Split the data into training and test sets 
 X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
 
+(finsvmsklearn)
+
 # Import the `svm` model
 from sklearn import svm
 
@@ -8553,6 +8792,8 @@ Even though this is not the focus of this tutorial, you will see how you could h
 
 # Split the `digits` data into two equal sets
 X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.5, random_state=0)
+
+(findcrossvalidationsklearn)
 
 # Import GridSearchCV
 from sklearn.grid_search import GridSearchCV
