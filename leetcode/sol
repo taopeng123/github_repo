@@ -1249,7 +1249,7 @@ Can you solve it using O(1) (i.e. constant) memory? <- Tao: therefore, can not u
 ==
 Key: Use walker and runner pointers. Runner moves at twice the speed of walker. Both of them starts from head. If they can meet, then there is cycle, otherwise no cycle.
 
-Tao's proof: If there is no cycle, obviously the walker will never be able to catch up with the runner. If ther is cycle, both the walker and runner will eventually enter the cycle. Once they are in the cycle, they will always be in the cycle. Now consider two people moving in the same cycle but with different speeds, the faster one will definately catch the slower one (think of the cycle as an infinately long straight line, the fater person will eventually catch the slower person).
+Tao's proof: If there is no cycle, obviously the walker will never be able to catch up with the runner. If there is cycle, both the walker and runner will eventually enter the cycle. Once they are in the cycle, they will always be in the cycle. Now consider two people moving in the same cycle but with different speeds, the faster one will definately catch the slower one (think of the cycle as an infinately long straight line, the fater person will eventually catch the slower person).
 
 ==
 C++ code:
@@ -1339,7 +1339,7 @@ Follow up: Can you solve it without using extra space?
 ==
 Key: First use the walker and runner method, runner moves at twice the speed of walker. When they meet (call it point A), move walker back to the head of the list, the runner stays at point A. Now walker and runner both walk at the SAME speed, when they meet again, it is where the cycle begins
 
-Tao's proof: when walker and runner first meet at point A, runner must have moved twice the distance as walker, as shown below. The "----" means the region outside the cycle. The "====" means inside the cycle. "****" means n complete cycles (only in this way runner can meet walker). Because the distance moved by runner is twice of walker, so the length of "****" equals the length of walker distance "-----===". Now if the walker starts again at head, let's suppose he moves the distance of "-------". The distance of "-------" compared to "*****", the difference is "====", which means that "------" equals n complete cycles minus "====". So if runner starts at the end of "****" and moves distance of "----", it would move a distance of n cycles minus "====", which essentially where the cycle begins (the point where "----" and "====" meets).
+Tao's proof: when walker and runner first meet at point A, runner must have moved twice the distance as walker as shown below (because runner has twice the speed as walker, and they moved within the same length of time). The "----" means the region outside the cycle. The "====" means inside the cycle. "****" means n complete cycles (only in this way runner can meet walker). Because the distance moved by runner is twice of walker, so the length of "****" equals the length of walker distance "-----===". Now if the walker starts again at head, let's suppose he moves the distance of "-------". The distance of "-------" compared to "*****", the difference is "====", which means that "------" equals n complete cycles minus "====". So if runner starts at the end of "****" (which is equivalent as the begining of "***") and moves distance of "----", it would move a distance of n cycles minus "====", which essentially where the cycle begins (the point where "----" and "====" meets).
 
 Walker: -------------======
 Runner: -------------======********************
